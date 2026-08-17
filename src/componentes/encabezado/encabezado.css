@@ -1,200 +1,257 @@
-/* ==========================================
-   VARIABLES
-========================================== */
-
+/* VARIABLES GLOBALES*/
 :root {
-    --primary-color: #aad100;
-    --primary-hover: #96b800;
-    --dark-color: #222222;
-    --light-bg: #f8f9fa;
-    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    --transition-fast: all 0.25s ease-in-out;
+  --primary-color: #aad100; /* Color verde/principal  */
+  --primary-hover: #96b800;
+  --dark-color: #222222;
+  --light-bg: #f8f9fa;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  --transition-fast: all 0.25s ease-in-out;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  background-color: #f4f4f6;
+  color: var(--dark-color);
 }
 
 
-/* ==========================================
-   HEADER PRINCIPAL
-========================================== */
+/* decoraciones nulas para los enlaces de la pagina */
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
+/* En esta seccion se edita la barra de navegacion */
 .contenido_principal {
-    background-color: #ffffff;
-    padding: 12px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-
-/* ==========================================
-   LOGO
-========================================== */
-
+/* Aqui se le aplican los estilos al logo de senabella */
 .logo {
-    font-size: 26px;
-    font-weight: bold;
-    color: #84b814;
-    letter-spacing: -1px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #84b814;
+  letter-spacing: -1px;
 }
 
-.logo img {
-    display: block;
+/* Es para el boton del menu junto a su diseño*/
+.boton-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-
-/* ==========================================
-   BUSCADOR
-========================================== */
-
+/* Contenedor de la barra de búsqueda */
 .contenedor-busqueda {
-    flex: 1;
-    max-width: 650px;
-    position: relative;
-    display: flex;
+  flex: 1;
+  max-width: 650px;
+  position: relative;
+  display: flex;
 }
 
+/* Campo de texto de búsqueda */
 .entrada-busqueda {
-    width: 100%;
-    padding: 10px 45px 10px 15px;
-    border: 1px solid #767676;
-    border-radius: 20px;
-    font-size: 14px;
-    outline: none;
+  width: 100%;
+  padding: 10px 45px 10px 15px;
+  border: 1px solid #767676;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
 }
 
-.entrada-busqueda:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.25rem rgba(170, 209, 0, 0.25);
-}
-
+/* El icono de la lupa tiene sus propiedades */
 .boton-busqueda {
-    position: absolute;
-    right: 3px;
-    top: 3px;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background-color: #333d45;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #333d45;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.boton-busqueda:hover {
-    background-color: var(--primary-hover);
-}
-
-
-/* ==========================================
-   ACCIONES DEL USUARIO
-========================================== */
-
+/* Sección derecha de acciones del usuario como el inicio de sesión */
 .acciones-usuario {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
+/* Contenedor de la información de cuenta para ver los datos del usuario*/
 .cuenta-usuario {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border-right: 1px solid #ddd;
-    padding-right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-right: 1px solid #ddd;
+  padding-right: 15px;
 }
 
+/* Textos informativos de usuario */
 .texto-usuario {
-    font-size: 13px;
-    line-height: 1.2;
+  font-size: 13px;
+  line-height: 1.2;
 }
 
-.texto-usuario-bold {
-    font-weight: bold;
+.texto-usuario strong {
+  font-size: 14px;
 }
 
+/* Icono del carrito con posición relativa para el contador y que se vea organizado*/
 .icono-carrito {
-    position: relative;
-    font-size: 20px;
+  position: relative;
+  font-size: 20px;
 }
 
+/* Etiqueta flotante con el número de productos registrados (ejemplo) 1*/
 .contador-carrito {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: #333d45;
-    color: #ffffff;
-    border-radius: 50%;
-    padding: 2px 5px;
-    font-size: 10px;
-    font-weight: bold;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #333d45;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
-
-/* ==========================================
-   SUB NAVEGACIÓN
-========================================== */
-
+/* Barra de navegación secundaria */
 .sub-navegacion {
-    background-color: #ffffff;
-    border-top: 1px solid #f0f0f0;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 10px 30px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    font-size: 13px;
-    color: #4a4a4a;
+  background-color: #fff;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #4a4a4a;
 }
 
-
-/* ==========================================
-   UBICACIÓN
-========================================== */
-
+/* Selector de ubicación del usuario */
 .boton-ubicacion {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    font-weight: bold;
-
-    background: none;
-    border: none;
-    padding: 0;
-
-    color: inherit;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
 }
 
-
-/* ==========================================
-   ENLACES
-========================================== */
-
+/* Enlaces secundarios de navegación */
 .enlaces-navegacion {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+  display: flex;
+  gap: 20px;
+}
+/* Clases de utilidad personalizadas */
+.fs-7 {
+  font-size: 0.85rem;
+}
+.fs-8 {
+  font-size: 0.75rem;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 
+/* CABECERA Y NAVEGACIÓN */
+.contenido_principal {
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #ffffff !important;
+}
+
+/* Botón de Menú */
+.menu-btn {
+  border-radius: 20px;
+  font-weight: 600;
+  padding: 0.4rem 1.2rem;
+  transition: var(--transition-fast);
+}
+
+.menu-btn:hover {
+  background-color: var(--dark-color);
+  color: #fff;
+}
+
+/* Barra de búsqueda */
+.search-input {
+  border-radius: 20px 0 0 20px !important;
+  border-color: #cccccc;
+  padding-left: 1rem;
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(170, 209, 0, 0.25);
+}
+
+.search-btn {
+  border-radius: 0 20px 20px 0 !important;
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--dark-color) !important;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+}
+
+.search-btn:hover {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+
+/* Indicador de Carrito */
+.cart-badge {
+  font-size: 0.65rem;
+  padding: 0.35em 0.55em;
+}
+
+/* Sub-navegación */
+.sub-nav {
+  background-color: #333333 !important;
+}
+
+.sub-nav a:hover {
+  color: var(--primary-color) !important;
+  text-decoration: underline !important;
+}
+
+.location-btn:hover {
+  color: var(--primary-color);
+}
 
 /* ==========================================
    MENÚS DESPLEGABLES
-========================================== */
+   ========================================== */
 
+/* Contenedor de cada menú */
 .menu-desplegable {
     position: relative;
     display: flex;
     align-items: center;
 }
 
+
+/* Botón de Tarjetas y cuentas / Ayuda */
 .boton-desplegable {
     background: none;
     border: none;
@@ -213,23 +270,31 @@
     transition: var(--transition-fast);
 }
 
+
+/* Efecto al pasar el mouse */
 .boton-desplegable:hover {
     color: var(--primary-color);
 }
 
+
+/* Flecha */
 .boton-desplegable i {
     font-size: 10px;
+
     transition: transform 0.25s ease;
 }
 
+
+/* Girar la flecha cuando está abierto */
 .boton-desplegable.activo i {
     transform: rotate(180deg);
 }
 
 
+
 /* ==========================================
    CONTENIDO DEL MENÚ
-========================================== */
+   ========================================== */
 
 .contenido-desplegable {
     position: absolute;
@@ -249,7 +314,21 @@
     padding: 8px 0;
 
     z-index: 1000;
+
+    /* Oculto inicialmente */
+    display: none;
 }
+
+
+/* Cuando JavaScript agrega "mostrar" */
+.contenido-desplegable.mostrar {
+    display: block;
+}
+
+
+/* ==========================================
+   OPCIONES DEL MENÚ
+   ========================================== */
 
 .contenido-desplegable a {
     display: block;
@@ -263,106 +342,329 @@
     transition: var(--transition-fast);
 }
 
+
+/* Hover de las opciones */
 .contenido-desplegable a:hover {
     background-color: #f4f4f4;
+
     color: var(--primary-color);
 }
-
-
-/* ==========================================
-   MENÚ AYUDA
-========================================== */
 
 #menu-ayuda {
     left: auto;
     right: 0;
 }
 
-
 /* ==========================================
-   TRANSICIONES
-========================================== */
-
-.contenido_principal,
-.sub-navegacion {
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
-}
-
-
-/* ==========================================
-   MODO OSCURO
+MODO OSCURO GENERAL
 ========================================== */
 
 body.modo-oscuro {
-    background-color: #121212 !important;
-    color: #ffffff !important;
+background-color: #121212 !important;
+color: white !important;
 }
 
+/* ==========================================
+HEADER
+========================================== */
+
 body.modo-oscuro .contenido_principal {
-    background-color: #181818 !important;
-    border-color: #333333 !important;
+background-color: #181818 !important;
+border-color: #333333 !important;
 }
 
 body.modo-oscuro .sub-navegacion {
-    background-color: #181818 !important;
-    border-color: #333333 !important;
-    color: #ffffff !important;
+background-color: #181818 !important;
+border-color: #333333 !important;
+color: white !important;
 }
 
 body.modo-oscuro .contenido_principal a,
 body.modo-oscuro .sub-navegacion a,
 body.modo-oscuro .boton-ubicacion {
-    color: #ffffff !important;
+color: white !important;
 }
 
-
-/* BUSCADOR */
+/* ==========================================
+BUSCADOR
+========================================== */
 
 body.modo-oscuro .entrada-busqueda {
-    background-color: #242424 !important;
-    color: #ffffff !important;
-    border-color: #555555 !important;
+background-color: #242424 !important;
+color: white !important;
+border-color: #555555 !important;
 }
 
 body.modo-oscuro .entrada-busqueda::placeholder {
-    color: #aaaaaa;
+color: #aaaaaa;
 }
 
-
-/* BOTÓN MODO OSCURO */
+/* ==========================================
+BOTÓN MODO OSCURO
+========================================== */
 
 body.modo-oscuro #theme-toggle {
-    background-color: #242424 !important;
-    color: #ffffff !important;
-    border-color: #555555 !important;
+background-color: #242424 !important;
+color: white !important;
+border-color: #555555 !important;
+}
+
+/* ==========================================
+TARJETAS
+========================================== */
+
+body.modo-oscuro .card,
+body.modo-oscuro .card-body,
+body.modo-oscuro .tarjeta,
+body.modo-oscuro .tarjeta-producto,
+body.modo-oscuro .tar-producto,
+body.modo-oscuro .tarjeta-carrito,
+body.modo-oscuro .tarjeta-resumen,
+body.modo-oscuro .tarjeta-sugerencia,
+body.modo-oscuro .seccion-sugerencias,
+body.modo-oscuro .recomendacion,
+body.modo-oscuro .filtro-marca,
+body.modo-oscuro .contenido-menu,
+body.modo-oscuro .barra-lateral,
+body.modo-oscuro .tarjeta-contenido,
+body.modo-oscuro .recomendaciones,
+body.modo-oscuro .info-box,
+body.modo-oscuro .p-3,
+body.modo-oscuro .elemento_galeria,
+body.modo-oscuro .categorias-circulares,
+body.modo-oscuro .tarjetas_informacion {
+background-color: #1e1e1e !important;
+color: white !important;
+}
+
+/* ==========================================
+FONDOS SECUNDARIOS
+========================================== */
+
+body.modo-oscuro .imagen-producto,
+body.modo-oscuro .imagen-cat,
+body.modo-oscuro .caja-garantia,
+body.modo-oscuro .categoria-lis,
+body.modo-oscuro .reco-card {
+  
+background-color: #252525 !important;
+color: white !important;
+}
+
+/* ==========================================
+TEXTOS
+========================================== */
+
+body.modo-oscuro h1,
+body.modo-oscuro h2,
+body.modo-oscuro h3,
+body.modo-oscuro h4,
+body.modo-oscuro h5,
+body.modo-oscuro h6,
+body.modo-oscuro p,
+body.modo-oscuro li,
+body.modo-oscuro label,
+body.modo-oscuro span,
+body.modo-oscuro .titulo-seccion,
+body.modo-oscuro .titulo-sugerencias,
+body.modo-oscuro .titulo-cat,
+body.modo-oscuro .nombre-producto,
+body.modo-oscuro .descripcion,
+body.modo-oscuro .referencia,
+body.modo-oscuro .marca-producto,
+body.modo-oscuro .color-producto,
+body.modo-oscuro .nombre-sugerencia,
+body.modo-oscuro .titulo-marca,
+body.modo-oscuro .filtro1,
+body.modo-oscuro .texto_galeria,
+body.modo-oscuro .texto_galeria h3,
+body.modo-oscuro .encabezado_seccion h2 {
+color: white !important;
+}
+
+/* ==========================================
+TEXTOS SECUNDARIOS
+========================================== */
+
+body.modo-oscuro .cantidad-carrito,
+body.modo-oscuro .marca-sugerencia,
+body.modo-oscuro .precio-secundario,
+body.modo-oscuro .precio-secundario1,
+body.modo-oscuro .precio-antiguo-pequeno,
+body.modo-oscuro .resultados,
+body.modo-oscuro .recomendacion1 {
+color: #bbbbbb !important;
+}
+
+/* ==========================================
+BOTONES
+========================================== */
+
+body.modo-oscuro button,
+body.modo-oscuro .botones button,
+body.modo-oscuro .boton-flecha,
+body.modo-oscuro .btn-secundario,
+body.modo-oscuro .boton_banner,
+body.modo-oscuro .boton-secundario {
+background-color: #292929 !important;
+color: white !important;
+border-color: #555555 !important;
+}
+
+/* ==========================================
+INPUTS Y SELECT
+========================================== */
+
+body.modo-oscuro input,
+body.modo-oscuro select {
+background-color: #242424 !important;
+color: white !important;
+border-color: #555555 !important;
+}
+
+body.modo-oscuro select option {
+background-color: #242424;
+color: white;
+}
+
+/* ==========================================
+MENÚ DE USUARIO
+========================================== */
+
+body.modo-oscuro .elemento-menu {
+background-color: #1e1e1e !important;
+color: white !important;
+border-color: #444444 !important;
+}
+
+body.modo-oscuro .elemento-menu:hover {
+background-color: #292929 !important;
+}
+
+body.modo-oscuro .elemento-menu.activo {
+background-color: #29331c !important;
+}
+
+/* ==========================================
+DETALLE DEL PRODUCTO
+========================================== */
+
+body.modo-oscuro .product-info,
+body.modo-oscuro .info-producto {
+color: white !important;
+}
+
+body.modo-oscuro .beneficios span {
+background-color: #243b29 !important;
+color: #b8e6c4 !important;
 }
 
 
-/* MENÚS */
+
+
+
+/* ==========================================
+FOOTER
+========================================== */
+
+body.modo-oscuro .footer,
+body.modo-oscuro .pie-pagina {
+background-color: #181818 !important;
+color: white !important;
+border-color: #333333 !important;
+}
+
+body.modo-oscuro .footer-top h3,
+body.modo-oscuro .footer-top a,
+body.modo-oscuro .footer-bottom,
+body.modo-oscuro .pie-pagina-superior h3,
+body.modo-oscuro .pie-pagina-superior a,
+body.modo-oscuro .pie-pagina-inferior {
+color: white !important;
+}
+
+body.modo-oscuro .footer-bottom,
+body.modo-oscuro .pie-pagina-inferior {
+background-color: #111111 !important;
+}
+
+/* ==========================================
+BORDES
+========================================== */
+
+body.modo-oscuro .divisor-tarjeta,
+body.modo-oscuro .filtro,
+body.modo-oscuro .p-3,
+body.modo-oscuro .tarjeta-sugerencia,
+body.modo-oscuro .grupo-info {
+border-color: #444444 !important;
+}
+
+/* ==========================================
+TRANSICIÓN
+========================================== */
+
+body,
+.contenido_principal,
+.sub-navegacion,
+.card,
+.tarjeta,
+.tarjeta-producto,
+.tarjeta-carrito,
+.tarjeta-resumen,
+.footer {
+transition:
+background-color 0.3s ease,
+color 0.3s ease;
+}
+
+
+
+/* ==========================================
+   MODO OSCURO MENU DESPLEGABLE
+   ========================================== */
 
 body.modo-oscuro .contenido-desplegable {
     background-color: #1e1e1e !important;
+
     border-color: #444444 !important;
+
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
+
 body.modo-oscuro .contenido-desplegable a {
-    color: #ffffff !important;
+    color: white !important;
 }
+
 
 body.modo-oscuro .contenido-desplegable a:hover {
     background-color: #292929 !important;
+
     color: var(--primary-color) !important;
 }
 
+
+body.modo-oscuro .boton-desplegable {
+    color: white !important;
+}
+
+
+body.modo-oscuro .boton-desplegable:hover {
+    color: var(--primary-color) !important;
+}
+
+/* ==========================================
+   CORRECCIÓN BOTONES DE MENÚ EN MODO OSCURO
+   ========================================== */
+
 body.modo-oscuro .boton-desplegable {
     background-color: transparent !important;
-    color: #ffffff !important;
+    color: white !important;
     border: none !important;
 }
 
 body.modo-oscuro .boton-desplegable:hover {
+    background-color: transparent !important;
     color: var(--primary-color) !important;
 }

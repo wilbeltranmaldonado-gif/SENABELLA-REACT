@@ -9,22 +9,22 @@ function Encabezado() {
     // MODO OSCURO
     // ==========================================
 
-    const [modoOscuro, setModoOscuro] = useState(() => {
-        return localStorage.getItem("modoOscuro") === "activado";
-    });
+    const [modoOscuro, setModoOscuro] = useState(
+        localStorage.getItem("modoOscuro") === "activado"
+    );
 
 
     // ==========================================
     // UBICACIÓN
     // ==========================================
 
-    const [ubicacion, setUbicacion] = useState(() => {
-        return localStorage.getItem("ubicacion") || "";
-    });
+    const [ubicacion, setUbicacion] = useState(
+        localStorage.getItem("ubicacion") || ""
+    );
 
 
     // ==========================================
-    // MENÚS DESPLEGABLES
+    // MENÚS
     // ==========================================
 
     const [menuTarjetas, setMenuTarjetas] = useState(false);
@@ -32,7 +32,7 @@ function Encabezado() {
 
 
     // ==========================================
-    // APLICAR MODO OSCURO
+    // MODO OSCURO
     // ==========================================
 
     useEffect(() => {
@@ -60,7 +60,7 @@ function Encabezado() {
 
 
     // ==========================================
-    // CAMBIAR UBICACIÓN
+    // UBICACIÓN
     // ==========================================
 
     function cambiarUbicacion() {
@@ -81,16 +81,12 @@ function Encabezado() {
     }
 
 
-    // ==========================================
-    // RENDERIZADO
-    // ==========================================
-
     return (
         <>
 
-            {/* ==================================
+            {/* ==========================================
                 HEADER PRINCIPAL
-            ================================== */}
+            ========================================== */}
 
             <header className="contenido_principal">
 
@@ -126,9 +122,7 @@ function Encabezado() {
                         className="boton-busqueda"
                         type="button"
                     >
-
                         <i className="fa-solid fa-magnifying-glass"></i>
-
                     </button>
 
                 </div>
@@ -204,9 +198,9 @@ function Encabezado() {
             </header>
 
 
-            {/* ==================================
+            {/* ==========================================
                 SUB NAVEGACIÓN
-            ================================== */}
+            ========================================== */}
 
             <div className="sub-navegacion">
 
@@ -214,8 +208,8 @@ function Encabezado() {
 
                 <button
                     className="boton-ubicacion"
-                    onClick={cambiarUbicacion}
                     type="button"
+                    onClick={cambiarUbicacion}
                 >
 
                     <i className="fa-solid fa-location-dot"></i>
@@ -237,9 +231,9 @@ function Encabezado() {
                     </a>
 
 
-                    {/* ==========================
+                    {/* ==================================
                         TARJETAS Y CUENTAS
-                    ========================== */}
+                    ================================== */}
 
                     <div className="menu-desplegable">
 
@@ -247,10 +241,10 @@ function Encabezado() {
                             className={`boton-desplegable ${
                                 menuTarjetas ? "activo" : ""
                             }`}
+                            type="button"
                             onClick={() =>
                                 setMenuTarjetas(!menuTarjetas)
                             }
-                            type="button"
                         >
 
                             Tarjetas y cuentas
@@ -260,28 +254,25 @@ function Encabezado() {
                         </button>
 
 
-                        {menuTarjetas && (
+                        <div
+                            className={`contenido-desplegable ${
+                                menuTarjetas ? "mostrar" : ""
+                            }`}
+                        >
 
-                            <div
-                                className="contenido-desplegable"
-                                id="menu-tarjetas"
-                            >
+                            <a href="/catalogo">
+                                Tarjetas
+                            </a>
 
-                                <a href="/catalogo">
-                                    Tarjetas
-                                </a>
+                            <a href="#">
+                                Cuentas
+                            </a>
 
-                                <a href="#">
-                                    Cuentas
-                                </a>
+                            <a href="#">
+                                Tarjetas de regalo
+                            </a>
 
-                                <a href="#">
-                                    Tarjetas de regalo
-                                </a>
-
-                            </div>
-
-                        )}
+                        </div>
 
                     </div>
 
@@ -293,9 +284,9 @@ function Encabezado() {
                     </a>
 
 
-                    {/* ==========================
+                    {/* ==================================
                         AYUDA
-                    ========================== */}
+                    ================================== */}
 
                     <div className="menu-desplegable">
 
@@ -303,10 +294,10 @@ function Encabezado() {
                             className={`boton-desplegable ${
                                 menuAyuda ? "activo" : ""
                             }`}
+                            type="button"
                             onClick={() =>
                                 setMenuAyuda(!menuAyuda)
                             }
-                            type="button"
                         >
 
                             Ayuda
@@ -316,28 +307,26 @@ function Encabezado() {
                         </button>
 
 
-                        {menuAyuda && (
+                        <div
+                            className={`contenido-desplegable ${
+                                menuAyuda ? "mostrar" : ""
+                            }`}
+                            id="menu-ayuda"
+                        >
 
-                            <div
-                                className="contenido-desplegable"
-                                id="menu-ayuda"
-                            >
+                            <a href="#">
+                                Preguntas frecuentes
+                            </a>
 
-                                <a href="#">
-                                    Preguntas frecuentes
-                                </a>
+                            <a href="#">
+                                Contáctanos
+                            </a>
 
-                                <a href="#">
-                                    Contáctanos
-                                </a>
+                            <a href="#">
+                                Soporte
+                            </a>
 
-                                <a href="#">
-                                    Soporte
-                                </a>
-
-                            </div>
-
-                        )}
+                        </div>
 
                     </div>
 
