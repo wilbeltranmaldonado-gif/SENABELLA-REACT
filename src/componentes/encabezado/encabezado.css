@@ -1,0 +1,368 @@
+/* ==========================================
+   VARIABLES
+========================================== */
+
+:root {
+    --primary-color: #aad100;
+    --primary-hover: #96b800;
+    --dark-color: #222222;
+    --light-bg: #f8f9fa;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --transition-fast: all 0.25s ease-in-out;
+}
+
+
+/* ==========================================
+   HEADER PRINCIPAL
+========================================== */
+
+.contenido_principal {
+    background-color: #ffffff;
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+
+/* ==========================================
+   LOGO
+========================================== */
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #84b814;
+    letter-spacing: -1px;
+}
+
+.logo img {
+    display: block;
+}
+
+
+/* ==========================================
+   BUSCADOR
+========================================== */
+
+.contenedor-busqueda {
+    flex: 1;
+    max-width: 650px;
+    position: relative;
+    display: flex;
+}
+
+.entrada-busqueda {
+    width: 100%;
+    padding: 10px 45px 10px 15px;
+    border: 1px solid #767676;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+}
+
+.entrada-busqueda:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(170, 209, 0, 0.25);
+}
+
+.boton-busqueda {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #333d45;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton-busqueda:hover {
+    background-color: var(--primary-hover);
+}
+
+
+/* ==========================================
+   ACCIONES DEL USUARIO
+========================================== */
+
+.acciones-usuario {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cuenta-usuario {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-right: 1px solid #ddd;
+    padding-right: 15px;
+}
+
+.texto-usuario {
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+.texto-usuario-bold {
+    font-weight: bold;
+}
+
+.icono-carrito {
+    position: relative;
+    font-size: 20px;
+}
+
+.contador-carrito {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #333d45;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+
+/* ==========================================
+   SUB NAVEGACIÓN
+========================================== */
+
+.sub-navegacion {
+    background-color: #ffffff;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 13px;
+    color: #4a4a4a;
+}
+
+
+/* ==========================================
+   UBICACIÓN
+========================================== */
+
+.boton-ubicacion {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-weight: bold;
+
+    background: none;
+    border: none;
+    padding: 0;
+
+    color: inherit;
+    cursor: pointer;
+}
+
+
+/* ==========================================
+   ENLACES
+========================================== */
+
+.enlaces-navegacion {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+
+/* ==========================================
+   MENÚS DESPLEGABLES
+========================================== */
+
+.menu-desplegable {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.boton-desplegable {
+    background: none;
+    border: none;
+    padding: 0;
+
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    transition: var(--transition-fast);
+}
+
+.boton-desplegable:hover {
+    color: var(--primary-color);
+}
+
+.boton-desplegable i {
+    font-size: 10px;
+    transition: transform 0.25s ease;
+}
+
+.boton-desplegable.activo i {
+    transform: rotate(180deg);
+}
+
+
+/* ==========================================
+   CONTENIDO DEL MENÚ
+========================================== */
+
+.contenido-desplegable {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    left: 0;
+
+    min-width: 200px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+
+    box-shadow: var(--card-shadow);
+
+    padding: 8px 0;
+
+    z-index: 1000;
+}
+
+.contenido-desplegable a {
+    display: block;
+
+    padding: 10px 16px;
+
+    font-size: 13px;
+
+    color: #4a4a4a;
+
+    transition: var(--transition-fast);
+}
+
+.contenido-desplegable a:hover {
+    background-color: #f4f4f4;
+    color: var(--primary-color);
+}
+
+
+/* ==========================================
+   MENÚ AYUDA
+========================================== */
+
+#menu-ayuda {
+    left: auto;
+    right: 0;
+}
+
+
+/* ==========================================
+   TRANSICIONES
+========================================== */
+
+.contenido_principal,
+.sub-navegacion {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+
+/* ==========================================
+   MODO OSCURO
+========================================== */
+
+body.modo-oscuro {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+}
+
+body.modo-oscuro .contenido_principal {
+    background-color: #181818 !important;
+    border-color: #333333 !important;
+}
+
+body.modo-oscuro .sub-navegacion {
+    background-color: #181818 !important;
+    border-color: #333333 !important;
+    color: #ffffff !important;
+}
+
+body.modo-oscuro .contenido_principal a,
+body.modo-oscuro .sub-navegacion a,
+body.modo-oscuro .boton-ubicacion {
+    color: #ffffff !important;
+}
+
+
+/* BUSCADOR */
+
+body.modo-oscuro .entrada-busqueda {
+    background-color: #242424 !important;
+    color: #ffffff !important;
+    border-color: #555555 !important;
+}
+
+body.modo-oscuro .entrada-busqueda::placeholder {
+    color: #aaaaaa;
+}
+
+
+/* BOTÓN MODO OSCURO */
+
+body.modo-oscuro #theme-toggle {
+    background-color: #242424 !important;
+    color: #ffffff !important;
+    border-color: #555555 !important;
+}
+
+
+/* MENÚS */
+
+body.modo-oscuro .contenido-desplegable {
+    background-color: #1e1e1e !important;
+    border-color: #444444 !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.modo-oscuro .contenido-desplegable a {
+    color: #ffffff !important;
+}
+
+body.modo-oscuro .contenido-desplegable a:hover {
+    background-color: #292929 !important;
+    color: var(--primary-color) !important;
+}
+
+body.modo-oscuro .boton-desplegable {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+body.modo-oscuro .boton-desplegable:hover {
+    color: var(--primary-color) !important;
+}
