@@ -14,4 +14,4 @@ function App() {
     );
 }
 
-export default Encabezado;
+export default App;
