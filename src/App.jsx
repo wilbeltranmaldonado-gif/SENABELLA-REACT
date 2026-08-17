@@ -1,10 +1,10 @@
-import encabezado from "./componentes/encabezado/encabezado";
+import Encabezado from "./componentes/encabezado/encabezado";
 
 function App() {
 
     return (
         <>
-            <encabezado />
+            <Encabezado />
 
             <main>
                 <h1>Senabella</h1>
@@ -14,4 +14,4 @@ function App() {
     );
 }
 
-export default App;
+export default Encabezado;

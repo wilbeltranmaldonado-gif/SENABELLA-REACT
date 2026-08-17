@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Encabezado.css";
+import "./encabezado.css";
 
 import logo from "../../../recursos/logo.png";
 
