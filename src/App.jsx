@@ -1,4 +1,4 @@
-import encabezado from "../componentes/encabezado/encabezado";
+import encabezado from "./componentes/encabezado/encabezado";
 
 function App() {
 
