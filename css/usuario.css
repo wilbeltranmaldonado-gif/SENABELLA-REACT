@@ -166,6 +166,13 @@
   cursor: pointer;
 }
 
+/* Mensaje cuando una sección no tiene datos que mostrar */
+.estado-vacio {
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 12px 0;
+}
+
 /* PIE DE PÁGINA */
 .footer {
   margin-top: 32px;
@@ -209,4 +216,133 @@
   padding: 14px 20px;
   font-size: 0.92rem;
   color: #111111;
+}
+
+/* ==========================================
+   RESPONSIVE - TABLET (≤ 992px)
+   ========================================== */
+
+@media (max-width: 992px) {
+  .diseno-perfil {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .barra-lateral {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: 8px;
+  }
+
+  .elemento-menu {
+    flex: 1;
+    min-width: 150px;
+    border-bottom: none;
+    border-right: 1px solid var(--border-color);
+    justify-content: center;
+    text-align: center;
+  }
+
+  .elemento-menu:last-child {
+    border-right: none;
+  }
+
+  .elemento-menu.activo {
+    border-left: none;
+    border-bottom: 3px solid var(--primary-color);
+  }
+
+  .contenedor {
+    padding: 0 20px;
+  }
+
+  .footer-top {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - MÓVIL (≤ 768px)
+   ========================================== */
+
+@media (max-width: 768px) {
+  .contenedor {
+    padding: 0 15px;
+    margin: 15px auto;
+  }
+
+  .titulo-pagina {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .barra-lateral {
+    flex-direction: column;
+  }
+
+  .elemento-menu {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .elemento-menu.activo {
+    border-bottom: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+  }
+
+  .tarjeta-contenido {
+    padding: 20px;
+  }
+
+  .grupo-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .titulo-seccion {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - MÓVIL PEQUEÑO (≤ 480px)
+   ========================================== */
+
+@media (max-width: 480px) {
+  .contenedor {
+    padding: 0 10px;
+    margin: 10px auto;
+  }
+
+  .tarjeta-contenido {
+    padding: 16px;
+  }
+
+  .titulo-pagina {
+    font-size: 18px;
+  }
+
+  .elemento-menu {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .valor-info {
+    font-size: 14px;
+  }
+
+  .etiqueta-info {
+    font-size: 12px;
+  }
+
+  .boton-editar {
+    font-size: 13px;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
 }

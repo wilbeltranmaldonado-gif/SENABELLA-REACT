@@ -1,0 +1,610 @@
+/* ==========================================
+   HERO / BANNER SUPERIOR DE CONTACTO
+   ========================================== */
+.contacto-hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+  color: #ffffff;
+  padding: 50px 20px 70px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contacto-hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(170, 209, 0, 0.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.contacto-hero-contenido {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.badge-hero {
+  display: inline-block;
+  background: linear-gradient(135deg, #aad100, #84b814);
+  color: #1a1a2e;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.contacto-hero h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.contacto-hero h1 span {
+  color: var(--primary-color, #aad100);
+}
+
+.contacto-hero p {
+  font-size: 1rem;
+  opacity: 0.88;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   CONTENEDOR PRINCIPAL
+   ========================================== */
+.contacto-contenedor {
+  max-width: 1180px;
+  margin: -35px auto 0;
+  padding: 0 20px 60px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================
+   TARJETAS DE CANALES DE CONTACTO
+   ========================================== */
+.canales-contacto {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.canal-tarjeta {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 32px 26px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+  border: 1px solid #eaeaea;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.canal-tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary-color, #aad100);
+}
+
+.canal-icono {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #aad100, #84b814);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  font-size: 22px;
+  color: #1a1a2e;
+  transition: transform 0.25s ease;
+}
+
+.canal-tarjeta:hover .canal-icono {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(170, 209, 0, 0.4);
+}
+
+.canal-tarjeta h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #222222;
+}
+
+.canal-tarjeta p {
+  font-size: 0.9rem;
+  color: #666666;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.canal-enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #84b814;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.canal-enlace:hover {
+  color: #1a1a2e;
+  gap: 12px;
+}
+
+/* ==========================================
+   GRID FORMULARIO + PANEL LATERAL (MAPA / HORARIO)
+   ========================================== */
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  align-items: start;
+  margin-bottom: 56px;
+}
+
+/* Formulario */
+.formulario-tarjeta {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 38px 34px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eaeaea;
+}
+
+.formulario-tarjeta h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #222222;
+}
+
+.formulario-subtitulo {
+  font-size: 0.9rem;
+  color: #777777;
+  margin-bottom: 28px;
+}
+
+.grupo-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grupo-campo {
+  margin-bottom: 20px;
+}
+
+.grupo-campo label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.grupo-campo input,
+.grupo-campo select,
+.grupo-campo textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: #222222;
+  background-color: #fcfcfc;
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.grupo-campo input:focus,
+.grupo-campo select:focus,
+.grupo-campo textarea:focus {
+  border-color: #aad100;
+  box-shadow: 0 0 0 4px rgba(170, 209, 0, 0.2);
+  background-color: #ffffff;
+}
+
+.grupo-campo textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.grupo-campo input::placeholder,
+.grupo-campo textarea::placeholder {
+  color: #aaaaaa;
+}
+
+/* Mensajes de ayuda/error debajo de campos */
+.campo-ayuda {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+/* Estado de error en campos */
+.grupo-campo input.campo-error,
+.grupo-campo input:invalid:not(:placeholder-shown) {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.12);
+}
+
+.boton-enviar {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #aad100, #84b814);
+  color: #1a1a2e;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.boton-enviar:hover {
+  background: linear-gradient(135deg, #96b800, #7aa010);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(132, 184, 20, 0.35);
+}
+
+.boton-enviar:active {
+  transform: translateY(0);
+}
+
+/* Mensaje de Éxito */
+.mensaje-exito {
+  display: none;
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border: 1.5px solid #27ae60;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+  animation: fadeInUp 0.4s ease;
+}
+
+.mensaje-exito.mostrar {
+  display: block;
+}
+
+.mensaje-exito i {
+  font-size: 32px;
+  color: #27ae60;
+  margin-bottom: 8px;
+}
+
+.mensaje-exito h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.mensaje-exito p {
+  font-size: 0.88rem;
+  color: #555555;
+  margin: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Panel Lateral (Mapa + Horario) */
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mapa-tarjeta {
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eaeaea;
+}
+
+.mapa-tarjeta iframe {
+  width: 100%;
+  height: 240px;
+  border: none;
+  display: block;
+}
+
+.mapa-info {
+  padding: 22px 24px;
+}
+
+.mapa-info h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #222222;
+}
+
+.dato-ubicacion {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+.dato-ubicacion i {
+  color: #84b814;
+  font-size: 17px;
+  margin-top: 2px;
+  width: 20px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.dato-ubicacion:last-child {
+  margin-bottom: 0;
+}
+
+.horario-tarjeta {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 26px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eaeaea;
+}
+
+.horario-tarjeta h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #222222;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.horario-tarjeta h3 i {
+  color: #84b814;
+}
+
+.fila-horario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+}
+
+.fila-horario:last-child {
+  border-bottom: none;
+}
+
+.fila-horario .dia {
+  font-weight: 600;
+  color: #333333;
+}
+
+.fila-horario .hora {
+  color: #666666;
+}
+
+.fila-horario .hora.cerrado {
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+/* ==========================================
+   PREGUNTAS FRECUENTES (FAQ)
+   ========================================== */
+.faq-seccion {
+  margin-top: 10px;
+}
+
+.faq-seccion h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 32px;
+  color: #222222;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.faq-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 22px 26px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border: 1px solid #eaeaea;
+}
+
+.faq-item:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: #aad100;
+}
+
+.faq-pregunta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #222222;
+}
+
+.faq-pregunta i {
+  color: #84b814;
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.activo .faq-pregunta i {
+  transform: rotate(180deg);
+}
+
+.faq-respuesta {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  font-size: 0.88rem;
+  color: #666666;
+  line-height: 1.6;
+}
+
+.faq-item.activo .faq-respuesta {
+  max-height: 200px;
+  padding-top: 14px;
+}
+
+/* ==========================================
+   MODO OSCURO
+   ========================================== */
+body.modo-oscuro .contacto-hero {
+  background: linear-gradient(135deg, #0a0a12 0%, #0e1526 40%, #0a2240 100%);
+}
+
+body.modo-oscuro .canal-tarjeta,
+body.modo-oscuro .formulario-tarjeta,
+body.modo-oscuro .mapa-tarjeta,
+body.modo-oscuro .horario-tarjeta,
+body.modo-oscuro .faq-item {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+body.modo-oscuro .canal-tarjeta h3,
+body.modo-oscuro .formulario-tarjeta h2,
+body.modo-oscuro .mapa-info h3,
+body.modo-oscuro .horario-tarjeta h3,
+body.modo-oscuro .faq-pregunta,
+body.modo-oscuro .fila-horario .dia {
+  color: #ffffff !important;
+}
+
+body.modo-oscuro .canal-tarjeta p,
+body.modo-oscuro .formulario-subtitulo,
+body.modo-oscuro .dato-ubicacion,
+body.modo-oscuro .fila-horario .hora,
+body.modo-oscuro .faq-respuesta {
+  color: #bbbbbb !important;
+}
+
+body.modo-oscuro .grupo-campo label {
+  color: #dddddd !important;
+}
+
+body.modo-oscuro .grupo-campo input,
+body.modo-oscuro .grupo-campo select,
+body.modo-oscuro .grupo-campo textarea {
+  background-color: #242424 !important;
+  color: #ffffff !important;
+  border-color: #444444 !important;
+}
+
+body.modo-oscuro .grupo-campo input::placeholder,
+body.modo-oscuro .grupo-campo textarea::placeholder {
+  color: #888888;
+}
+
+body.modo-oscuro .grupo-campo input:focus,
+body.modo-oscuro .grupo-campo select:focus,
+body.modo-oscuro .grupo-campo textarea:focus {
+  border-color: #aad100 !important;
+  box-shadow: 0 0 0 4px rgba(170, 209, 0, 0.2);
+}
+
+body.modo-oscuro .mapa-info {
+  background-color: #1e1e1e;
+}
+
+body.modo-oscuro .fila-horario {
+  border-color: #333333;
+}
+
+body.modo-oscuro .canal-tarjeta:hover,
+body.modo-oscuro .faq-item:hover {
+  border-color: #aad100 !important;
+}
+
+body.modo-oscuro .mensaje-exito {
+  background: linear-gradient(135deg, #1a2e1a, #1e2e15) !important;
+  border-color: #4a6e10 !important;
+}
+
+body.modo-oscuro .mensaje-exito h4 {
+  color: #ffffff !important;
+}
+
+body.modo-oscuro .mensaje-exito p {
+  color: #bbbbbb !important;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+@media (max-width: 992px) {
+  .canales-contacto {
+    grid-template-columns: 1fr;
+  }
+  .contacto-grid {
+    grid-template-columns: 1fr;
+  }
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .contacto-hero h1 {
+    font-size: 1.7rem;
+  }
+  .formulario-tarjeta {
+    padding: 26px 20px;
+  }
+  .grupo-fila {
+    grid-template-columns: 1fr;
+  }
+  .contacto-contenedor {
+    padding: 0 14px 40px;
+  }
+}

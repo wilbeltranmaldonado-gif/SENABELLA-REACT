@@ -1,0 +1,223 @@
+/* ==========================================
+   PÁGINA DE CONFIRMACIÓN - SENABELLA
+   ========================================== */
+
+.contenedor-confirmacion {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.tarjeta-confirmacion {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 50px 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Franja superior verde */
+.tarjeta-confirmacion::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-color: #84b814;
+}
+
+/* Icono animado de éxito */
+.icono-exito-wrapper {
+  width: 90px;
+  height: 90px;
+  background-color: rgba(132, 184, 20, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 25px auto;
+  position: relative;
+}
+
+.icono-exito-wrapper i {
+  font-size: 45px;
+  color: #84b814;
+  z-index: 2;
+}
+
+/* Animación de pulsación */
+@keyframes pulsoExito {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(132, 184, 20, 0.4); }
+  70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(132, 184, 20, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(132, 184, 20, 0); }
+}
+
+.icono-exito-wrapper {
+  animation: pulsoExito 2s infinite;
+}
+
+/* Textos principales */
+.titulo-confirmacion {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subtitulo-confirmacion {
+  font-size: 16px;
+  color: #767676;
+  margin-bottom: 35px;
+}
+
+/* Resumen del Pedido */
+.resumen-pedido-box {
+  background-color: #f9f9f9;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: left;
+  margin-bottom: 35px;
+}
+
+.resumen-pedido-box h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.detalle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.detalle-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detalle-item .label {
+  font-size: 12px;
+  color: #767676;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.detalle-item .valor {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.detalle-item.total .valor {
+  color: #84b814;
+  font-size: 20px;
+}
+
+/* Acciones inferiores */
+.acciones-confirmacion {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-volver-inicio {
+  background-color: #333d45;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 14px 30px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-volver-inicio:hover {
+  background-color: #21282e;
+  color: #fff;
+}
+
+.btn-ver-mis-compras {
+  background-color: transparent;
+  color: #333d45;
+  border: 1px solid #333d45;
+  border-radius: 25px;
+  padding: 14px 30px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-ver-mis-compras:hover {
+  background-color: #f5f5f5;
+  color: #333d45;
+}
+
+/* ==========================================
+   MODO OSCURO - CONFIRMACIÓN
+   ========================================== */
+
+body.modo-oscuro .tarjeta-confirmacion {
+  background-color: #1e1e1e !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.modo-oscuro .titulo-confirmacion,
+body.modo-oscuro .resumen-pedido-box h3,
+body.modo-oscuro .detalle-item .valor {
+  color: white !important;
+}
+
+body.modo-oscuro .subtitulo-confirmacion,
+body.modo-oscuro .detalle-item .label {
+  color: #bbb !important;
+}
+
+body.modo-oscuro .resumen-pedido-box {
+  background-color: #2a2a2a !important;
+  border-color: #444 !important;
+}
+
+body.modo-oscuro .resumen-pedido-box h3 {
+  border-color: #444 !important;
+}
+
+body.modo-oscuro .btn-ver-mis-compras {
+  border-color: #bbb !important;
+  color: #bbb !important;
+}
+
+body.modo-oscuro .btn-ver-mis-compras:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 576px) {
+  .detalle-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .acciones-confirmacion {
+    flex-direction: column;
+  }
+  
+  .tarjeta-confirmacion {
+    padding: 40px 20px;
+  }
+}
