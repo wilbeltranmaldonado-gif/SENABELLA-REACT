@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión - Senabella</title>
+  <!-- Iconos Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Hoja de Estilos -->
+  <link rel="stylesheet" href="../css/registro.css">
+</head>
+
+<body>
+
+  <!-- Botón regresar al inicio -->
+  <a href="inicio.html" class="boton-regresar" title="Volver al inicio">
+    <i class="fa-solid fa-arrow-left"></i>
+    <span>Inicio</span>
+  </a>
+
+  <!-- Contenedor principal de inicio de sesión -->
+  <main class="contenedor-registro">
+    <div class="tarjeta-registro">
+      <h2>Bienvenido de nuevo</h2>
+      <p class="subtitulo">Ingresa tus datos para acceder a tu cuenta de Senabella</p>
+
+      <form id="formularioLogin" class="formulario" novalidate>
+
+        <!-- Campo Correo -->
+        <div class="grupo-campo">
+          <label for="correoLogin">Correo electrónico</label>
+          <div class="campo-wrapper">
+            <input type="email" id="correoLogin" placeholder="nombre@ejemplo.com" maxlength="32" required>
+            <i class="fa-solid fa-envelope icono-campo"></i>
+          </div>
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div class="grupo-campo">
+          <label for="contrasenaLogin">Contraseña</label>
+          <div class="campo-wrapper">
+            <input type="password" id="contrasenaLogin" class="has-toggle" placeholder="Ingresa tu contraseña" maxlength="30" required >
+            <i class="fa-solid fa-lock icono-campo"></i>
+            <button type="button" class="btn-toggle-pass" data-target="contrasenaLogin"
+              title="Ver / Ocultar contraseña">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Opciones adicionales -->
+        <div class="grupo-opciones">
+          <label class="opcion-checkbox">
+            <input type="checkbox" id="recordarSesion">
+            <span>Recordarme</span>
+          </label>
+        </div>
+
+        <!-- Alertas de estado -->
+        <div id="mensajeError" class="mensaje-error"></div>
+        <div id="mensajeExito" class="mensaje-exito"></div>
+
+        <!-- Botón Iniciar Sesión -->
+        <button type="submit" class="boton-registro">
+          <i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión
+        </button>
+      </form>
+
+      <div class="pie-tarjeta">
+        <p>¿No tienes una cuenta? <a href="registro.html">Crea tu cuenta aquí</a></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Módulo de usuarios (debe ir ANTES de login.js) -->
+  <script src="../js/usuarios-bd.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+
+</html>

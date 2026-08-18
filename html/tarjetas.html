@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarjeta Senabella - Tu tarjeta exclusiva para estudiantes SENA</title>
+    <meta name="description" content="Solicita tu Tarjeta Senabella exclusiva para estudiantes del SENA. Descuentos, envío gratis, puntos por compra y acceso a promociones especiales." />
+
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Iconos de font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- Hojas de estilos -->
+    <link rel="stylesheet" href="../css/encabezado.css" />
+    <link rel="stylesheet" href="../css/tarjetas.css" />
+  </head>
+  <body>
+
+    <!-- Main Content -->
+    <main>
+
+      <!-- HERO SECTION -->
+      <section class="tarjetas-hero">
+        <div class="hero-particulas" id="hero-particulas"></div>
+        <div class="hero-contenido">
+          <span class="hero-etiqueta">
+            <i class="fa-solid fa-id-card"></i>
+            Exclusivo para estudiantes SENA
+          </span>
+          <h1>Tarjeta <span>Senabella</span></h1>
+          <p>Tu tarjeta exclusiva para estudiantes del SENA. Disfruta de beneficios, descuentos y mucho más en todos nuestros productos.</p>
+          <a href="#formulario-solicitud" class="hero-boton">
+            <i class="fa-solid fa-paper-plane"></i>
+            Solicitar Ahora
+          </a>
+        </div>
+      </section>
+
+      <!-- SECCIÓN BENEFICIOS -->
+      <section class="beneficios-seccion" id="beneficios">
+        <div class="beneficios-contenedor">
+          <h2 class="seccion-titulo">Beneficios <span>Exclusivos</span></h2>
+          <p class="seccion-subtitulo">Descubre todo lo que tu Tarjeta Senabella puede hacer por ti</p>
+
+          <div class="beneficios-grid">
+            <!-- Beneficio 1 -->
+            <div class="beneficio-tarjeta">
+              <div class="beneficio-icono">
+                <i class="fa-solid fa-percent"></i>
+              </div>
+              <h3>Descuentos Exclusivos</h3>
+              <p>Hasta un 30% de descuento en marcas seleccionadas y productos favoritos.</p>
+              <div class="beneficio-badge">Popular</div>
+            </div>
+
+            <!-- Beneficio 2 -->
+            <div class="beneficio-tarjeta">
+              <div class="beneficio-icono">
+                <i class="fa-solid fa-truck-fast"></i>
+              </div>
+              <h3>Envío Gratis</h3>
+              <p>Disfruta de envíos sin costo en todos los comercios aliados a nivel nacional.</p>
+              <div class="beneficio-badge">Nuevo</div>
+            </div>
+
+            <!-- Beneficio 3 -->
+            <div class="beneficio-tarjeta">
+              <div class="beneficio-icono">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <h3>Puntos por Compra</h3>
+              <p>Acumula puntos con cada compra y canjéalos por productos o descuentos.</p>
+            </div>
+
+            <!-- Beneficio 4 -->
+            <div class="beneficio-tarjeta">
+              <div class="beneficio-icono">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <h3>Promociones Especiales</h3>
+              <p>Acceso anticipado a ofertas y promociones exclusivas para miembros.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN VISTA PREVIA TARJETA -->
+      <section class="preview-seccion">
+        <div class="preview-contenedor">
+          <h2 class="seccion-titulo">Tu Tarjeta <span>Digital</span></h2>
+          <p class="seccion-subtitulo">Lleva tus beneficios a donde quieras</p>
+
+          <div class="tarjeta-preview-wrapper">
+            <div class="tarjeta-fisica" id="tarjeta-fisica">
+              <!-- Decoraciones -->
+              <div class="tarjeta-circulo tarjeta-circulo-1"></div>
+              <div class="tarjeta-circulo tarjeta-circulo-2"></div>
+              <div class="tarjeta-circulo tarjeta-circulo-3"></div>
+
+              <!-- Contenido de la tarjeta -->
+              <div class="tarjeta-header">
+                <div class="tarjeta-logo">
+                  <img src="../recursos/logo.png" alt="Senabella" height="30" />
+                </div>
+                <div class="tarjeta-tipo">
+                  <i class="fa-solid fa-wifi"></i>
+                </div>
+              </div>
+
+              <div class="tarjeta-chip">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+
+              <div class="tarjeta-numero">
+                **** &nbsp; **** &nbsp; **** &nbsp; 4281
+              </div>
+
+              <div class="tarjeta-footer">
+                <div class="tarjeta-titular">
+                  <span class="tarjeta-label">TITULAR</span>
+                  <span class="tarjeta-valor" id="preview-nombre">JUAN PÉREZ</span>
+                </div>
+                <div class="tarjeta-vencimiento">
+                  <span class="tarjeta-label">VENCE</span>
+                  <span class="tarjeta-valor">12/28</span>
+                </div>
+                <div class="tarjeta-marca">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                  SENA
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estadísticas -->
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-numero" id="stat-usuarios">5,000+</div>
+              <div class="stat-texto">Estudiantes activos</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-numero">150+</div>
+              <div class="stat-texto">Comercios aliados</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-numero">30%</div>
+              <div class="stat-texto">Descuento máximo</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-numero">24/7</div>
+              <div class="stat-texto">Soporte disponible</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN FORMULARIO -->
+      <section class="formulario-seccion" id="formulario-solicitud">
+        <div class="formulario-contenedor">
+          <div class="formulario-info">
+            <h2 class="seccion-titulo texto-blanco">Solicita tu <span>Tarjeta</span></h2>
+            <p class="seccion-subtitulo texto-blanco-opaco">Completa el formulario y recibe tu tarjeta en tu centro de formación.</p>
+
+            <div class="pasos-lista">
+              <div class="paso-item">
+                <div class="paso-numero">1</div>
+                <div class="paso-texto">
+                  <strong>Completa tus datos</strong>
+                  <span>Llena el formulario con tu información personal</span>
+                </div>
+              </div>
+              <div class="paso-item">
+                <div class="paso-numero">2</div>
+                <div class="paso-texto">
+                  <strong>Verificación</strong>
+                  <span>Validaremos tu matrícula con el SENA</span>
+                </div>
+              </div>
+              <div class="paso-item">
+                <div class="paso-numero">3</div>
+                <div class="paso-texto">
+                  <strong>Recibe tu tarjeta</strong>
+                  <span>Recógela en tu centro de formación</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="formulario-card">
+            <form id="formulario-tarjeta">
+              <div class="grupo-fila">
+                <div class="grupo-campo">
+                  <label for="nombre-completo">
+                    <i class="fa-solid fa-user"></i>
+                    Nombre completo
+                  </label>
+                  <input type="text" id="nombre-completo" placeholder="Ej: Juan Pérez García" maxlength="32" required />
+                </div>
+                <div class="grupo-campo">
+                  <label for="documento">
+                    <i class="fa-solid fa-id-card"></i>
+                    Número de documento
+                  </label>
+                  <input type="text" id="documento" placeholder="Ej: 1234567890" inputmode="numeric" maxlength="28" required />
+                </div>
+              </div>
+
+              <div class="grupo-fila">
+                <div class="grupo-campo">
+                  <label for="correo">
+                    <i class="fa-solid fa-envelope"></i>
+                    Correo electrónico
+                  </label>
+                  <input type="email" id="correo" placeholder="Ej: juan@ejemplo.com" maxlength="50" required />
+                </div>
+                <div class="grupo-campo">
+                  <label for="telefono">
+                    <i class="fa-solid fa-phone"></i>
+                    Teléfono
+                  </label>
+                  <input type="tel" id="telefono" placeholder="Ej: 300 123 4567" maxlength="15" required />
+                </div>
+              </div>
+
+              <div class="grupo-campo">
+                <label for="programa">
+                  <i class="fa-solid fa-book"></i>
+                  Programa de formación SENA
+                </label>
+                <input type="text" id="programa" placeholder="Ej: Tecnólogo en Análisis y Desarrollo de Software" maxlength="100" required />
+              </div>
+
+              <div class="grupo-campo">
+                <label for="centro">
+                  <i class="fa-solid fa-building"></i>
+                  Centro de formación
+                </label>
+                <select id="centro" required>
+                  <option value="">Selecciona tu centro...</option>
+                  <option value="servicios-financieros">Centro de Servicios Financieros</option>
+                  <option value="gestion-mercados">Centro de Gestión de Mercados</option>
+                  <option value="tecnologias-transporte">Centro de Tecnologías del Transporte</option>
+                  <option value="gestion-industrial">Centro de Gestión Industrial</option>
+                  <option value="electricidad-electronica">Centro de Electricidad, Electrónica y Telecomunicaciones</option>
+                  <option value="manufactura-textil">Centro de Manufactura en Textil y Cuero</option>
+                  <option value="servicios-salud">Centro de Formación en Servicios de Salud</option>
+                  <option value="gestion-administrativa">Centro de Gestión Administrativa</option>
+                </select>
+              </div>
+
+              <div class="formulario-check">
+                <input type="checkbox" id="terminos" required />
+                <label for="terminos">Acepto los <a href="#">términos y condiciones</a> y la <a href="#">política de privacidad</a></label>
+              </div>
+
+              <button type="submit" class="boton-solicitar" id="boton-solicitar">
+                <i class="fa-solid fa-paper-plane"></i>
+                Solicitar mi tarjeta
+              </button>
+            </form>
+
+            <!-- Mensaje de éxito -->
+            <div class="mensaje-exito" id="mensaje-exito">
+              <div class="exito-icono">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+              <h4>¡Solicitud enviada exitosamente!</h4>
+              <p>Revisaremos tus datos y te notificaremos al correo electrónico proporcionado cuando tu tarjeta esté lista.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="pie-pagina">
+      <div class="pie-pagina-superior">
+        <div>
+          <h3>Servicio al cliente</h3>
+          <a href="soporte.html">Ayuda</a>
+          <a href="contacto.html">Cambio y devoluciones</a>
+          <a href="contacto.html">Garantías</a>
+        </div>
+
+        <div>
+          <h3>Compra segura</h3>
+          <a href="carrito.html">Formas de pago</a>
+          <a href="catalogo.html">Envíos</a>
+          <a href="catalogo.html">Promociones</a>
+        </div>
+
+        <div>
+          <h3>Acerca de Senabella</h3>
+          <a href="contacto.html">Nuestra empresa</a>
+          <a href="contacto.html">Trabaja con nosotros</a>
+          <a href="catalogo.html">Tiendas</a>
+        </div>
+      </div>
+
+      <div class="pie-pagina-inferior">
+        <p>© 2026 Senabella. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/encabezado.js"></script>
+    <script src="../js/tarjetas.js"></script>
+
+  </body>
+</html>

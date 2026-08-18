@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo Ropa y Accesorios · Senabella</title>
+  <meta name="description" content="Catálogo de ropa, moda y accesorios en Senabella. Encuentra vestidos, chaquetas, calzado y más." />
+
+  <!-- Iconos de font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="../css/catalogo.css" />
+  <link rel="stylesheet" href="../css/encabezado.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <div id="header-container"></div>
+
+  <!-- Categorías circulares -->
+  <section class="categorias-circulares">
+    <div class="categoria">
+      <div class="imagen-cat">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4j0PMoypc__UeVq6nD4bIh6qFQ4FaGSnEI4GclFl7iw&s=10" alt="Mujer" />
+      </div>
+      <div class="titulo-cat">Moda Mujer</div>
+    </div>
+    <div class="categoria">
+      <div class="imagen-cat">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWwkq93t5FnksulxA2YfZpSKAUiaqGZ7sNWSgR0wOtoQ&s=10" alt="Hombre" />
+      </div>
+      <div class="titulo-cat">Moda Hombre</div>
+    </div>
+    <div class="categoria">
+      <div class="imagen-cat">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREmL4kn7HnCXVri8EmYY9FT-MtzgKWj5fhj7F1MvHkRQ&s=10" alt="Calzado" />
+      </div>
+      <div class="titulo-cat">Calzado</div>
+    </div>
+    <div class="categoria">
+      <div class="imagen-cat">
+        <img src="https://cdn.pixabay.com/photo/2016/06/25/12/48/go-pro-1478810_1280.jpg" alt="Accesorios" />
+      </div>
+      <div class="titulo-cat">Accesorios</div>
+    </div>
+    <div class="categoria">
+      <div class="imagen-cat">
+        <img src="https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt5da4c0580b8c656d/6a59c7bf15befe0a433a8a5a/powercard7_home_relojes_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280" alt="Relojes" />
+      </div>
+      <div class="titulo-cat">Relojes</div>
+    </div>
+    <div class="categoria">
+      <div class="imagen-cat">
+        <img src="https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltf413d366cc29e9bf/6a5a7cfd5c7ce2611d2d8c44/powercard10_home_belleza_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280" alt="Belleza" />
+      </div>
+      <div class="titulo-cat">Belleza</div>
+    </div>
+  </section>
+
+  <!-- Contenido Principal -->
+  <main class="main">
+    <!-- Menu lateral -->
+    <aside class="menu_lateral">
+      <div class="contenido-menu">
+        <div class="menu-texto">
+          <h3>Moda</h3>
+          <h2>Ropa y Accesorios</h2>
+          <div class="resultados">Resultados (16)</div>
+        </div>
+
+        <!-- Filtro: Tipo de Entrega -->
+        <div class="filtro">
+          <div class="filtro1">
+            Tipo de Entrega
+            <i class="fa-solid fa-chevron-up"></i>
+          </div>
+          <div class="opcion-domicilio">
+            <div>
+              <i class="fa-solid fa-truck"></i>
+              Envío a domicilio
+            </div>
+            <input type="checkbox" />
+          </div>
+          <div class="info-entrega">
+            <span class="texto-gratis">Gratis</span>
+            <span class="texto-2">Llega mañana</span>
+          </div>
+        </div>
+
+        <!-- Filtro: Categorías -->
+        <div class="filtro">
+          <div class="filtro1">
+            Categoría
+            <i class="fa-solid fa-chevron-up"></i>
+          </div>
+          <div class="categorias-lista">
+            <span class="categoria-lis">Moda Mujer</span>
+            <span class="categoria-lis">Moda Hombre</span>
+            <span class="categoria-lis">Calzado</span>
+            <span class="categoria-lis">Accesorios</span>
+            <span class="categoria-lis">Relojes</span>
+            <span class="categoria-lis">Belleza</span>
+          </div>
+        </div>
+
+        <!-- Filtro: Marca -->
+        <div class="filtro">
+          <div class="filtro1">
+            Marca
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="opciones-filtro-lateral" style="display:none; padding: 8px 0; font-size: 13px;">
+            <div><label><input type="checkbox" value="NIKE"> NIKE</label></div>
+            <div><label><input type="checkbox" value="ADIDAS"> ADIDAS</label></div>
+            <div><label><input type="checkbox" value="PUMA"> PUMA</label></div>
+            <div><label><input type="checkbox" value="ZARA"> ZARA</label></div>
+            <div><label><input type="checkbox" value="SENABELLA"> SENABELLA</label></div>
+          </div>
+        </div>
+
+        <!-- Filtro: Talla -->
+        <div class="filtro">
+          <div class="filtro1">
+            Talla
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="opciones-filtro-lateral" style="display:none; padding: 8px 0; font-size: 13px;">
+            <div><label><input type="checkbox" value="XS"> XS</label></div>
+            <div><label><input type="checkbox" value="S"> S</label></div>
+            <div><label><input type="checkbox" value="M"> M</label></div>
+            <div><label><input type="checkbox" value="L"> L</label></div>
+            <div><label><input type="checkbox" value="XL"> XL</label></div>
+          </div>
+        </div>
+
+        <!-- Filtro: Precio -->
+        <div class="filtro">
+          <div class="filtro1">
+            Precio
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="opciones-filtro-lateral" style="display:none; padding: 8px 0; font-size: 13px;">
+            <div><label><input type="checkbox" value="100000"> Menos de $100.000</label></div>
+            <div><label><input type="checkbox" value="200000"> $100.000 - $200.000</label></div>
+            <div><label><input type="checkbox" value="500000"> Más de $200.000</label></div>
+          </div>
+        </div>
+
+        <!-- Filtro: Descuentos -->
+        <div class="filtro">
+          <div class="filtro1">
+            Descuentos
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="opciones-filtro-lateral" style="display:none; padding: 8px 0; font-size: 13px;">
+            <div><label><input type="checkbox" value="20"> 20% o más</label></div>
+            <div><label><input type="checkbox" value="30"> 30% o más</label></div>
+            <div><label><input type="checkbox" value="40"> 40% o más</label></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Productos -->
+    <section class="marca">
+      <!-- Filtro por marca -->
+      <div class="filtro-marca">
+        <span class="titulo-marca">Filtrar por <strong>Marca</strong></span>
+        <div class="botones">
+          <button>NIKE</button>
+          <button>ADIDAS</button>
+          <button>PUMA</button>
+          <button>ZARA</button>
+          <button>SENABELLA</button>
+          <button>MICHAEL KORS</button>
+          <button>LEVI'S</button>
+          <button>CONVERSE</button>
+        </div>
+        <button class="boton-flecha">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Recomendacion -->
+      <div class="recomendacion">
+        <div class="recomendacion1">
+          <span>Ordenar por:</span>
+          <select class="opciones-recomendacion">
+            <option>Recomendados</option>
+            <option>Menor precio</option>
+            <option>Mayor precio</option>
+          </select>
+        </div>
+        <!--Numeros de pagina-->
+        <div class="num-pagina">
+          <i class="fa-solid fa-chevron-left"></i>
+          <span class="pag-2 active">1</span>
+          <span class="pag-2">2</span>
+          <span class="pag-2">3</span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <!-- Grid de Productos -->
+      <div class="tarjeta-producto">
+
+        <!-- Producto 1 - Vestido Mujer -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="data:image/jpeg;base64,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" alt="Vestido Mujer" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Vestido Elegante Mujer Fiesta Estampado Floral Moda Femenina Tallas S-XL</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 129.900 <span class="descuento">-35%</span></div>
+            <div class="precio-secundario">$ 149.900</div>
+            <div class="precio-secundario1">$ 199.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 2 - Chaqueta Hombre -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWgTjtC6eMdbcKiul2_AZgw2fVD3N_Wr1WEJhL0EglBg&s=10" alt="Chaqueta Hombre" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Chaqueta de Cuero Sintético Hombre Slim Fit Moda Masculina Color Negro</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 189.900 <span class="descuento">-30%</span></div>
+            <div class="precio-secundario">$ 209.900</div>
+            <div class="precio-secundario1">$ 269.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 3 - Nike Air Max -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsjsSfp0bET8LXZyvw-l8lAViovXcbHb315pM1ty93D3iZ8bc7T8raqqD6&s=10" alt="Tenis NIKE" />
+          </a>
+          <div class="etiqueta"><span>CALZADO</span></div>
+          <div class="nom-producto">NIKE</div>
+          <div class="descripcion">Tenis Deportivos Hombre Nike Air Max Excee Blancos Calzado Urbano</div>
+          <div class="referencia">Por SENABELLA SPORT</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 349.900 <span class="descuento">-25%</span></div>
+            <div class="precio-secundario">$ 379.900</div>
+            <div class="precio-secundario1">$ 469.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 4 - Adidas Grand Court -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://i.pinimg.com/736x/e2/b2/1a/e2b21ac3e2e06a39ad45f77ce6e17613.jpg" alt="Tenis ADIDAS" />
+          </a>
+          <div class="etiqueta"><span>CALZADO</span></div>
+          <div class="nom-producto">ADIDAS</div>
+          <div class="descripcion">Tenis Urbano Mujer Adidas Grand Court 2.0 Negros Calzado Deportivo</div>
+          <div class="referencia">Por SENABELLA SPORT</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 279.900 <span class="descuento">-20%</span></div>
+            <div class="precio-secundario">$ 299.900</div>
+            <div class="precio-secundario1">$ 349.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 6 - Blusa Mujer -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEqA0Sdhk-P-LU_dcaY7GaK9x8e08b7k41_mmTnnnI-w&s=10" alt="Blusa Mujer" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">ZARA</div>
+          <div class="descripcion">Blusa Casual Mujer Manga Larga Estampado Moderno Talla S-L</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 89.900 <span class="descuento">-40%</span></div>
+            <div class="precio-secundario">$ 109.900</div>
+            <div class="precio-secundario1">$ 149.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 7 - Pantalón Hombre -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnw1azFfbDwAhHN3GN5N2ElPJHLM_jyYOJTlzyBezRUA&s=10" alt="Pantalón Hombre" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">LEVI'S</div>
+          <div class="descripcion">Jean Slim Fit Hombre Levi's 511 Azul Oscuro Algodón Premium</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 159.900 <span class="descuento">-25%</span></div>
+            <div class="precio-secundario">$ 179.900</div>
+            <div class="precio-secundario1">$ 219.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 8 - Puma Carina -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://pbs.twimg.com/media/HFp-9iYXgAAJ1-w.jpg" alt="Tenis PUMA" />
+          </a>
+          <div class="etiqueta"><span>CALZADO</span></div>
+          <div class="nom-producto">PUMA</div>
+          <div class="descripcion">Tenis Mujer Puma Carina 2.0 Rosados Plataforma Calzado Urbano</div>
+          <div class="referencia">Por SENABELLA SPORT</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 249.900 <span class="descuento">-30%</span></div>
+            <div class="precio-secundario">$ 279.900</div>
+            <div class="precio-secundario1">$ 359.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 9 - Converse -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://preview.redd.it/my-sister-has-been-wearing-these-converse-for-20-years-v0-3o7kf6t46mwd1.jpg?width=640&crop=smart&auto=webp&s=2b7f878b9b24a12f8bedd1f86f4968c07d0f7b2c" alt="Tenis CONVERSE" />
+          </a>
+          <div class="etiqueta"><span>CALZADO</span></div>
+          <div class="nom-producto">CONVERSE</div>
+          <div class="descripcion">Tenis Converse Chuck Taylor All Star Classic Unisex Canvas Blanco</div>
+          <div class="referencia">Por SENABELLA SPORT</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 219.900 <span class="descuento">-20%</span></div>
+            <div class="precio-secundario">$ 239.900</div>
+            <div class="precio-secundario1">$ 279.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 10 - Falda Mujer -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="data:image/jpeg;base64,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" alt="Falda Mujer" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Falda Plisada Midi Mujer Elegante Cintura Alta Color Rosa Blush</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 99.900 <span class="descuento">-30%</span></div>
+            <div class="precio-secundario">$ 119.900</div>
+            <div class="precio-secundario1">$ 139.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 11 - Camisa Hombre -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnDqQqSP84fNnqRcMz9-8BWPGqB54NA0x0oLuH6AzZWQ&s" alt="Camisa Hombre" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Camisa Formal Hombre Manga Larga Algodón Slim Fit Azul Cielo</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 79.900 <span class="descuento">-25%</span></div>
+            <div class="precio-secundario">$ 89.900</div>
+            <div class="precio-secundario1">$ 109.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 12 - Reloj Michael Kors -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9k0AXSE_NtuFs28dU7tQaQvSArCackXXm_pWkQZTDYA&s" alt="Reloj MICHAEL KORS" />
+          </a>
+          <div class="etiqueta"><span>ACCESORIOS</span></div>
+          <div class="nom-producto">MICHAEL KORS</div>
+          <div class="descripcion">Reloj Mujer Michael Kors MK5774 Dorado Acero Inoxidable Elegante</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 599.900 <span class="descuento">-35%</span></div>
+            <div class="precio-secundario">$ 699.900</div>
+            <div class="precio-secundario1">$ 929.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 13 - Mochila Antirrobo -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXyOoSx2cgbgcBw6qOwljz_Kyk40t6Tq3uNMrDKvfwdg&s=10" alt="Mochila Antirrobo" />
+          </a>
+          <div class="etiqueta"><span>ACCESORIOS</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Mochila Antirrobo USB Impermeable Laptop 15.6" Viaje Urbano Negra</div>
+          <div class="referencia">Por SENABELLA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 119.900 <span class="descuento">-40%</span></div>
+            <div class="precio-secundario">$ 139.900</div>
+            <div class="precio-secundario1">$ 199.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 14 - Sudadera Adidas -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="data:image/jpeg;base64,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" alt="Sudadera Adidas" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">ADIDAS</div>
+          <div class="descripcion">Sudadera con Capucha Hombre Adidas Essentials 3 Franjas Algodón Gris</div>
+          <div class="referencia">Por SENABELLA SPORT</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 169.900 <span class="descuento">-30%</span></div>
+            <div class="precio-secundario">$ 189.900</div>
+            <div class="precio-secundario1">$ 239.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 15 - Vestido Casual -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjKdXGl7rnBy90A7PrDWzd2WUlkjIrgmFp2nCPsEW8TA&s=10" alt="Vestido Casual" />
+          </a>
+          <div class="etiqueta"><span>MODA</span></div>
+          <div class="nom-producto">ZARA</div>
+          <div class="descripcion">Vestido Casual Mujer Verano Algodón Fresco Estampado Tropical</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 109.900 <span class="descuento">-25%</span></div>
+            <div class="precio-secundario">$ 129.900</div>
+            <div class="precio-secundario1">$ 149.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 16 - Nike Running -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="../recursos/zapatos.jpg" alt="Tenis Nike Running" />
+          </a>
+          <div class="etiqueta"><span>CALZADO</span></div>
+          <div class="nom-producto">NIKE</div>
+          <div class="descripcion">Tenis Running Mujer Nike Revolution 6 Rosados Ligeros Amortiguación</div>
+          <div class="referencia">Por SENABELLA SPORT</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 299.900 <span class="descuento">-20%</span></div>
+            <div class="precio-secundario">$ 329.900</div>
+            <div class="precio-secundario1">$ 379.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 17 - Look de pareja -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="../recursos/pareja.jpeg" alt="Look de pareja elegante" />
+          </a>
+          <div class="etiqueta"><span>NUEVO</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Look de pareja: Propuesta elegante y romántica para celebraciones</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 359.900 <span class="descuento">-10%</span></div>
+            <div class="precio-secundario">$ 399.900</div>
+            <div class="precio-secundario1">$ 459.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 18 - Conjunto coordinado -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="../recursos/camisa_1.jpg" alt="Conjunto para pareja" />
+          </a>
+          <div class="etiqueta"><span>OFERTA</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Conjunto coordinado moderno con tonos neutros y detalles sofisticados</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 289.900 <span class="descuento">-20%</span></div>
+            <div class="precio-secundario">$ 329.900</div>
+            <div class="precio-secundario1">$ 389.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 19 - Detalle romántico -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfCB8hqTQ1Wn98tvM0-H9CBVeWy4dtQ5LsZ92XNsKNbw&s=10" alt="Detalle romántico" />
+          </a>
+          <div class="etiqueta"><span>EXCLUSIVO</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Detalle romántico: Texturas suaves y cortes delicados boutique</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 199.900 <span class="descuento">-15%</span></div>
+            <div class="precio-secundario">$ 239.900</div>
+            <div class="precio-secundario1">$ 279.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 20 - Chaqueta coordinada Él -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="../recursos/camisa_2.jpg" alt="Chaqueta coordinada para él" />
+          </a>
+          <div class="etiqueta"><span>NUEVO</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Chaqueta coordinada para Él - Diseño moderno y cómodo</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 189.900 <span class="descuento">-20%</span></div>
+            <div class="precio-secundario">$ 209.900</div>
+            <div class="precio-secundario1">$ 249.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 21 - Chaqueta coordinada Ella -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=400&q=80" alt="Chaqueta coordinada para ella" />
+          </a>
+          <div class="etiqueta"><span>NUEVO</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Chaqueta coordinada para Ella - Diseño romántico y ligero</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 179.900 <span class="descuento">-20%</span></div>
+            <div class="precio-secundario">$ 199.900</div>
+            <div class="precio-secundario1">$ 239.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 22 - Set camisetas -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhFMe-b-ektSfJSGPI-LNVY_ZHq0vd3XEW-l_NKESf1HotP4M3nAECmNA&s=10" alt="Set de camisetas para pareja" />
+          </a>
+          <div class="etiqueta"><span>OFERTA</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Set de camisetas coordinadas para pareja diseño casual</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 129.900 <span class="descuento">-15%</span></div>
+            <div class="precio-secundario">$ 149.900</div>
+            <div class="precio-secundario1">$ 189.900</div>
+          </div>
+        </div>
+
+        <!-- Producto 23 - Bufandas -->
+        <div class="tar-producto">
+          <a href="detalle_producto.html">
+            <img src="https://i.pinimg.com/736x/b5/d5/29/b5d529b50a755b34677a4ea43d781c9d.jpg" alt="Bufandas coordinadas pareja" />
+          </a>
+          <div class="etiqueta"><span>OFERTA</span></div>
+          <div class="nom-producto">SENABELLA</div>
+          <div class="descripcion">Bufandas coordinadas para pareja ideales para el frío</div>
+          <div class="referencia">Por SENABELLA MODA</div>
+          <i class="fa-regular fa-heart favorite-btn"></i>
+          <div>
+            <div class="metodo"><span class="unica">ÚNICA</span><span class="cmr">CMR</span><span class="debito">Débito</span></div>
+            <div class="precio">$ 89.900 <span class="descuento">-25%</span></div>
+            <div class="precio-secundario">$ 109.900</div>
+            <div class="precio-secundario1">$ 129.900</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div>
+        <h3>Servicio al Cliente</h3>
+        <a href="#">Centro de ayuda</a>
+        <a href="#">Estado de tu pedido</a>
+        <a href="#">Devoluciones y Cambios</a>
+      </div>
+      <div>
+        <h3>Mi cuenta</h3>
+        <a href="#">Iniciar sesión</a>
+        <a href="#">Mis pedidos</a>
+        <a href="#">Mis compras</a>
+      </div>
+      <div>
+        <h3>Acerca de Senabella</h3>
+        <a href="#">Nuestra historia</a>
+        <a href="#">Sostenibilidad</a>
+        <a href="#">Trabaja con nosotros</a>
+      </div>
+      <div>
+        <h3>Síguenos</h3>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Senabella. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="../js/encabezado.js"></script>
+  <script src="../js/favoritos.js"></script>
+  <script src="../js/catalogo.js"></script>
+</body>
+
+</html>

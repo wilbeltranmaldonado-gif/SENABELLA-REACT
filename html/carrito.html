@@ -21,7 +21,7 @@
     
     <!-- Hoja de estilos externa -->
     <link rel="stylesheet" href="../css/carrito.css" />
-    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/encabezado.css" />
   </head>
   <body>
 
@@ -30,66 +30,40 @@
       <!-- Columna Izquierda: Carro y Productos -->
       <section class="seccion-carrito">
         <h2 class="titulo-seccion">
-          Carro <span class="cantidad-carrito">(1 producto)</span>
+          Carro <span class="cantidad-carrito">(0 productos)</span>
         </h2>
 
-        <div class="tarjeta-carrito">
-          <!-- Cabecera del vendedor -->
-          <div class="cabecera-vendedor">
-            <label class="contenedor-casilla">
-              <input type="checkbox" checked />
-              <span class="marca-casilla"></span>
-              <p class="texto-vendedor">
-                Vendido por <strong class="nombre-vendedor">Senabella</strong>
-              </p>
-            </label>
-            <i class="fa-solid fa-chevron-up"></i>
-          </div>
-
-          <div class="divisor-tarjeta"></div>
-
-          <!-- Detalle del producto -->
-          <div class="fila-producto">
-            <label class="contenedor-casilla">
-              <input type="checkbox" checked />
-              <span class="marca-casilla"></span>
-            </label>
-
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnaxViT3U737FB2Z2wgIYSxpYhUeo0T-NOcwgXHJPl5A&s=10"
-              alt="Freidora Ninja"
-              class="imagen-producto"
-            />
-
-            <div class="detalles-producto">
-              <h3 class="nombre-producto">
-                Ninja Crispi Freidora de Aire 4 en 1 | 4 Funciones
-                Predeterminadas | Freír con...
-              </h3>
-              <p class="marca-producto">NINJA</p>
-              <p class="color-producto">Color: <strong>Navy</strong></p>
+        <div id="contenedor-items-carrito" style="display: none;">
+          <div class="tarjeta-carrito">
+            <!-- Cabecera del vendedor -->
+            <div class="cabecera-vendedor">
+              <label class="contenedor-casilla">
+                <input type="checkbox" />
+                <span class="marca-casilla"></span>
+                <p class="texto-vendedor">
+                  Vendido por <strong class="nombre-vendedor">Senabella</strong>
+                </p>
+              </label>
+              <i class="fa-solid fa-chevron-up"></i>
             </div>
 
-            <div class="caja-precio-producto">
-              <div class="fila-precio">
-                <p class="precio-actual">$ 599.900</p>
-              </div>
-            </div>
+            <div class="divisor-tarjeta"></div>
 
-            <div class="caja-acciones-producto">
-              <i class="fa-solid fa-ellipsis-vertical icono-opciones"></i>
-              <div class="selector-cantidad">
-                <button><i class="fa-solid fa-minus"></i></button>
-                <p>1</p>
-                <button><i class="fa-solid fa-plus"></i></button>
-              </div>
+            <!-- Garantía extendida -->
+            <div class="caja-garantia">
+              <i class="fa-solid fa-chevron-down"></i>
             </div>
           </div>
+        </div>
 
-          <!-- Garantía extendida -->
-          <div class="caja-garantia">
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
+        <!-- Vista de Carrito Vacío -->
+        <div id="vista-carrito-vacio" class="tarjeta-carrito text-center py-5" style="display: block;">
+          <i class="fa-solid fa-basket-shopping fa-3x mb-3" style="color: #aad100 !important;"></i>
+          <h3 class="h5 font-weight-bold mb-2">Tu carrito está vacío</h3>
+          <p class="text-muted mb-4" style="font-size: 14px;">Explora nuestros productos y añade lo que más te guste.</p>
+          <a href="catalogo.html" class="boton-vacios" style="display: inline-block; width: auto; padding: 10px 30px; text-decoration: none; background-color: #333d45; color: #fff; border-radius: 25px; font-weight: bold;">
+            Ver catálogo de productos
+          </a>
         </div>
       </section>
 
@@ -99,15 +73,15 @@
 
         <div class="tarjeta-resumen">
           <div class="fila-resumen">
-            <p>Productos (1)</p>
-            <p class="precio-resumen">$599.900</p>
+            <p>Productos (0)</p>
+            <p class="precio-resumen">$ 0</p>
           </div>
 
           <div class="divisor-tarjeta"></div>
 
           <div class="fila-resumen fila-total">
             <p>Total:</p>
-            <p class="precio-total">$599.900</p>
+            <p class="precio-total">$ 0</p>
           </div>
 
           <button class="boton-pagar">Continuar compra</button>
@@ -133,7 +107,7 @@
             <p>$ 350.870</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 119.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 2: Freidora 9.5L -->
@@ -149,7 +123,7 @@
             <p class="precio-sugerencia">$ 899.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 1.199.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 3: Freidora Crispi Vidrio -->
@@ -166,7 +140,7 @@
             <p class="precio-sugerencia">$ 889.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 1.799.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 4: Crispi 4 en 1 -->
@@ -184,7 +158,7 @@
             <p class="precio-sugerencia">$ 599.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 799.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 5: Licuadora -->
@@ -200,7 +174,7 @@
             <p class="precio-sugerencia">$ 719.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 1.199.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 6: iPhone -->
@@ -216,7 +190,7 @@
             <p class="precio-sugerencia">$ 6.799.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 6.998.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 7: Televisor -->
@@ -234,7 +208,7 @@
             <p class="precio-sugerencia">$ 2.299.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 4.669.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 8: Parlante JBL -->
@@ -252,7 +226,7 @@
             <p class="precio-sugerencia">$ 1.259.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 2.329.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 9: Tenis Adidas -->
@@ -268,7 +242,7 @@
             <p class="precio-sugerencia">$ 239.990</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 299.950</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
 
         <!-- Producto 10: Multiestilizador Shark -->
@@ -286,12 +260,12 @@
             <p class="precio-sugerencia">$ 1.059.900</p>
           </div>
           <p class="precio-antiguo-pequeno">$ 1.299.900</p>
-          <button class="boton-ver-producto">Ver producto</button>
+          <button class="boton-ver-producto">Agregar Producto</button>
         </div>
       </div>
     </section>
 
-    <script src="../js/header.js"></script>
+    <script src="../js/encabezado.js"></script>
     <script src="../js/carrito.js"></script>
 
   </body>
@@ -300,27 +274,21 @@
     <div class="footer-top">
       <div>
         <h3>Servicio al Cliente</h3>
-        <a href="#">Centro de ayuda</a>
-        <a href="#">Estado de tu pedido</a>
-        <a href="#">Devoluciones y Cambios</a>
+        <a href="soporte.html">Centro de ayuda</a>
+        <a href="carrito.html">Estado de tu pedido</a>
+        <a href="contacto.html">Devoluciones y Cambios</a>
       </div>
       <div>
         <h3>Mi Cuenta</h3>
-        <a href="#">Inicia sesión</a>
-        <a href="#">Registrarse</a>
-        <a href="#">Mis compras</a>
+        <a href="login.html">Inicia sesión</a>
+        <a href="registro.html">Registrarse</a>
+        <a href="usuario.html">Mis compras</a>
       </div>
       <div>
         <h3>Acerca de Senabella</h3>
-        <a href="#">Nuestra historia</a>
-        <a href="#">Sostenibilidad</a>
-        <a href="#">Trabaja con nosotros</a>
-      </div>
-      <div>
-        <h3>Síguenos</h3>
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
+        <a href="contacto.html">Nuestra historia</a>
+        <a href="contacto.html">Sostenibilidad</a>
+        <a href="contacto.html">Trabaja con nosotros</a>
       </div>
     </div>
     <div class="footer-bottom">

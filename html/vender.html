@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vender en Senabella | Impulsa tu Negocio en Colombia</title>
+  <meta name="description"
+    content="Únete a la comunidad de vendedores de Senabella. Publica tus productos gratis, accede a logística nacional y recibe tus pagos semanales." />
+
+  <!-- Iconos de Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Hojas de estilos -->
+  <link rel="stylesheet" href="../css/encabezado.css" />
+  <link rel="stylesheet" href="../css/inicio.css" />
+  <link rel="stylesheet" href="../css/vender.css" />
+</head>
+
+<body>
+
+  <!-- HERO / BANNER SUPERIOR -->
+  <section class="vender-hero">
+    <div class="vender-hero-brillo"></div>
+    <div class="vender-contenedor vender-hero-cuadricula">
+      <div class="vender-hero-contenido fade-in">
+        <span class="badge-hero">
+          <i class="fa-solid fa-store"></i> SENABELLA PARA VENDEDORES
+        </span>
+        <h1 class="vender-hero-titulo">
+          Vende con Senabella y <span>haz crecer tu negocio</span> en Colombia
+        </h1>
+        <p class="vender-hero-subtitulo">
+          Conecta tus productos con miles de compradores diarios. Logística nacional, cobros transparentes y soporte personalizado.
+        </p>
+
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#registro" class="boton-principal">
+            <i class="fa-solid fa-rocket"></i> Registrar mi tienda gratis
+          </a>
+          <a href="#simulador" class="boton-secundario">
+            <i class="fa-solid fa-calculator"></i> Calcular mis ganancias
+          </a>
+        </div>
+
+        <div class="vender-hero-metricas">
+          <div class="metrica-item">
+            <h4>+5.000</h4>
+            <span>Marcas activas</span>
+          </div>
+          <div class="metrica-item">
+            <h4>$0 COP</h4>
+            <span>Costo de apertura</span>
+          </div>
+          <div class="metrica-item">
+            <h4>Semanales</h4>
+            <span>Pagos directos a tu cuenta</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in">
+        <div class="tarjeta-panel">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <strong style="color: #fff; font-size: 0.95rem;">Panel de Control Vendedor</strong>
+            <span class="badge bg-success">En línea</span>
+          </div>
+
+          <div class="item-simulado">
+            <div class="d-flex align-items-center gap-3">
+              <div class="icono-simulado"><i class="fa-solid fa-bag-shopping"></i></div>
+              <div>
+                <strong style="color: #fff; font-size: 0.88rem; display: block;">Nuevo pedido recibido</strong>
+                <span style="color: #94a3b8; font-size: 0.78rem;">Chaqueta Denim • Bogotá</span>
+              </div>
+            </div>
+            <strong style="color: var(--principal); font-size: 0.9rem;">+$ 145.000</strong>
+          </div>
+
+          <div class="item-simulado">
+            <div class="d-flex align-items-center gap-3">
+              <div class="icono-simulado"><i class="fa-solid fa-wallet"></i></div>
+              <div>
+                <strong style="color: #fff; font-size: 0.88rem; display: block;">Consignación semanal</strong>
+                <span style="color: #94a3b8; font-size: 0.78rem;">Transferencia Bancolombia</span>
+              </div>
+            </div>
+            <strong style="color: var(--principal); font-size: 0.9rem;">+$ 2.890.000</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- SIMULADOR DE GANANCIAS -->
+    <section id="simulador" class="vender-seccion">
+      <div class="vender-contenedor">
+        <div class="seccion-encabezado fade-in">
+          <span class="etiqueta-seccion">Calculadora Vendedor</span>
+          <h2 class="titulo-seccion">Calcula cuánto podrías ganar</h2>
+          <p class="descripcion-seccion">Selecciona tu categoría y volumen de ventas para calcular tus ingresos netos.</p>
+        </div>
+
+        <div class="tarjeta-simulador fade-in">
+          <div>
+            <div class="mb-4">
+              <label for="sim-categoria" class="fw-bold mb-2 text-dark">Categoría principal</label>
+              <select id="sim-categoria" class="selector-personalizado">
+                <option value="moda" selected>Moda y Vestuario</option>
+                <option value="calzado">Calzado y Marroquinería</option>
+                <option value="tecnologia">Tecnología y Accesorios</option>
+                <option value="hogar">Hogar y Decoración</option>
+                <option value="belleza">Salud y Belleza</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label for="sim-ventas-range" class="fw-bold text-dark mb-0">Ventas mensuales</label>
+                <span id="sim-ventas-val" class="valor-rango">50 unidades / mes</span>
+              </div>
+              <input type="range" id="sim-ventas-range" class="entrada-rango" min="10" max="300" step="5" value="50">
+            </div>
+
+            <ul class="list-unstyled small text-muted mt-3 mb-0">
+              <li class="mb-1"><i class="fa-solid fa-check text-success me-2"></i> Sin mensualidades fijas.</li>
+              <li class="mb-1"><i class="fa-solid fa-check text-success me-2"></i> Solo pagas comisión al vender.</li>
+              <li><i class="fa-solid fa-check text-success me-2"></i> Pagos semanales a Bancos o Nequi.</li>
+            </ul>
+          </div>
+
+          <div class="caja-resultado">
+            <div class="resultado-item">
+              <span>Ventas brutas:</span>
+              <strong id="sim-res-ventas" class="text-white">$ 4.250.000 COP</strong>
+            </div>
+            <div class="resultado-item">
+              <span>Comisión de plataforma:</span>
+              <strong id="sim-res-comision" class="text-danger">-$ 340.000 (8%)</strong>
+            </div>
+
+            <div class="resultado-total">
+              <span class="text-uppercase small text-muted">Tu ganancia neta estimada:</span>
+              <h3 id="sim-res-ganancia">$ 3.910.000 COP</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VENTAJAS Y HERRAMIENTAS -->
+    <section class="vender-seccion bg-white border-top border-bottom">
+      <div class="vender-contenedor">
+        <div class="seccion-encabezado fade-in">
+          <span class="etiqueta-seccion">Ventajas Senabella</span>
+          <h2 class="titulo-seccion">Herramientas para potenciar tu marca</h2>
+        </div>
+
+        <div class="cuadricula-ventajas">
+          <div class="tarjeta-ventaja fade-in">
+            <div class="icono-ventaja"><i class="fa-solid fa-truck-fast"></i></div>
+            <h3>Logística Integrada</h3>
+            <p>Guías automáticas con Servientrega, Coordinadora e Interrapidísimo con recolección en bodega.</p>
+          </div>
+
+          <div class="tarjeta-ventaja fade-in">
+            <div class="icono-ventaja"><i class="fa-solid fa-wallet"></i></div>
+            <h3>Cobros Semanales</h3>
+            <p>Consignación directa de tus ventas a Bancolombia, Nequi, Daviplata o cualquier banco en Colombia.</p>
+          </div>
+
+          <div class="tarjeta-ventaja fade-in">
+            <div class="icono-ventaja"><i class="fa-solid fa-headset"></i></div>
+            <h3>Soporte Humano 24/7</h3>
+            <p>Asesoría personalizada por WhatsApp para resolver cualquier duda con tus ventas de inmediato.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO EN 4 PASOS -->
+    <section class="vender-seccion">
+      <div class="vender-contenedor">
+        <div class="seccion-encabezado fade-in">
+          <span class="etiqueta-seccion">Paso a paso</span>
+          <h2 class="titulo-seccion">Empieza a vender en 4 pasos</h2>
+        </div>
+
+        <div class="row g-4 text-center">
+          <div class="col-md-3 col-6 fade-in">
+            <div class="tarjeta-paso h-100">
+              <div class="numero-paso">01</div>
+              <h4 class="fw-bold">Regístrate</h4>
+              <p class="small text-muted mb-0">Llena el formulario con tus datos comerciales.</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-6 fade-in">
+            <div class="tarjeta-paso h-100">
+              <div class="numero-paso">02</div>
+              <h4 class="fw-bold">Publica</h4>
+              <p class="small text-muted mb-0">Sube tus productos con fotos y precios.</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-6 fade-in">
+            <div class="tarjeta-paso h-100">
+              <div class="numero-paso">03</div>
+              <h4 class="fw-bold">Despacha</h4>
+              <p class="small text-muted mb-0">Imprime guías pre-pagadas con 1 clic.</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-6 fade-in">
+            <div class="numero-paso">04</div>
+            <h4 class="fw-bold">Cobra</h4>
+            <p class="small text-muted mb-0">Recibe dinero semanal en tu cuenta.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREGUNTAS FRECUENTES -->
+    <section class="vender-seccion bg-white border-top">
+      <div class="vender-contenedor">
+        <div class="seccion-encabezado fade-in">
+          <span class="etiqueta-seccion">FAQ</span>
+          <h2 class="titulo-seccion">Preguntas Frecuentes</h2>
+        </div>
+
+        <div class="contenedor-faq fade-in">
+          <div class="item-faq active">
+            <button class="boton-faq">
+              <span>¿Cuánto cuesta registrarme y publicar productos?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="respuesta-faq">
+              <p>Es 100% gratuito. No cobramos mensualidades. Solo pagas una pequeña comisión cuando realizas una venta con éxito.</p>
+            </div>
+          </div>
+
+          <div class="item-faq">
+            <button class="boton-faq">
+              <span>¿Cómo y cuándo recibo el dinero de mis ventas?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="respuesta-faq">
+              <p>Se consignan semanalmente a la cuenta bancaria, Nequi o Daviplata que registres en tu perfil.</p>
+            </div>
+          </div>
+
+          <div class="item-faq">
+            <button class="boton-faq">
+              <span>¿Necesito tener RUT o empresa registrada?</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="respuesta-faq">
+              <p>Puedes registrarte como Persona Natural (con tu Cédula) o como Empresa (con NIT y RUT).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMULARIO REGISTRO -->
+    <section id="registro" class="vender-seccion-formulario">
+      <div class="vender-contenedor">
+        <div class="tarjeta-formulario fade-in">
+          <div class="formulario-lateral">
+            <div>
+              <h3 class="fw-bold mb-3">Comienza a vender hoy</h3>
+              <p class="small text-muted mb-4">Un asesor comercial te contactará para activar tu tienda rápidamente.</p>
+              <ul class="list-unstyled small text-light space-y-2">
+                <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Registro en 3 minutos</li>
+                <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Capacitación gratuita</li>
+                <li><i class="fa-solid fa-check text-success me-2"></i> Soporte en WhatsApp</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="formulario-cuerpo">
+            <div class="formulario-pestanas">
+              <button type="button" class="boton-pestana active" data-tipo="persona">Persona Natural</button>
+              <button type="button" class="boton-pestana" data-tipo="empresa">Empresa (NIT)</button>
+            </div>
+
+            <form id="formulario-registro-vender">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold" id="etiqueta-marca">Nombre de Marca o Tienda</label>
+                  <input type="text" class="campo-entrada" placeholder="Ej. Moda Elite" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold" id="etiqueta-documento">Cédula (CC / CE)</label>
+                  <input type="text" id="entrada-documento" class="campo-entrada" placeholder="Ej. 1.098.765.432" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold">Teléfono o WhatsApp</label>
+                  <input type="tel" class="campo-entrada" placeholder="+57 300 000 0000" required maxlength="15" minlength="7" inputmode="numeric" autocomplete="tel">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold">Correo Electrónico</label>
+                  <input type="email" class="campo-entrada" placeholder="contacto@tumarca.com" required>
+                </div>
+                <div class="col-12 mt-4">
+                  <button type="submit" id="boton-enviar-vender" class="boton-enviar">
+                    <i class="fa-solid fa-store me-2"></i> Solicitar activación de tienda
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PAGINA ESTÁNDAR SENABELLA -->
+  <footer class="pie-pagina">
+    <div class="pie-pagina-superior">
+      <div>
+        <h3>Servicio al cliente</h3>
+        <a href="soporte.html">Ayuda</a>
+        <a href="contacto.html">Cambio y devoluciones</a>
+        <a href="contacto.html">Garantías</a>
+      </div>
+
+      <div>
+        <h3>Compra segura</h3>
+        <a href="carrito.html">Formas de pago</a>
+        <a href="catalogo.html">Envíos</a>
+        <a href="catalogo.html">Promociones</a>
+      </div>
+
+      <div>
+        <h3>Acerca de Senabella</h3>
+        <a href="contacto.html">Nuestra empresa</a>
+        <a href="contacto.html">Trabaja con nosotros</a>
+        <a href="catalogo.html">Tiendas</a>
+      </div>
+    </div>
+
+    <div class="pie-pagina-inferior">
+      <p>© 2026 Senabella. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/encabezado.js"></script>
+  <script src="../js/vender.js"></script>
+</body>
+
+</html>
