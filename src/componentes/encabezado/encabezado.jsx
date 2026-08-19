@@ -439,8 +439,7 @@ export default function Header() {
         <div className="enlaces-navegacion">
           <Link to="/catalogo">Productos Tecnológicos</Link>
           <a href="catalogo_ropa_accesorios.html">Ropa y Accesorios</a>
-          <a href="vender.html">Vende en Senabella.com</a>
-
+    
           {/* TARJETAS Y CUENTAS */}
           <div className="menu-desplegable">
             <button
