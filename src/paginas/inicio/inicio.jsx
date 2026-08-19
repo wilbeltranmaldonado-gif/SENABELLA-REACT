@@ -610,11 +610,19 @@ function Inicio() {
                   <button
                     className="modal-btn-carrito"
                     onClick={() => {
+                      if (window.SenabellaCart) {
+                        window.SenabellaCart.agregarProducto({
+                          nombre: productoModal.nombre,
+                          precioText: productoModal.precio,
+                          img: productoModal.imagen,
+                          cantidad: cantidad
+                        });
+                      }
                       mostrarToast(
-                        "Esta acción pertenece al carrito",
-                        "fa-circle-info",
-                        "info"
+                        `${productoModal.nombre} agregado al carrito`,
+                        "exito"
                       );
+                      cerrarModal();
                     }}
                   >
                     <i className="fa-solid fa-cart-plus"></i>

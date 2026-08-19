@@ -1,0 +1,241 @@
+import { useState, useEffect } from "react";
+import "./carrito.css";
+import { Link } from "react-router-dom";
+
+function Carrito() {
+  const parsearPrecio = (texto) => {
+    if (!texto) return 0;
+    return parseFloat(texto.toString().replace(/[^\d]/g, "")) || 0;
+  };
+
+  const formatoMoneda = (valor) => {
+    return "$ " + Math.round(valor).toLocaleString("es-CO");
+  };
+
+  // Inicializar estado desde la base de datos local
+  const [itemsCarrito, setItemsCarrito] = useState(() => {
+    if (window.SenabellaCart) {
+      const itemsGuardados = window.SenabellaCart.obtenerItems();
+      return itemsGuardados.map(item => ({
+        id: item.nombre,
+        nombre: item.nombre,
+        marca: item.marca,
+        precio: parsearPrecio(item.precioText),
+        imagen: item.img,
+        cantidad: item.cantidad,
+        seleccionado: item.checked
+      }));
+    }
+    return [];
+  });
+
+  // Sincronizar cambios en el estado hacia la base de datos local
+  useEffect(() => {
+    if (window.SenabellaCart) {
+      const itemsParaGuardar = itemsCarrito.map(item => ({
+        nombre: item.nombre,
+        marca: item.marca,
+        color: "Estándar",
+        precioText: formatoMoneda(item.precio),
+        img: item.imagen,
+        cantidad: item.cantidad,
+        checked: item.seleccionado
+      }));
+      window.SenabellaCart.guardarItems(itemsParaGuardar);
+    }
+  }, [itemsCarrito]);
+  
+  // Estado para las sugerencias (Y si le sumas lo último)
+  const [sugerencias, setSugerencias] = useState([
+    { id: 1, marca: "OSTER", nombre: "Sandwichera Oster 2 puestos", precio: 350870, precioTexto: "$ 350.870", precioAntiguo: "$ 119.900", imagen: "https://media.falabella.com/falabellaCO/72911449_1/public" },
+    { id: 2, marca: "NINJA", nombre: "Freidora de aire Ninja 9.5 Litros", precio: 899900, precioTexto: "$ 899.900", precioAntiguo: "$ 1.199.900", imagen: "https://media.falabella.com/falabellaCO/73142536_1/public" },
+    { id: 3, marca: "NINJA", nombre: "Freidora Profesional Ninja Crispi Vidrio p", precio: 889900, precioTexto: "$ 889.900", precioAntiguo: "$ 1.799.900", imagen: "https://media.falabella.com/sodimacCO/3030845_01/public" },
+    { id: 4, marca: "NINJA", nombre: "Crispi Freidora de Aire Ninja 4 En 1", precio: 599900, precioTexto: "$ 599.900", precioAntiguo: "$ 799.900", imagen: "https://media.falabella.com/falabellaCO/62737961_01/public" },
+    { id: 5, marca: "NINJA", nombre: "Licuadora Profesional Ninja", precio: 719900, precioTexto: "$ 719.900", precioAntiguo: "$ 1.199.900", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnaxViT3U737FB2Z2wgIYSxpYhUeo0T-NOcwgXHJPl5A&s=10" },
+    { id: 6, marca: "APPLE", nombre: "iPhone 17 Pro Max 256GB | 5G | Chip", precio: 6799900, precioTexto: "$ 6.799.900", precioAntiguo: "$ 6.998.900", imagen: "https://media.falabella.com/falabellaCO/73417532_1/public" },
+    { id: 7, marca: "SAMSUNG", nombre: "Televisor | Samsung | 70 Pulgadas | 4K I", precio: 2299900, precioTexto: "$ 2.299.900", precioAntiguo: "$ 4.669.900", imagen: "https://media.falabella.com/falabellaCO/73600042_1/public" },
+    { id: 8, marca: "JBL", nombre: "Parlante Jbl Partybox 130 Bluetooth 200 W", precio: 1259900, precioTexto: "$ 1.259.900", precioAntiguo: "$ 2.329.900", imagen: "https://media.falabella.com/falabellaCO/155423436_01/public" },
+    { id: 9, marca: "ADIDAS", nombre: "Tenis Adidas Moda Barreda Hombre", precio: 239990, precioTexto: "$ 239.990", precioAntiguo: "$ 299.950", imagen: "https://media.falabella.com/falabellaCO/73540825_1/public" },
+    { id: 10, marca: "SHARK", nombre: "Multiestilizador Shark Flexstyle | 5", precio: 1059900, precioTexto: "$ 1.059.900", precioAntiguo: "$ 1.299.900", imagen: "https://media.falabella.com/falabellaCO/72780484_1/public" }
+  ]);
+
+  const [toast, setToast] = useState(null);
+
+  const mostrarToast = (mensaje) => {
+    setToast(mensaje);
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const agregarAlCarrito = (producto) => {
+    // Verificar si ya existe en el carrito
+    const existente = itemsCarrito.find(item => item.id === producto.id);
+    if (existente) {
+      setItemsCarrito(itemsCarrito.map(item => 
+        item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
+      ));
+    } else {
+      setItemsCarrito([...itemsCarrito, { ...producto, cantidad: 1, seleccionado: true }]);
+    }
+    mostrarToast(`Se agregó ${producto.nombre} al carrito`);
+  };
+
+  const eliminarDelCarrito = (id) => {
+    setItemsCarrito(itemsCarrito.filter(item => item.id !== id));
+  };
+
+  const cambiarCantidad = (id, delta) => {
+    setItemsCarrito(itemsCarrito.map(item => {
+      if (item.id === id) {
+        const nuevaCantidad = item.cantidad + delta;
+        return { ...item, cantidad: Math.max(1, Math.min(20, nuevaCantidad)) };
+      }
+      return item;
+    }));
+  };
+
+  const toggleSeleccion = (id) => {
+    setItemsCarrito(itemsCarrito.map(item => 
+      item.id === id ? { ...item, seleccionado: !item.seleccionado } : item
+    ));
+  };
+
+  const toggleSeleccionTodos = (e) => {
+    const checked = e.target.checked;
+    setItemsCarrito(itemsCarrito.map(item => ({ ...item, seleccionado: checked })));
+  };
+
+  // Cálculos derivados del estado
+  const todosSeleccionados = itemsCarrito.length > 0 && itemsCarrito.every(item => item.seleccionado);
+  const totalItems = itemsCarrito.reduce((acc, item) => acc + item.cantidad, 0);
+  const itemsSeleccionadosParaCompra = itemsCarrito.filter(item => item.seleccionado);
+  const totalSeleccionados = itemsSeleccionadosParaCompra.reduce((acc, item) => acc + item.cantidad, 0);
+  
+  const totalPrecio = itemsSeleccionadosParaCompra.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+  
+  
+  return (
+    <>
+      <main className="contenedor-carrito">
+        <section className="seccion-carrito">
+          <h2 className="titulo-seccion">
+            Carro <span className="cantidad-carrito">({totalItems} productos)</span>
+          </h2>
+
+          {itemsCarrito.length === 0 ? (
+            <div id="vista-carrito-vacio" className="tarjeta-carrito text-center py-5">
+              <i className="fa-solid fa-basket-shopping fa-3x mb-3" style={{ color: "#aad100" }}></i>
+              <h3 className="h5 font-weight-bold mb-2">Tu carrito está vacío</h3>
+              <p className="text-muted mb-4" style={{ fontSize: "14px" }}>Explora nuestros productos y añade lo que más te guste.</p>
+              <Link to="/catalogo" className="boton-vacios" style={{ display: "inline-block", width: "auto", padding: "10px 30px", textDecoration: "none", backgroundColor: "#333d45", color: "#fff", borderRadius: "25px", fontWeight: "bold" }}>
+                Ver catálogo de productos
+              </Link>
+            </div>
+          ) : (
+            <div id="contenedor-items-carrito">
+              <div className="tarjeta-carrito">
+                <div className="cabecera-vendedor">
+                  <label className="contenedor-casilla">
+                    <input type="checkbox" checked={todosSeleccionados} onChange={toggleSeleccionTodos} />
+                    <span className="marca-casilla"></span>
+                    <p className="texto-vendedor">
+                      Vendido por <strong className="nombre-vendedor">Senabella</strong>
+                    </p>
+                  </label>
+                  <i className="fa-solid fa-chevron-up"></i>
+                </div>
+
+                <div className="divisor-tarjeta"></div>
+
+                {itemsCarrito.map(item => (
+                  <div key={item.id}>
+                    <div className="fila-producto">
+                      <label className="contenedor-casilla">
+                        <input type="checkbox" checked={item.seleccionado} onChange={() => toggleSeleccion(item.id)} />
+                        <span className="marca-casilla"></span>
+                      </label>
+                      <img src={item.imagen} alt={item.nombre} className="imagen-producto" />
+                      <div className="detalles-producto">
+                        <h3 className="nombre-producto">{item.nombre}</h3>
+                        <p className="marca-producto">{item.marca}</p>
+                        <p className="color-producto">Color: <strong>Estándar</strong></p>
+                      </div>
+                      <div className="caja-precio-producto">
+                        <div className="fila-precio">
+                          <p className="precio-actual">{formatoMoneda(item.precio)}</p>
+                        </div>
+                      </div>
+                      <div className="caja-acciones-producto">
+                        <i className="fa-solid fa-trash-can icono-opciones" title="Eliminar producto" onClick={() => eliminarDelCarrito(item.id)} style={{cursor: "pointer"}}></i>
+                        <div className="selector-cantidad">
+                          <button onClick={() => cambiarCantidad(item.id, -1)}><i className="fa-solid fa-minus"></i></button>
+                          <p>{item.cantidad}</p>
+                          <button onClick={() => cambiarCantidad(item.id, 1)}><i className="fa-solid fa-plus"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="divisor-tarjeta"></div>
+                  </div>
+                ))}
+
+                <div className="caja-garantia">
+                  <i className="fa-solid fa-chevron-down"></i>
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+
+        <aside className="seccion-resumen">
+          <h2 className="titulo-seccion">Resumen de la orden</h2>
+          <div className="tarjeta-resumen">
+            <div className="fila-resumen">
+              <p>Productos ({totalSeleccionados})</p>
+              <p className="precio-resumen">{formatoMoneda(totalPrecio)}</p>
+            </div>
+
+            <div className="divisor-tarjeta"></div>
+
+            <div className="fila-resumen fila-total">
+              <p>Total:</p>
+              <p className="precio-total">{formatoMoneda(totalPrecio)}</p>
+            </div>
+
+            <button className="boton-pagar" disabled={itemsCarrito.length === 0 || totalSeleccionados === 0}>
+              Continuar compra
+            </button>
+          </div>
+        </aside>
+      </main>
+
+      <section className="seccion-sugerencias">
+        <h2 className="titulo-sugerencias">¿Y si le sumas lo último?</h2>
+        <div className="cuadricula-sugerencias">
+          {sugerencias.map((prod) => (
+            <div className="tarjeta-sugerencia" key={prod.id}>
+              <img src={prod.imagen} alt={prod.nombre} className="imagen-sugerencia" />
+              <p className="marca-sugerencia">{prod.marca}</p>
+              <h4 className="nombre-sugerencia">{prod.nombre}</h4>
+              <div className="contenedor-precio">
+                <p className="precio-sugerencia">{prod.precioTexto}</p>
+              </div>
+              <p className="precio-antiguo-pequeno">{prod.precioAntiguo}</p>
+              <button className="boton-ver-producto" onClick={() => agregarAlCarrito(prod)}>Agregar Producto</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {toast && (
+        <div className="toast-senabella toast-exito toast-visible" style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 9999 }}>
+          <i className="fa-solid fa-circle-check"></i>
+          <span>{toast}</span>
+          <button className="toast-cerrar" onClick={() => setToast(null)} style={{ background: "none", border: "none", color: "white", marginLeft: "15px", cursor: "pointer" }}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default Carrito;

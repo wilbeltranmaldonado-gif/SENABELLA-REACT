@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./pie_de_pagina.css";
 
 function Footer() {
@@ -14,15 +15,15 @@ function Footer() {
         <div>
           <h3>Compra segura</h3>
           <a href="tarjetas.html">Formas de pago</a>
-          <a href="catalogo.html">Envíos</a>
-          <a href="catalogo.html">Promociones</a>
+          <Link to="/catalogo">Envíos</Link>
+          <Link to="/catalogo">Promociones</Link>
         </div>
 
         <div>
           <h3>Acerca de Senabella</h3>
           <a href="contacto.html">Nuestra empresa</a>
           <a href="contacto.html">Trabaja con nosotros</a>
-          <a href="catalogo.html">Tiendas</a>
+          <Link to="/catalogo">Tiendas</Link>
         </div>
       </div>
 

@@ -23,8 +23,8 @@ const CIUDADES = [
 ];
 
 const ENLACES_MENU_MOVIL = [
-  { href: "inicio.html", icono: "fa-solid fa-house", texto: "Inicio" },
-  { href: "catalogo.html", icono: "fa-solid fa-microchip", texto: "Productos Tecnológicos" },
+  { href: "/", icono: "fa-solid fa-house", texto: "Inicio" },
+  { href: "/catalogo", icono: "fa-solid fa-microchip", texto: "Productos Tecnológicos" },
   { href: "catalogo_ropa_accesorios.html", icono: "fa-solid fa-shirt", texto: "Ropa y Accesorios" },
   { href: "vender.html", icono: "fa-solid fa-store", texto: "Vende en Senabella.com" },
   { href: "tarjetas.html", icono: "fa-solid fa-credit-card", texto: "Tarjetas y cuentas" },
@@ -32,7 +32,7 @@ const ENLACES_MENU_MOVIL = [
   { href: "contacto.html", icono: "fa-solid fa-envelope", texto: "Contáctanos" },
   { href: "soporte.html", icono: "fa-solid fa-headset", texto: "Soporte" },
   { href: "favoritos.html", icono: "fa-regular fa-heart", texto: "Favoritos" },
-  { href: "carrito.html", icono: "fa-solid fa-cart-shopping", texto: "Carrito" },
+  { href: "/carrito", icono: "fa-solid fa-cart-shopping", texto: "Carrito" },
 ];
 
 const EVENTO_CARRITO_ACTUALIZADO = "senabella-cart-actualizado";
@@ -318,9 +318,9 @@ export default function Header() {
         </button>
 
         <div className="logo">
-          <a href="inicio.html">
+          <Link to="/">
             <img src="../src/assets/logo.png" alt="Senabella" width="130" height="50" />
-          </a>
+          </Link>
         </div>
 
         <div className="contenedor-busqueda">
@@ -356,10 +356,10 @@ export default function Header() {
             <i className="fa-regular fa-heart icono-corazon"></i>
           </a>
 
-          <a href="carrito.html" className="icono-carrito">
+          <Link to="/carrito" className="icono-carrito">
             <i className="fa-solid fa-cart-shopping"></i>
             <p className="contador-carrito"> {cantidadCarrito} </p>
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -384,11 +384,18 @@ export default function Header() {
           </button>
         </div>
         <div className="menu-movil-enlaces">
-          {ENLACES_MENU_MOVIL.map((enlace) => (
-            <a href={enlace.href} key={enlace.href}>
-              <i className={enlace.icono}></i> {enlace.texto}
-            </a>
-          ))}
+          {ENLACES_MENU_MOVIL.map((enlace) => {
+            const isReactRoute = enlace.href.startsWith("/");
+            return isReactRoute ? (
+              <Link to={enlace.href} key={enlace.href}>
+                <i className={enlace.icono}></i> {enlace.texto}
+              </Link>
+            ) : (
+              <a href={enlace.href} key={enlace.href}>
+                <i className={enlace.icono}></i> {enlace.texto}
+              </a>
+            );
+          })}
         </div>
       </nav>
 
@@ -430,7 +437,7 @@ export default function Header() {
         </div>
 
         <div className="enlaces-navegacion">
-          <a href="catalogo.html">Productos Tecnológicos</a>
+          <Link to="/catalogo">Productos Tecnológicos</Link>
           <a href="catalogo_ropa_accesorios.html">Ropa y Accesorios</a>
           <a href="vender.html">Vende en Senabella.com</a>
 
