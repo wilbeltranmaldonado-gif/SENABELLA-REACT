@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./encabezado.css";
-
+import logo from "../../assets/logo.png";
 function Encabezado() {
 
   const navigate = useNavigate();
@@ -179,20 +179,16 @@ function Encabezado() {
             LOGO
         ================================== */}
 
-        <div className="logo">
-
-          <Link to="/">
-
-            <img
-              src="/assets/logo.png"
-              alt="Senabella"
-              width="130"
-              height="50"
-            />
-
-          </Link>
-
-        </div>
+    <div className="logo">
+      <Link to="/">
+        <img
+          src={logo}
+          alt="Senabella"
+          width="130"
+          height="50"
+        />
+      </Link>
+    </div>
 
 
         {/* =================================
