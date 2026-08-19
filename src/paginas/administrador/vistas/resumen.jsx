@@ -27,47 +27,65 @@ function Resumen() {
       const ctx = chartRef.current?.getContext('2d');
       if (!ctx) return;
 
-      // Crear gráfica de ventas
-      chartInstance.current = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago'],
-          datasets: [{
-            label: 'Ventas 2024',
-            data: [12000, 19000, 15000, 25000, 22000, 30000, 28000, 35000],
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            tension: 0.4,
-            fill: true
-          }, {
-            label: 'Ventas 2023',
-            data: [8000, 12000, 10000, 18000, 15000, 22000, 20000, 25000],
-            borderColor: '#94a3b8',
-            backgroundColor: 'rgba(148, 163, 184, 0.1)',
-            tension: 0.4,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'top',
-            }
+      try {
+        // Crear gráfica de ventas simplificada
+        chartInstance.current = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            datasets: [{
+              label: 'Ventas 2024',
+              data: [12000, 19000, 15000, 25000, 22000, 30000, 28000, 35000, 32000, 38000, 42000, 45000],
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              tension: 0.4,
+              fill: true,
+              pointBackgroundColor: '#3b82f6',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }, {
+              label: 'Ventas 2023',
+              data: [8000, 12000, 10000, 18000, 15000, 22000, 20000, 25000, 23000, 28000, 32000, 35000],
+              borderColor: '#94a3b8',
+              backgroundColor: 'rgba(148, 163, 184, 0.1)',
+              tension: 0.4,
+              fill: true,
+              pointBackgroundColor: '#94a3b8',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }]
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                callback: function(value) {
-                  return '$' + value.toLocaleString();
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  usePointStyle: true,
+                  padding: 20
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return '$' + value.toLocaleString();
+                  }
                 }
               }
             }
           }
-        }
-      });
+        });
+      } catch (error) {
+        console.error('Error al crear la gráfica:', error);
+      }
     };
 
     loadChartJS();
@@ -155,16 +173,6 @@ function Resumen() {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* ==========================================
-           GRÁFICA DE VENTAS
-      ========================================== */}
-      <div className="admin-seccion">
-        <h2 className="admin-seccion-titulo">Ventas mensuales</h2>
-        <div className="admin-grafica-contenedor">
-          <canvas ref={chartRef}></canvas>
-        </div>
       </div>
 
       {/* ==========================================

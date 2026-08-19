@@ -39,11 +39,25 @@
 
 .entrada-busqueda {
   width: 100%;
-  padding: 10px 45px 10px 15px;
-  border: 1px solid #767676;
-  border-radius: 20px;
-  font-size: 14px;
+  padding: 12px 45px 12px 18px;
+  border: 2px solid #767676;
+  border-radius: 24px;
+  font-size: 15px;
   outline: none;
+  color: #1a202c;
+  font-weight: 500;
+  background-color: #ffffff;
+  letter-spacing: 0.2px;
+}
+
+.entrada-busqueda:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(170, 209, 0, 0.2);
+}
+
+.entrada-busqueda::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
 }
 
 .boton-busqueda {

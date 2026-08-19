@@ -134,7 +134,7 @@ export default function Header() {
   const [menuMovilAbierto, setMenuMovilAbierto] = useState(false);
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
-  const [cuenta, setCuenta] = useState({ texto: "Iniciar sesión", href: "login.html", isReact: false });
+  const [cuenta, setCuenta] = useState({ texto: "Iniciar sesión", href: "/login", isReact: true });
 
   const contenedorUbicacionRef = useRef(null);
 
@@ -159,11 +159,11 @@ export default function Header() {
     const rolUsuario = localStorage.getItem("senabella_rol");
 
     if (!sesionActiva) {
-      setCuenta({ texto: "Iniciar sesión", href: "login.html" });
+      setCuenta({ texto: "Iniciar sesión", href: "/login", isReact: true });
     } else if (rolUsuario === "administrador") {
       setCuenta({ texto: "Panel Admin", href: "/administrador", isReact: true });
     } else {
-      setCuenta({ texto: "Mi cuenta", href: "usuario.html" });
+      setCuenta({ texto: "Mi cuenta", href: "/usuario", isReact: true });
     }
 
     // Sistemas globales (toast y carrito)

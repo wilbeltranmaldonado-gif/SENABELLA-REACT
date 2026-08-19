@@ -17,10 +17,7 @@ import Configuracion from "./vistas/configuracion";
 function Administrador() {
   const [vistaActual, setVistaActual] = useState("resumen");
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
-  const [modoOscuro, setModoOscuro] = useState(false);
-  const [busqueda, setBusqueda] = useState("");
   const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
-  const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
   const [contadorNotificaciones, setContadorNotificaciones] = useState(3);
   
   const sidebarRef = useRef(null);
@@ -72,22 +69,7 @@ function Administrador() {
     return () => document.removeEventListener("click", manejarClickFuera);
   }, []);
 
-  // ==========================================
-  // MODO OSCURO
-  // ==========================================
 
-  const alternarModoOscuro = () => {
-    const nuevoEstado = !modoOscuro;
-    setModoOscuro(nuevoEstado);
-
-    if (nuevoEstado) {
-      document.body.classList.add("modo-oscuro");
-      localStorage.setItem("modoOscuro", "activado");
-    } else {
-      document.body.classList.remove("modo-oscuro");
-      localStorage.setItem("modoOscuro", "desactivado");
-    }
-  };
 
   // ==========================================
   // CAMBIAR VISTA
@@ -105,7 +87,9 @@ function Administrador() {
   const cerrarSesion = () => {
     localStorage.setItem("senabella_sesion", "inactiva");
     localStorage.removeItem("senabella_rol");
-    window.location.href = "login.html";
+    localStorage.removeItem("senabella_usuario");
+    localStorage.removeItem("recordar_sesion");
+    window.location.href = "/";
   };
 
   // ==========================================
@@ -190,7 +174,6 @@ function Administrador() {
         <div className="admin-sidebar-logo">
           <img src="../assets/logo.png" alt="Senabella" onError={(e) => { e.target.style.display = 'none'; }} />
           <span>Admin</span>
-          <span className="admin-badge-pro">PRO</span>
         </div>
 
         <nav className="admin-nav">
@@ -246,38 +229,11 @@ function Administrador() {
 
           <h1 className="admin-titulo-vista">{obtenerTituloVista()}</h1>
 
-          <div className="admin-buscador">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input 
-              type="text" 
-              placeholder="Buscar pedidos, productos o clientes..."
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-            />
-            {busqueda && (
-              <button 
-                className="admin-buscador-limpiar" 
-                onClick={() => setBusqueda("")}
-                title="Limpiar búsqueda"
-              >
-                <i className="fa-solid fa-xmark"></i>
-              </button>
-            )}
-          </div>
-
           <div className="admin-topbar-acciones">
-            <button 
-              className="admin-icono-boton" 
-              onClick={alternarModoOscuro}
-              title="Cambiar modo"
-            >
-              <i className={`fa-solid ${modoOscuro ? "fa-sun" : "fa-moon"}`}></i>
-            </button>
-
             {/* NOTIFICACIONES */}
             <div className="admin-menu-desplegable">
               <button 
-                className="admin-icono-boton" 
+                className="admin-icono-boton admin-boton-notificaciones" 
                 onClick={() => setMenuNotificacionesAbierto(!menuNotificacionesAbierto)}
                 title="Notificaciones"
               >
@@ -286,7 +242,7 @@ function Administrador() {
                   <span className="admin-punto-badge">{contadorNotificaciones}</span>
                 )}
               </button>
-              <div className={`admin-dropdown${menuNotificacionesAbierto ? " mostrar" : ""}`}>
+              <div className={`admin-dropdown admin-dropdown-notificaciones${menuNotificacionesAbierto ? " mostrar" : ""}`}>
                 <div className="admin-dropdown-titulo">Notificaciones</div>
                 <a 
                   href="#" 
@@ -336,37 +292,6 @@ function Administrador() {
                     <p>Zapatillas Runner recibió 5 estrellas</p>
                   </div>
                 </a>
-              </div>
-            </div>
-
-            {/* PERFIL */}
-            <div className="admin-menu-desplegable">
-              <button 
-                className="admin-perfil-boton"
-                onClick={() => setMenuPerfilAbierto(!menuPerfilAbierto)}
-              >
-                <span className="admin-avatar">AD</span>
-                <span className="admin-perfil-nombre">Admin Senabella</span>
-                <i className="fa-solid fa-chevron-down"></i>
-              </button>
-              <div className={`admin-dropdown admin-dropdown-derecha${menuPerfilAbierto ? " mostrar" : ""}`}>
-                <a href="usuario.html" className="admin-dropdown-item-simple">
-                  <i className="fa-regular fa-user"></i> Mi perfil
-                </a>
-                <button 
-                  type="button" 
-                  className="admin-dropdown-item-simple"
-                  onClick={() => cambiarVista("configuracion")}
-                >
-                  <i className="fa-solid fa-gear"></i> Configuración
-                </button>
-                <button 
-                  type="button" 
-                  className="admin-dropdown-item-simple"
-                  onClick={cerrarSesion}
-                >
-                  <i className="fa-solid fa-power-off"></i> Cerrar sesión
-                </button>
               </div>
             </div>
           </div>

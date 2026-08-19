@@ -10,6 +10,8 @@ import Carrito from "./paginas/carrito/carrito";
 import Tarjeta from "./paginas/tarjeta/tarjeta";
 import Administrador from "./paginas/administrador/administrador";
 import Parejas from "./paginas/parejas/Parejas";
+import Login from "./paginas/login/login";
+import Usuario from "./paginas/usuario/usuario";
 
 function App() {
     return (
@@ -25,6 +27,8 @@ function App() {
                 <Route path="/tarjetas" element={<Tarjeta />} />
                 <Route path="/administrador" element={<Administrador />} />
                 <Route path="/parejas" element={<Parejas />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/usuario" element={<Usuario />} />
             </Routes>
 
             <PieDePagina />
