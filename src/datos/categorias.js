@@ -24,8 +24,7 @@ export const categoriasInicio = [
   {
     nombre: "TECNO",
     categoria: "tecno",
-    imagen:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlsVX5r-2gPMvY9Y6HJo19zqBHxYIn9izOfNFlfNPc7w&s=10",
+    imagen: imgTablets,
     ruta: "/catalogo?categoria=tecno",
   },
   {

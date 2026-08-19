@@ -327,16 +327,55 @@ function Inicio() {
                     loading="lazy"
                   />
 
-                  <div className="card-body">
+                  <div className="card-body position-relative d-flex flex-column justify-content-between">
+                    <i 
+                      className="fa-regular fa-heart favorite-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.SenabellaFavoritos) {
+                          window.SenabellaFavoritos.agregar({
+                            nombre: producto.nombre,
+                            marca: "SENABELLA",
+                            imagen: producto.imagen,
+                            precioTexto: producto.precio,
+                            referencia: "TECNO"
+                          });
+                        }
+                        mostrarToast("Agregado a favoritos", "exito");
+                        e.currentTarget.classList.remove('fa-regular');
+                        e.currentTarget.classList.add('fa-solid');
+                        e.currentTarget.style.color = '#e63946';
+                      }}
+                      title="Agregar a Favoritos"
+                    ></i>
 
-                    <h3 className="card-title h6">
-                      {producto.nombre}
-                    </h3>
+                    <div>
+                      <h3 className="card-title h6 text-truncate" title={producto.nombre}>
+                        {producto.nombre}
+                      </h3>
 
-                    <p className="card-text fw-bold text-success">
-                      {producto.precio}
-                    </p>
+                      <p className="card-text fw-bold text-success">
+                        {producto.precio}
+                      </p>
+                    </div>
 
+                    <button 
+                      className="btn-agregar-carrito mt-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.SenabellaCart) {
+                          window.SenabellaCart.agregarProducto({
+                            nombre: producto.nombre,
+                            precioText: producto.precio,
+                            img: producto.imagen,
+                            cantidad: 1
+                          });
+                        }
+                        mostrarToast(`${producto.nombre} agregado al carrito`, "exito");
+                      }}
+                    >
+                      <i className="fa-solid fa-cart-plus"></i> Añadir al carrito
+                    </button>
                   </div>
 
                 </div>
