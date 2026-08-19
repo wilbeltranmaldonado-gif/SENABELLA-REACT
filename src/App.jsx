@@ -6,6 +6,7 @@ import PieDePagina from "./componentes/pie_de_pagina/pie_de_pagina";
 import Inicio from "./paginas/inicio/inicio";
 import Catalogo from "./paginas/catalogo/catalogo";
 import Carrito from "./paginas/carrito/carrito";
+import Tarjeta from "./paginas/tarjeta/tarjeta";
 
 function App() {
     return (
@@ -16,6 +17,8 @@ function App() {
                 <Route path="/" element={<Inicio />} />
                 <Route path="/catalogo" element={<Catalogo />} />
                 <Route path="/carrito" element={<Carrito />} />
+                <Route path="/tarjeta" element={<Tarjeta />} />
+                <Route path="/tarjetas" element={<Tarjeta />} />
             </Routes>
 
             <PieDePagina />

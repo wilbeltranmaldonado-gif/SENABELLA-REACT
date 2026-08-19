@@ -27,7 +27,7 @@ const ENLACES_MENU_MOVIL = [
   { href: "/catalogo", icono: "fa-solid fa-microchip", texto: "Productos Tecnológicos" },
   { href: "catalogo_ropa_accesorios.html", icono: "fa-solid fa-shirt", texto: "Ropa y Accesorios" },
   { href: "vender.html", icono: "fa-solid fa-store", texto: "Vende en Senabella.com" },
-  { href: "tarjetas.html", icono: "fa-solid fa-credit-card", texto: "Tarjetas y cuentas" },
+  { href: "/tarjeta", icono: "fa-solid fa-credit-card", texto: "Tarjetas y cuentas" },
   { href: "parejas.html", icono: "fa-solid fa-heart", texto: "Parejas" },
   { href: "contacto.html", icono: "fa-solid fa-envelope", texto: "Contáctanos" },
   { href: "soporte.html", icono: "fa-solid fa-headset", texto: "Soporte" },
@@ -455,7 +455,9 @@ export default function Header() {
               className={`contenido-desplegable${menuTarjetasAbierto ? " mostrar" : ""}`}
               id="menu-tarjetas"
             >
-              <a href="tarjetas.html">Tarjetas</a>
+              <Link to="/tarjeta" onClick={() => setMenuTarjetasAbierto(false)}>
+                Tarjetas
+              </Link>
             </div>
           </div>
 

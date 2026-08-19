@@ -14,7 +14,7 @@ function Footer() {
 
         <div>
           <h3>Compra segura</h3>
-          <a href="tarjetas.html">Formas de pago</a>
+          <Link to="/tarjeta">Formas de pago</Link>
           <Link to="/catalogo">Envíos</Link>
           <Link to="/catalogo">Promociones</Link>
         </div>
