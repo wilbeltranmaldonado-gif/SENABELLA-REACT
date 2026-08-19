@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+
 import Encabezado from "./componentes/encabezado/encabezado";
 import Pie_de_pagina from "./componentes/pie_de_pagina/pie_de_pagina"
 
