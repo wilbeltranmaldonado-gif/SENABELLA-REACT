@@ -406,7 +406,7 @@ export default function Header() {
 
         <div className="enlaces-navegacion">
           <Link to="/catalogo">Productos Tecnológicos</Link>
-          <a href="catalogo_ropa_accesorios.html">Ropa y Accesorios</a>
+          <Link to="/catalogo-ropa-accesorios">Ropa y Accesorios</Link>
     
           {/* TARJETAS Y CUENTAS */}
           <div className="menu-desplegable">

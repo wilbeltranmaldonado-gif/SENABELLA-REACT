@@ -3,6 +3,7 @@
 // ==========================================
 
 export * from "./productos";
+export * from "./productosRopa";
 export * from "./sugerencias";
 export * from "./categorias";
 export * from "./navegacion";

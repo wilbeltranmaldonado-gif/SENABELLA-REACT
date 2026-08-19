@@ -786,3 +786,46 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   BOTÓN AÑADIR AL CARRITO
+   ========================================== */
+.btn-agregar-carrito {
+  margin-top: 12px;
+  width: 100%;
+  padding: 9px 14px;
+  background: linear-gradient(135deg, #aad100, #84b814);
+  color: #111;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(170, 209, 0, 0.25);
+  font-family: inherit;
+}
+
+.btn-agregar-carrito:hover {
+  background: linear-gradient(135deg, #84b814, #73a010);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(132, 184, 20, 0.4);
+}
+
+.btn-agregar-carrito:active {
+  transform: translateY(0);
+}
+
+.btn-agregar-carrito i {
+  font-size: 14px;
+}
+
+body.modo-oscuro .btn-agregar-carrito {
+  background: linear-gradient(135deg, #aad100, #84b814);
+  color: #111;
+}

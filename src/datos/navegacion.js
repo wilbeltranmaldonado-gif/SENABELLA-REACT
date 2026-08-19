@@ -20,7 +20,7 @@ export const CIUDADES = [
 export const ENLACES_MENU_MOVIL = [
   { href: "/", icono: "fa-solid fa-house", texto: "Inicio" },
   { href: "/catalogo", icono: "fa-solid fa-microchip", texto: "Productos Tecnológicos" },
-  { href: "catalogo_ropa_accesorios.html", icono: "fa-solid fa-shirt", texto: "Ropa y Accesorios" },
+  { href: "/catalogo-ropa-accesorios", icono: "fa-solid fa-shirt", texto: "Ropa y Accesorios" },
   { href: "vender.html", icono: "fa-solid fa-store", texto: "Vende en Senabella.com" },
   { href: "/tarjeta", icono: "fa-solid fa-credit-card", texto: "Tarjetas y cuentas" },
   { href: "parejas.html", icono: "fa-solid fa-heart", texto: "Parejas" },

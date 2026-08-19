@@ -56,6 +56,25 @@ function Catalogo() {
     e.target.style.color = e.target.classList.contains("fa-solid") ? "#e63946" : "";
   };
 
+  const handleAgregarAlCarrito = (prod) => {
+    if (window.SenabellaCart) {
+      window.SenabellaCart.agregarProducto({
+        nombre: prod.nombre,
+        marca: prod.marca || "SENABELLA",
+        precioText: prod.precio,
+        img: prod.imagen,
+        cantidad: 1,
+      });
+    }
+    if (window.SenabellaToast) {
+      window.SenabellaToast(
+        `${prod.nombre.slice(0, 32)}... añadido al carrito`,
+        "fa-cart-plus",
+        "exito"
+      );
+    }
+  };
+
   return (
     <>
       <section className="categorias-circulares">
@@ -232,6 +251,13 @@ function Catalogo() {
                   {prod.precioSecundario && <div className="precio-secundario">{prod.precioSecundario}</div>}
                   {prod.precioSecundario1 && <div className="precio-secundario1">{prod.precioSecundario1}</div>}
                 </div>
+
+                <button
+                  className="btn-agregar-carrito"
+                  onClick={() => handleAgregarAlCarrito(prod)}
+                >
+                  <i className="fa-solid fa-cart-plus"></i> Añadir al carrito
+                </button>
               </div>
             ))}
           </div>
