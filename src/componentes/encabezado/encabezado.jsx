@@ -134,7 +134,7 @@ export default function Header() {
   const [menuMovilAbierto, setMenuMovilAbierto] = useState(false);
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
-  const [cuenta, setCuenta] = useState({ texto: "Iniciar sesión", href: "login.html" });
+  const [cuenta, setCuenta] = useState({ texto: "Iniciar sesión", href: "login.html", isReact: false });
 
   const contenedorUbicacionRef = useRef(null);
 
@@ -161,7 +161,7 @@ export default function Header() {
     if (!sesionActiva) {
       setCuenta({ texto: "Iniciar sesión", href: "login.html" });
     } else if (rolUsuario === "administrador") {
-      setCuenta({ texto: "Panel Admin", href: "administrador.html" });
+      setCuenta({ texto: "Panel Admin", href: "/administrador", isReact: true });
     } else {
       setCuenta({ texto: "Mi cuenta", href: "usuario.html" });
     }
@@ -314,9 +314,15 @@ export default function Header() {
         <div className="acciones-usuario">
           <div className="cuenta-usuario">
             <div className="texto-usuario texto-usuario-bold">
-              <a href={cuenta.href} id="enlace-cuenta">
-                {cuenta.texto}
-              </a>
+              {cuenta.isReact ? (
+                <Link to={cuenta.href} id="enlace-cuenta">
+                  {cuenta.texto}
+                </Link>
+              ) : (
+                <a href={cuenta.href} id="enlace-cuenta">
+                  {cuenta.texto}
+                </a>
+              )}
             </div>
           </div>
 

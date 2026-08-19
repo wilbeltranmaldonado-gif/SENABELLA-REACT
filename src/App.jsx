@@ -8,6 +8,7 @@ import Catalogo from "./paginas/catalogo/catalogo";
 import CatalogoRopaAccesorios from "./paginas/catalogo_ropa_accesorios/catalogo_ropa_accesorios";
 import Carrito from "./paginas/carrito/carrito";
 import Tarjeta from "./paginas/tarjeta/tarjeta";
+import Administrador from "./paginas/administrador/administrador";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path="/tarjeta" element={<Tarjeta />} />
                 <Route path="/tarjetas" element={<Tarjeta />} />
+                <Route path="/administrador" element={<Administrador />} />
             </Routes>
 
             <PieDePagina />
