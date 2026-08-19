@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./inicio.css";
+import {
+  productosInicio as productos,
+  categoriasInicio as categorias,
+  promocionesInicio as promociones,
+  bannersInicio as banners,
+} from "../../datos";
 
 function Inicio() {
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -8,125 +14,6 @@ function Inicio() {
   const [cantidad, setCantidad] = useState(1);
   const [toast, setToast] = useState(null);
   const [mostrarArriba, setMostrarArriba] = useState(false);
-
-  // ==========================================
-  // PRODUCTOS
-  // ==========================================
-
-  const productos = [
-    {
-      nombre: "Cámara digital",
-      precio: "$ 1.299.900",
-      imagen:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6v1HiWNeKzYFIctVnOkEp9OtNfTmGEj1MNsNhXed1vQ&s=10",
-      descuento: "-15%",
-      categoria: "tecno",
-    },
-    {
-      nombre: "PlayStation 4",
-      precio: "$ 3.999.900",
-      imagen:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn8UWZ26nTqWpCzbzjgGJU_NAVvXz8R8f0GvMHIz4FdA&s=10",
-      nuevo: true,
-      categoria: "tecno",
-    },
-    {
-      nombre: "Tableta gráfica digital",
-      precio: "$ 2.657.900",
-      imagen:
-        "https://media.falabella.com/falabellaCO/119583403_01/w=276,h=276,fit=pad",
-      categoria: "tecno",
-    },
-    {
-      nombre: "Audifonos Xiaomi Redmi Buds 8 Lite",
-      precio: "$107.750",
-      imagen:
-        "https://media.falabella.com/falabellaCO/155500313_01/w=1200,h=1200,fit=pad",
-      descuento: "-30%",
-      categoria: "tecno",
-    },
-  ];
-
-  const categorias = [
-    {
-      nombre: "OFERTAS",
-      categoria: "ofertas",
-      imagen:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5trp8CEafbpi6qOXT-FjQ11HqgD7petZxuYnIIeCfA&s=10",
-      ruta: "/catalogo?categoria=ofertas",
-    },
-    {
-      nombre: "TECNO",
-      categoria: "tecno",
-      imagen:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlsVX5r-2gPMvY9Y6HJo19zqBHxYIn9izOfNFlfNPc7w&s=10",
-      ruta: "/catalogo?categoria=tecno",
-    },
-    {
-      nombre: "MUJER",
-      categoria: "mujer",
-      imagen:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4j0PMoypc__UeVq6nD4bIh6qFQ4FaGSnEI4GclFl7iw&s=10",
-      ruta: "/catalogo-ropa-accesorios?categoria=mujer",
-    },
-    {
-      nombre: "HOMBRE",
-      categoria: "hombre",
-      imagen:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWwkq93t5FnksulxA2YfZpSKAUiaqGZ7sNWSgR0wOtoQ&s=10",
-      ruta: "/catalogo-ropa-accesorios?categoria=hombre",
-    },
-    {
-      nombre: "CALZADO",
-      categoria: "calzado",
-      imagen:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREmL4kn7HnCXVri8EmYY9FT-MtzgKWj5fhj7F1MvHkRQ&s=10",
-      ruta: "/catalogo-ropa-accesorios?categoria=calzado",
-    },
-  ];
-
-  const promociones = [
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltb64adf7df7412925/6a59c7ae3d25ec046fccbe95/powercard16_home_suplementos_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo?busqueda=suplementos",
-    },
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltf413d366cc29e9bf/6a5a7cfd5c7ce2611d2d8c44/powercard10_home_belleza_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo?busqueda=belleza",
-    },
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt5da4c0580b8c656d/6a59c7bf15befe0a433a8a5a/powercard7_home_relojes_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo?busqueda=reloj",
-    },
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltd4a47313d2285f26/6a63ec4398a7f19022344b73/powercard9_home_moda_mujer_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo-ropa-accesorios?categoria=mujer",
-    },
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltc8501095a0ace138/6a59c7ae1d6cdc171efb0209/powercard14_home_ropa_cama_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo?busqueda=cama",
-    },
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt1626d2cca9a6757c/6a59c7ae1d6cdc852ffb020d/powercard13_home_tablets_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo?categoria=tablets",
-    },
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt51f7cce65f3e83cd/6a677af55f2918326a139dd0/Imperdible3_home_computador_lenovo_ideapad_cyber_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo?busqueda=lenovo",
-    },
-    {
-      imagen:
-        "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt008e3e85bf2c1c75/6a675c0cb08d720383bb7b25/Imperdible2_home_electro_tv_samsung_40pul_cyber_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-      ruta: "/catalogo?busqueda=samsung",
-    },
-  ];
 
   // ==========================================
   // TOAST
@@ -224,12 +111,6 @@ function Inicio() {
   // ==========================================
 
   const [slideActual, setSlideActual] = useState(0);
-
-  const banners = [
-    "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltbe35baee88cd51d6/6a57c00691d0075f65be69d8/Banner-doble02-landing-mujer-colombia-disena-dto-cyber_desk.png?auto=webp&disable=upscale&quality=70&width=1280",
-    "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltc5b14ee48b0288b5/6a57defcade6f5a0546e68e4/Banner-doble02-landing-mujer-imperdibles-accesorios-relojes-MK-price-cyber_desk.png?auto=webp&disable=upscale&quality=70&width=1280",
-    "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt0d2994fac24f0fb9/6a29da3fec6a5e4bb177ac7e/bannerdoble07_landing_tecnologia_computadores_mejorestablets_30dcto_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-  ];
 
   useEffect(() => {
     const intervalo = setInterval(() => {
