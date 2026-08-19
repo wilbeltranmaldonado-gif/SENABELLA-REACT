@@ -1,22 +1,20 @@
 import { Routes, Route } from "react-router-dom";
 
 import Encabezado from "./componentes/encabezado/encabezado";
-import Pie_de_pagina from "./componentes/pie_de_pagina/pie_de_pagina"
+import PieDePagina from "./componentes/pie_de_pagina/pie_de_pagina";
 
-
+import Inicio from "./paginas/inicio/inicio";
 
 function App() {
-
     return (
         <>
             <Encabezado />
 
-            <main>
-                <h1>Senabella</h1>
-                <p>Estamos migrando el proyecto a React.</p>
-            </main>
+            <Routes>
+                <Route path="/" element={<Inicio />} />
+            </Routes>
 
-            <Pie_de_pagina />
+            <PieDePagina />
         </>
     );
 }

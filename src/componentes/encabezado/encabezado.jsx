@@ -1,5 +1,7 @@
-import "./encabezado.css";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import "./encabezado.css";
+
 
 // ==========================================
 // DATOS FIJOS
