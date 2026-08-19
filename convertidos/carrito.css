@@ -1,0 +1,461 @@
+
+/* Contenedor principal de la vista del carrito con sus respectivos productos*/
+.contenedor-carrito {
+  max-width: 1250px;
+  margin: 30px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+/* Títulos de secciones principales */
+.titulo-seccion {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Subtexto para el conteo de productos */
+.cantidad-carrito {
+  font-weight: normal;
+  color: #767676;
+  font-size: 18px;
+}
+
+/* Tarjetas contenedoras del carrito y resumen */
+.tarjeta-carrito,
+.tarjeta-resumen {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Cabecera que indica el vendedor del producto */
+.cabecera-vendedor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Contenedor interactivo para casillas de selección */
+.contenedor-casilla {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.contenedor-casilla input {
+  accent-color: #333;
+  width: 16px;
+  height: 16px;
+}
+
+/* Nombre destacado del vendedor */
+.nombre-vendedor {
+  color: #84b814;
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* Divisor personalizado para reemplazar etiquetas hr */
+.divisor-tarjeta {
+  border: none;
+  border-top: 1px solid #eaeaea;
+  margin: 15px 0;
+}
+
+/* Estructura en cuadrícula para la fila del producto */
+.fila-producto {
+  display: grid;
+  grid-template-columns: auto 90px 2fr 1fr auto;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Imagen miniatura del producto */
+.imagen-producto {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+/* Nombre principal del producto */
+.nombre-producto {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+/* Datos secundarios como marca y color */
+.marca-producto,
+.color-producto {
+  font-size: 12px;
+  color: #767676;
+  margin-bottom: 2px;
+}
+
+.color-producto strong {
+  color: #333;
+}
+
+/* Precio actual del producto */
+.precio-actual {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.fila-precio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Acciones laterales del producto (opciones y cantidad) */
+.caja-acciones-producto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.icono-opciones {
+  color: #767676;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Selector numérico de cantidad */
+.selector-cantidad{
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.selector-cantidad p{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  width: 30px;
+}
+
+
+
+.selector-cantidad button {
+  background: transparent;
+  border: none;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #333;
+}
+
+
+/* Contenedor de la garantía extendida */
+.caja-garantia {
+  background-color: #f7f7f7;
+  border-radius: 6px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-top: 20px;
+  color: #333;
+}
+
+/* Filas informativas del resumen de compra */
+.fila-resumen {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.fila-total {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.precio-total {
+  font-size: 18px;
+}
+
+/* Botón principal de pago o continuación */
+.boton-pagar {
+  width: 100%;
+  background-color: #333d45;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.boton-pagar:hover {
+  background-color: #21282e;
+}
+
+/* Sección de productos sugeridos */
+.seccion-sugerencias {
+  max-width: 1250px;
+  margin: 40px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.titulo-sugerencias {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Contenedor con desplazamiento horizontal para sugerencias */
+.cuadricula-sugerencias {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+}
+
+/* Tarjeta individual de producto sugerido */
+.tarjeta-sugerencia {
+  min-width: 175px;
+  max-width: 175px;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.imagen-sugerencia {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.marca-sugerencia {
+  font-size: 11px;
+  color: #767676;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.nombre-sugerencia {
+  font-size: 12px;
+  color: #333;
+  height: 30px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.contenedor-precio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+}
+
+/* Precio anterior tachado en las tarjetas de sugerencia */
+.precio-antiguo-pequeno {
+  font-size: 11px;
+  color: #767676;
+  text-decoration: line-through;
+  margin-bottom: 10px;
+}
+
+/* Botón para ver el detalle de un producto sugerido */
+.boton-ver-producto {
+  width: 100%;
+  background-color: #333d45;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background 0.2s;
+}
+
+.boton-ver-producto:hover {
+  background-color: #21282e;
+}
+
+/* Contenedor principal del pie de página */
+.footer {
+  margin-top: 32px;
+  background: #ffffff;
+  color: #111111;
+  border-top: 1px solid #e4e7eb;
+}
+
+.footer-top {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.footer-top h3 {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  color: #111111;
+}
+
+.footer-top a {
+  display: block;
+  margin-bottom: 8px;
+  color: #111111;
+  text-decoration: none;
+  opacity: 0.95;
+}
+
+.footer-top a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  background: #f5f5f5;
+  text-align: center;
+  padding: 14px 20px;
+  font-size: 0.92rem;
+  color: #111111;
+}
+
+/* ==========================================
+   RESPONSIVE - TABLET (≤ 992px)
+   ========================================== */
+
+@media (max-width: 992px) {
+  .contenedor-carrito {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .tarjeta-resumen {
+    position: static;
+  }
+
+  .fila-producto {
+    grid-template-columns: auto 70px 1.5fr 1fr auto;
+    gap: 10px;
+  }
+
+  .footer-top {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - MÓVIL (≤ 768px)
+   ========================================== */
+
+@media (max-width: 768px) {
+  .contenedor-carrito {
+    margin: 15px auto;
+    padding: 0 15px;
+  }
+
+  .fila-producto {
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+  }
+
+  .imagen-producto {
+    width: 70px;
+    height: 70px;
+    grid-row: span 2;
+  }
+
+  .caja-acciones-producto {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    grid-column: 1 / -1;
+  }
+
+  .titulo-seccion {
+    font-size: 18px;
+  }
+
+  .seccion-sugerencias {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .caja-garantia {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .cabecera-vendedor {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - MÓVIL PEQUEÑO (≤ 480px)
+   ========================================== */
+
+@media (max-width: 480px) {
+  .contenedor-carrito {
+    padding: 0 10px;
+    margin: 10px auto;
+  }
+
+  .tarjeta-carrito,
+  .tarjeta-resumen {
+    padding: 14px;
+  }
+
+  .precio-actual {
+    font-size: 16px;
+  }
+
+  .titulo-seccion {
+    font-size: 16px;
+  }
+
+  .boton-pagar {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+}
