@@ -1,3 +1,5 @@
+import "./pie_de_pagina.css";
+
 function Footer() {
   return (
     <footer className="pie-pagina">

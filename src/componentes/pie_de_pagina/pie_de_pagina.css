@@ -43,3 +43,40 @@
   font-size: 0.92rem;
   color: #111111;
 }
+
+/* ==========================================
+   PIE DE PÁGINA — MODO OSCURO
+   ========================================== */
+body.modo-oscuro .pie-pagina {
+  background: #181818;
+  color: #ffffff;
+  border-top-color: #333333;
+}
+
+body.modo-oscuro .pie-pagina-superior h3 {
+  color: #ffffff;
+}
+
+body.modo-oscuro .pie-pagina-superior a {
+  color: #e0e0e0;
+  opacity: 1;
+}
+
+body.modo-oscuro .pie-pagina-superior a:hover {
+  color: var(--primary-color);
+}
+
+body.modo-oscuro .pie-pagina-inferior {
+  background: #111111;
+  color: #bbbbbb;
+}
+
+/* ==========================================
+   RESPONSIVE — MÓVIL (≤ 768px)
+   ========================================== */
+@media (max-width: 768px) {
+  .pie-pagina-superior {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
