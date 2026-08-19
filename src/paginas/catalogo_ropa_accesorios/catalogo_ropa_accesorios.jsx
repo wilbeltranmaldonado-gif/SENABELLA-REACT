@@ -19,6 +19,8 @@ function CatalogoRopaAccesorios() {
   const [soloDomicilio, setSoloDomicilio] = useState(false);
 
   // Estados para desplegables de filtros laterales
+  const [filtroEntregaAbierto, setFiltroEntregaAbierto] = useState(true);
+  const [filtroCategoriaAbierto, setFiltroCategoriaAbierto] = useState(true);
   const [filtroMarcaAbierto, setFiltroMarcaAbierto] = useState(false);
   const [filtroTallaAbierto, setFiltroTallaAbierto] = useState(false);
   const [filtroPrecioAbierto, setFiltroPrecioAbierto] = useState(false);
@@ -162,49 +164,63 @@ function CatalogoRopaAccesorios() {
 
             {/* Filtro: Tipo de Entrega */}
             <div className="filtro">
-              <div className="filtro1">
+              <div
+                className="filtro1"
+                onClick={() => setFiltroEntregaAbierto(!filtroEntregaAbierto)}
+                style={{ cursor: 'pointer' }}
+              >
                 Tipo de Entrega
-                <i className="fa-solid fa-chevron-up"></i>
+                <i className={`fa-solid ${filtroEntregaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
-              <div className="opcion-domicilio">
-                <div>
-                  <i className="fa-solid fa-truck"></i>
-                  Envío a domicilio
-                </div>
-                <input
-                  type="checkbox"
-                  checked={soloDomicilio}
-                  onChange={(e) => setSoloDomicilio(e.target.checked)}
-                />
-              </div>
-              <div className="info-entrega">
-                <span className="texto-gratis">Gratis</span>
-                <span className="texto-2">Llega mañana</span>
-              </div>
+              {filtroEntregaAbierto && (
+                <>
+                  <div className="opcion-domicilio">
+                    <div>
+                      <i className="fa-solid fa-truck"></i>
+                      Envío a domicilio
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={soloDomicilio}
+                      onChange={(e) => setSoloDomicilio(e.target.checked)}
+                    />
+                  </div>
+                  <div className="info-entrega">
+                    <span className="texto-gratis">Gratis</span>
+                    <span className="texto-2">Llega mañana</span>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Filtro: Categoría */}
             <div className="filtro">
-              <div className="filtro1">
+              <div
+                className="filtro1"
+                onClick={() => setFiltroCategoriaAbierto(!filtroCategoriaAbierto)}
+                style={{ cursor: 'pointer' }}
+              >
                 Categoría
-                <i className="fa-solid fa-chevron-up"></i>
+                <i className={`fa-solid ${filtroCategoriaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
-              <div className="categorias-lista">
-                {categoriasListaLateralRopa.map((cat, idx) => {
-                  const valor = cat.toLowerCase().replace("moda ", "");
-                  return (
-                    <span
-                      key={idx}
-                      className={`categoria-lis ${
-                        categoriaSeleccionada === valor ? "activa" : ""
-                      }`}
-                      onClick={() => toggleCategoria(valor)}
-                    >
-                      {cat}
-                    </span>
-                  );
-                })}
-              </div>
+              {filtroCategoriaAbierto && (
+                <div className="categorias-lista">
+                  {categoriasListaLateralRopa.map((cat, idx) => {
+                    const valor = cat.toLowerCase().replace("moda ", "");
+                    return (
+                      <span
+                        key={idx}
+                        className={`categoria-lis ${
+                          categoriaSeleccionada === valor ? "activa" : ""
+                        }`}
+                        onClick={() => toggleCategoria(valor)}
+                      >
+                        {cat}
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Filtro: Marca */}

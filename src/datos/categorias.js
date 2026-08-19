@@ -137,7 +137,7 @@ export const categoriasCirculares = [
   {
     titulo: "Computadora Todo en uno",
     imagen: imgTodoEnUno,
-    categoria: "desktop",
+    categoria: "todo-en-uno",
   },
   {
     titulo: "Software",
