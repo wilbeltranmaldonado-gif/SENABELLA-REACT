@@ -21,6 +21,7 @@ function Administrador() {
   const [busqueda, setBusqueda] = useState("");
   const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
   const [menuPerfilAbierto, setMenuPerfilAbierto] = useState(false);
+  const [contadorNotificaciones, setContadorNotificaciones] = useState(3);
   
   const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
@@ -281,25 +282,54 @@ function Administrador() {
                 title="Notificaciones"
               >
                 <i className="fa-solid fa-bell"></i>
-                <span className="admin-punto-badge">3</span>
+                {contadorNotificaciones > 0 && (
+                  <span className="admin-punto-badge">{contadorNotificaciones}</span>
+                )}
               </button>
               <div className={`admin-dropdown${menuNotificacionesAbierto ? " mostrar" : ""}`}>
                 <div className="admin-dropdown-titulo">Notificaciones</div>
-                <a href="#" className="admin-dropdown-item">
+                <a 
+                  href="#" 
+                  className="admin-dropdown-item"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (contadorNotificaciones > 0) {
+                      setContadorNotificaciones(contadorNotificaciones - 1);
+                    }
+                  }}
+                >
                   <i className="fa-solid fa-triangle-exclamation texto-warning"></i>
                   <div>
                     <strong>Stock bajo</strong>
                     <p>4 productos están por agotarse</p>
                   </div>
                 </a>
-                <a href="#" className="admin-dropdown-item">
+                <a 
+                  href="#" 
+                  className="admin-dropdown-item"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (contadorNotificaciones > 0) {
+                      setContadorNotificaciones(contadorNotificaciones - 1);
+                    }
+                  }}
+                >
                   <i className="fa-solid fa-cart-shopping texto-info"></i>
                   <div>
                     <strong>Pedido nuevo</strong>
                     <p>#SN-10482 recién se registró</p>
                   </div>
                 </a>
-                <a href="#" className="admin-dropdown-item">
+                <a 
+                  href="#" 
+                  className="admin-dropdown-item"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (contadorNotificaciones > 0) {
+                      setContadorNotificaciones(contadorNotificaciones - 1);
+                    }
+                  }}
+                >
                   <i className="fa-solid fa-star texto-success"></i>
                   <div>
                     <strong>Reseña nueva</strong>
