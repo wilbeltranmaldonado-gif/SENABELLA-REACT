@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./catalogo.css";
 import { Link } from "react-router-dom";
 import {
@@ -12,6 +12,11 @@ function Catalogo() {
   const [paginaActual, setPaginaActual] = useState(1);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [marcaSeleccionada, setMarcaSeleccionada] = useState("");
+
+  const [filtroEntregaAbierto, setFiltroEntregaAbierto] = useState(true);
+  const [filtroCategoriaAbierto, setFiltroCategoriaAbierto] = useState(true);
+  const [filtroMarcaAbierto, setFiltroMarcaAbierto] = useState(true);
+  const [filtroPrecioAbierto, setFiltroPrecioAbierto] = useState(true);
   
   // ==========================================
   // LÓGICA DE FILTRADO
@@ -104,54 +109,100 @@ function Catalogo() {
             </div>
 
             <div className="filtro">
-              <div className="filtro1">
+              <div 
+                className="filtro1" 
+                onClick={() => setFiltroEntregaAbierto(!filtroEntregaAbierto)}
+                style={{ cursor: 'pointer' }}
+              >
                 Tipo de Entrega
-                <i className="fa-solid fa-chevron-up"></i>
+                <i className={`fa-solid ${filtroEntregaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
-              <div className="opcion-domicilio">
-                <div>
-                  <i className="fa-solid fa-truck"></i>
-                  Envío a domicilio
-                </div>
-                <input type="checkbox" />
-              </div>
-              <div className="info-entrega">
-                <span className="texto-gratis">Gratis</span>
-                <span className="texto-2">Llega mañana</span>
-              </div>
+              {filtroEntregaAbierto && (
+                <>
+                  <div className="opcion-domicilio">
+                    <div>
+                      <i className="fa-solid fa-truck"></i>
+                      Envío a domicilio
+                    </div>
+                    <input type="checkbox" />
+                  </div>
+                  <div className="info-entrega">
+                    <span className="texto-gratis">Gratis</span>
+                    <span className="texto-2">Llega mañana</span>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="filtro">
-              <div className="filtro1">
+              <div 
+                className="filtro1"
+                onClick={() => setFiltroCategoriaAbierto(!filtroCategoriaAbierto)}
+                style={{ cursor: 'pointer' }}
+              >
                 Categoría
-                <i className="fa-solid fa-chevron-up"></i>
+                <i className={`fa-solid ${filtroCategoriaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
-              <div className="categorias-lista">
-                {categoriasListaLateral.map((cat, i) => (
-                  <span 
-                    key={i} 
-                    className="categoria-lis" 
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {cat}
-                  </span>
-                ))}
-              </div>
+              {filtroCategoriaAbierto && (
+                <div className="categorias-lista">
+                  {categoriasListaLateral.map((cat, i) => (
+                    <span 
+                      key={i} 
+                      className="categoria-lis" 
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Agregamos solo algunos filtros de ejemplo de los muchos que había */}
             <div className="filtro">
-              <div className="filtro1">
+              <div 
+                className="filtro1"
+                onClick={() => setFiltroMarcaAbierto(!filtroMarcaAbierto)}
+                style={{ cursor: 'pointer' }}
+              >
                 Marca
-                <i className="fa-solid fa-chevron-down"></i>
+                <i className={`fa-solid ${filtroMarcaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
+              {filtroMarcaAbierto && (
+                <div className="opciones-filtro-lateral">
+                  {marcasBotones.map((m, idx) => (
+                    <div key={idx}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={marcaSeleccionada === m}
+                          onChange={() => setMarcaSeleccionada(marcaSeleccionada === m ? "" : m)}
+                        />{" "}
+                        {m}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             
             <div className="filtro">
-              <div className="filtro1">
+              <div 
+                className="filtro1"
+                onClick={() => setFiltroPrecioAbierto(!filtroPrecioAbierto)}
+                style={{ cursor: 'pointer' }}
+              >
                 Precio
-                <i className="fa-solid fa-chevron-down"></i>
+                <i className={`fa-solid ${filtroPrecioAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
+              {filtroPrecioAbierto && (
+                <div className="opciones-filtro-lateral">
+                  <div><label><input type="checkbox" /> Menos de $500.000</label></div>
+                  <div><label><input type="checkbox" /> $500.000 - $1.000.000</label></div>
+                  <div><label><input type="checkbox" /> $1.000.000 - $2.000.000</label></div>
+                  <div><label><input type="checkbox" /> Más de $2.000.000</label></div>
+                </div>
+              )}
             </div>
           </div>
         </aside>
