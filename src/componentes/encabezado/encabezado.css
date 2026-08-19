@@ -163,6 +163,13 @@
   color: var(--primary-color);
 }
 
+.enlaces-navegacion > a.active {
+  color: var(--primary-color);
+  font-weight: 700;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 2px;
+}
+
 /* ==========================================
    MENÚS DESPLEGABLES
    ========================================== */

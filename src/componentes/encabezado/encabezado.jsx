@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./encabezado.css";
 import { CIUDADES, ENLACES_MENU_MOVIL } from "../../datos";
 
@@ -411,31 +411,13 @@ export default function Header() {
         </div>
 
         <div className="enlaces-navegacion">
-          <Link to="/catalogo">Productos Tecnológicos</Link>
-          <Link to="/catalogo-ropa-accesorios">Ropa y Accesorios</Link>
+          <NavLink to="/catalogo">Productos Tecnológicos</NavLink>
+          <NavLink to="/catalogo-ropa-accesorios">Ropa y Accesorios</NavLink>
     
           {/* TARJETAS Y CUENTAS */}
-          <div className="menu-desplegable">
-            <button
-              className={`boton-desplegable${menuTarjetasAbierto ? " activo" : ""}`}
-              id="boton-tarjetas"
-              onClick={() => setMenuTarjetasAbierto(!menuTarjetasAbierto)}
-            >
-              Tarjetas y cuentas
-              <i className="fa-solid fa-chevron-down"></i>
-            </button>
+          <NavLink to="/tarjeta">Tarjeta Senabella</NavLink>
 
-            <div
-              className={`contenido-desplegable${menuTarjetasAbierto ? " mostrar" : ""}`}
-              id="menu-tarjetas"
-            >
-              <Link to="/tarjeta" onClick={() => setMenuTarjetasAbierto(false)}>
-                Tarjetas
-              </Link>
-            </div>
-          </div>
-
-          <a href="parejas.html">Parejas</a>
+          <NavLink to="/parejas">Parejas</NavLink>
 
           {/* AYUDA */}
           <div className="menu-desplegable">
