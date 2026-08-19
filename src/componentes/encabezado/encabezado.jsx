@@ -316,7 +316,7 @@ export default function Header() {
 
         <div className="logo">
           <a href="inicio.html">
-            <img src="../recursos/logo.png" alt="Senabella" width="130" height="50" />
+            <img src="../src/assets/logo.png" alt="Senabella" width="130" height="50" />
           </a>
         </div>
 
