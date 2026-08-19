@@ -315,44 +315,44 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", verificarScroll);
   verificarScroll();
 
-  // 7. Búsqueda en el Header
-  let inputBusq = document.querySelector(".entrada-busqueda");
-  let btnBusq = document.querySelector(".boton-busqueda");
-  if (inputBusq && btnBusq) {
-    function buscar() {
-      let t = inputBusq.value.trim().toLowerCase();
-      let cols = document.querySelectorAll(".productos-grid .col");
+  // // 7. Búsqueda en el Header
+  // let inputBusq = document.querySelector(".entrada-busqueda");
+  // let btnBusq = document.querySelector(".boton-busqueda");
+  // if (inputBusq && btnBusq) {
+  //   function buscar() {
+  //     let t = inputBusq.value.trim().toLowerCase();
+  //     let cols = document.querySelectorAll(".productos-grid .col");
 
-      if (!t) {
-        for (let i = 0; i < cols.length; i++) cols[i].style.display = "";
-        return;
-      }
+  //     if (!t) {
+  //       for (let i = 0; i < cols.length; i++) cols[i].style.display = "";
+  //       return;
+  //     }
 
-      let enc = 0;
-      for (let i = 0; i < cols.length; i++) {
-        if (cols[i].textContent.toLowerCase().indexOf(t) !== -1) {
-          cols[i].style.display = "";
-          enc++;
-        } else {
-          cols[i].style.display = "none";
-        }
-      }
-      mostrarToast(enc ? enc + " producto(s) encontrado(s)" : "Sin resultados para: " + t, "fa-magnifying-glass", enc ? "info" : "advertencia");
-      let grid = document.querySelector(".productos-grid");
-      if (grid) grid.scrollIntoView({ behavior: "smooth" });
-    }
+  //     let enc = 0;
+  //     for (let i = 0; i < cols.length; i++) {
+  //       if (cols[i].textContent.toLowerCase().indexOf(t) !== -1) {
+  //         cols[i].style.display = "";
+  //         enc++;
+  //       } else {
+  //         cols[i].style.display = "none";
+  //       }
+  //     }
+  //     mostrarToast(enc ? enc + " producto(s) encontrado(s)" : "Sin resultados para: " + t, "fa-magnifying-glass", enc ? "info" : "advertencia");
+  //     let grid = document.querySelector(".productos-grid");
+  //     if (grid) grid.scrollIntoView({ behavior: "smooth" });
+  //   }
 
-    btnBusq.addEventListener("click", buscar);
-    inputBusq.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") buscar();
-    });
-    inputBusq.addEventListener("input", function () {
-      if (!inputBusq.value.trim()) {
-        let c = document.querySelectorAll(".productos-grid .col");
-        for (let i = 0; i < c.length; i++) c[i].style.display = "";
-      }
-    });
-  }
+  //   btnBusq.addEventListener("click", buscar);
+  //   inputBusq.addEventListener("keydown", function (e) {
+  //     if (e.key === "Enter") buscar();
+  //   });
+  //   inputBusq.addEventListener("input", function () {
+  //     if (!inputBusq.value.trim()) {
+  //       let c = document.querySelectorAll(".productos-grid .col");
+  //       for (let i = 0; i < c.length; i++) c[i].style.display = "";
+  //     }
+  //   });
+  // }
 
   // 8. Imágenes de Promociones y Carrusel Funcionales
   let promoImgs = document.querySelectorAll(".promos-grid img");
