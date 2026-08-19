@@ -429,7 +429,7 @@ export default function Header() {
             </div>
           </div>
 
-          <a href="parejas.html">Parejas</a>
+          <Link to="/parejas">Parejas</Link>
 
           {/* AYUDA */}
           <div className="menu-desplegable">

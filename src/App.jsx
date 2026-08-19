@@ -8,6 +8,7 @@ import Catalogo from "./paginas/catalogo/catalogo";
 import CatalogoRopaAccesorios from "./paginas/catalogo_ropa_accesorios/catalogo_ropa_accesorios";
 import Carrito from "./paginas/carrito/carrito";
 import Tarjeta from "./paginas/tarjeta/tarjeta";
+import Parejas from "./paginas/parejas/Parejas";
 
 function App() {
     return (
@@ -18,10 +19,9 @@ function App() {
                 <Route path="/" element={<Inicio />} />
                 <Route path="/catalogo" element={<Catalogo />} />
                 <Route path="/catalogo-ropa-accesorios" element={<CatalogoRopaAccesorios />} />
-                <Route path="/catalogo_ropa_accesorios" element={<CatalogoRopaAccesorios />} />
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path="/tarjeta" element={<Tarjeta />} />
-                <Route path="/tarjetas" element={<Tarjeta />} />
+                <Route path="/parejas" element={<Parejas />} />
             </Routes>
 
             <PieDePagina />
