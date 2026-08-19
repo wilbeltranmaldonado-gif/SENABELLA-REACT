@@ -4,6 +4,7 @@ import Encabezado from "./componentes/encabezado/encabezado";
 import PieDePagina from "./componentes/pie_de_pagina/pie_de_pagina";
 
 import Inicio from "./paginas/inicio/inicio";
+import Catalogo from "./paginas/catalogo/catalogo";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Inicio />} />
+                <Route path="/catalogo" element={<Catalogo />} />
             </Routes>
 
             <PieDePagina />
