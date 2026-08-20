@@ -1,10 +1,33 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { productosIniciales } from "../../../datos";
+
+function cargarDatosDashboard() {
+  try {
+    const pedidos = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+    const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
+    const usuarios = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+    const ventas = pedidos.reduce((total, pedido) => total + (Number(String(pedido.total || "").replace(/[^\d]/g, "")) || 0), 0);
+    return {
+      pedidos,
+      ventas,
+      productos: (Array.isArray(productos) ? productos.length : 0) + productosIniciales.length,
+      clientes: Array.isArray(usuarios) ? usuarios.filter((usuario) => usuario.rol !== "administrador").length : 0,
+      pedidosPendientes: pedidos.filter((pedido) => ["pendiente", "pendiente-verificacion", "procesando"].includes(pedido.estado)).length
+    };
+  } catch {
+    return { pedidos: [], ventas: 0, productos: 0, clientes: 0, pedidosPendientes: 0 };
+  }
+}
 
 function Resumen() {
+  const [datos, setDatos] = useState(() => cargarDatosDashboard());
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
   useEffect(() => {
+    const actualizarDatos = () => setDatos(cargarDatosDashboard());
+    actualizarDatos();
+    window.addEventListener("storage", actualizarDatos);
     // Cargar Chart.js dinámicamente
     const loadChartJS = async () => {
       if (typeof Chart === 'undefined') {
@@ -91,6 +114,7 @@ function Resumen() {
     loadChartJS();
 
     return () => {
+      window.removeEventListener("storage", actualizarDatos);
       if (chartInstance.current) {
         chartInstance.current.destroy();
       }
@@ -101,32 +125,32 @@ function Resumen() {
   const estadisticas = [
     {
       titulo: "Ventas totales",
-      valor: "$186,000",
-      cambio: "+12.5%",
+      valor: `$ ${datos.ventas.toLocaleString("es-CO")}`,
+      cambio: `${datos.pedidos.length} pedidos`,
       positivo: true,
       icono: "fa-dollar-sign",
       color: "blue"
     },
     {
       titulo: "Pedidos",
-      valor: "1,245",
-      cambio: "+8.2%",
+      valor: String(datos.pedidos.length),
+      cambio: `${datos.pedidosPendientes} pendientes`,
       positivo: true,
       icono: "fa-cart-shopping",
       color: "green"
     },
     {
       titulo: "Clientes",
-      valor: "892",
-      cambio: "+5.1%",
+      valor: String(datos.clientes),
+      cambio: "cuentas registradas",
       positivo: true,
       icono: "fa-users",
       color: "purple"
     },
     {
       titulo: "Productos",
-      valor: "456",
-      cambio: "-2.3%",
+      valor: String(datos.productos),
+      cambio: "en catálogo",
       positivo: false,
       icono: "fa-box",
       color: "orange"
@@ -134,13 +158,13 @@ function Resumen() {
   ];
 
   // Pedidos recientes
-  const pedidosRecientes = [
-    { id: "#SN-10482", cliente: "María García", total: "$125.00", estado: "completado", fecha: "Hace 2 horas" },
-    { id: "#SN-10481", cliente: "Juan Rodríguez", total: "$89.50", estado: "procesando", fecha: "Hace 4 horas" },
-    { id: "#SN-10480", cliente: "Ana Martínez", total: "$234.00", estado: "pendiente", fecha: "Hace 6 horas" },
-    { id: "#SN-10479", cliente: "Carlos López", total: "$56.00", estado: "completado", fecha: "Hace 8 horas" },
-    { id: "#SN-10478", cliente: "Laura Sánchez", total: "$178.00", estado: "enviado", fecha: "Hace 12 horas" },
-  ];
+  const pedidosRecientes = datos.pedidos.slice(0, 5).map((pedido) => ({
+    id: pedido.numero || pedido.id,
+    cliente: pedido.cliente?.nombre || pedido.cliente || "Cliente",
+    total: pedido.total,
+    estado: pedido.estado,
+    fecha: pedido.fecha
+  }));
 
   const obtenerClaseEstado = (estado) => {
     const clases = {
@@ -222,7 +246,7 @@ function Resumen() {
       <div className="admin-seccion">
         <h2 className="admin-seccion-titulo">Productos más vendidos</h2>
         <div className="admin-grid-productos">
-          {[
+          {[ 
             { nombre: "Camisa Casual", ventas: 234, imagen: "/src/assets/camisa_1.jpg" },
             { nombre: "Camisa Formal", ventas: 189, imagen: "/src/assets/camisa_2.jpg" },
             { nombre: "Zapatos Deportivos", ventas: 156, imagen: "/src/assets/zapatos.jpg" },

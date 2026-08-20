@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { obtenerUsuarios } from "../../../utils/usuariosBd";
 
 function Clientes() {
-  const [clientes, setClientes] = useState([
-    { id: 1, nombre: "María García", email: "maria@email.com", telefono: "+57 300 123 4567", pedidos: 12, totalGastado: "$1,450.00", fechaRegistro: "2024-01-15" },
-    { id: 2, nombre: "Juan Rodríguez", email: "juan@email.com", telefono: "+57 310 234 5678", pedidos: 8, totalGastado: "$890.00", fechaRegistro: "2024-02-20" },
-    { id: 3, nombre: "Ana Martínez", email: "ana@email.com", telefono: "+57 320 345 6789", pedidos: 15, totalGastado: "$2,100.00", fechaRegistro: "2024-01-10" },
-    { id: 4, nombre: "Carlos López", email: "carlos@email.com", telefono: "+57 300 456 7890", pedidos: 5, totalGastado: "$450.00", fechaRegistro: "2024-03-05" },
-  ]);
-
   const [busqueda, setBusqueda] = useState("");
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
+  const clientes = useMemo(() => {
+    let usuarios = [];
+    let pedidos = [];
+    try {
+      usuarios = obtenerUsuarios().filter((usuario) => usuario.rol !== "administrador");
+      pedidos = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+    } catch { return []; }
+    return usuarios.map((usuario) => {
+      const ordenes = pedidos.filter((pedido) => pedido.cliente?.email === usuario.correo);
+      const total = ordenes.reduce((suma, pedido) => suma + (Number(String(pedido.total || "").replace(/[^\d]/g, "")) || 0), 0);
+      return { ...usuario, email: usuario.correo, telefono: usuario.celular || "-", pedidos: ordenes.length, totalGastado: `$ ${total.toLocaleString("es-CO")}` };
+    });
+  }, []);
 
   const clientesFiltrados = clientes.filter(cliente =>
     cliente.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -56,10 +64,10 @@ function Clientes() {
                 <td>{cliente.fechaRegistro}</td>
                 <td>
                   <div className="admin-acciones-tabla">
-                    <button className="admin-boton-icono" title="Ver detalles">
+                    <button className="admin-boton-icono" title="Ver detalles" onClick={() => setClienteSeleccionado(cliente)}>
                       <i className="fa-solid fa-eye"></i>
                     </button>
-                    <button className="admin-boton-icono" title="Editar">
+                    <button className="admin-boton-icono" title="Editar" onClick={() => setClienteSeleccionado(cliente)}>
                       <i className="fa-solid fa-pen"></i>
                     </button>
                   </div>
@@ -74,6 +82,20 @@ function Clientes() {
         <div className="admin-vacio">
           <i className="fa-solid fa-users"></i>
           <p>No se encontraron clientes</p>
+        </div>
+      )}
+      {clienteSeleccionado && (
+        <div className="admin-modal-overlay" onClick={() => setClienteSeleccionado(null)}>
+          <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-modal-cabecera"><h3>Detalle del cliente</h3><button onClick={() => setClienteSeleccionado(null)}><i className="fa-solid fa-xmark"></i></button></div>
+            <div className="admin-modal-cuerpo">
+              <p><strong>Nombre:</strong> {clienteSeleccionado.nombre}</p>
+              <p><strong>Email:</strong> {clienteSeleccionado.email}</p>
+              <p><strong>Teléfono:</strong> {clienteSeleccionado.telefono}</p>
+              <p><strong>Pedidos:</strong> {clienteSeleccionado.pedidos}</p>
+              <p><strong>Total gastado:</strong> {clienteSeleccionado.totalGastado}</p>
+            </div>
+          </div>
         </div>
       )}
     </div>

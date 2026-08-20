@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { productosIniciales, productosRopaAccesorios } from "../../../datos";
 
 const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";
 const productosPredeterminados = [
@@ -9,12 +10,36 @@ const productosPredeterminados = [
   { id: 5, nombre: "Teclado Mecánico", categoria: "Computación", precio: "$79.99", stock: 0, estado: "agotado", imagen: "" },
 ];
 
+const productosDelCatalogo = [...productosIniciales, ...productosRopaAccesorios].map((producto) => ({
+  id: `catalogo-${producto.id}`,
+  nombre: producto.nombre,
+  categoria: producto.categoria || producto.etiqueta || "General",
+  precio: producto.precio,
+  stock: 10,
+  estado: "activo",
+  imagen: producto.imagen,
+  marca: producto.marca || "SENABELLA",
+  referencia: producto.referencia || "Catálogo Senabella",
+  proveedor: "Sin proveedor",
+  origenCatalogo: true
+}));
+
 const leerProductos = () => {
   try {
     const guardados = JSON.parse(localStorage.getItem(PRODUCTOS_ADMIN_KEY) || "null");
-    return Array.isArray(guardados) ? guardados : productosPredeterminados;
+    const productosGuardados = Array.isArray(guardados) ? guardados : productosPredeterminados;
+    const nombresGuardados = new Set(productosGuardados.map((producto) => producto.nombre));
+    const faltantes = productosDelCatalogo.filter((producto) => !nombresGuardados.has(producto.nombre));
+    const productosCompletos = [...productosGuardados, ...faltantes].map((producto) => ({
+      ...producto,
+      proveedor: producto.proveedor && producto.proveedor !== "Sin proveedor"
+        ? producto.proveedor
+        : producto.marca || "Proveedor Senabella"
+    }));
+    localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosCompletos));
+    return productosCompletos;
   } catch {
-    return productosPredeterminados;
+    return [...productosPredeterminados, ...productosDelCatalogo];
   }
 };
 
@@ -24,6 +49,13 @@ function Productos() {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [productoEditando, setProductoEditando] = useState(null);
   const [busqueda, setBusqueda] = useState("");
+  const proveedoresDisponibles = Array.from(new Set([
+    "Proveedor Senabella",
+    "TechSupply Inc.",
+    "Global Electronics",
+    "Digital Accessories",
+    ...productos.map((producto) => producto.proveedor).filter(Boolean)
+  ]));
 
   const obtenerClaseEstado = (estado) => {
     const clases = {
@@ -47,7 +79,8 @@ function Productos() {
       precio: "",
       stock: 0,
       estado: "activo",
-      imagen: ""
+      imagen: "",
+      proveedor: "Sin proveedor"
     });
     setModalAbierto(true);
   };
@@ -70,7 +103,7 @@ function Productos() {
       // Agregar nuevo producto
       const nuevoProducto = {
         ...productoEditando,
-        id: productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 1
+        id: productos.reduce((mayor, producto) => typeof producto.id === "number" ? Math.max(mayor, producto.id) : mayor, 0) + 1
       };
       const productosActualizados = [...productos, nuevoProducto];
       setProductos(productosActualizados);
@@ -121,6 +154,7 @@ function Productos() {
           <thead>
             <tr>
               <th>ID</th>
+              <th>Imagen</th>
               <th>Nombre</th>
               <th>Categoría</th>
               <th>Precio</th>
@@ -133,6 +167,19 @@ function Productos() {
             {productosFiltrados.map((producto) => (
               <tr key={producto.id}>
                 <td>{producto.id}</td>
+                <td>
+                  {producto.imagen ? (
+                    <img
+                      src={producto.imagen}
+                      alt={producto.nombre}
+                      style={{ width: "52px", height: "52px", objectFit: "cover", borderRadius: "8px" }}
+                    />
+                  ) : (
+                    <span title="Sin imagen" style={{ display: "inline-flex", width: "52px", height: "52px", alignItems: "center", justifyContent: "center", background: "#f1f2f5", borderRadius: "8px" }}>
+                      <i className="fa-solid fa-image"></i>
+                    </span>
+                  )}
+                </td>
                 <td>{producto.nombre}</td>
                 <td>{producto.categoria}</td>
                 <td>{producto.precio}</td>
@@ -243,6 +290,18 @@ function Productos() {
                   <option value="activo">Activo</option>
                   <option value="bajo">Stock bajo</option>
                   <option value="agotado">Agotado</option>
+                </select>
+              </div>
+              <div className="admin-form-grupo">
+                <label>Proveedor</label>
+                <select
+                  value={productoEditando?.proveedor || "Sin proveedor"}
+                  onChange={(e) => setProductoEditando({...productoEditando, proveedor: e.target.value})}
+                >
+                  <option value="Sin proveedor">Sin proveedor</option>
+                  {proveedoresDisponibles.map((proveedor) => (
+                    <option key={proveedor} value={proveedor}>{proveedor}</option>
+                  ))}
                 </select>
               </div>
               <div className="admin-modal-pie">

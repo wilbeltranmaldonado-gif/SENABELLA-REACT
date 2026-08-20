@@ -1,14 +1,58 @@
 import { useState } from "react";
 
+const PROVEEDORES_KEY = "senabella_suppliers";
+const proveedoresIniciales = [
+  { id: 1, nombre: "TechSupply Inc.", contacto: "Juan Pérez", email: "juan@techsupply.com", telefono: "+57 300 111 2222", productos: 0 },
+  { id: 2, nombre: "Global Electronics", contacto: "María López", email: "maria@globalelectronics.com", telefono: "+57 310 333 4444", productos: 0 },
+  { id: 3, nombre: "Digital Accessories", contacto: "Carlos Ruiz", email: "carlos@digitalacc.com", telefono: "+57 320 555 6666", productos: 0 },
+];
+
+const leerProveedores = () => {
+  let proveedoresGuardados = proveedoresIniciales;
+  let productos = [];
+  try {
+    proveedoresGuardados = JSON.parse(localStorage.getItem(PROVEEDORES_KEY) || "null") || proveedoresIniciales;
+    productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
+  } catch {
+    return proveedoresIniciales;
+  }
+  const productosActualizados = productos.map((producto) => ({
+    ...producto,
+    proveedor: producto.proveedor && producto.proveedor !== "Sin proveedor"
+      ? producto.proveedor
+      : producto.marca || "Proveedor Senabella"
+  }));
+  localStorage.setItem("senabella_admin_products", JSON.stringify(productosActualizados));
+  const nombres = new Set(proveedoresGuardados.map((proveedor) => proveedor.nombre));
+  const proveedoresDeProductos = productosActualizados
+    .map((producto) => producto.proveedor)
+    .filter((proveedor) => proveedor && proveedor !== "Sin proveedor" && !nombres.has(proveedor));
+  const nuevos = Array.from(new Set(proveedoresDeProductos)).map((nombre, indice) => ({
+    id: Math.max(...proveedoresGuardados.map((proveedor) => Number(proveedor.id) || 0), 0) + indice + 1,
+    nombre,
+    contacto: "Contacto pendiente",
+    email: "-",
+    telefono: "-",
+    productos: 0
+  }));
+  const todos = [...proveedoresGuardados, ...nuevos];
+  localStorage.setItem(PROVEEDORES_KEY, JSON.stringify(todos));
+  return todos;
+};
+
 function Proveedores() {
-  const [proveedores, setProveedores] = useState([
-    { id: 1, nombre: "TechSupply Inc.", contacto: "Juan Pérez", email: "juan@techsupply.com", telefono: "+57 300 111 2222", productos: 45 },
-    { id: 2, nombre: "Global Electronics", contacto: "María López", email: "maria@globalelectronics.com", telefono: "+57 310 333 4444", productos: 32 },
-    { id: 3, nombre: "Digital Accessories", contacto: "Carlos Ruiz", email: "carlos@digitalacc.com", telefono: "+57 320 555 6666", productos: 28 },
-  ]);
+  const [proveedores, setProveedores] = useState(leerProveedores);
 
   const [modalAbierto, setModalAbierto] = useState(false);
   const [proveedorEditando, setProveedorEditando] = useState(null);
+  const contarProductos = (nombreProveedor) => {
+    try {
+      const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
+      return productos.filter((producto) => producto.proveedor === nombreProveedor).length;
+    } catch {
+      return 0;
+    }
+  };
 
   const abrirModal = (proveedor = null) => {
     setProveedorEditando(proveedor || {
@@ -29,23 +73,28 @@ function Proveedores() {
 
   const guardarProveedor = (e) => {
     e.preventDefault();
+    let proveedoresActualizados;
     if (proveedorEditando.id) {
-      setProveedores(proveedores.map(p =>
+      proveedoresActualizados = proveedores.map(p =>
         p.id === proveedorEditando.id ? proveedorEditando : p
-      ));
+      );
     } else {
       const nuevoProveedor = {
         ...proveedorEditando,
-        id: Math.max(...proveedores.map(p => p.id)) + 1
+        id: Math.max(...proveedores.map(p => p.id), 0) + 1
       };
-      setProveedores([...proveedores, nuevoProveedor]);
+      proveedoresActualizados = [...proveedores, nuevoProveedor];
     }
+    setProveedores(proveedoresActualizados);
+    localStorage.setItem(PROVEEDORES_KEY, JSON.stringify(proveedoresActualizados));
     cerrarModal();
   };
 
   const eliminarProveedor = (id) => {
     if (confirm("¿Estás seguro de eliminar este proveedor?")) {
-      setProveedores(proveedores.filter(p => p.id !== id));
+      const proveedoresActualizados = proveedores.filter(p => p.id !== id);
+      setProveedores(proveedoresActualizados);
+      localStorage.setItem(PROVEEDORES_KEY, JSON.stringify(proveedoresActualizados));
     }
   };
 
@@ -82,7 +131,7 @@ function Proveedores() {
                 <td>{proveedor.contacto}</td>
                 <td>{proveedor.email}</td>
                 <td>{proveedor.telefono}</td>
-                <td>{proveedor.productos}</td>
+                <td>{contarProductos(proveedor.nombre)}</td>
                 <td>
                   <div className="admin-acciones-tabla">
                     <button onClick={() => abrirModal(proveedor)}>

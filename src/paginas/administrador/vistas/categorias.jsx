@@ -1,13 +1,51 @@
 import { useState } from "react";
 
+const CATEGORIAS_KEY = "senabella_categories";
+const categoriasIniciales = [
+  { id: 1, nombre: "Audio", descripcion: "Auriculares, parlantes y sistemas de sonido", productos: 0 },
+  { id: 2, nombre: "Relojes", descripcion: "Smartwatches y relojes tradicionales", productos: 0 },
+  { id: 3, nombre: "Cargadores", descripcion: "Cargadores y cables para dispositivos", productos: 0 },
+  { id: 4, nombre: "Computación", descripcion: "Laptops, tablets y accesorios", productos: 0 },
+  { id: 5, nombre: "Accesorios", descripcion: "Fundas, protectores y accesorios varios", productos: 0 },
+];
+
+const normalizarNombreCategoria = (nombre) => String(nombre || "General")
+  .trim()
+  .toLowerCase()
+  .replace(/^\w/, (letra) => letra.toUpperCase());
+
+const leerCategorias = () => {
+  let categoriasGuardadas = categoriasIniciales;
+  let productos = [];
+  try {
+    categoriasGuardadas = JSON.parse(localStorage.getItem(CATEGORIAS_KEY) || "null") || categoriasIniciales;
+    productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
+  } catch {
+    return categoriasIniciales;
+  }
+
+  const categoriasPorNombre = new Map(categoriasGuardadas.map((categoria) => [categoria.nombre.toLowerCase(), categoria]));
+  const nombresProductos = Array.from(new Set(productos.map((producto) => normalizarNombreCategoria(producto.categoria))));
+  let siguienteId = Math.max(...categoriasGuardadas.map((categoria) => Number(categoria.id) || 0), 0) + 1;
+
+  nombresProductos.forEach((nombre) => {
+    if (!categoriasPorNombre.has(nombre.toLowerCase())) {
+      const nuevaCategoria = { id: siguienteId++, nombre, descripcion: `Productos de ${nombre}`, productos: 0 };
+      categoriasGuardadas = [...categoriasGuardadas, nuevaCategoria];
+      categoriasPorNombre.set(nombre.toLowerCase(), nuevaCategoria);
+    }
+  });
+
+  const categoriasActualizadas = categoriasGuardadas.map((categoria) => ({
+    ...categoria,
+    productos: productos.filter((producto) => normalizarNombreCategoria(producto.categoria).toLowerCase() === categoria.nombre.toLowerCase()).length
+  }));
+  localStorage.setItem(CATEGORIAS_KEY, JSON.stringify(categoriasActualizadas));
+  return categoriasActualizadas;
+};
+
 function Categorias() {
-  const [categorias, setCategorias] = useState([
-    { id: 1, nombre: "Audio", descripcion: "Auriculares, parlantes y sistemas de sonido", productos: 45 },
-    { id: 2, nombre: "Relojes", descripcion: "Smartwatches y relojes tradicionales", productos: 23 },
-    { id: 3, nombre: "Cargadores", descripcion: "Cargadores y cables para dispositivos", productos: 67 },
-    { id: 4, nombre: "Computación", descripcion: "Laptops, tablets y accesorios", productos: 89 },
-    { id: 5, nombre: "Accesorios", descripcion: "Fundas, protectores y accesorios varios", productos: 134 },
-  ]);
+  const [categorias, setCategorias] = useState(leerCategorias);
 
   const [modalAbierto, setModalAbierto] = useState(false);
   const [categoriaEditando, setCategoriaEditando] = useState(null);
@@ -29,23 +67,28 @@ function Categorias() {
 
   const guardarCategoria = (e) => {
     e.preventDefault();
+    let categoriasActualizadas;
     if (categoriaEditando.id) {
-      setCategorias(categorias.map(c =>
+      categoriasActualizadas = categorias.map(c =>
         c.id === categoriaEditando.id ? categoriaEditando : c
-      ));
+      );
     } else {
       const nuevaCategoria = {
         ...categoriaEditando,
-        id: Math.max(...categorias.map(c => c.id)) + 1
+        id: Math.max(...categorias.map(c => c.id), 0) + 1
       };
-      setCategorias([...categorias, nuevaCategoria]);
+      categoriasActualizadas = [...categorias, nuevaCategoria];
     }
+    setCategorias(categoriasActualizadas);
+    localStorage.setItem(CATEGORIAS_KEY, JSON.stringify(categoriasActualizadas));
     cerrarModal();
   };
 
   const eliminarCategoria = (id) => {
     if (confirm("¿Estás seguro de eliminar esta categoría?")) {
-      setCategorias(categorias.filter(c => c.id !== id));
+      const categoriasActualizadas = categorias.filter(c => c.id !== id);
+      setCategorias(categoriasActualizadas);
+      localStorage.setItem(CATEGORIAS_KEY, JSON.stringify(categoriasActualizadas));
     }
   };
 

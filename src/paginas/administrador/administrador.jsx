@@ -14,11 +14,26 @@ import Usuarios from "./vistas/usuarios";
 import Reportes from "./vistas/reportes";
 import Configuracion from "./vistas/configuracion";
 
+function obtenerNotificaciones() {
+  try {
+    const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
+    const pedidos = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+    const stockBajo = productos.filter((producto) => Number(producto.stock) > 0 && Number(producto.stock) <= 10).length;
+    const pedidosPendientes = pedidos.filter((pedido) => ["pendiente", "pendiente-verificacion", "procesando"].includes(pedido.estado)).length;
+    return [
+      ...(stockBajo ? [{ id: "stockBajo", icono: "fa-triangle-exclamation", clase: "texto-warning", titulo: "Stock bajo", texto: `${stockBajo} producto${stockBajo === 1 ? "" : "s"} necesita${stockBajo === 1 ? "" : "n"} reposición.`, vista: "productos" }] : []),
+      ...(pedidosPendientes ? [{ id: "pedidoNuevo", icono: "fa-cart-shopping", clase: "texto-info", titulo: "Pedidos pendientes", texto: `${pedidosPendientes} pedido${pedidosPendientes === 1 ? "" : "s"} requiere${pedidosPendientes === 1 ? "" : "n"} atención.`, vista: "pedidos" }] : [])
+    ];
+  } catch {
+    return [];
+  }
+}
+
 function Administrador() {
   const [vistaActual, setVistaActual] = useState("resumen");
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
-  const [contadorNotificaciones, setContadorNotificaciones] = useState(3);
+  const [notificaciones, setNotificaciones] = useState(obtenerNotificaciones);
   const [cantidadPedidos, setCantidadPedidos] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]").length;
@@ -26,12 +41,15 @@ function Administrador() {
       return 0;
     }
   });
-  const [modoOscuro, setModoOscuro] = useState(false);
-  const [notificacionesLeidas, setNotificacionesLeidas] = useState({
-    stockBajo: false,
-    pedidoNuevo: false,
-    reseñaNueva: false
+  const [cantidadUsuarios, setCantidadUsuarios] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("senabella_usuarios") || "[]").filter((usuario) => usuario.rol !== "administrador").length;
+    } catch {
+      return 0;
+    }
   });
+  const [modoOscuro, setModoOscuro] = useState(false);
+  const [notificacionesLeidas, setNotificacionesLeidas] = useState({});
   
   const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
@@ -41,31 +59,15 @@ function Administrador() {
   // ==========================================
 
   useEffect(() => {
-    // Para pruebas: crear usuario admin si no existe
-    if (!localStorage.getItem("senabella_usuarios_db")) {
-      const usuariosDemo = [
-        { id: 1, nombre: "Admin Senabella", email: "admin@senabella.com", password: "admin123", rol: "administrador", fechaRegistro: "2024-01-01" },
-        { id: 2, nombre: "Usuario Demo", email: "usuario@email.com", password: "usuario123", rol: "usuario", fechaRegistro: "2024-02-15" }
-      ];
-      localStorage.setItem("senabella_usuarios_db", JSON.stringify(usuariosDemo));
-    }
-
-    // Verificar si el usuario es administrador
-    const sesionActiva = localStorage.getItem("senabella_sesion") === "activa";
-    const rolUsuario = localStorage.getItem("senabella_rol");
-
-    // Para pruebas: si no hay sesión activa, configurar automáticamente como admin
-    if (!sesionActiva) {
-      localStorage.setItem("senabella_sesion", "activa");
-      localStorage.setItem("senabella_rol", "administrador");
-    }
-
     // Modo oscuro
     if (localStorage.getItem("modoOscuro") === "activado") {
       setModoOscuro(true);
       document.body.classList.add("modo-oscuro");
     }
   }, []);
+
+  const actualizarNotificaciones = () => setNotificaciones(obtenerNotificaciones());
+  const notificacionesNoLeidas = notificaciones.filter((notificacion) => !notificacionesLeidas[notificacion.id]).length;
 
   useEffect(() => {
     const actualizarCantidadPedidos = () => {
@@ -77,7 +79,18 @@ function Administrador() {
     };
 
     window.addEventListener("storage", actualizarCantidadPedidos);
-    return () => window.removeEventListener("storage", actualizarCantidadPedidos);
+    const actualizarCantidadUsuarios = () => {
+      try {
+        setCantidadUsuarios(JSON.parse(localStorage.getItem("senabella_usuarios") || "[]").filter((usuario) => usuario.rol !== "administrador").length);
+      } catch {
+        setCantidadUsuarios(0);
+      }
+    };
+    window.addEventListener("storage", actualizarCantidadUsuarios);
+    return () => {
+      window.removeEventListener("storage", actualizarCantidadPedidos);
+      window.removeEventListener("storage", actualizarCantidadUsuarios);
+    };
   }, []);
 
   // ==========================================
@@ -161,7 +174,7 @@ function Administrador() {
     { titulo: "Catálogo", items: [
       { id: "categorias", icono: "fa-tags", texto: "Categorías" },
       { id: "proveedores", icono: "fa-truck-field", texto: "Proveedores" },
-      { id: "usuarios", icono: "fa-user-shield", texto: "Usuarios", badge: "0" },
+      { id: "usuarios", icono: "fa-user-shield", texto: "Usuarios", badge: String(cantidadUsuarios) },
     ]},
     { titulo: "Cuenta", items: [
       { id: "reportes", icono: "fa-chart-line", texto: "Reportes" },
@@ -259,67 +272,35 @@ function Administrador() {
             <div className="admin-menu-desplegable">
               <button 
                 className="admin-icono-boton admin-boton-notificaciones" 
-                onClick={() => setMenuNotificacionesAbierto(!menuNotificacionesAbierto)}
+                onClick={() => {
+                  actualizarNotificaciones();
+                  setMenuNotificacionesAbierto(!menuNotificacionesAbierto);
+                }}
                 title="Notificaciones"
               >
                 <i className="fa-solid fa-bell"></i>
-                {contadorNotificaciones > 0 && (
-                  <span className="admin-punto-badge">{contadorNotificaciones}</span>
+                {notificacionesNoLeidas > 0 && (
+                  <span className="admin-punto-badge">{notificacionesNoLeidas}</span>
                 )}
               </button>
               <div className={`admin-dropdown admin-dropdown-notificaciones${menuNotificacionesAbierto ? " mostrar" : ""}`}>
                 <div className="admin-dropdown-titulo">Notificaciones</div>
-                <a 
-                  href="#" 
-                  className={`admin-dropdown-item${!notificacionesLeidas.stockBajo ? " no-leido" : ""}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (contadorNotificaciones > 0) {
-                      setContadorNotificaciones(contadorNotificaciones - 1);
-                    }
-                    setNotificacionesLeidas(prev => ({ ...prev, stockBajo: true }));
-                  }}
-                >
-                  <i className="fa-solid fa-triangle-exclamation texto-warning"></i>
-                  <div>
-                    <strong>Stock bajo</strong>
-                    <p>4 productos están por agotarse</p>
-                  </div>
-                </a>
-                <a 
-                  href="#" 
-                  className={`admin-dropdown-item${!notificacionesLeidas.pedidoNuevo ? " no-leido" : ""}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (contadorNotificaciones > 0) {
-                      setContadorNotificaciones(contadorNotificaciones - 1);
-                    }
-                    setNotificacionesLeidas(prev => ({ ...prev, pedidoNuevo: true }));
-                  }}
-                >
-                  <i className="fa-solid fa-cart-shopping texto-info"></i>
-                  <div>
-                    <strong>Pedido nuevo</strong>
-                    <p>#SN-10482 recién se registró</p>
-                  </div>
-                </a>
-                <a 
-                  href="#" 
-                  className={`admin-dropdown-item${!notificacionesLeidas.reseñaNueva ? " no-leido" : ""}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (contadorNotificaciones > 0) {
-                      setContadorNotificaciones(contadorNotificaciones - 1);
-                    }
-                    setNotificacionesLeidas(prev => ({ ...prev, reseñaNueva: true }));
-                  }}
-                >
-                  <i className="fa-solid fa-star texto-success"></i>
-                  <div>
-                    <strong>Reseña nueva</strong>
-                    <p>Zapatillas Runner recibió 5 estrellas</p>
-                  </div>
-                </a>
+                {notificaciones.length === 0 ? <p className="admin-dropdown-item">No hay notificaciones nuevas.</p> : notificaciones.map((notificacion) => (
+                  <a
+                    href="#"
+                    key={notificacion.id}
+                    className={`admin-dropdown-item${!notificacionesLeidas[notificacion.id] ? " no-leido" : ""}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setNotificacionesLeidas((prev) => ({ ...prev, [notificacion.id]: true }));
+                      cambiarVista(notificacion.vista);
+                      setMenuNotificacionesAbierto(false);
+                    }}
+                  >
+                    <i className={`fa-solid ${notificacion.icono} ${notificacion.clase}`}></i>
+                    <div><strong>{notificacion.titulo}</strong><p>{notificacion.texto}</p></div>
+                  </a>
+                ))}
               </div>
             </div>
           </div>

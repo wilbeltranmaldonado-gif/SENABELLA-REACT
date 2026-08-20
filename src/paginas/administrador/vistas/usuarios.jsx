@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario as borrarUsuario } from "../../../utils/usuariosBd";
 
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -9,18 +10,7 @@ function Usuarios() {
     // Cargar usuarios del localStorage (simulando la base de datos)
     const cargarUsuarios = () => {
       try {
-        const datos = localStorage.getItem("senabella_usuarios_db");
-        if (datos) {
-          const usuariosDB = JSON.parse(datos);
-          setUsuarios(usuariosDB);
-        } else {
-          // Datos de ejemplo si no hay nada en localStorage
-          setUsuarios([
-            { id: 1, nombre: "Admin Senabella", email: "admin@senabella.com", rol: "administrador", fechaRegistro: "2024-01-01" },
-            { id: 2, nombre: "María García", email: "maria@email.com", rol: "usuario", fechaRegistro: "2024-02-15" },
-            { id: 3, nombre: "Juan Rodríguez", email: "juan@email.com", rol: "usuario", fechaRegistro: "2024-03-20" },
-          ]);
-        }
+        setUsuarios(obtenerUsuarios());
       } catch (e) {
         console.error("Error al cargar usuarios:", e);
       }
@@ -41,8 +31,10 @@ function Usuarios() {
     setUsuarioEditando(usuario || {
       id: null,
       nombre: "",
-      email: "",
-      rol: "usuario",
+      correo: "",
+      password: "",
+      rol: "cliente",
+      estado: "activo",
       fechaRegistro: new Date().toISOString().split('T')[0]
     });
     setModalAbierto(true);
@@ -56,41 +48,29 @@ function Usuarios() {
   const guardarUsuario = (e) => {
     e.preventDefault();
     if (usuarioEditando.id) {
-      setUsuarios(usuarios.map(u =>
-        u.id === usuarioEditando.id ? usuarioEditando : u
-      ));
+      actualizarUsuario(usuarioEditando.id, {
+        nombre: usuarioEditando.nombre,
+        correo: usuarioEditando.correo,
+        rol: usuarioEditando.rol,
+        estado: usuarioEditando.estado
+      });
     } else {
-      const nuevoUsuario = {
-        ...usuarioEditando,
-        id: Math.max(...usuarios.map(u => u.id), 0) + 1
-      };
-      setUsuarios([...usuarios, nuevoUsuario]);
+      crearUsuario(usuarioEditando);
     }
-    
-    // Guardar en localStorage
-    localStorage.setItem("senabella_usuarios_db", JSON.stringify(
-      usuarioEditando.id 
-        ? usuarios.map(u => u.id === usuarioEditando.id ? usuarioEditando : u)
-        : [...usuarios, { ...usuarioEditando, id: Math.max(...usuarios.map(u => u.id), 0) + 1 }]
-    ));
-    
+    setUsuarios(obtenerUsuarios());
     cerrarModal();
   };
 
   const eliminarUsuario = (id) => {
     if (confirm("¿Estás seguro de eliminar este usuario?")) {
-      const nuevosUsuarios = usuarios.filter(u => u.id !== id);
-      setUsuarios(nuevosUsuarios);
-      localStorage.setItem("senabella_usuarios_db", JSON.stringify(nuevosUsuarios));
+      borrarUsuario(id);
+      setUsuarios(obtenerUsuarios());
     }
   };
 
   const cambiarRol = (id, nuevoRol) => {
-    const nuevosUsuarios = usuarios.map(u =>
-      u.id === id ? { ...u, rol: nuevoRol } : u
-    );
-    setUsuarios(nuevosUsuarios);
-    localStorage.setItem("senabella_usuarios_db", JSON.stringify(nuevosUsuarios));
+    actualizarUsuario(id, { rol: nuevoRol });
+    setUsuarios(obtenerUsuarios());
   };
 
   return (
@@ -122,7 +102,7 @@ function Usuarios() {
               <tr key={usuario.id}>
                 <td>{usuario.id}</td>
                 <td>{usuario.nombre}</td>
-                <td>{usuario.email}</td>
+                <td>{usuario.correo}</td>
                 <td>
                   <span className={`admin-badge ${obtenerClaseRol(usuario.rol)}`}>
                     {usuario.rol}
@@ -139,7 +119,7 @@ function Usuarios() {
                       onChange={(e) => cambiarRol(usuario.id, e.target.value)}
                       className="admin-select-estado"
                     >
-                      <option value="usuario">Usuario</option>
+                      <option value="cliente">Cliente</option>
                       <option value="administrador">Administrador</option>
                     </select>
                     <button onClick={() => eliminarUsuario(usuario.id)}>
@@ -184,18 +164,22 @@ function Usuarios() {
                 <label>Email</label>
                 <input
                   type="email"
-                  value={usuarioEditando?.email || ""}
-                  onChange={(e) => setUsuarioEditando({...usuarioEditando, email: e.target.value})}
+                  value={usuarioEditando?.correo || ""}
+                  onChange={(e) => setUsuarioEditando({...usuarioEditando, correo: e.target.value})}
                   required
                 />
               </div>
+              {!usuarioEditando?.id && <div className="admin-form-grupo">
+                <label>Contraseña</label>
+                <input type="password" value={usuarioEditando?.password || ""} onChange={(e) => setUsuarioEditando({...usuarioEditando, password: e.target.value})} required />
+              </div>}
               <div className="admin-form-grupo">
                 <label>Rol</label>
                 <select
-                  value={usuarioEditando?.rol || "usuario"}
+                  value={usuarioEditando?.rol || "cliente"}
                   onChange={(e) => setUsuarioEditando({...usuarioEditando, rol: e.target.value})}
                 >
-                  <option value="usuario">Usuario</option>
+                  <option value="cliente">Cliente</option>
                   <option value="administrador">Administrador</option>
                 </select>
               </div>

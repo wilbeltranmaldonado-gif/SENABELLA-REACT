@@ -48,7 +48,9 @@ function Catalogo() {
     referencia: producto.categoria,
     precioNumero: Number(String(producto.precio).replace(/[^\d]/g, "")) || 0,
   }));
-  const productosDisponibles = [...productosAdministrados, ...productosIniciales];
+  const productosDisponibles = Array.from(
+    new Map([...productosAdministrados, ...productosIniciales].map((producto) => [producto.nombre, producto])).values()
+  );
   
   // ==========================================
   // LÓGICA DE FILTRADO
