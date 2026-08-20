@@ -233,7 +233,7 @@ function Parejas() {
         <section className="productos-parejas">
           <div className="productos-encabezado">
             <h2>Productos para parejas</h2>
-            <Link to="/catalogo_ropa_accesorios" className="btn btn-outline-primary btn-sm">Ver todo</Link>
+            <Link to="/catalogo-ropa-accesorios" className="btn btn-outline-primary btn-sm">Ver todo</Link>
           </div>
 
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 productos-parejas-grid">
