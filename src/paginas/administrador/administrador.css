@@ -2299,6 +2299,75 @@ body.cuerpo-admin.modo-oscuro .admin-buscador input {
   color: #ffffff !important;
 }
 
+body.cuerpo-admin.modo-oscuro .admin-icono-boton {
+  background-color: #242424 !important;
+  border-color: #444444 !important;
+  color: #f1f1f1 !important;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-icono-boton:hover {
+  background-color: #333333 !important;
+  color: var(--primary-color) !important;
+}
+
+/* La clase cuerpo-admin del body solo identifica el tema; el layout vive en el div raíz. */
+body.cuerpo-admin {
+  display: block !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  overflow-x: hidden !important;
+}
+
+/* Superficies generales que deben cambiar junto con el tema. */
+body.cuerpo-admin.modo-oscuro .admin-main,
+body.cuerpo-admin.modo-oscuro .admin-contenido,
+body.cuerpo-admin.modo-oscuro .admin-sidebar,
+body.cuerpo-admin.modo-oscuro .admin-sidebar-footer,
+body.cuerpo-admin.modo-oscuro .admin-nav-item:hover,
+body.cuerpo-admin.modo-oscuro .admin-nav-item.activo {
+  background-color: #121212 !important;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-sidebar {
+  background: linear-gradient(180deg, #101318 0%, #090b0f 100%) !important;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-tarjeta,
+body.cuerpo-admin.modo-oscuro .admin-kpi,
+body.cuerpo-admin.modo-oscuro .admin-grid-tablas,
+body.cuerpo-admin.modo-oscuro .admin-tabla-contenedor,
+body.cuerpo-admin.modo-oscuro .admin-formulario,
+body.cuerpo-admin.modo-oscuro .admin-panel,
+body.cuerpo-admin.modo-oscuro .admin-categoria-tarjeta,
+body.cuerpo-admin.modo-oscuro .admin-proveedor-card,
+body.cuerpo-admin.modo-oscuro .admin-usuario-card {
+  background-color: #1b1b1b !important;
+  border-color: #333333 !important;
+  color: #f1f1f1 !important;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-tabla,
+body.cuerpo-admin.modo-oscuro .admin-tabla tbody tr,
+body.cuerpo-admin.modo-oscuro .admin-tabla thead tr {
+  background-color: #1b1b1b !important;
+  color: #f1f1f1 !important;
+  border-color: #333333 !important;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-tabla th,
+body.cuerpo-admin.modo-oscuro .admin-tabla td,
+body.cuerpo-admin.modo-oscuro .admin-texto-muted,
+body.cuerpo-admin.modo-oscuro .admin-nav-titulo,
+body.cuerpo-admin.modo-oscuro .admin-sidebar-footer a {
+  color: #c4c4c4 !important;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-form-grupo input::placeholder,
+body.cuerpo-admin.modo-oscuro .admin-form-grupo textarea::placeholder,
+body.cuerpo-admin.modo-oscuro .admin-buscador input::placeholder {
+  color: #8d8d8d !important;
+}
+
 body.cuerpo-admin.modo-oscuro .admin-titulo-vista,
 body.cuerpo-admin.modo-oscuro .admin-bienvenida h2,
 body.cuerpo-admin.modo-oscuro .admin-tarjeta-header h3,
