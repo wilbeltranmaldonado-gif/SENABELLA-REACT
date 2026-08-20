@@ -7,6 +7,7 @@ import {
   categoriasListaLateralRopa,
   productosRopaAccesorios,
 } from "../../datos";
+import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 
 function CatalogoRopaAccesorios() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -100,14 +101,35 @@ function CatalogoRopaAccesorios() {
     setPaginaActual(1);
   };
 
-  const handleFavorito = (e) => {
+  const handleFavorito = (e, prod) => {
     e.preventDefault();
     e.stopPropagation();
-    e.target.classList.toggle("fa-solid");
-    e.target.classList.toggle("fa-regular");
-    e.target.style.color = e.target.classList.contains("fa-solid")
-      ? "#e63946"
-      : "";
+    
+    iniciarFavoritosGlobal();
+    
+    const esFav = window.SenabellaFavoritos.toggleFavorito({
+      nombre: prod.nombre,
+      marca: prod.marca || "SENABELLA",
+      imagen: prod.imagen,
+      precio: prod.precio,
+      descuento: prod.descuento,
+      etiqueta: prod.etiqueta,
+      referencia: prod.referencia,
+      precioSecundario: prod.precioSecundario,
+      precioSecundario1: prod.precioSecundario1
+    });
+
+    e.target.classList.toggle("fa-solid", esFav);
+    e.target.classList.toggle("fa-regular", !esFav);
+    e.target.style.color = esFav ? "#e63946" : "";
+
+    if (window.SenabellaToast) {
+      window.SenabellaToast(
+        esFav ? "Agregado a favoritos" : "Eliminado de favoritos",
+        esFav ? "fa-heart" : "fa-heart-crack",
+        "exito"
+      );
+    }
   };
 
   const handleAgregarAlCarrito = (prod) => {
@@ -443,7 +465,8 @@ function CatalogoRopaAccesorios() {
                 </div>
                 <i
                   className="fa-regular fa-heart favorite-btn"
-                  onClick={handleFavorito}
+                  onClick={(e) => handleFavorito(e, prod)}
+                  style={{ cursor: 'pointer' }}
                 ></i>
                 <div>
                   <div className="metodo">

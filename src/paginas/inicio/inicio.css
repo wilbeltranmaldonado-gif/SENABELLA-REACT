@@ -692,106 +692,7 @@ main.container {
 }
 
 
-/* =========================================================
-   TOAST
-   ========================================================= */
 
-.toast-senabella {
-  position: fixed;
-
-  top: 20px;
-  right: 20px;
-
-  z-index: 11000;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 14px 20px;
-
-  background: #fff;
-
-  border-radius: 12px;
-
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.12);
-
-  min-width: 280px;
-  max-width: 400px;
-
-  border-left: 4px solid #27ae60;
-
-  animation: toastEntrada 0.35s ease;
-}
-
-@keyframes toastEntrada {
-  from {
-    transform: translateX(120%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-.toast-senabella span {
-  flex: 1;
-
-  font-size: 0.85rem;
-
-  font-weight: 500;
-
-  color: #333;
-}
-
-.toast-senabella > i {
-  font-size: 1.1rem;
-
-  flex-shrink: 0;
-}
-
-.toast-senabella button {
-  background: none;
-
-  border: none;
-
-  color: #999;
-
-  cursor: pointer;
-
-  padding: 2px;
-
-  font-size: 0.8rem;
-}
-
-.toast-exito {
-  border-left-color: #27ae60;
-}
-
-.toast-exito > i {
-  color: #27ae60;
-}
-
-.toast-info {
-  border-left-color: #3498db;
-}
-
-.toast-info > i {
-  color: #3498db;
-}
-
-.toast-advertencia {
-  border-left-color: #f39c12;
-}
-
-.toast-advertencia > i {
-  color: #f39c12;
-}
 
 
 /* =========================================================
@@ -1026,16 +927,6 @@ body.modo-oscuro .modal-beneficios div {
   color: #999;
 }
 
-body.modo-oscuro .toast-senabella {
-  background: #2a2a2a;
-
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.4);
-}
-
-body.modo-oscuro .toast-senabella span {
-  color: #ddd;
-}
 
 
 /* =========================================================
@@ -1104,13 +995,6 @@ body.modo-oscuro .toast-senabella span {
     flex-direction: column;
   }
 
-  .toast-senabella {
-    left: 10px;
-    right: 10px;
-
-    min-width: auto;
-    max-width: none;
-  }
 
   #btn-volver-arriba {
     right: 20px;

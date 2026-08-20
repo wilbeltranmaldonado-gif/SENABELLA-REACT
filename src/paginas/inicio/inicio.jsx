@@ -13,19 +13,12 @@ function Inicio() {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [productoModal, setProductoModal] = useState(null);
   const [cantidad, setCantidad] = useState(1);
-  const [toast, setToast] = useState(null);
   const [mostrarArriba, setMostrarArriba] = useState(false);
-
-  // ==========================================
-  // TOAST
-  // ==========================================
-
   const mostrarToast = (mensaje, tipo = "exito") => {
-    setToast({ mensaje, tipo });
-
-    setTimeout(() => {
-      setToast(null);
-    }, 3500);
+    if (window.SenabellaToast) {
+      const icono = tipo === "info" ? "fa-circle-info" : tipo === "advertencia" ? "fa-triangle-exclamation" : "fa-circle-check";
+      window.SenabellaToast(mensaje, icono, tipo);
+    }
   };
 
   // ==========================================
@@ -603,33 +596,7 @@ function Inicio() {
 
       )}
 
-      {/* ==========================================
-          TOAST
-      ========================================== */}
 
-      {toast && (
-        <div className={`toast-senabella toast-${toast.tipo} toast-visible`}>
-
-          <i
-            className={`fa-solid ${
-              toast.tipo === "info"
-                ? "fa-circle-info"
-                : toast.tipo === "advertencia"
-                ? "fa-triangle-exclamation"
-                : "fa-circle-check"
-            }`}
-          ></i>
-
-          <span>
-            {toast.mensaje}
-          </span>
-
-          <button onClick={() => setToast(null)}>
-            <i className="fa-solid fa-xmark"></i>
-          </button>
-
-        </div>
-      )}
 
       {/* ==========================================
           VOLVER ARRIBA
