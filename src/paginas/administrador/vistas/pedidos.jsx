@@ -77,6 +77,27 @@ function Pedidos() {
     setPedidoSeleccionado(null);
   };
 
+  const handleEliminarPedido = (id) => {
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar el pedido ${id}? Esta acción no se puede deshacer.`)) {
+      return;
+    }
+    setPedidos((pedidosActuales) => {
+      const base = pedidosActuales.length ? pedidosActuales : pedidosDemo;
+      const actualizados = base.filter((p) => {
+        const identificador = p.id || p.numero;
+        return identificador !== id;
+      });
+      localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+      window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event("senabella_orders_updated"));
+      return actualizados;
+    });
+    setPedidoSeleccionado(null);
+    if (window.SenabellaToast) {
+      window.SenabellaToast(`Pedido ${id} eliminado correctamente`, "fa-trash-can", "exito");
+    }
+  };
+
   return (
     <div className="vista-pedidos">
       <div className="admin-cabecera-vista">
@@ -155,6 +176,13 @@ function Pedidos() {
                       <option value="completado">Completado</option>
                       <option value="cancelado">Cancelado</option>
                     </select>
+                    <button
+                      className="admin-boton-icono admin-boton-eliminar"
+                      title="Eliminar pedido"
+                      onClick={() => handleEliminarPedido(identificador)}
+                    >
+                      <i className="fa-solid fa-trash-can"></i>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -177,6 +205,7 @@ function Pedidos() {
           pedido={pedidoSeleccionado}
           alCerrar={() => setPedidoSeleccionado(null)}
           alGuardar={guardarPedidoEditado}
+          alEliminar={handleEliminarPedido}
         />
       )}
     </div>
