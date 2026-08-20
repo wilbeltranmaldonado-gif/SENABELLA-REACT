@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
+import { obtenerPedidosAdmin } from "../../../datos";
 
 function obtenerDatosReporte() {
   try {
-    const pedidos = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+    const pedidos = obtenerPedidosAdmin();
     const usuarios = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
     const ingresos = pedidos.reduce((total, pedido) => total + (Number(String(pedido.total || "").replace(/[^\d]/g, "")) || 0), 0);
     const completados = pedidos.filter((pedido) => pedido.estado === "completado").length;
     return { pedidos, ingresos, completados, usuarios: usuarios.filter((usuario) => usuario.rol !== "administrador").length };
   } catch {
-    return { pedidos: [], ingresos: 0, completados: 0, usuarios: 0 };
+    return { pedidos: obtenerPedidosAdmin(), ingresos: 0, completados: 0, usuarios: 0 };
   }
 }
 
@@ -21,7 +22,11 @@ function Reportes() {
     const actualizarDatos = () => setDatos(obtenerDatosReporte());
     actualizarDatos();
     window.addEventListener("storage", actualizarDatos);
-    return () => window.removeEventListener("storage", actualizarDatos);
+    window.addEventListener("senabella_orders_updated", actualizarDatos);
+    return () => {
+      window.removeEventListener("storage", actualizarDatos);
+      window.removeEventListener("senabella_orders_updated", actualizarDatos);
+    };
   }, []);
 
   const promedio = datos.pedidos.length ? Math.round(datos.ingresos / datos.pedidos.length) : 0;

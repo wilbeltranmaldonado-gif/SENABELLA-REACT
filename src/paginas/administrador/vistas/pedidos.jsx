@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { obtenerPedidosAdmin, pedidosDemo } from "../../../datos";
+import ModalEditarPedido from "./modalEditarPedido";
 
 function Pedidos() {
   const normalizarOrdenes = (ordenes) => ordenes.map((orden) => ({
@@ -6,40 +8,23 @@ function Pedidos() {
     estado: orden.estado === "pendiente-verificacion" ? "pendiente" : orden.estado
   }));
 
-  const pedidosDemo = [
-    { id: "#SN-10482", cliente: "María García", email: "maria@email.com", total: "$125.00", estado: "completado", fecha: "2024-08-19", items: 3 },
-    { id: "#SN-10481", cliente: "Juan Rodríguez", email: "juan@email.com", total: "$89.50", estado: "procesando", fecha: "2024-08-19", items: 2 },
-    { id: "#SN-10480", cliente: "Ana Martínez", email: "ana@email.com", total: "$234.00", estado: "pendiente", fecha: "2024-08-18", items: 5 },
-    { id: "#SN-10479", cliente: "Carlos López", email: "carlos@email.com", total: "$56.00", estado: "completado", fecha: "2024-08-18", items: 1 },
-    { id: "#SN-10478", cliente: "Laura Sánchez", email: "laura@email.com", total: "$178.00", estado: "enviado", fecha: "2024-08-17", items: 4 },
-    { id: "#SN-10477", cliente: "Pedro González", email: "pedro@email.com", total: "$312.00", estado: "cancelado", fecha: "2024-08-17", items: 6 },
-  ];
-  const [pedidos, setPedidos] = useState(() => {
-    try {
-      const ordenes = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
-      return ordenes.length ? normalizarOrdenes(ordenes) : pedidosDemo;
-    } catch {
-      return pedidosDemo;
-    }
-  });
-
-  useEffect(() => {
-    const actualizarPedidos = () => {
-      try {
-        const ordenes = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
-        if (ordenes.length) setPedidos(normalizarOrdenes(ordenes));
-      } catch {
-        // Conserva los datos mostrados si el almacenamiento está incompleto.
-      }
-    };
-    actualizarPedidos();
-    window.addEventListener("storage", actualizarPedidos);
-    return () => window.removeEventListener("storage", actualizarPedidos);
-  }, []);
-
+  const [pedidos, setPedidos] = useState(() => normalizarOrdenes(obtenerPedidosAdmin()));
   const [filtroEstado, setFiltroEstado] = useState("todos");
   const [busqueda, setBusqueda] = useState("");
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
+
+  useEffect(() => {
+    const actualizarPedidos = () => {
+      setPedidos(normalizarOrdenes(obtenerPedidosAdmin()));
+    };
+    actualizarPedidos();
+    window.addEventListener("storage", actualizarPedidos);
+    window.addEventListener("senabella_orders_updated", actualizarPedidos);
+    return () => {
+      window.removeEventListener("storage", actualizarPedidos);
+      window.removeEventListener("senabella_orders_updated", actualizarPedidos);
+    };
+  }, []);
 
   const obtenerClaseEstado = (estado) => {
     const clases = {
@@ -64,21 +49,32 @@ function Pedidos() {
 
   const cambiarEstado = (id, nuevoEstado) => {
     setPedidos((pedidosActuales) => {
-      const pedidosActualizados = pedidosActuales.map((pedido) => {
-      const identificador = pedido.id || pedido.numero;
-      return identificador === id ? { ...pedido, estado: nuevoEstado } : pedido;
+      const base = pedidosActuales.length ? pedidosActuales : pedidosDemo;
+      const pedidosActualizados = base.map((pedido) => {
+        const identificador = pedido.id || pedido.numero;
+        return identificador === id ? { ...pedido, estado: nuevoEstado } : pedido;
       });
-      const ordenesGuardadas = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
-      if (ordenesGuardadas.length) {
-        localStorage.setItem("senabella_admin_orders", JSON.stringify(
-          ordenesGuardadas.map((orden) => {
-            const identificador = orden.id || orden.numero;
-            return identificador === id ? { ...orden, estado: nuevoEstado } : orden;
-          })
-        ));
-      }
+      localStorage.setItem("senabella_admin_orders", JSON.stringify(pedidosActualizados));
+      window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event("senabella_orders_updated"));
       return pedidosActualizados;
     });
+  };
+
+  const guardarPedidoEditado = (pedidoActualizado) => {
+    const id = pedidoActualizado.id || pedidoActualizado.numero;
+    setPedidos((pedidosActuales) => {
+      const base = pedidosActuales.length ? pedidosActuales : pedidosDemo;
+      const actualizados = base.map((p) => {
+        const identificador = p.id || p.numero;
+        return identificador === id ? pedidoActualizado : p;
+      });
+      localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+      window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event("senabella_orders_updated"));
+      return actualizados;
+    });
+    setPedidoSeleccionado(null);
   };
 
   return (
@@ -143,7 +139,7 @@ function Pedidos() {
                   <div className="admin-acciones-tabla">
                     <button
                       className="admin-boton-icono"
-                      title="Ver detalles"
+                      title="Ver y editar detalles del pedido"
                       onClick={() => setPedidoSeleccionado(pedido)}
                     >
                       <i className="fa-solid fa-eye"></i>
@@ -175,41 +171,13 @@ function Pedidos() {
         </div>
       )}
 
+      {/* MODAL MINIMALISTA Y EDITABLE DE DETALLES DEL PEDIDO */}
       {pedidoSeleccionado && (
-        <div className="admin-modal-overlay" onClick={() => setPedidoSeleccionado(null)}>
-          <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-modal-cabecera">
-              <h3>Detalle del pedido {pedidoSeleccionado.numero || pedidoSeleccionado.id}</h3>
-              <button onClick={() => setPedidoSeleccionado(null)} title="Cerrar">
-                <i className="fa-solid fa-xmark"></i>
-              </button>
-            </div>
-            <div className="admin-modal-cuerpo">
-              <p><strong>Cliente:</strong> {pedidoSeleccionado.cliente?.nombre || pedidoSeleccionado.cliente || "Cliente"}</p>
-              <p><strong>Email:</strong> {pedidoSeleccionado.cliente?.email || pedidoSeleccionado.email || "-"}</p>
-              <p><strong>Envío:</strong> {pedidoSeleccionado.direccion || "-"}{pedidoSeleccionado.ciudad ? `, ${pedidoSeleccionado.ciudad}` : ""}</p>
-              <p><strong>Estado:</strong> {pedidoSeleccionado.estado}</p>
-              <h4>Comprobante de pago</h4>
-              {pedidoSeleccionado.comprobante ? (
-                <img
-                  src={pedidoSeleccionado.comprobante}
-                  alt="Comprobante de pago"
-                  style={{ maxWidth: "100%", maxHeight: "320px", objectFit: "contain", display: "block", margin: "0 auto" }}
-                />
-              ) : <p>Este pedido no tiene comprobante adjunto.</p>}
-              <h4>Productos</h4>
-              {pedidoSeleccionado.productos?.length ? (
-                <ul>
-                  {pedidoSeleccionado.productos.map((producto, index) => (
-                    <li key={`${producto.nombre}-${index}`}>
-                      {producto.nombre} x {producto.cantidad || 1}
-                    </li>
-                  ))}
-                </ul>
-              ) : <p>Este pedido no tiene productos detallados.</p>}
-            </div>
-          </div>
-        </div>
+        <ModalEditarPedido
+          pedido={pedidoSeleccionado}
+          alCerrar={() => setPedidoSeleccionado(null)}
+          alGuardar={guardarPedidoEditado}
+        />
       )}
     </div>
   );
