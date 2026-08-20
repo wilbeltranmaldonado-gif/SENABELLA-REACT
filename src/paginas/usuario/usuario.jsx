@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./usuario.css";
 
 function Usuario() {
@@ -10,6 +10,13 @@ function Usuario() {
   const [mensajeEnvio, setMensajeEnvio] = useState({ texto: "", tipo: "" });
   
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.seccion) {
+      setSeccionActiva(location.state.seccion);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     // Verificar sesión
