@@ -62,7 +62,7 @@ function Catalogo() {
 
   const productosAdministrados = productosAdmin.map((producto) => ({
     ...producto,
-    marca: "SENABELLA",
+    marca: producto.marca || "SENABELLA",
     imagen: producto.imagen || imagenFallback,
     referencia: producto.categoria,
     precioNumero: Number(String(producto.precio).replace(/[^\d]/g, "")) || 0,
