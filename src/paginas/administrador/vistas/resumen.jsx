@@ -140,7 +140,7 @@ function Resumen() {
     };
   }, []);
 
-  // Datos de ejemplo para las tarjetas
+  // Datos para las tarjetas
   const estadisticas = [
     {
       titulo: "Ventas totales",
@@ -169,7 +169,7 @@ function Resumen() {
     {
       titulo: "Productos",
       valor: String(datos.productos),
-      cambio: "en catálogo",
+      cambio: null,
       positivo: false,
       icono: "fa-box",
       color: "orange"
@@ -292,10 +292,12 @@ function Resumen() {
             <div className="admin-tarjeta-contenido">
               <h3>{stat.titulo}</h3>
               <p className="admin-tarjeta-valor">{stat.valor}</p>
-              <p className={`admin-tarjeta-cambio ${stat.positivo ? "positivo" : "negativo"}`}>
-                <i className={`fa-solid ${stat.positivo ? "fa-arrow-up" : "fa-arrow-down"}`}></i>
-                {stat.cambio}
-              </p>
+              {stat.cambio ? (
+                <p className={`admin-tarjeta-cambio ${stat.positivo ? "positivo" : "negativo"}`}>
+                  <i className={`fa-solid ${stat.positivo ? "fa-arrow-up" : "fa-arrow-down"}`}></i>
+                  {stat.cambio}
+                </p>
+              ) : null}
             </div>
           </div>
         ))}
