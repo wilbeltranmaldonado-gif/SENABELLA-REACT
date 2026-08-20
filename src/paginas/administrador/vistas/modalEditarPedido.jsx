@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-function ModalEditarPedido({ pedido, alCerrar, alGuardar }) {
+function ModalEditarPedido({ pedido, alCerrar, alGuardar, alEliminar }) {
   const [formData, setFormData] = useState(() => {
     const clienteNombre = pedido.cliente?.nombre || pedido.cliente || "";
     const email = pedido.cliente?.email || pedido.email || "";
@@ -444,6 +444,21 @@ function ModalEditarPedido({ pedido, alCerrar, alGuardar }) {
               <strong>{formData.total}</strong>
             </div>
             <div className="modal-pedido-botones-accion">
+              {alEliminar && (
+                <button
+                  type="button"
+                  className="admin-boton admin-boton-peligro"
+                  onClick={() => {
+                    if (window.confirm(`¿Estás seguro de que deseas eliminar permanentemente el pedido ${formData.id || formData.numero}?`)) {
+                      alEliminar(formData.id || formData.numero);
+                    }
+                  }}
+                  disabled={guardando}
+                  title="Eliminar este pedido permanentemente"
+                >
+                  <i className="fa-solid fa-trash-can"></i> Eliminar Pedido
+                </button>
+              )}
               <button
                 type="button"
                 className="admin-boton admin-boton-secundario"

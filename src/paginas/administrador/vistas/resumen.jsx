@@ -41,6 +41,24 @@ function Resumen() {
     setPedidoSeleccionado(null);
   };
 
+  const handleEliminarPedido = (id) => {
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar el pedido ${id}? Esta acción no se puede deshacer.`)) {
+      return;
+    }
+    const base = datos.pedidos.length ? datos.pedidos : pedidosDemo;
+    const actualizados = base.filter((p) => {
+      const identificador = p.id || p.numero;
+      return identificador !== id;
+    });
+    localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new Event("senabella_orders_updated"));
+    setPedidoSeleccionado(null);
+    if (window.SenabellaToast) {
+      window.SenabellaToast(`Pedido ${id} eliminado correctamente`, "fa-trash-can", "exito");
+    }
+  };
+
   useEffect(() => {
     const actualizarDatos = () => setDatos(cargarDatosDashboard());
     actualizarDatos();
@@ -370,6 +388,7 @@ function Resumen() {
           pedido={pedidoSeleccionado}
           alCerrar={() => setPedidoSeleccionado(null)}
           alGuardar={guardarPedidoEditado}
+          alEliminar={handleEliminarPedido}
         />
       )}
 
