@@ -1,0 +1,598 @@
+/* ==========================================
+   FAVORITOS — SENABELLA
+   ========================================== */
+
+/* HERO */
+.favoritos-hero {
+  background: linear-gradient(135deg, #fff 60%, #f0f7e0 100%);
+  border-bottom: 2px solid #eaf2c8;
+  padding: 30px 20px 24px;
+}
+
+.favoritos-hero-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.favoritos-hero-icono {
+  font-size: 2.4rem;
+  color: #e74c3c;
+  filter: drop-shadow(0 2px 8px rgba(231, 76, 60, 0.25));
+}
+
+.favoritos-titulo {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0 0 4px 0;
+}
+
+.favoritos-subtitulo {
+  font-size: 0.95rem;
+  color: #777;
+  margin: 0;
+}
+
+/* MAIN */
+.favoritos-main {
+  max-width: 1200px;
+  width: 95%;
+  margin: 24px auto 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* SECCIÓN PRINCIPAL */
+.favoritos-seccion {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ESTADO VACÍO */
+.favoritos-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 16px;
+}
+
+.favoritos-vacio-icono {
+  font-size: 4rem;
+  color: #e0e0e0;
+}
+
+.favoritos-vacio-titulo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.favoritos-vacio-texto {
+  font-size: 0.95rem;
+  color: #777;
+  max-width: 400px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.favoritos-btn-catalogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #aad100, #84b814);
+  color: #1a1a2e;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 12px 28px;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  margin-top: 8px;
+}
+
+.favoritos-btn-catalogo:hover {
+  background: linear-gradient(135deg, #96b800, #7aa010);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(132, 184, 20, 0.35);
+  color: #1a1a2e;
+}
+
+/* BARRA DE HERRAMIENTAS */
+.favoritos-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.favoritos-contador {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.favoritos-barra-der {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.favoritos-orden-label {
+  font-size: 0.88rem;
+  color: #777;
+}
+
+.favoritos-orden-select {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #333;
+  padding: 4px 6px;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.favoritos-btn-limpiar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px solid #e74c3c;
+  color: #e74c3c;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.favoritos-btn-limpiar:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* GRID DE TARJETAS */
+.favoritos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* TARJETA FAVORITO */
+.fav-tarjeta {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.fav-tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Botón quitar favorito */
+.fav-btn-quitar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #e74c3c;
+  background: #fdecea;
+  color: #e74c3c;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.fav-btn-quitar:hover {
+  background: #e74c3c;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Badge promoción */
+.fav-promocion {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #7bf000;
+  color: #000;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 2px;
+  z-index: 2;
+}
+
+/* Imagen */
+.fav-imagen {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  padding: 14px;
+  transition: transform 0.3s ease;
+}
+
+.fav-tarjeta:hover .fav-imagen {
+  transform: scale(1.06);
+}
+
+/* Etiquetas */
+.fav-etiquetas {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.fav-etiqueta {
+  background-color: #000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.fav-etiqueta-envio {
+  background-color: #e5f7ed;
+  color: #00a650;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+/* Texto producto */
+.fav-marca {
+  font-size: 12px;
+  font-weight: bold;
+  color: #999;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.fav-nombre {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  flex: 1;
+}
+
+.fav-referencia {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fav-verificado {
+  color: #00a650;
+  font-size: 12px;
+}
+
+/* Métodos de pago */
+.fav-metodo {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.fav-metodo span {
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.fav-unica  { background-color: #e60000; }
+.fav-cmr    { background-color: #00a650; }
+.fav-debito { background-color: #333; }
+
+/* Precio */
+.fav-precio {
+  font-size: 18px;
+  font-weight: bold;
+  color: #e60000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.fav-descuento {
+  background-color: #e60000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.fav-precio-secundario {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+  margin-bottom: 8px;
+}
+
+/* Botón carrito */
+.fav-btn-carrito {
+  width: 100%;
+  background: linear-gradient(135deg, #aad100, #84b814);
+  color: #1a1a2e;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.fav-btn-carrito:hover {
+  background: linear-gradient(135deg, #96b800, #7aa010);
+  transform: scale(1.02);
+}
+
+/* ==========================================
+   SUGERENCIAS
+   ========================================== */
+.favoritos-sugerencias {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.favoritos-sugerencias-titulo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0 0 20px 0;
+}
+
+.favoritos-sugerencias-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.fav-sugerencia-tarjeta {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 16px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fav-sugerencia-tarjeta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fav-sugerencia-imagen {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.fav-sugerencia-tarjeta:hover .fav-sugerencia-imagen {
+  transform: scale(1.05);
+}
+
+.fav-sugerencia-marca {
+  font-size: 11px;
+  font-weight: bold;
+  color: #aaa;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.fav-sugerencia-nombre {
+  font-size: 13px;
+  color: #333;
+  margin: 0 0 10px;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.fav-sugerencia-precio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.fav-sugerencia-precio-texto {
+  font-size: 16px;
+  font-weight: bold;
+  color: #e60000;
+  margin: 0;
+}
+
+.fav-sugerencia-descuento {
+  background-color: #e60000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.fav-sugerencia-acciones {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+}
+
+.fav-sugerencia-btn-carrito {
+  flex: 1;
+  background: linear-gradient(135deg, #aad100, #84b814);
+  color: #1a1a2e;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.fav-sugerencia-btn-carrito:hover {
+  background: linear-gradient(135deg, #96b800, #7aa010);
+}
+
+.fav-sugerencia-btn-fav {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  color: #999;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.fav-sugerencia-btn-fav:hover {
+  border-color: #e74c3c;
+  color: #e74c3c;
+  transform: scale(1.1);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 1100px) {
+  .favoritos-grid,
+  .favoritos-sugerencias-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .favoritos-titulo {
+    font-size: 1.5rem;
+  }
+
+  .favoritos-barra {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .favoritos-grid,
+  .favoritos-sugerencias-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .fav-imagen {
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favoritos-grid,
+  .favoritos-sugerencias-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fav-imagen {
+    height: 200px;
+  }
+
+  .favoritos-barra-der {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================
+   TOAST EN FAVORITOS
+   ========================================== */
+.toast-senabella {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+  min-width: 240px;
+  max-width: 340px;
+  width: auto;
+  border-left: 4px solid #27ae60;
+  animation: favToastEntrada 0.3s ease;
+  box-sizing: border-box;
+}
+
+@keyframes favToastEntrada {
+  from { transform: translateX(110%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.toast-senabella i { font-size: 1rem; flex-shrink: 0; color: #27ae60; }
+.toast-senabella span { flex: 1; font-size: 0.83rem; font-weight: 500; color: #333; }
+.toast-senabella .toast-cerrar { background: none; border: none; color: #999; cursor: pointer; font-size: 0.8rem; padding: 2px; }
+.toast-exito { border-left-color: #27ae60; }
+.toast-info  { border-left-color: #3498db; }
+

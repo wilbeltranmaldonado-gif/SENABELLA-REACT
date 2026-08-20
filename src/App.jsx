@@ -14,6 +14,7 @@ import Login from "./paginas/login/login";
 import Usuario from "./paginas/usuario/usuario";
 import Contacto from "./paginas/contacto/contacto";
 import Soporte from "./paginas/soporte/soporte";
+import Favoritos from "./paginas/favoritos/favoritos";
 
 function App() {
     const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/usuario" element={<Usuario />} />
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/soporte" element={<Soporte />} />
+                <Route path="/favoritos" element={<Favoritos />} />
             </Routes>
 
             {!esRutaAdministrador && <PieDePagina />}

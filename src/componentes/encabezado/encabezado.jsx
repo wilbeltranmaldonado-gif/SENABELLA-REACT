@@ -326,9 +326,9 @@ export default function Header() {
             </div>
           </div>
 
-          <a href="favoritos.html">
+          <Link to="/favoritos">
             <i className="fa-regular fa-heart icono-corazon"></i>
-          </a>
+          </Link>
 
           <Link to="/carrito" className="icono-carrito">
             <i className="fa-solid fa-cart-shopping"></i>

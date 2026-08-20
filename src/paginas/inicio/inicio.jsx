@@ -7,6 +7,7 @@ import {
   promocionesInicio as promociones,
   bannersInicio as banners,
 } from "../../datos";
+import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 
 function Inicio() {
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -49,6 +50,7 @@ function Inicio() {
   // ==========================================
 
   useEffect(() => {
+    iniciarFavoritosGlobal(); // Inicializar favoritos globales al montar
     const manejarScroll = () => {
       setMostrarArriba(window.scrollY > 400);
     };
@@ -332,19 +334,25 @@ function Inicio() {
                       className="fa-regular fa-heart favorite-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (window.SenabellaFavoritos) {
-                          window.SenabellaFavoritos.agregar({
-                            nombre: producto.nombre,
-                            marca: "SENABELLA",
-                            imagen: producto.imagen,
-                            precioTexto: producto.precio,
-                            referencia: "TECNO"
-                          });
+                        // Inicializar y usar el sistema global de favoritos
+                        if (!window.SenabellaFavoritos) {
+                          import("../favoritos/favoritos").then(m => m.iniciarFavoritosGlobal());
                         }
-                        mostrarToast("Agregado a favoritos", "exito");
-                        e.currentTarget.classList.remove('fa-regular');
-                        e.currentTarget.classList.add('fa-solid');
-                        e.currentTarget.style.color = '#e63946';
+                        const esFav = window.SenabellaFavoritos
+                          ? window.SenabellaFavoritos.toggleFavorito({
+                              nombre: producto.nombre,
+                              marca: "SENABELLA",
+                              imagen: producto.imagen,
+                              precio: producto.precio,
+                            })
+                          : false;
+                        mostrarToast(
+                          esFav ? "Agregado a favoritos" : "Eliminado de favoritos",
+                          "exito"
+                        );
+                        e.currentTarget.classList.toggle('fa-regular');
+                        e.currentTarget.classList.toggle('fa-solid');
+                        e.currentTarget.style.color = e.currentTarget.classList.contains('fa-solid') ? '#e63946' : '';
                       }}
                       title="Agregar a Favoritos"
                     ></i>

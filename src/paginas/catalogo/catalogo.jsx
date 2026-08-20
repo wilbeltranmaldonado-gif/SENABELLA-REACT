@@ -7,6 +7,7 @@ import {
   marcasBotones,
   categoriasListaLateral,
 } from "../../datos";
+import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 
 function Catalogo() {
   const [paginaActual, setPaginaActual] = useState(1);
@@ -54,11 +55,34 @@ function Catalogo() {
     setPaginaActual(1);
   };
 
-  const agregarFavorito = (e) => {
+  const agregarFavorito = (e, prod) => {
     e.preventDefault();
-    e.target.classList.toggle("fa-solid");
-    e.target.classList.toggle("fa-regular");
-    e.target.style.color = e.target.classList.contains("fa-solid") ? "#e63946" : "";
+    e.stopPropagation();
+    // Inicializar si aún no está disponible
+    iniciarFavoritosGlobal();
+    const esFav = window.SenabellaFavoritos.toggleFavorito({
+      nombre: prod.nombre,
+      marca: prod.marca || "SENABELLA",
+      imagen: prod.imagen,
+      precio: prod.precio,
+      descuento: prod.descuento,
+      etiqueta: prod.etiqueta,
+      envioGratis: prod.envioGratis,
+      referencia: prod.referencia,
+      verificado: prod.verificado,
+      precioSecundario: prod.precioSecundario,
+      promocion: prod.promocion,
+    });
+    e.target.classList.toggle("fa-solid", esFav);
+    e.target.classList.toggle("fa-regular", !esFav);
+    e.target.style.color = esFav ? "#e63946" : "";
+    if (window.SenabellaToast) {
+      window.SenabellaToast(
+        esFav ? "Agregado a favoritos" : "Eliminado de favoritos",
+        esFav ? "fa-heart" : "fa-heart-crack",
+        "exito"
+      );
+    }
   };
 
   const handleAgregarAlCarrito = (prod) => {
@@ -287,7 +311,7 @@ function Catalogo() {
                   {prod.referencia} {prod.verificado && <i className="fa-solid fa-check-circle"></i>}
                 </div>
                 
-                <i className="fa-regular fa-heart favorite-btn" onClick={agregarFavorito} style={{ cursor: 'pointer' }}></i>
+                <i className="fa-regular fa-heart favorite-btn" onClick={(e) => agregarFavorito(e, prod)} style={{ cursor: 'pointer' }}></i>
                 
                 <div>
                   <div className="metodo">

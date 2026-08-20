@@ -49,11 +49,11 @@ function Carrito() {
   // Estado para las sugerencias (Y si le sumas lo último)
   const [sugerencias, setSugerencias] = useState(sugerenciasCarrito);
 
-  const [toast, setToast] = useState(null);
-
   const mostrarToast = (mensaje) => {
-    setToast(mensaje);
-    setTimeout(() => setToast(null), 3000);
+    // Usar el sistema global de toast del encabezado (position:fixed en body)
+    if (window.SenabellaToast) {
+      window.SenabellaToast(mensaje, "fa-circle-check", "exito");
+    }
   };
 
   const agregarAlCarrito = (producto) => {
@@ -214,16 +214,6 @@ function Carrito() {
           ))}
         </div>
       </section>
-
-      {toast && (
-        <div className="toast-senabella toast-exito toast-visible" style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 9999 }}>
-          <i className="fa-solid fa-circle-check"></i>
-          <span>{toast}</span>
-          <button className="toast-cerrar" onClick={() => setToast(null)} style={{ background: "none", border: "none", color: "white", marginLeft: "15px", cursor: "pointer" }}>
-            <i className="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-      )}
     </>
   );
 }
