@@ -71,7 +71,7 @@ body.modo-oscuro {
   border-color: var(--color-primario);
 }
 
-/* Tarjeta de Login */
+/* Tarjeta de Registro */
 .contenedor-registro {
   flex: 1;
   display: flex;
@@ -192,7 +192,49 @@ body.modo-oscuro {
   color: var(--color-primario);
 }
 
-/* Checkbox */
+/* Indicador de Fortaleza de Contraseña */
+.fortaleza-contenedor {
+  margin-top: 4px;
+}
+
+.fortaleza-barra {
+  height: 5px;
+  width: 100%;
+  background-color: var(--color-borde);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.fortaleza-progreso {
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.fortaleza-texto {
+  font-size: 12px;
+  color: var(--color-texto-secundario);
+  font-weight: 500;
+}
+
+/* Mensaje de coincidencia */
+.coincidencia-texto {
+  font-size: 12px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.coincidencia-texto.valido {
+  color: var(--color-exito);
+}
+
+.coincidencia-texto.invalido {
+  color: var(--color-error);
+}
+
+/* Checkbox Términos */
 .grupo-opciones {
   font-size: 13px;
   color: var(--color-texto-secundario);
@@ -225,7 +267,7 @@ body.modo-oscuro {
   text-decoration: underline;
 }
 
-/* Botón Login */
+/* Botón Registro / Login */
 .boton-registro {
   background-color: var(--color-primario);
   color: var(--color-blanco);
@@ -283,6 +325,57 @@ body.modo-oscuro {
   border: 1px solid rgba(46, 125, 50, 0.25);
 }
 
+/* Separador & Redes */
+.separador-o {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0 16px;
+  color: var(--color-texto-secundario);
+  font-size: 13px;
+}
+
+.separador-o::before, .separador-o::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.separador-o span {
+  padding: 0 12px;
+}
+
+.redes-registro {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-social {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  background-color: var(--color-blanco);
+  color: var(--color-texto);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-social:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-color: var(--color-primario);
+}
+
+.modo-oscuro .btn-social:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .pie-tarjeta {
   margin-top: 25px;
   text-align: center;
@@ -313,6 +406,11 @@ body.modo-oscuro {
     left: auto;
     margin: 15px 15px 0;
     align-self: flex-start;
+  }
+
+  .redes-registro {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 

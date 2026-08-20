@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { validarLogin } from "../../utils/usuariosBd";
 import "./login.css";
 
 function Login() {
@@ -14,15 +15,8 @@ function Login() {
   const navigate = useNavigate();
 
   const manejarCambio = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value
-    });
-  };
-
-  const toggleContrasena = () => {
-    setMostrarContrasena(!mostrarContrasena);
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const manejarSubmit = (e) => {
@@ -30,59 +24,59 @@ function Login() {
     setMensajeError("");
     setMensajeExito("");
 
-    // Validación básica
-    if (!formData.correo || !formData.contrasena) {
-      setMensajeError("Por favor completa todos los campos");
+    const correo = formData.correo.trim();
+    const contrasena = formData.contrasena;
+
+    if (!correo) {
+      setMensajeError("Por favor, ingresa tu correo electrónico.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      setMensajeError("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+    if (!contrasena) {
+      setMensajeError("Por favor, ingresa tu contraseña.");
       return;
     }
 
-    // Validar formato de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.correo)) {
-      setMensajeError("Por favor ingresa un correo válido");
+    const resultado = validarLogin(correo, contrasena);
+
+    if (!resultado.ok) {
+      setMensajeError(resultado.mensaje);
       return;
     }
 
-    // Simular autenticación (en producción esto iría al backend)
-    try {
-      const usuarios = JSON.parse(localStorage.getItem("senabella_usuarios_db") || "[]");
-      const usuario = usuarios.find(u => u.email === formData.correo && u.password === formData.contrasena);
+    // Login exitoso
+    const usuario = resultado.usuario;
+    const nombre = usuario.nombre || correo.split("@")[0];
+    const rol = usuario.rol || "cliente";
 
-      if (usuario) {
-        // Login exitoso
-        localStorage.setItem("senabella_sesion", "activa");
-        localStorage.setItem("senabella_rol", usuario.rol);
-        localStorage.setItem("senabella_usuario", JSON.stringify({
-          id: usuario.id,
-          nombre: usuario.nombre,
-          email: usuario.email,
-          rol: usuario.rol
-        }));
+    localStorage.setItem("senabella_sesion", "activa");
+    localStorage.setItem("senabella_rol", rol);
+    localStorage.setItem("senabella_usuario", JSON.stringify({
+      id: usuario.id,
+      nombre: nombre,
+      email: usuario.correo,
+      correo: usuario.correo,
+      rol: rol,
+    }));
 
-        if (recordarSesion) {
-          localStorage.setItem("recordar_sesion", "true");
-        }
+    if (recordarSesion) {
+      localStorage.setItem("recordar_sesion", "true");
+    }
 
-        setMensajeExito("¡Inicio de sesión exitoso!");
-
-        // Redirigir según el rol
-        setTimeout(() => {
-          if (usuario.rol === "administrador") {
-            navigate("/administrador");
-          } else {
-            navigate("/usuario");
-          }
-        }, 1000);
-      } else {
-        setMensajeError("Correo o contraseña incorrectos");
-      }
-    } catch (error) {
-      setMensajeError("Error al iniciar sesión. Por favor intenta nuevamente.");
+    if (rol === "administrador") {
+      setMensajeExito(`¡Bienvenido, ${nombre}! Redirigiendo al panel de administración...`);
+      setTimeout(() => { navigate("/administrador"); }, 1200);
+    } else {
+      setMensajeExito(`¡Bienvenido de nuevo, ${nombre}! Redirigiendo a tu perfil...`);
+      setTimeout(() => { navigate("/usuario"); }, 1200);
     }
   };
 
   return (
-    <div className="login-page">
+    <div className="auth-page">
       {/* Botón regresar al inicio */}
       <Link to="/" className="boton-regresar" title="Volver al inicio">
         <i className="fa-solid fa-arrow-left"></i>
@@ -95,7 +89,7 @@ function Login() {
           <h2>Bienvenido de nuevo</h2>
           <p className="subtitulo">Ingresa tus datos para acceder a tu cuenta de Senabella</p>
 
-          <form onSubmit={manejarSubmit} className="formulario" novalidate>
+          <form onSubmit={manejarSubmit} className="formulario" noValidate>
             {/* Campo Correo */}
             <div className="grupo-campo">
               <label htmlFor="correoLogin">Correo electrónico</label>
@@ -104,10 +98,10 @@ function Login() {
                   type="email"
                   id="correoLogin"
                   name="correo"
-                  placeholder="nombre@ejemplo.com"
-                  maxLength="32"
                   value={formData.correo}
                   onChange={manejarCambio}
+                  placeholder="nombre@ejemplo.com"
+                  maxLength="32"
                   required
                 />
                 <i className="fa-solid fa-envelope icono-campo"></i>
@@ -122,18 +116,18 @@ function Login() {
                   type={mostrarContrasena ? "text" : "password"}
                   id="contrasenaLogin"
                   name="contrasena"
+                  value={formData.contrasena}
+                  onChange={manejarCambio}
                   className="has-toggle"
                   placeholder="Ingresa tu contraseña"
                   maxLength="30"
-                  value={formData.contrasena}
-                  onChange={manejarCambio}
                   required
                 />
                 <i className="fa-solid fa-lock icono-campo"></i>
                 <button
                   type="button"
                   className="btn-toggle-pass"
-                  onClick={toggleContrasena}
+                  onClick={() => setMostrarContrasena(!mostrarContrasena)}
                   title="Ver / Ocultar contraseña"
                 >
                   <i className={`fa-solid ${mostrarContrasena ? "fa-eye-slash" : "fa-eye"}`}></i>
@@ -146,7 +140,6 @@ function Login() {
               <label className="opcion-checkbox">
                 <input
                   type="checkbox"
-                  id="recordarSesion"
                   checked={recordarSesion}
                   onChange={(e) => setRecordarSesion(e.target.checked)}
                 />
@@ -156,15 +149,15 @@ function Login() {
 
             {/* Alertas de estado */}
             {mensajeError && (
-              <div className="mensaje-error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {mensajeError}
+              <div className="mensaje-error" style={{ display: "flex" }}>
+                <i className="fa-solid fa-triangle-exclamation"></i>
+                <span>{mensajeError}</span>
               </div>
             )}
             {mensajeExito && (
-              <div className="mensaje-exito">
+              <div className="mensaje-exito" style={{ display: "flex" }}>
                 <i className="fa-solid fa-circle-check"></i>
-                {mensajeExito}
+                <span>{mensajeExito}</span>
               </div>
             )}
 

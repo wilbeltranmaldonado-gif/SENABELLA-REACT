@@ -11,6 +11,7 @@ import Tarjeta from "./paginas/tarjeta/tarjeta";
 import Administrador from "./paginas/administrador/administrador";
 import Parejas from "./paginas/parejas/Parejas";
 import Login from "./paginas/login/login";
+import Registro from "./paginas/registro/registro";
 import Usuario from "./paginas/usuario/usuario";
 import Contacto from "./paginas/contacto/contacto";
 import Soporte from "./paginas/soporte/soporte";
@@ -18,11 +19,14 @@ import Favoritos from "./paginas/favoritos/favoritos";
 
 function App() {
     const location = useLocation();
-    const esRutaAdministrador = location.pathname === "/administrador";
+
+    // Rutas donde NO se muestra el encabezado ni el pie de página
+    const rutasSinLayout = ["/administrador", "/login", "/registro"];
+    const ocultarLayout = rutasSinLayout.includes(location.pathname);
 
     return (
         <>
-            {!esRutaAdministrador && <Encabezado />}
+            {!ocultarLayout && <Encabezado />}
 
             <Routes>
                 <Route path="/" element={<Inicio />} />
@@ -33,13 +37,14 @@ function App() {
                 <Route path="/administrador" element={<Administrador />} />
                 <Route path="/parejas" element={<Parejas />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/registro" element={<Registro />} />
                 <Route path="/usuario" element={<Usuario />} />
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/soporte" element={<Soporte />} />
                 <Route path="/favoritos" element={<Favoritos />} />
             </Routes>
 
-            {!esRutaAdministrador && <PieDePagina />}
+            {!ocultarLayout && <PieDePagina />}
         </>
     );
 }
