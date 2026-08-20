@@ -30,6 +30,25 @@ function Usuario() {
       navigate("/login");
       return;
     }
+
+    const sincronizarDatosUsuario = () => {
+      try {
+        const u = JSON.parse(localStorage.getItem("senabella_usuario")) || {};
+        setUsuario(u);
+        const ords = JSON.parse(localStorage.getItem("senabella_user_orders")) || [];
+        setOrdenes(ords);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    sincronizarDatosUsuario();
+    window.addEventListener("storage", sincronizarDatosUsuario);
+    window.addEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+    return () => {
+      window.removeEventListener("storage", sincronizarDatosUsuario);
+      window.removeEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+    };
   }, [navigate]);
 
   const handleLogout = () => {
@@ -164,7 +183,8 @@ function Usuario() {
                   <input
                     name="nombre"
                     type="text"
-                    defaultValue={usuario.nombre || ""}
+                    value={usuario.nombre || ""}
+                    onChange={(e) => setUsuario({ ...usuario, nombre: e.target.value })}
                     required
                     placeholder="Ej. María García"
                     className="usuario-input"
@@ -175,7 +195,8 @@ function Usuario() {
                   <input
                     name="email"
                     type="email"
-                    defaultValue={usuario.email || usuario.correo || ""}
+                    value={usuario.email || usuario.correo || ""}
+                    onChange={(e) => setUsuario({ ...usuario, email: e.target.value, correo: e.target.value })}
                     required
                     placeholder="Ej. maria@email.com"
                     className="usuario-input"
@@ -186,7 +207,8 @@ function Usuario() {
                   <input
                     name="celular"
                     type="tel"
-                    defaultValue={usuario.celular || ""}
+                    value={usuario.celular || ""}
+                    onChange={(e) => setUsuario({ ...usuario, celular: e.target.value })}
                     placeholder="Ej. 300 123 4567"
                     className="usuario-input"
                   />
@@ -285,7 +307,8 @@ function Usuario() {
                   <input
                     name="celular"
                     type="tel"
-                    defaultValue={usuario.celular || ""}
+                    value={usuario.celular || ""}
+                    onChange={(e) => setUsuario({ ...usuario, celular: e.target.value })}
                     required
                     placeholder="Ej. 300 123 4567"
                     className="usuario-input"
@@ -296,7 +319,8 @@ function Usuario() {
                   <input
                     name="direccion"
                     type="text"
-                    defaultValue={usuario.direccion || ""}
+                    value={usuario.direccion || ""}
+                    onChange={(e) => setUsuario({ ...usuario, direccion: e.target.value })}
                     required
                     placeholder="Ej. Calle 123 # 45 - 67, Apto 201"
                     className="usuario-input"
@@ -307,7 +331,8 @@ function Usuario() {
                   <input
                     name="ciudad"
                     type="text"
-                    defaultValue={usuario.ciudad || ""}
+                    value={usuario.ciudad || ""}
+                    onChange={(e) => setUsuario({ ...usuario, ciudad: e.target.value })}
                     required
                     placeholder="Ej. Bogotá"
                     className="usuario-input"
