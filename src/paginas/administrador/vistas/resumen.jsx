@@ -219,14 +219,16 @@ function Resumen() {
     datos.pedidos.forEach((pedido) => {
       const listaProds = Array.isArray(pedido.productos) ? pedido.productos : [];
       listaProds.forEach((item) => {
-        const nombre = item.nombre || "Producto";
-        const cantidad = Number(item.cantidad) || 1;
-        const precioUnitario = Number(String(item.precioText || item.precio || "0").replace(/[^\d]/g, "")) || 0;
+        const nombre = String(item.nombre || "Producto").trim();
+        const cantidad = parseInt(item.cantidad, 10) || 1;
+        const precioUnitario = Number(String(item.precioText || item.precio || item.precioNumero || "0").replace(/[^\d]/g, "")) || 0;
         const imagen = item.img || item.imagen || "";
         const categoria = item.categoria || "Catálogo";
 
-        if (!conteo[nombre]) {
-          conteo[nombre] = {
+        const clave = nombre.toLowerCase();
+
+        if (!conteo[clave]) {
+          conteo[clave] = {
             nombre,
             ventas: 0,
             ingresos: 0,
@@ -237,19 +239,19 @@ function Resumen() {
           };
         }
 
-        conteo[nombre].ventas += cantidad;
-        conteo[nombre].ingresos += precioUnitario * cantidad;
-        if (!conteo[nombre].precioUnitario && precioUnitario) {
-          conteo[nombre].precioUnitario = precioUnitario;
+        conteo[clave].ventas += cantidad;
+        conteo[clave].ingresos += precioUnitario * cantidad;
+        if (!conteo[clave].precioUnitario && precioUnitario) {
+          conteo[clave].precioUnitario = precioUnitario;
         }
-        conteo[nombre].pedidosAsociados.push({
+        conteo[clave].pedidosAsociados.push({
           pedidoId: pedido.id || pedido.numero,
           cliente: pedido.cliente?.nombre || pedido.cliente || "Cliente",
           fecha: pedido.fecha,
           cantidad
         });
-        if (!conteo[nombre].imagen && imagen) {
-          conteo[nombre].imagen = imagen;
+        if (!conteo[clave].imagen && imagen) {
+          conteo[clave].imagen = imagen;
         }
       });
     });
@@ -272,13 +274,6 @@ function Resumen() {
       (p) => p.nombre.toLowerCase().includes(query) || p.categoria.toLowerCase().includes(query)
     );
   }, [todosProductosVendidos, busquedaProducto]);
-
-  const maximoMetrica = useMemo(() => {
-    if (!todosProductosVendidos.length) return 1;
-    return criterioTopProductos === "ingresos"
-      ? Math.max(...todosProductosVendidos.map((p) => p.ingresos), 1)
-      : Math.max(...todosProductosVendidos.map((p) => p.ventas), 1);
-  }, [todosProductosVendidos, criterioTopProductos]);
 
   const totalUnidadesVendidas = useMemo(() => {
     return todosProductosVendidos.reduce((total, p) => total + p.ventas, 0);
@@ -409,11 +404,11 @@ function Resumen() {
           <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
             <input
               type="text"
-              placeholder="Buscar en relación..."
+              placeholder="Buscar producto o categoría..."
               value={busquedaProducto}
               onChange={(e) => setBusquedaProducto(e.target.value)}
               className="admin-input-busqueda"
-              style={{ width: "190px", padding: "6px 12px", fontSize: "13px" }}
+              style={{ width: "200px" }}
             />
 
             <div style={{ display: "flex", background: "#f1f5f9", borderRadius: "8px", padding: "2px", border: "1px solid #e2e8f0" }}>
@@ -421,7 +416,7 @@ function Resumen() {
                 className={`admin-boton ${criterioTopProductos === "unidades" ? "admin-boton-primario" : ""}`}
                 style={{ padding: "5px 10px", fontSize: "12px", borderRadius: "6px", border: 0 }}
                 onClick={() => setCriterioTopProductos("unidades")}
-                title="Ordenar por unidades vendidas"
+                title="Ordenar por cantidad de unidades vendidas"
               >
                 <i className="fa-solid fa-boxes-stacked"></i> Unidades
               </button>
@@ -468,15 +463,12 @@ function Resumen() {
                   <th style={{ textAlign: "center" }}>Uds. Vendidas</th>
                   <th>Precio Ref.</th>
                   <th>Total Recaudado</th>
-                  <th style={{ minWidth: "140px" }}>Participación</th>
                   <th style={{ width: "90px", textAlign: "center" }}>Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {productosMasVendidosFiltrados.length > 0 ? (
                   productosMasVendidosFiltrados.map((prod, index) => {
-                    const valorActual = criterioTopProductos === "ingresos" ? prod.ingresos : prod.ventas;
-                    const porcentaje = Math.round((valorActual / maximoMetrica) * 100);
                     const rankClase = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "";
 
                     return (
@@ -521,17 +513,6 @@ function Resumen() {
                         <td style={{ fontWeight: "700", color: "#2563eb" }}>
                           ${prod.ingresos.toLocaleString("es-CO")}
                         </td>
-                        <td>
-                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <div className="admin-producto-top-barra" style={{ height: "6px", flex: 1, margin: 0 }}>
-                              <div
-                                className="admin-producto-top-barra-progreso"
-                                style={{ width: `${Math.max(porcentaje, 6)}%` }}
-                              ></div>
-                            </div>
-                            <span style={{ fontSize: "11px", color: "#64748b", width: "32px", textAlign: "right" }}>{porcentaje}%</span>
-                          </div>
-                        </td>
                         <td style={{ textAlign: "center" }}>
                           <button
                             className="admin-boton-icono"
@@ -546,7 +527,7 @@ function Resumen() {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="8" style={{ textAlign: "center", padding: "24px", color: "#64748b" }}>
+                    <td colSpan="7" style={{ textAlign: "center", padding: "24px", color: "#64748b" }}>
                       No se encontraron productos en la relación.
                     </td>
                   </tr>
@@ -558,8 +539,6 @@ function Resumen() {
           /* MODO TARJETAS */
           <div className="admin-grid-productos-top">
             {productosMasVendidosFiltrados.map((prod, index) => {
-              const valorActual = criterioTopProductos === "ingresos" ? prod.ingresos : prod.ventas;
-              const porcentaje = Math.round((valorActual / maximoMetrica) * 100);
               const rankClase = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "";
 
               return (
@@ -613,13 +592,6 @@ function Resumen() {
                         ${prod.ingresos.toLocaleString("es-CO")}
                       </span>
                     </div>
-                  </div>
-
-                  <div className="admin-producto-top-barra">
-                    <div
-                      className="admin-producto-top-barra-progreso"
-                      style={{ width: `${Math.max(porcentaje, 6)}%` }}
-                    ></div>
                   </div>
                 </div>
               );

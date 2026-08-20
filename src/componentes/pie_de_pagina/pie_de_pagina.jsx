@@ -8,13 +8,12 @@ function Footer() {
         <div>
           <h3>Servicio al cliente</h3>
           <Link to="/soporte">Ayuda</Link>
-          <Link to="/contacto">Cambio y devoluciones</Link>
-          <Link to="/contacto">Garantías</Link>
+          <Link to="/soporte">Cambio y devoluciones</Link>
+          <Link to="/soporte">Garantías</Link>
         </div>
 
         <div>
           <h3>Compra segura</h3>
-          <Link to="/tarjeta">Formas de pago</Link>
           <Link to="/catalogo">Envíos</Link>
           <Link to="/catalogo">Promociones</Link>
         </div>
@@ -23,7 +22,7 @@ function Footer() {
           <h3>Acerca de Senabella</h3>
           <Link to="/contacto">Nuestra empresa</Link>
           <Link to="/contacto">Trabaja con nosotros</Link>
-          <Link to="/catalogo">Tiendas</Link>
+          <Link to="/inicio">Tiendas</Link>
         </div>
       </div>
 

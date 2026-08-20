@@ -97,14 +97,19 @@ function Favoritos() {
   };
 
   const eliminarFavorito = (nombre) => {
-    setFavoritos((prev) =>
-      prev.filter((f) => f.nombre?.trim().toLowerCase() !== nombre?.trim().toLowerCase())
+    const favoritosActualizados = favoritos.filter(
+      (f) => f.nombre?.trim().toLowerCase() !== nombre?.trim().toLowerCase()
     );
+    setFavoritos(favoritosActualizados);
+    guardarFavoritosEnStorage(favoritosActualizados);
+    window.dispatchEvent(new CustomEvent("senabella-favoritos-actualizado"));
     mostrarToast("Producto eliminado de favoritos", "info");
   };
 
   const limpiarTodos = () => {
     setFavoritos([]);
+    guardarFavoritosEnStorage([]);
+    window.dispatchEvent(new CustomEvent("senabella-favoritos-actualizado"));
     mostrarToast("Se eliminaron todos los favoritos", "info");
   };
 
