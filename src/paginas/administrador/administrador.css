@@ -1216,6 +1216,53 @@
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
+.admin-boton-icono.admin-boton-eliminar {
+  color: #ef4444;
+}
+
+.admin-boton-icono.admin-boton-eliminar:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.admin-boton-peligro {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.admin-boton-peligro:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-boton-icono.admin-boton-eliminar:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-boton-peligro {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
 .admin-boton-icono:hover {
   background-color: #f1f2f5;
   color: var(--text-main);
