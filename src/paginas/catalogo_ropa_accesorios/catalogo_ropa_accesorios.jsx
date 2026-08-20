@@ -78,15 +78,15 @@ function CatalogoRopaAccesorios() {
 
     // Filtro por precio
     if (preciosSeleccionados.length > 0) {
-       resultado = resultado.filter((p) => {
-          const precio = p.precioNumero || 0;
-          return preciosSeleccionados.some(rango => {
-             if (rango === "Menos de $100.000") return precio < 100000;
-             if (rango === "$100.000 - $200.000") return precio >= 100000 && precio <= 200000;
-             if (rango === "Más de $200.000") return precio > 200000;
-             return true;
-          });
-       });
+      resultado = resultado.filter((p) => {
+        const precio = p.precioNumero || 0;
+        return preciosSeleccionados.some((rango) => {
+          if (rango === "Menos de $100.000") return precio < 100000;
+          if (rango === "$100.000 - $200.000") return precio >= 100000 && precio <= 200000;
+          if (rango === "Más de $200.000") return precio > 200000;
+          return true;
+        });
+      });
     }
 
     // Ordenamiento

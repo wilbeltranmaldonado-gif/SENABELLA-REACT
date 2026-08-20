@@ -62,7 +62,7 @@ function Catalogo() {
 
   const productosAdministrados = productosAdmin.map((producto) => ({
     ...producto,
-    marca: "SENABELLA",
+    marca: producto.marca || "SENABELLA",
     imagen: producto.imagen || imagenFallback,
     referencia: producto.categoria,
     precioNumero: Number(String(producto.precio).replace(/[^\d]/g, "")) || 0,
@@ -83,6 +83,8 @@ function Catalogo() {
     const prodCat = (prod.categoria || prod.etiqueta || "").toLowerCase();
     const prodNombre = prod.nombre.toLowerCase();
     const prodMarca = (prod.marca || "").toLowerCase();
+
+    // Búsqueda
     const textoProducto = [prod.nombre, prod.marca, prod.categoria, prod.referencia]
       .filter(Boolean)
       .join(" ")

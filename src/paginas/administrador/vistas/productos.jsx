@@ -4,12 +4,17 @@ import { productosIniciales, productosRopaAccesorios } from "../../../datos";
 const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";
 const CATEGORIAS_KEY = "senabella_categories";
 const productosPredeterminados = [
-  { id: 1, nombre: "Auriculares Bluetooth", categoria: "Audio", precio: "$89.99", stock: 45, estado: "activo", imagen: "" },
-  { id: 2, nombre: "Smartwatch Pro", categoria: "Relojes", precio: "$199.99", stock: 23, estado: "activo", imagen: "" },
-  { id: 3, nombre: "Cargador USB-C", categoria: "Cargadores", precio: "$29.99", stock: 120, estado: "activo", imagen: "" },
-  { id: 4, nombre: "Batería Portátil", categoria: "Accesorios", precio: "$49.99", stock: 8, estado: "bajo", imagen: "" },
-  { id: 5, nombre: "Teclado Mecánico", categoria: "Computación", precio: "$79.99", stock: 0, estado: "agotado", imagen: "" },
+  { id: 1, nombre: "Auriculares Bluetooth", marca: "JBL", categoria: "Audio", precio: "$ 89.900", precioNumero: 89900, stock: 45, estado: "activo", imagen: "https://media.falabella.com/falabellaCO/155500313_01/w=1200,h=1200,fit=pad" },
+  { id: 2, nombre: "Smartwatch Pro", marca: "XIAOMI", categoria: "Relojes", precio: "$ 199.900", precioNumero: 199900, stock: 23, estado: "activo", imagen: "https://media.falabella.com/falabellaCO/139001771_01/w=480,h=480,fit=pad" },
+  { id: 3, nombre: "Cargador USB-C", marca: "BELKIN", categoria: "Cargadores", precio: "$ 29.900", precioNumero: 29900, stock: 120, estado: "activo", imagen: "https://media.falabella.com/falabellaCO/140922701_01/w=1200,h=1200,fit=pad" },
+  { id: 4, nombre: "Batería Portátil", marca: "ANKER", categoria: "Accesorios", precio: "$ 49.900", precioNumero: 49900, stock: 8, estado: "bajo", imagen: "https://media.falabella.com/falabellaCO/124164429_01/w=1200,h=1200,fit=pad" },
+  { id: 5, nombre: "Teclado Mecánico", marca: "LOGITECH", categoria: "Computación", precio: "$ 79.900", precioNumero: 79900, stock: 0, estado: "agotado", imagen: "https://media.falabella.com/falabellaCO/124164429_01/w=1200,h=1200,fit=pad" },
 ];
+
+const datosProductosActualizados = productosPredeterminados.reduce((datos, producto) => {
+  datos[producto.nombre] = producto;
+  return datos;
+}, {});
 
 const productosDelCatalogo = [...productosIniciales, ...productosRopaAccesorios].map((producto) => ({
   id: `catalogo-${producto.id}`,
@@ -33,9 +38,13 @@ const leerProductos = () => {
     const faltantes = productosDelCatalogo.filter((producto) => !nombresGuardados.has(producto.nombre));
     const productosCompletos = [...productosGuardados, ...faltantes].map((producto) => ({
       ...producto,
+      ...(datosProductosActualizados[producto.nombre] || {}),
+      id: producto.id,
+      stock: producto.stock,
+      estado: producto.estado,
       proveedor: producto.proveedor && producto.proveedor !== "Sin proveedor"
         ? producto.proveedor
-        : producto.marca || "Proveedor Senabella"
+        : datosProductosActualizados[producto.nombre]?.marca || producto.marca || "Proveedor Senabella"
     }));
     localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosCompletos));
     return productosCompletos;

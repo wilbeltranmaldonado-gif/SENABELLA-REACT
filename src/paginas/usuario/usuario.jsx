@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./usuario.css";
+import { MUNICIPIOS_COLOMBIA_AGRUPADOS, TODOS_LOS_MUNICIPIOS } from "../../datos";
 
 function Usuario() {
   const [seccionActiva, setSeccionActiva] = useState("mi-perfil");
@@ -35,6 +36,10 @@ function Usuario() {
     const sincronizarDatosUsuario = () => {
       try {
         const u = JSON.parse(localStorage.getItem("senabella_usuario")) || {};
+        const ubicacionGuardada = localStorage.getItem("ubicacion");
+        if (ubicacionGuardada) {
+          u.ciudad = ubicacionGuardada;
+        }
         setUsuario(u);
         const ords = JSON.parse(localStorage.getItem("senabella_user_orders")) || [];
         setOrdenes(ords);
@@ -46,9 +51,13 @@ function Usuario() {
     sincronizarDatosUsuario();
     window.addEventListener("storage", sincronizarDatosUsuario);
     window.addEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+    window.addEventListener("senabella_ubicacion_actualizada", sincronizarDatosUsuario);
+    window.addEventListener("senabella-ubicacion-actualizada", sincronizarDatosUsuario);
     return () => {
       window.removeEventListener("storage", sincronizarDatosUsuario);
       window.removeEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+      window.removeEventListener("senabella_ubicacion_actualizada", sincronizarDatosUsuario);
+      window.removeEventListener("senabella-ubicacion-actualizada", sincronizarDatosUsuario);
     };
   }, [navigate]);
 
@@ -125,11 +134,48 @@ function Usuario() {
     localStorage.setItem("senabella_usuario", JSON.stringify(actualizado));
     setUsuario(actualizado);
 
+    // Sincronizar en la base de datos de usuarios
+    try {
+      const usuariosBD = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+      const emailActual = (usuario.email || usuario.correo || "").toLowerCase();
+      const idx = usuariosBD.findIndex((u) => (u.correo || u.email || "").toLowerCase() === emailActual);
+      if (idx !== -1) {
+        usuariosBD[idx] = {
+          ...usuariosBD[idx],
+          celular: actualizado.celular,
+          direccion: actualizado.direccion,
+          ciudad: actualizado.ciudad
+        };
+        localStorage.setItem("senabella_usuarios", JSON.stringify(usuariosBD));
+      }
+    } catch (err) {
+      console.warn("Error al sincronizar datos de envío con senabella_usuarios:", err);
+    }
+
+    if (ciudad) {
+      localStorage.setItem("ubicacion", ciudad);
+      window.dispatchEvent(new Event("senabella_ubicacion_actualizada"));
+      window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
+    }
+
+    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new Event("senabella_orders_updated"));
+
     setMensajeEnvio({ texto: "✓ Datos de envío guardados correctamente.", tipo: "exito" });
     if (window.SenabellaToast) {
       window.SenabellaToast("Datos de envío actualizados", "fa-circle-check", "exito");
     }
     setTimeout(() => setMensajeEnvio({ texto: "", tipo: "" }), 4000);
+  };
+
+  const handleCambioCiudad = (nuevaCiudad) => {
+    setUsuario((prev) => ({ ...prev, ciudad: nuevaCiudad }));
+    if (nuevaCiudad) {
+      localStorage.setItem("ubicacion", nuevaCiudad);
+      window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event("senabella_ubicacion_actualizada"));
+      window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
+    }
   };
 
   const menuItems = [
@@ -328,16 +374,28 @@ function Usuario() {
                   />
                 </div>
                 <div className="usuario-grupo-campo">
-                  <label className="usuario-label">Ciudad / Municipio *</label>
-                  <input
+                  <label className="usuario-label">Ciudad / Municipio de Entrega *</label>
+                  <select
                     name="ciudad"
-                    type="text"
                     value={usuario.ciudad || ""}
-                    onChange={(e) => setUsuario({ ...usuario, ciudad: e.target.value })}
+                    onChange={(e) => handleCambioCiudad(e.target.value)}
                     required
-                    placeholder="Ej. Bogotá"
-                    className="usuario-input"
-                  />
+                    className="usuario-input usuario-select"
+                  >
+                    <option value="">-- Selecciona tu municipio o ciudad --</option>
+                    {MUNICIPIOS_COLOMBIA_AGRUPADOS.map((grupo) => (
+                      <optgroup key={grupo.departamento} label={grupo.departamento}>
+                        {grupo.municipios.map((mun) => (
+                          <option key={mun} value={mun}>
+                            {mun}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                    {usuario.ciudad && !TODOS_LOS_MUNICIPIOS.includes(usuario.ciudad) && (
+                      <option value={usuario.ciudad}>{usuario.ciudad}</option>
+                    )}
+                  </select>
                 </div>
                 <button type="submit" className="usuario-boton-guardar">
                   <i className="fa-solid fa-floppy-disk"></i> Guardar Datos de Envío
