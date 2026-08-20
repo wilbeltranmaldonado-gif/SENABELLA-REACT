@@ -68,7 +68,8 @@ function Parejas() {
       precioActual: precioActual,
       precioAntiguo: precioAntiguo,
       imagen: imagen,
-      referencia: marca
+      referencia: marca,
+      origen: "/catalogo-ropa-accesorios"
     }));
     navigate("/detalle_producto"); 
   };

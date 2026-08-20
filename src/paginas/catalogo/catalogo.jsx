@@ -97,6 +97,7 @@ function Catalogo() {
     // Categoria
     const cumpleCategoria = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.some(catSel => {
        const cs = catSel.toLowerCase();
+       if (cs === 'ofertas') return !!prod.descuento;
        return prodCat.includes(cs) || prodNombre.includes(cs) || prodMarca.includes(cs);
     });
 
