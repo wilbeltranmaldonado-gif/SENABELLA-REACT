@@ -1,13 +1,25 @@
 import { useState } from "react";
 
+const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";
+const productosPredeterminados = [
+  { id: 1, nombre: "Auriculares Bluetooth", categoria: "Audio", precio: "$89.99", stock: 45, estado: "activo", imagen: "" },
+  { id: 2, nombre: "Smartwatch Pro", categoria: "Relojes", precio: "$199.99", stock: 23, estado: "activo", imagen: "" },
+  { id: 3, nombre: "Cargador USB-C", categoria: "Cargadores", precio: "$29.99", stock: 120, estado: "activo", imagen: "" },
+  { id: 4, nombre: "Batería Portátil", categoria: "Accesorios", precio: "$49.99", stock: 8, estado: "bajo", imagen: "" },
+  { id: 5, nombre: "Teclado Mecánico", categoria: "Computación", precio: "$79.99", stock: 0, estado: "agotado", imagen: "" },
+];
+
+const leerProductos = () => {
+  try {
+    const guardados = JSON.parse(localStorage.getItem(PRODUCTOS_ADMIN_KEY) || "null");
+    return Array.isArray(guardados) ? guardados : productosPredeterminados;
+  } catch {
+    return productosPredeterminados;
+  }
+};
+
 function Productos() {
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "Auriculares Bluetooth", categoria: "Audio", precio: "$89.99", stock: 45, estado: "activo" },
-    { id: 2, nombre: "Smartwatch Pro", categoria: "Relojes", precio: "$199.99", stock: 23, estado: "activo" },
-    { id: 3, nombre: "Cargador USB-C", categoria: "Cargadores", precio: "$29.99", stock: 120, estado: "activo" },
-    { id: 4, nombre: "Batería Portátil", categoria: "Accesorios", precio: "$49.99", stock: 8, estado: "bajo" },
-    { id: 5, nombre: "Teclado Mecánico", categoria: "Computación", precio: "$79.99", stock: 0, estado: "agotado" },
-  ]);
+  const [productos, setProductos] = useState(leerProductos);
 
   const [modalAbierto, setModalAbierto] = useState(false);
   const [productoEditando, setProductoEditando] = useState(null);
@@ -34,7 +46,8 @@ function Productos() {
       categoria: "",
       precio: "",
       stock: 0,
-      estado: "activo"
+      estado: "activo",
+      imagen: ""
     });
     setModalAbierto(true);
   };
@@ -48,24 +61,38 @@ function Productos() {
     e.preventDefault();
     if (productoEditando.id) {
       // Editar producto existente
-      setProductos(productos.map(p =>
+      const productosActualizados = productos.map(p =>
         p.id === productoEditando.id ? productoEditando : p
-      ));
+      );
+      setProductos(productosActualizados);
+      localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
     } else {
       // Agregar nuevo producto
       const nuevoProducto = {
         ...productoEditando,
-        id: Math.max(...productos.map(p => p.id)) + 1
+        id: productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 1
       };
-      setProductos([...productos, nuevoProducto]);
+      const productosActualizados = [...productos, nuevoProducto];
+      setProductos(productosActualizados);
+      localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
     }
     cerrarModal();
   };
 
   const eliminarProducto = (id) => {
     if (confirm("¿Estás seguro de eliminar este producto?")) {
-      setProductos(productos.filter(p => p.id !== id));
+      const productosActualizados = productos.filter(p => p.id !== id);
+      setProductos(productosActualizados);
+      localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
     }
+  };
+
+  const cargarImagen = (e) => {
+    const archivo = e.target.files?.[0];
+    if (!archivo) return;
+    const lector = new FileReader();
+    lector.onload = () => setProductoEditando((producto) => ({ ...producto, imagen: lector.result }));
+    lector.readAsDataURL(archivo);
   };
 
   return (
@@ -189,9 +216,23 @@ function Productos() {
                 <input
                   type="number"
                   value={productoEditando?.stock || 0}
-                  onChange={(e) => setProductoEditando({...productoEditando, stock: parseInt(e.target.value)})}
+                  onChange={(e) => setProductoEditando({
+                    ...productoEditando,
+                    stock: Number(e.target.value) || 0
+                  })}
                   required
                 />
+              </div>
+              <div className="admin-form-grupo">
+                <label htmlFor="imagen-producto">Imagen del producto</label>
+                <input id="imagen-producto" type="file" accept="image/*" onChange={cargarImagen} />
+                {productoEditando?.imagen && (
+                  <img
+                    src={productoEditando.imagen}
+                    alt="Vista previa del producto"
+                    style={{ width: "90px", height: "90px", objectFit: "cover", marginTop: "8px" }}
+                  />
+                )}
               </div>
               <div className="admin-form-grupo">
                 <label>Estado</label>

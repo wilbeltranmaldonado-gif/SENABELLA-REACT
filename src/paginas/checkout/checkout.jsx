@@ -34,7 +34,19 @@ function Checkout() {
     const numero = "SENA-" + Math.floor(100000 + Math.random() * 900000);
     const fecha = new Date().toLocaleDateString("es-CO", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
     const detalleOrden = { numero, fecha, total: formatoMoneda(totalPrecio), metodoPago, direccion: usuario.direccion, ciudad: usuario.ciudad, productos: items };
-    const ordenAdmin = { ...detalleOrden, cliente: { direccion: usuario.direccion, ciudad: usuario.ciudad, telefono: usuario.celular }, comprobante: imagenBase64, estado: metodoPago === "contraentrega" ? "pendiente" : "pendiente-verificacion" };
+    const ordenAdmin = {
+      ...detalleOrden,
+      cliente: {
+        nombre: usuario.nombre || "Cliente",
+        email: usuario.email || "-",
+        direccion: usuario.direccion,
+        ciudad: usuario.ciudad,
+        telefono: usuario.celular
+      },
+      items: items.length,
+      comprobante: imagenBase64,
+      estado: "pendiente"
+    };
     localStorage.setItem("ultima_orden_senabella", JSON.stringify(detalleOrden));
     localStorage.setItem("senabella_user_orders", JSON.stringify([detalleOrden, ...leerJSON("senabella_user_orders", [])]));
     localStorage.setItem("senabella_admin_orders", JSON.stringify([ordenAdmin, ...leerJSON("senabella_admin_orders", [])]));

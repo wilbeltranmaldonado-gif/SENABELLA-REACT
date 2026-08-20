@@ -10,6 +10,14 @@ import {
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 
 function Catalogo() {
+  const [productosAdmin, setProductosAdmin] = useState(() => {
+    try {
+      const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
+      return Array.isArray(productos) ? productos : [];
+    } catch {
+      return [];
+    }
+  });
   const [paginaActual, setPaginaActual] = useState(1);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [marcaSeleccionada, setMarcaSeleccionada] = useState("");
@@ -18,18 +26,42 @@ function Catalogo() {
   const [filtroCategoriaAbierto, setFiltroCategoriaAbierto] = useState(true);
   const [filtroMarcaAbierto, setFiltroMarcaAbierto] = useState(true);
   const [filtroPrecioAbierto, setFiltroPrecioAbierto] = useState(true);
+
+  useEffect(() => {
+    const actualizarProductos = () => {
+      try {
+        const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
+        setProductosAdmin(Array.isArray(productos) ? productos : []);
+      } catch {
+        setProductosAdmin([]);
+      }
+    };
+    actualizarProductos();
+    window.addEventListener("storage", actualizarProductos);
+    return () => window.removeEventListener("storage", actualizarProductos);
+  }, []);
+
+  const productosAdministrados = productosAdmin.map((producto) => ({
+    ...producto,
+    marca: "SENABELLA",
+    imagen: producto.imagen || "https://via.placeholder.com/480x480?text=Producto",
+    referencia: producto.categoria,
+    precioNumero: Number(String(producto.precio).replace(/[^\d]/g, "")) || 0,
+  }));
+  const productosDisponibles = [...productosAdministrados, ...productosIniciales];
   
   // ==========================================
   // LÓGICA DE FILTRADO
   // ==========================================
   
-  const productosFiltrados = productosIniciales.filter(prod => {
+  const productosFiltrados = productosDisponibles.filter(prod => {
     let cumpleMarca = marcaSeleccionada === "" || prod.marca === marcaSeleccionada;
     let cumpleCategoria = true;
     
     if (categoriaSeleccionada !== "") {
-       cumpleCategoria = prod.nombre.toLowerCase().includes(categoriaSeleccionada) || 
-                         prod.marca.toLowerCase().includes(categoriaSeleccionada);
+      cumpleCategoria = prod.nombre.toLowerCase().includes(categoriaSeleccionada) ||
+              prod.marca.toLowerCase().includes(categoriaSeleccionada) ||
+              prod.categoria?.toLowerCase().includes(categoriaSeleccionada);
     }
     
     return cumpleMarca && cumpleCategoria;
