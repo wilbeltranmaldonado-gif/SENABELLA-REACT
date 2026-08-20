@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./soporte.css";
 import articulosDatos from "../../datos/articulosSoporte";
 
@@ -35,7 +35,8 @@ function Soporte() {
   // ==========================================
   // ESTADO DE BÚSQUEDA Y RENDERIZADO
   // ==========================================
-  const [busqueda, setBusqueda] = useState("");
+  const location = useLocation();
+  const [busqueda, setBusqueda] = useState(location.state?.busqueda || "");
   const [resultadoArticulos, setResultadoArticulos] = useState(articulosDatos.slice(0, 6));
   const [tituloSeccion, setTituloSeccion] = useState("Artículos populares");
   const [buscando, setBuscando] = useState(false);
@@ -145,6 +146,15 @@ function Soporte() {
     setBusqueda(catNombre);
     realizarBusqueda(catNombre);
   };
+
+  useEffect(() => {
+    if (location.state?.busqueda) {
+      const q = location.state.busqueda;
+      setBusqueda(q);
+      realizarBusqueda(q);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state?.busqueda]);
 
   // ==========================================
   // MODAL ARTÍCULO

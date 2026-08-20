@@ -587,37 +587,51 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-}
-
-/* --- Botones --- */
+}/* --- Botones Estéticos del Panel Admin --- */
 .admin-boton {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 10px 16px;
-  border-radius: 9px;
-  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid transparent;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
   white-space: nowrap;
 }
 
+.admin-boton:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
 .admin-boton:active {
-  transform: scale(0.97);
+  transform: translateY(1px) scale(0.98);
 }
 
 .admin-boton-primario {
-  background-color: var(--primary-color);
-  color: #16311a;
-  box-shadow: 0 3px 10px -3px rgba(170, 209, 0, 0.55);
+  background: linear-gradient(135deg, #84b814 0%, #709f0f 100%) !important;
+  color: #0e2a05 !important;
+  font-weight: 700 !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 3px 12px rgba(132, 184, 20, 0.35) !important;
 }
 
 .admin-boton-primario:hover {
-  background-color: var(--primary-hover);
-  box-shadow: 0 5px 14px -3px rgba(170, 209, 0, 0.6);
+  background: linear-gradient(135deg, #8ec516 0%, #76a810 100%) !important;
+  box-shadow: 0 5px 18px rgba(132, 184, 20, 0.48) !important;
+  transform: translateY(-1px);
+  color: #0e2a05 !important;
 }
 
 .admin-aviso-exito {
@@ -627,7 +641,7 @@
   margin-bottom: 18px;
   padding: 12px 16px;
   border: 1px solid #b7e3c1;
-  border-radius: 9px;
+  border-radius: 10px;
   background: #effaf1;
   color: #216e39;
   font-size: 14px;
@@ -644,42 +658,51 @@
 }
 
 .admin-boton-secundario {
-  background-color: #fff;
-  border-color: var(--border-color);
-  color: var(--text-main);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
 }
 
 .admin-boton-secundario:hover {
-  background-color: #f1f2f5;
-  border-color: #d7dae0;
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
 }
 
 .admin-boton-peligro {
-  background-color: #fff;
-  border-color: var(--admin-danger-bg);
-  color: var(--admin-danger);
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  font-weight: 600;
 }
 
 .admin-boton-peligro:hover {
-  background-color: var(--admin-danger-bg);
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+  transform: translateY(-1px);
 }
 
 .admin-boton-fantasma {
   background: none;
   border-color: transparent;
   color: var(--text-muted);
-  padding: 8px 10px;
+  padding: 8px 12px;
+  box-shadow: none;
 }
 
 .admin-boton-fantasma:hover {
-  background-color: #f1f2f5;
+  background-color: #f1f5f9;
   color: var(--text-main);
+  box-shadow: none;
 }
 
 .admin-boton:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
+  box-shadow: none !important;
 }
 
 .admin-boton-sm {
@@ -1189,72 +1212,110 @@
 }
 
 .admin-select-estado {
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  padding: 4px 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 5px 10px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  background-color: #fff;
-  color: var(--text-main);
+  background-color: #f8fafc;
+  color: #1e293b;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.admin-select-estado:hover {
+  border-color: #cbd5e1;
+  background-color: #ffffff;
+}
+
+.admin-select-estado:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: #ffffff;
 }
 
 .admin-acciones-tabla {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   align-items: center;
 }
 
 .admin-boton-icono {
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 14px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.admin-boton-icono.admin-boton-eliminar {
-  color: #ef4444;
-}
-
-.admin-boton-icono.admin-boton-eliminar:hover {
-  background-color: #fef2f2;
-  color: #dc2626;
-}
-
-.admin-boton-peligro {
-  background-color: #fee2e2;
-  color: #dc2626;
-  border: 1px solid #fca5a5;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 13.5px;
-  font-weight: 600;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: #475569;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-.admin-boton-peligro:hover {
+.admin-boton-icono:hover {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #2563eb;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
+  transform: translateY(-1px);
+}
+
+.admin-boton-icono:active {
+  transform: translateY(1px) scale(0.96);
+}
+
+.admin-boton-icono.admin-boton-eliminar,
+.admin-boton-icono-danger {
+  color: #ef4444;
+  background-color: #fef2f2;
+  border-color: #fee2e2;
+}
+
+.admin-boton-icono.admin-boton-eliminar:hover,
+.admin-boton-icono-danger:hover {
   background-color: #ef4444;
-  color: #ffffff;
   border-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+  transform: translateY(-1px);
 }
 
-body.cuerpo-admin.modo-oscuro .admin-boton-icono.admin-boton-eliminar:hover {
-  background-color: rgba(239, 68, 68, 0.15);
+body.cuerpo-admin.modo-oscuro .admin-select-estado {
+  background-color: #141822;
+  border-color: #2e384d;
+  color: #f8fafc;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-boton-icono {
+  background-color: #141822;
+  border-color: #2e384d;
+  color: #94a3b8;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-boton-icono:hover {
+  background-color: #1e293b;
+  border-color: #3b82f6;
+  color: #60a5fa;
+}
+
+body.cuerpo-admin.modo-oscuro .admin-boton-icono.admin-boton-eliminar,
+body.cuerpo-admin.modo-oscuro .admin-boton-icono-danger {
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
   color: #f87171;
 }
 
-body.cuerpo-admin.modo-oscuro .admin-boton-peligro {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border-color: rgba(239, 68, 68, 0.3);
+body.cuerpo-admin.modo-oscuro .admin-boton-icono.admin-boton-eliminar:hover,
+body.cuerpo-admin.modo-oscuro .admin-boton-icono-danger:hover {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: #ffffff;
 }
 
 body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
