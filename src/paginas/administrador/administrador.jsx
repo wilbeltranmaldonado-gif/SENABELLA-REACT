@@ -99,12 +99,21 @@ function Administrador() {
   // ==========================================
 
   useEffect(() => {
-    // Modo oscuro
+    document.body.classList.add("cuerpo-admin");
     if (localStorage.getItem("modoOscuro") === "activado") {
       setModoOscuro(true);
       document.body.classList.add("modo-oscuro");
     }
+
+    return () => document.body.classList.remove("cuerpo-admin");
   }, []);
+
+  const alternarModoOscuro = () => {
+    const nuevoEstado = !modoOscuro;
+    setModoOscuro(nuevoEstado);
+    document.body.classList.toggle("modo-oscuro", nuevoEstado);
+    localStorage.setItem("modoOscuro", nuevoEstado ? "activado" : "desactivado");
+  };
 
   const actualizarNotificaciones = () => setNotificaciones(obtenerNotificaciones());
   const notificacionesNoLeidas = notificaciones.filter((notificacion) => !notificacionesLeidas[notificacion.id]).length;
@@ -239,7 +248,7 @@ function Administrador() {
   };
 
   return (
-    <div className="cuerpo-admin">
+    <div className={`cuerpo-admin${modoOscuro ? " modo-oscuro" : ""}`}>
       {/* ==========================================
            SIDEBAR
       ========================================== */}
@@ -305,6 +314,15 @@ function Administrador() {
           <h1 className="admin-titulo-vista">{obtenerTituloVista()}</h1>
 
           <div className="admin-topbar-acciones">
+            <button
+              className="admin-icono-boton admin-boton-tema"
+              onClick={alternarModoOscuro}
+              title={modoOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+              aria-label={modoOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            >
+              <i className={`fa-solid ${modoOscuro ? "fa-sun" : "fa-moon"}`}></i>
+            </button>
+
             {/* NOTIFICACIONES */}
             <div className="admin-menu-desplegable">
               <button 
