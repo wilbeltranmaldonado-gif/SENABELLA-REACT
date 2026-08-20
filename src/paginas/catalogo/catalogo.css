@@ -859,7 +859,77 @@
   font-size: 14px;
 }
 
+/* ==========================================
+   MODO OSCURO
+   ========================================== */
 body.modo-oscuro .btn-agregar-carrito {
   background: linear-gradient(135deg, #aad100, #84b814);
   color: #111;
+}
+
+body.modo-oscuro .categorias-circulares,
+body.modo-oscuro .contenido-menu,
+body.modo-oscuro .filtro-marca,
+body.modo-oscuro .recomendacion,
+body.modo-oscuro .tar-producto {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+}
+
+body.modo-oscuro .categoria.circulo-activo .titulo-cat,
+body.modo-oscuro .menu-texto h2,
+body.modo-oscuro .filtro1,
+body.modo-oscuro .opcion-domicilio,
+body.modo-oscuro .titulo-marca,
+body.modo-oscuro .recomendacion-texto h2,
+body.modo-oscuro .nombre-producto,
+body.modo-oscuro .precio {
+  color: #fff !important;
+}
+
+body.modo-oscuro .titulo-cat,
+body.modo-oscuro .menu-texto h3,
+body.modo-oscuro .resultados,
+body.modo-oscuro .opciones-filtro-lateral label,
+body.modo-oscuro .descripcion,
+body.modo-oscuro .info span,
+body.modo-oscuro .info i {
+  color: #bbb !important;
+}
+
+body.modo-oscuro .imagen-cat,
+body.modo-oscuro .tar-producto img {
+  background-color: #2a2a2a;
+  border-color: #444;
+}
+
+body.modo-oscuro .filtro {
+  border-bottom-color: #333;
+}
+
+body.modo-oscuro .botones button,
+body.modo-oscuro .boton-flecha,
+body.modo-oscuro .btn-ordenar,
+body.modo-oscuro .opciones-orden select,
+body.modo-oscuro .paginacion button {
+  background: #2a2a2a;
+  color: #bbb;
+  border-color: #444;
+}
+
+body.modo-oscuro .botones button:hover,
+body.modo-oscuro .paginacion button:hover {
+  border-color: #84b814;
+  color: #84b814;
+}
+
+body.modo-oscuro .paginacion .pagina-activa {
+  background-color: #84b814;
+  color: #111;
+  border-color: #84b814;
+}
+
+body.modo-oscuro .categoria-lis {
+  background-color: #2a2a2a;
+  color: #bbb;
 }

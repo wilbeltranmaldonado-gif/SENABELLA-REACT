@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./confirmacion.css";
+import "../../../css/confirmacion.css";
 
 function Confirmacion() {
   let orden = {};

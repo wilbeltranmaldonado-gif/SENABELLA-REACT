@@ -562,5 +562,82 @@
   }
 }
 
+/* ==========================================
+   MODO OSCURO - FAVORITOS
+   ========================================== */
+body.modo-oscuro .favoritos-hero {
+  background: linear-gradient(135deg, #121212 60%, #1a2210 100%);
+  border-bottom-color: #333;
+}
+
+body.modo-oscuro .favoritos-titulo,
+body.modo-oscuro .favoritos-vacio-titulo,
+body.modo-oscuro .fav-nombre,
+body.modo-oscuro .favoritos-sugerencias-titulo,
+body.modo-oscuro .fav-sugerencia-nombre,
+body.modo-oscuro .favoritos-orden-select {
+  color: #fff !important;
+}
+
+body.modo-oscuro .favoritos-subtitulo,
+body.modo-oscuro .favoritos-vacio-texto,
+body.modo-oscuro .favoritos-contador,
+body.modo-oscuro .favoritos-orden-label,
+body.modo-oscuro .fav-marca,
+body.modo-oscuro .fav-referencia,
+body.modo-oscuro .fav-sugerencia-marca {
+  color: #bbb !important;
+}
+
+body.modo-oscuro .favoritos-seccion,
+body.modo-oscuro .fav-tarjeta,
+body.modo-oscuro .favoritos-sugerencias,
+body.modo-oscuro .fav-sugerencia-tarjeta {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.modo-oscuro .favoritos-barra {
+  border-bottom-color: #333 !important;
+}
+
+body.modo-oscuro .favoritos-orden-select {
+  border-bottom-color: #555 !important;
+}
+
+body.modo-oscuro .favoritos-orden-select option {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+body.modo-oscuro .fav-btn-quitar {
+  background-color: #2a1111 !important;
+  border-color: #a83232 !important;
+  color: #ff6b6b !important;
+}
+
+body.modo-oscuro .fav-btn-quitar:hover {
+  background-color: #a83232 !important;
+  color: #fff !important;
+}
+
+body.modo-oscuro .fav-sugerencia-btn-fav {
+  background-color: #2a2a2a !important;
+  border-color: #444 !important;
+  color: #bbb !important;
+}
+
+body.modo-oscuro .fav-sugerencia-btn-fav:hover {
+  border-color: #ff6b6b !important;
+  color: #ff6b6b !important;
+}
+
+body.modo-oscuro .fav-btn-carrito,
+body.modo-oscuro .favoritos-btn-catalogo,
+body.modo-oscuro .fav-sugerencia-btn-carrito {
+  background: linear-gradient(135deg, #aad100, #84b814) !important;
+  color: #111 !important;
+}
 
 

@@ -460,3 +460,63 @@
   }
 }
 
+/* ==========================================
+   MODO OSCURO - CARRITO
+   ========================================== */
+body.modo-oscuro .titulo-seccion,
+body.modo-oscuro .cabecera-vendedor,
+body.modo-oscuro .nombre-producto,
+body.modo-oscuro .color-producto strong,
+body.modo-oscuro .fila-resumen,
+body.modo-oscuro .fila-total,
+body.modo-oscuro .titulo-sugerencias,
+body.modo-oscuro .nombre-sugerencia,
+body.modo-oscuro .caja-garantia {
+  color: #fff !important;
+}
+
+body.modo-oscuro .cantidad-carrito,
+body.modo-oscuro .marca-producto,
+body.modo-oscuro .color-producto,
+body.modo-oscuro .icono-opciones,
+body.modo-oscuro .marca-sugerencia,
+body.modo-oscuro .precio-antiguo-pequeno {
+  color: #bbb !important;
+}
+
+body.modo-oscuro .tarjeta-carrito,
+body.modo-oscuro .tarjeta-resumen,
+body.modo-oscuro .seccion-sugerencias,
+body.modo-oscuro .tarjeta-sugerencia {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.modo-oscuro .divisor-tarjeta {
+  border-top-color: #333 !important;
+}
+
+body.modo-oscuro .selector-cantidad {
+  border-color: #555 !important;
+}
+
+body.modo-oscuro .selector-cantidad button,
+body.modo-oscuro .selector-cantidad p {
+  color: #fff !important;
+}
+
+body.modo-oscuro .caja-garantia {
+  background-color: #2a2a2a !important;
+}
+
+body.modo-oscuro .boton-pagar,
+body.modo-oscuro .boton-ver-producto {
+  background-color: #84b814 !important;
+  color: #111 !important;
+}
+
+body.modo-oscuro .boton-pagar:hover,
+body.modo-oscuro .boton-ver-producto:hover {
+  background-color: #96b800 !important;
+}
