@@ -19,6 +19,13 @@ function Administrador() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
   const [contadorNotificaciones, setContadorNotificaciones] = useState(3);
+  const [cantidadPedidos, setCantidadPedidos] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]").length;
+    } catch {
+      return 0;
+    }
+  });
   const [modoOscuro, setModoOscuro] = useState(false);
   const [notificacionesLeidas, setNotificacionesLeidas] = useState({
     stockBajo: false,
@@ -58,6 +65,19 @@ function Administrador() {
       setModoOscuro(true);
       document.body.classList.add("modo-oscuro");
     }
+  }, []);
+
+  useEffect(() => {
+    const actualizarCantidadPedidos = () => {
+      try {
+        setCantidadPedidos(JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]").length);
+      } catch {
+        setCantidadPedidos(0);
+      }
+    };
+
+    window.addEventListener("storage", actualizarCantidadPedidos);
+    return () => window.removeEventListener("storage", actualizarCantidadPedidos);
   }, []);
 
   // ==========================================
@@ -134,7 +154,7 @@ function Administrador() {
   const itemsNavegacion = [
     { titulo: "General", items: [
       { id: "resumen", icono: "fa-gauge-high", texto: "Resumen" },
-      { id: "pedidos", icono: "fa-cart-shopping", texto: "Pedidos", badge: "6" },
+      { id: "pedidos", icono: "fa-cart-shopping", texto: "Pedidos", badge: String(cantidadPedidos) },
       { id: "productos", icono: "fa-box", texto: "Productos" },
       { id: "clientes", icono: "fa-users", texto: "Clientes" },
     ]},
