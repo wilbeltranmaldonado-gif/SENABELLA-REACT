@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../../css/detalle_producto.css";
 import { productosIniciales, productosRopaAccesorios } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
+import { obtenerStockDeProducto } from "../../utils/stock";
 import imagenFallback from "../../assets/teclado.webp";
 
 const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";
@@ -78,9 +79,16 @@ function DetalleProducto() {
   const [producto, setProducto] = useState(() => normalizarProducto(leerProductoSeleccionado() || productosIniciales[0]));
   const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
   const [favoritosVersion, setFavoritosVersion] = useState(0);
+  const [cantidad, setCantidad] = useState(1);
+
   iniciarFavoritosGlobal();
   const imagenActiva = imagenSeleccionada || producto.imagen;
   const esFavorito = favoritosVersion >= 0 && window.SenabellaFavoritos.esFavorito(producto.nombre);
+
+  const stockDisponible = obtenerStockDeProducto(producto.nombre, producto.id);
+  const precioUnitario = precioNumero(producto.precioActual);
+  const totalCalculado = precioUnitario * cantidad;
+  const totalFormateado = "$ " + Math.round(totalCalculado).toLocaleString("es-CO");
 
   const todosLosProductos = [
     ...productosIniciales,
@@ -94,6 +102,7 @@ function DetalleProducto() {
       if (guardado) {
         setImagenSeleccionada(null);
         setProducto(normalizarProducto(guardado));
+        setCantidad(1);
       }
     };
     window.addEventListener("senabella-producto-seleccionado", actualizarProducto);
@@ -106,6 +115,59 @@ function DetalleProducto() {
     return () => window.removeEventListener("senabella-favoritos-actualizado", sincronizarFavoritos);
   }, []);
 
+  const [carritoItems, setCarritoItems] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("senabella_cart_db") || "[]");
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    const actualizarItems = () => {
+      try {
+        setCarritoItems(JSON.parse(localStorage.getItem("senabella_cart_db") || "[]"));
+      } catch {
+        setCarritoItems([]);
+      }
+    };
+    window.addEventListener("storage", actualizarItems);
+    window.addEventListener("senabella-cart-updated", actualizarItems);
+    return () => {
+      window.removeEventListener("storage", actualizarItems);
+      window.removeEventListener("senabella-cart-updated", actualizarItems);
+    };
+  }, []);
+
+  const itemEnCarrito = carritoItems.find(
+    (item) => (item.nombre || "").trim().toLowerCase() === (producto.nombre || "").trim().toLowerCase()
+  );
+  const cantidadEnCarrito = itemEnCarrito ? (parseInt(itemEnCarrito.cantidad, 10) || 0) : 0;
+  const unidadesRestantes = Math.max(0, stockDisponible - cantidadEnCarrito);
+
+  // El botón se bloquea cuando se alcanza la cantidad de unidades disponibles
+  const botonAgregarBloqueado = stockDisponible <= 0 || cantidadEnCarrito >= stockDisponible || cantidad > unidadesRestantes;
+
+  const disminuirCantidad = () => {
+    setCantidad((prev) => Math.max(1, prev - 1));
+  };
+
+  const aumentarCantidad = () => {
+    setCantidad((prev) => {
+      const limite = Math.max(1, unidadesRestantes);
+      if (prev < limite) {
+        return prev + 1;
+      } else {
+        window.SenabellaToast?.(
+          `Has alcanzado el límite de unidades disponibles (${stockDisponible} unidades en total)`,
+          "fa-circle-info",
+          "advertencia"
+        );
+        return prev;
+      }
+    });
+  };
+
   const recomendaciones = todosLosProductos
     .filter((item) => item.nombre !== producto.nombre)
     .slice(0, 4);
@@ -115,6 +177,7 @@ function DetalleProducto() {
     localStorage.setItem(PRODUCTO_SELECCIONADO_KEY, JSON.stringify(seleccionado));
     setImagenSeleccionada(null);
     setProducto(seleccionado);
+    setCantidad(1);
     window.dispatchEvent(new CustomEvent("senabella-producto-seleccionado"));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -143,18 +206,45 @@ function DetalleProducto() {
     color: "Estándar",
     precioText: producto.precioActual,
     img: producto.imagen,
-    cantidad: 1,
+    cantidad: cantidad,
   };
 
   const agregarAlCarrito = () => {
+    if (botonAgregarBloqueado) {
+      window.SenabellaToast?.(
+        cantidadEnCarrito >= stockDisponible 
+          ? `Ya tienes el total disponible (${stockDisponible} uds) en tu carrito`
+          : `Solo quedan ${unidadesRestantes} unidad(es) disponible(s)`,
+        "fa-triangle-exclamation",
+        "advertencia"
+      );
+      return false;
+    }
+
     const agregado = window.SenabellaCart?.agregarProducto(productoCarrito);
     if (agregado) {
-      window.SenabellaToast?.("Producto agregado al carrito", "fa-cart-plus", "exito");
+      // Actualizar estado local de items del carrito
+      try {
+        setCarritoItems(JSON.parse(localStorage.getItem("senabella_cart_db") || "[]"));
+      } catch {
+        // Silencioso
+      }
+      window.SenabellaToast?.(
+        `Se ${cantidad === 1 ? "agregó 1 unidad" : `agregaron ${cantidad} unidades`} al carrito`,
+        "fa-cart-plus",
+        "exito"
+      );
+      // Reajustar cantidad si el restante disminuyó
+      setCantidad(1);
     }
     return agregado;
   };
 
   const comprarAhora = () => {
+    if (botonAgregarBloqueado) {
+      window.SenabellaToast?.("Has alcanzado el límite de unidades disponibles", "fa-triangle-exclamation", "advertencia");
+      return;
+    }
     const agregado = agregarAlCarrito();
     if (agregado) {
       navigate("/carrito");
@@ -195,9 +285,80 @@ function DetalleProducto() {
             <span><i className="fa-solid fa-shield-halved"></i> Compra segura</span>
           </div>
           <ul className="lista-especificaciones">{obtenerEspecificaciones(producto).map((item) => <li key={item}>{item}</li>)}</ul>
+
+          {/* SELECTOR ESTÉTICO DE CANTIDAD Y TOTALIZADOR */}
+          <div className="detalle-control-cantidad-box">
+            <div className="detalle-cantidad-fila">
+              <span className="detalle-cantidad-label">Cantidad:</span>
+              <div className="detalle-contador-grupo">
+                <button 
+                  type="button" 
+                  className="btn-detalle-contador" 
+                  onClick={disminuirCantidad}
+                  disabled={cantidad <= 1 || botonAgregarBloqueado}
+                  title={cantidad <= 1 ? "Mínimo 1 unidad" : "Disminuir cantidad"}
+                >
+                  <i className="fa-solid fa-minus"></i>
+                </button>
+                <span className="detalle-cantidad-valor">{cantidad}</span>
+                <button 
+                  type="button" 
+                  className="btn-detalle-contador" 
+                  onClick={aumentarCantidad}
+                  disabled={cantidad >= unidadesRestantes || botonAgregarBloqueado}
+                  title={
+                    cantidad >= unidadesRestantes 
+                      ? `Límite alcanzado (${unidadesRestantes} restantes)` 
+                      : "Aumentar cantidad"
+                  }
+                >
+                  <i className="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <span className="detalle-stock-badge">
+                <i className="fa-solid fa-boxes-stacked"></i> 
+                {stockDisponible <= 0 
+                  ? "Agotado" 
+                  : cantidadEnCarrito > 0 
+                  ? `${stockDisponible} stock (${cantidadEnCarrito} en carro)` 
+                  : `${stockDisponible} disponibles`}
+              </span>
+            </div>
+
+            <div className="detalle-total-fila">
+              <span className="detalle-total-label">Total ({cantidad} {cantidad === 1 ? "unidad" : "unidades"}):</span>
+              <span className="detalle-total-precio">{totalFormateado}</span>
+            </div>
+          </div>
+
           <div className="acciones-producto">
-            <button className="btn-primario" onClick={agregarAlCarrito}>Agregar al carrito</button>
-            <button className="btn-secundario" onClick={comprarAhora}>Comprar ahora</button>
+            <button 
+              className="btn-primario" 
+              onClick={agregarAlCarrito} 
+              disabled={botonAgregarBloqueado}
+              title={
+                stockDisponible <= 0
+                  ? "Producto agotado en inventario"
+                  : cantidadEnCarrito >= stockDisponible
+                  ? `Has alcanzado el límite disponible (${stockDisponible} uds) en el carrito`
+                  : "Agregar al carrito"
+              }
+            >
+              <i className={`fa-solid ${botonAgregarBloqueado ? "fa-lock" : "fa-cart-plus"}`}></i>
+              {stockDisponible <= 0
+                ? "Producto agotado"
+                : cantidadEnCarrito >= stockDisponible
+                ? "Stock límite en carrito"
+                : "Agregar al carrito"}
+            </button>
+            <button 
+              className="btn-secundario" 
+              onClick={comprarAhora} 
+              disabled={botonAgregarBloqueado}
+              title={botonAgregarBloqueado ? "Límite de stock alcanzado" : "Comprar ahora"}
+            >
+              <i className="fa-solid fa-bolt"></i> Comprar ahora
+            </button>
             <Link to={producto.origen || "/catalogo"} className="btn-terciario-catalogo"><i className="fa-solid fa-store"></i> Volver al catálogo</Link>
           </div>
         </div>

@@ -194,13 +194,120 @@
   font-weight: 700;
 }
 
+/* ==========================================
+   SELECTOR DE CANTIDAD Y TOTALIZADOR EN VIVO
+   ========================================== */
+.detalle-control-cantidad-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin: 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.detalle-cantidad-fila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.detalle-cantidad-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.detalle-contador-grupo {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 25px;
+  padding: 3px 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.btn-detalle-contador {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f5f9;
+  color: #1e293b;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-detalle-contador:hover:not(:disabled) {
+  background: #84b814;
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.btn-detalle-contador:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.detalle-cantidad-valor {
+  min-width: 38px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.detalle-stock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #166534;
+  background: #dcfce7;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #bbf7d0;
+  margin-left: auto;
+}
+
+.detalle-total-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.detalle-total-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.detalle-total-precio {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #15803d;
+  letter-spacing: -0.5px;
+}
+
 .acciones-producto {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .btn-primario,
@@ -223,10 +330,19 @@
   color: #ffffff;
 }
 
-.btn-primario:hover {
+.btn-primario:hover:not(:disabled) {
   background: #6e9b10;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(132, 184, 20, 0.35);
+}
+
+.btn-primario:disabled {
+  background: #94a3b8 !important;
+  color: #f1f5f9 !important;
+  opacity: 0.65;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .btn-secundario {
@@ -234,10 +350,19 @@
   color: #ffffff;
 }
 
-.btn-secundario:hover {
+.btn-secundario:hover:not(:disabled) {
   background: #1f262c;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(51, 61, 69, 0.35);
+}
+
+.btn-secundario:disabled {
+  background: #64748b !important;
+  color: #cbd5e1 !important;
+  opacity: 0.65;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .btn-terciario-catalogo {
@@ -507,6 +632,52 @@ body.modo-oscuro .detalle-producto-page .reco-card {
 
 body.modo-oscuro .detalle-producto-page .precio-antiguo {
   color: #aaaaaa;
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-control-cantidad-box {
+  background: #1a222d;
+  border-color: #2e3c4e;
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-cantidad-label {
+  color: #e2e8f0;
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-contador-grupo {
+  background: #111827;
+  border-color: #374151;
+}
+
+body.modo-oscuro .detalle-producto-page .btn-detalle-contador {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+
+body.modo-oscuro .detalle-producto-page .btn-detalle-contador:hover:not(:disabled) {
+  background: #84b814;
+  color: #ffffff;
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-cantidad-valor {
+  color: #ffffff;
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-stock-badge {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-total-fila {
+  border-top-color: #374151;
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-total-label {
+  color: #94a3b8;
+}
+
+body.modo-oscuro .detalle-producto-page .detalle-total-precio {
+  color: #4ade80;
 }
 
 .detalle-producto-page .imagen-producto {
