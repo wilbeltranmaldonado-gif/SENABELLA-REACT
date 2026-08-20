@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./inicio.css";
 import {
   productosInicio as productos,
@@ -14,6 +14,7 @@ function Inicio() {
   const [productoModal, setProductoModal] = useState(null);
   const [cantidad, setCantidad] = useState(1);
   const [mostrarArriba, setMostrarArriba] = useState(false);
+  const navigate = useNavigate();
   const mostrarToast = (mensaje, tipo = "exito") => {
     if (window.SenabellaToast) {
       const icono = tipo === "info" ? "fa-circle-info" : tipo === "advertencia" ? "fa-triangle-exclamation" : "fa-circle-check";
@@ -26,10 +27,15 @@ function Inicio() {
   // ==========================================
 
   const abrirVistaRapida = (producto) => {
-    setProductoModal(producto);
-    setCantidad(1);
-    setModalAbierto(true);
-    document.body.style.overflow = "hidden";
+    localStorage.setItem("productoSeleccionado", JSON.stringify({
+      ...producto,
+      titulo: producto.nombre,
+      marca: producto.marca || "SENABELLA",
+      precioActual: producto.precio,
+      descripcion: producto.descripcion || `${producto.nombre}. Producto seleccionado de Senabella con compra segura y soporte especializado.`,
+      origen: "/",
+    }));
+    navigate("/detalle_producto");
   };
 
   const cerrarModal = () => {
