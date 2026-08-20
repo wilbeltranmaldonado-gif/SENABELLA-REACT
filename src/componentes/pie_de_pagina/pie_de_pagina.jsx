@@ -8,8 +8,8 @@ function Footer() {
         <div>
           <h3>Servicio al cliente</h3>
           <Link to="/soporte">Ayuda</Link>
-          <Link to="/soporte">Cambio y devoluciones</Link>
-          <Link to="/soporte">Garantías</Link>
+          <Link to="/soporte" state={{ busqueda: "cambios y devoluciones" }}>Cambio y devoluciones</Link>
+          <Link to="/soporte" state={{ busqueda: "garantías" }}>Garantías</Link>
         </div>
 
         <div>
