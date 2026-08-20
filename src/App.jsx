@@ -16,6 +16,8 @@ import Usuario from "./paginas/usuario/usuario";
 import Contacto from "./paginas/contacto/contacto";
 import Soporte from "./paginas/soporte/soporte";
 import Favoritos from "./paginas/favoritos/favoritos";
+import Checkout from "./paginas/checkout/checkout";
+import Confirmacion from "./paginas/confirmacion/confirmacion";
 
 function App() {
     const location = useLocation();
@@ -42,6 +44,8 @@ function App() {
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/soporte" element={<Soporte />} />
                 <Route path="/favoritos" element={<Favoritos />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/confirmacion" element={<Confirmacion />} />
             </Routes>
 
             {!ocultarLayout && <PieDePagina />}

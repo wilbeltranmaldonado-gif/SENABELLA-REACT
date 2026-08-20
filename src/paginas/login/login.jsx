@@ -55,11 +55,11 @@ function Login() {
     localStorage.setItem("senabella_sesion", "activa");
     localStorage.setItem("senabella_rol", rol);
     localStorage.setItem("senabella_usuario", JSON.stringify({
-      id: usuario.id,
-      nombre: nombre,
+      ...usuario,
+      nombre,
       email: usuario.correo,
       correo: usuario.correo,
-      rol: rol,
+      rol,
     }));
 
     if (recordarSesion) {

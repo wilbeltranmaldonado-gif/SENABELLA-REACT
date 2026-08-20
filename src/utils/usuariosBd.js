@@ -38,7 +38,7 @@ export function buscarPorCorreo(correo) {
   return lista.find((u) => u.correo.toLowerCase() === correo.toLowerCase()) || null;
 }
 
-export function crearUsuario({ nombre, correo, password, rol = "cliente" }) {
+export function crearUsuario({ nombre, correo, password, celular = "", direccion = "", ciudad = "", rol = "cliente" }) {
   if (!nombre || !correo || !password) {
     return { ok: false, mensaje: "Todos los campos son obligatorios." };
   }
@@ -52,6 +52,9 @@ export function crearUsuario({ nombre, correo, password, rol = "cliente" }) {
     nombre: nombre.trim(),
     correo: correo.trim().toLowerCase(),
     password: _codificar(password),
+    celular,
+    direccion,
+    ciudad,
     rol,
     estado: "activo",
     fechaRegistro: _hoy(),

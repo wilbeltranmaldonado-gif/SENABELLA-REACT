@@ -99,6 +99,7 @@ function Registro() {
       nombre: formData.nombreCompleto,
       correo: formData.correoElectronico,
       password: formData.contrasena,
+      celular: formData.celular,
       rol: "cliente"
     });
 

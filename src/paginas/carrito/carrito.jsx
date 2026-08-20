@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import "./carrito.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { sugerenciasCarrito } from "../../datos";
 
 function Carrito() {
+  const navigate = useNavigate();
   const parsearPrecio = (texto) => {
     if (!texto) return 0;
     return parseFloat(texto.toString().replace(/[^\d]/g, "")) || 0;
@@ -190,7 +191,7 @@ function Carrito() {
               <p className="precio-total">{formatoMoneda(totalPrecio)}</p>
             </div>
 
-            <button className="boton-pagar" disabled={itemsCarrito.length === 0 || totalSeleccionados === 0}>
+            <button className="boton-pagar" disabled={itemsCarrito.length === 0 || totalSeleccionados === 0} onClick={() => navigate("/checkout")}>
               Continuar compra
             </button>
           </div>

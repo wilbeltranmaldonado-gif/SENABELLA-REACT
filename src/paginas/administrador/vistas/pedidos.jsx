@@ -1,14 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Pedidos() {
-  const [pedidos, setPedidos] = useState([
+  const pedidosDemo = [
     { id: "#SN-10482", cliente: "María García", email: "maria@email.com", total: "$125.00", estado: "completado", fecha: "2024-08-19", items: 3 },
     { id: "#SN-10481", cliente: "Juan Rodríguez", email: "juan@email.com", total: "$89.50", estado: "procesando", fecha: "2024-08-19", items: 2 },
     { id: "#SN-10480", cliente: "Ana Martínez", email: "ana@email.com", total: "$234.00", estado: "pendiente", fecha: "2024-08-18", items: 5 },
     { id: "#SN-10479", cliente: "Carlos López", email: "carlos@email.com", total: "$56.00", estado: "completado", fecha: "2024-08-18", items: 1 },
     { id: "#SN-10478", cliente: "Laura Sánchez", email: "laura@email.com", total: "$178.00", estado: "enviado", fecha: "2024-08-17", items: 4 },
     { id: "#SN-10477", cliente: "Pedro González", email: "pedro@email.com", total: "$312.00", estado: "cancelado", fecha: "2024-08-17", items: 6 },
-  ]);
+  ];
+  const [pedidos, setPedidos] = useState(() => {
+    try {
+      const ordenes = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+      return ordenes.length ? ordenes : pedidosDemo;
+    } catch {
+      return pedidosDemo;
+    }
+  });
+
+  useEffect(() => {
+    const actualizarPedidos = () => {
+      try {
+        const ordenes = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+        if (ordenes.length) setPedidos(ordenes);
+      } catch {
+        // Conserva los datos mostrados si el almacenamiento está incompleto.
+      }
+    };
+    window.addEventListener("storage", actualizarPedidos);
+    return () => window.removeEventListener("storage", actualizarPedidos);
+  }, []);
 
   const [filtroEstado, setFiltroEstado] = useState("todos");
   const [busqueda, setBusqueda] = useState("");
@@ -26,10 +47,11 @@ function Pedidos() {
 
   const pedidosFiltrados = pedidos.filter(pedido => {
     const coincideEstado = filtroEstado === "todos" || pedido.estado === filtroEstado;
+    const idPedido = String(pedido.id || pedido.numero || "");
     const coincideBusqueda = 
-      pedido.cliente.toLowerCase().includes(busqueda.toLowerCase()) ||
-      pedido.id.toLowerCase().includes(busqueda.toLowerCase()) ||
-      pedido.email.toLowerCase().includes(busqueda.toLowerCase());
+      String(pedido.cliente?.nombre || pedido.cliente || "").toLowerCase().includes(busqueda.toLowerCase()) ||
+      idPedido.toLowerCase().includes(busqueda.toLowerCase()) ||
+      String(pedido.email || pedido.cliente?.email || "").toLowerCase().includes(busqueda.toLowerCase());
     return coincideEstado && coincideBusqueda;
   });
 
@@ -83,9 +105,9 @@ function Pedidos() {
           <tbody>
             {pedidosFiltrados.map((pedido, index) => (
               <tr key={index}>
-                <td>{pedido.id}</td>
-                <td>{pedido.cliente}</td>
-                <td>{pedido.email}</td>
+                <td>{pedido.id || pedido.numero}</td>
+                <td>{pedido.cliente?.nombre || pedido.cliente || "Cliente"}</td>
+                <td>{pedido.email || pedido.cliente?.email || "-"}</td>
                 <td>{pedido.total}</td>
                 <td>{pedido.items}</td>
                 <td>
