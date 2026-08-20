@@ -285,9 +285,10 @@ function Soporte() {
               </span>
               <h2 id="modal-titulo">{modalArticulo.titulo}</h2>
               <div className="modal-meta">
-                <i className="fa-regular fa-clock"></i>{" "}
+                <i className="fa-regular fa-clock"></i>
                 <span id="modal-tiempo">{modalArticulo.tiempo}</span>
-                &nbsp;&bull;&nbsp; Actualizado hoy
+                <span className="modal-punto">•</span>
+                <span>Actualizado hoy</span>
               </div>
             </div>
             <div
