@@ -22,7 +22,6 @@ function Footer() {
           <h3>Acerca de Senabella</h3>
           <Link to="/contacto">Nuestra empresa</Link>
           <Link to="/contacto">Trabaja con nosotros</Link>
-          <Link to="/inicio">Tiendas</Link>
         </div>
       </div>
 
