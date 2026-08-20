@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../../css/detalle_producto.css";
+import "./detalle_producto.css";
 import { productosIniciales, productosRopaAccesorios } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 import { obtenerStockDeProducto } from "../../utils/stock";
