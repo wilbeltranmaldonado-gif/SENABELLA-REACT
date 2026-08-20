@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { obtenerPedidosAdmin } from "../../datos";
 import "./administrador.css";
 import "./encabezado.css";
 
@@ -17,7 +18,7 @@ import Configuracion from "./vistas/configuracion";
 function obtenerNotificaciones() {
   try {
     const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
-    const pedidos = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+    const pedidos = obtenerPedidosAdmin();
     const stockBajo = productos.filter((producto) => Number(producto.stock) > 0 && Number(producto.stock) <= 10).length;
     const pedidosPendientes = pedidos.filter((pedido) => ["pendiente", "pendiente-verificacion", "procesando"].includes(pedido.estado)).length;
     return [
@@ -34,13 +35,7 @@ function Administrador() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
   const [notificaciones, setNotificaciones] = useState(obtenerNotificaciones);
-  const [cantidadPedidos, setCantidadPedidos] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]").length;
-    } catch {
-      return 0;
-    }
-  });
+  const [cantidadPedidos, setCantidadPedidos] = useState(() => obtenerPedidosAdmin().length);
   const [cantidadUsuarios, setCantidadUsuarios] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("senabella_usuarios") || "[]").filter((usuario) => usuario.rol !== "administrador").length;
@@ -71,14 +66,11 @@ function Administrador() {
 
   useEffect(() => {
     const actualizarCantidadPedidos = () => {
-      try {
-        setCantidadPedidos(JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]").length);
-      } catch {
-        setCantidadPedidos(0);
-      }
+      setCantidadPedidos(obtenerPedidosAdmin().length);
     };
 
     window.addEventListener("storage", actualizarCantidadPedidos);
+    window.addEventListener("senabella_orders_updated", actualizarCantidadPedidos);
     const actualizarCantidadUsuarios = () => {
       try {
         setCantidadUsuarios(JSON.parse(localStorage.getItem("senabella_usuarios") || "[]").filter((usuario) => usuario.rol !== "administrador").length);
@@ -89,6 +81,7 @@ function Administrador() {
     window.addEventListener("storage", actualizarCantidadUsuarios);
     return () => {
       window.removeEventListener("storage", actualizarCantidadPedidos);
+      window.removeEventListener("senabella_orders_updated", actualizarCantidadPedidos);
       window.removeEventListener("storage", actualizarCantidadUsuarios);
     };
   }, []);
