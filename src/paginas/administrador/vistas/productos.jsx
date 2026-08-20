@@ -2,6 +2,7 @@ import { useState } from "react";
 import { productosIniciales, productosRopaAccesorios } from "../../../datos";
 
 const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";
+const CATEGORIAS_KEY = "senabella_categories";
 const productosPredeterminados = [
   { id: 1, nombre: "Auriculares Bluetooth", categoria: "Audio", precio: "$89.99", stock: 45, estado: "activo", imagen: "" },
   { id: 2, nombre: "Smartwatch Pro", categoria: "Relojes", precio: "$199.99", stock: 23, estado: "activo", imagen: "" },
@@ -43,8 +44,33 @@ const leerProductos = () => {
   }
 };
 
+const leerCategorias = () => {
+  try {
+    const categorias = JSON.parse(localStorage.getItem(CATEGORIAS_KEY) || "[]");
+    return Array.isArray(categorias) && categorias.length
+      ? categorias
+      : [{ id: 1, nombre: "General", descripcion: "Productos generales", productos: 0 }];
+  } catch {
+    return [{ id: 1, nombre: "General", descripcion: "Productos generales", productos: 0 }];
+  }
+};
+
+const sincronizarCategorias = (productos) => {
+  try {
+    const categorias = leerCategorias();
+    const categoriasActualizadas = categorias.map((categoria) => ({
+      ...categoria,
+      productos: productos.filter((producto) => String(producto.categoria || "General").toLowerCase() === String(categoria.nombre).toLowerCase()).length
+    }));
+    localStorage.setItem(CATEGORIAS_KEY, JSON.stringify(categoriasActualizadas));
+  } catch {
+    // La tabla de productos sigue funcionando aunque el almacenamiento este incompleto.
+  }
+};
+
 function Productos() {
   const [productos, setProductos] = useState(leerProductos);
+  const [categorias, setCategorias] = useState(leerCategorias);
 
   const [modalAbierto, setModalAbierto] = useState(false);
   const [productoEditando, setProductoEditando] = useState(null);
@@ -99,6 +125,7 @@ function Productos() {
       );
       setProductos(productosActualizados);
       localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
+      sincronizarCategorias(productosActualizados);
     } else {
       // Agregar nuevo producto
       const nuevoProducto = {
@@ -108,6 +135,7 @@ function Productos() {
       const productosActualizados = [...productos, nuevoProducto];
       setProductos(productosActualizados);
       localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
+      sincronizarCategorias(productosActualizados);
     }
     cerrarModal();
   };
@@ -117,6 +145,7 @@ function Productos() {
       const productosActualizados = productos.filter(p => p.id !== id);
       setProductos(productosActualizados);
       localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
+      sincronizarCategorias(productosActualizados);
     }
   };
 
@@ -241,13 +270,17 @@ function Productos() {
                 />
               </div>
               <div className="admin-form-grupo">
-                <label>Categoría</label>
-                <input
-                  type="text"
-                  value={productoEditando?.categoria || ""}
+                <label htmlFor="categoria-producto">Categoría</label>
+                <select
+                  id="categoria-producto"
+                  value={productoEditando?.categoria || categorias[0]?.nombre || "General"}
                   onChange={(e) => setProductoEditando({...productoEditando, categoria: e.target.value})}
                   required
-                />
+                >
+                  {categorias.map((categoria) => (
+                    <option key={categoria.id} value={categoria.nombre}>{categoria.nombre}</option>
+                  ))}
+                </select>
               </div>
               <div className="admin-form-grupo">
                 <label>Precio</label>
