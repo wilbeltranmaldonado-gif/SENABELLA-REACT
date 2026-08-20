@@ -18,6 +18,7 @@ import Soporte from "./paginas/soporte/soporte";
 import Favoritos from "./paginas/favoritos/favoritos";
 import Checkout from "./paginas/checkout/checkout";
 import Confirmacion from "./paginas/confirmacion/confirmacion";
+import DetalleProducto from "./paginas/detalle_producto/detalle_producto";
 
 function App() {
     const location = useLocation();
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/favoritos" element={<Favoritos />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/confirmacion" element={<Confirmacion />} />
+                <Route path="/detalle_producto" element={<DetalleProducto />} />
             </Routes>
 
             {!ocultarLayout && <PieDePagina />}
