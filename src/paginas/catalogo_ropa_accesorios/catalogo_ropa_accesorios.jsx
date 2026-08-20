@@ -68,14 +68,14 @@ function CatalogoRopaAccesorios() {
       });
     }
 
-<<<<<<< Updated upstream
     if (queryBusqueda) {
       resultado = resultado.filter((p) => [p.nombre, p.marca, p.categoria, p.referencia]
         .filter(Boolean)
         .join(" ")
         .toLowerCase()
         .includes(queryBusqueda));
-=======
+    }
+
     // Filtro por precio
     if (preciosSeleccionados.length > 0) {
        resultado = resultado.filter((p) => {
@@ -87,7 +87,6 @@ function CatalogoRopaAccesorios() {
              return true;
           });
        });
->>>>>>> Stashed changes
     }
 
     // Ordenamiento
@@ -98,11 +97,7 @@ function CatalogoRopaAccesorios() {
     }
 
     return resultado;
-<<<<<<< Updated upstream
-  }, [marcaSeleccionada, categoriaSeleccionada, ordenSeleccionado, queryBusqueda]);
-=======
-  }, [marcasSeleccionadas, categoriasSeleccionadas, preciosSeleccionados, ordenSeleccionado]);
->>>>>>> Stashed changes
+  }, [marcasSeleccionadas, categoriasSeleccionadas, preciosSeleccionados, ordenSeleccionado, queryBusqueda]);
 
   // Paginación (12 productos por página)
   const itemsPorPagina = 12;

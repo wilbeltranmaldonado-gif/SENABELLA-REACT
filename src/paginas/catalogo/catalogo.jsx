@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import "./catalogo.css";
-<<<<<<< Updated upstream
-import { Link, useSearchParams } from "react-router-dom";
-=======
-import { Link, useLocation } from "react-router-dom";
->>>>>>> Stashed changes
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   categoriasCirculares,
   productosIniciales,
@@ -84,38 +80,26 @@ function Catalogo() {
   // ==========================================
   
   const productosFiltrados = productosDisponibles.filter(prod => {
-<<<<<<< Updated upstream
-    let cumpleMarca = marcaSeleccionada === "" || prod.marca === marcaSeleccionada;
-    let cumpleCategoria = true;
+    const prodCat = (prod.categoria || prod.etiqueta || "").toLowerCase();
+    const prodNombre = prod.nombre.toLowerCase();
+    const prodMarca = (prod.marca || "").toLowerCase();
     const textoProducto = [prod.nombre, prod.marca, prod.categoria, prod.referencia]
       .filter(Boolean)
       .join(" ")
       .toLowerCase();
     const cumpleBusqueda = !busqueda || textoProducto.includes(busqueda);
-    
-    if (categoriaSeleccionada !== "") {
-      cumpleCategoria = prod.nombre.toLowerCase().includes(categoriaSeleccionada) ||
-              prod.marca.toLowerCase().includes(categoriaSeleccionada) ||
-              prod.categoria?.toLowerCase().includes(categoriaSeleccionada);
-    }
-    
-    return cumpleMarca && cumpleCategoria && cumpleBusqueda;
-=======
-    const prodCat = (prod.categoria || prod.etiqueta || "").toLowerCase();
-    const prodNombre = prod.nombre.toLowerCase();
-    const prodMarca = prod.marca.toLowerCase();
 
     // Marca
-    let cumpleMarca = marcasSeleccionadas.length === 0 || marcasSeleccionadas.includes(prod.marca);
+    const cumpleMarca = marcasSeleccionadas.length === 0 || marcasSeleccionadas.includes(prod.marca);
 
     // Categoria
-    let cumpleCategoria = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.some(catSel => {
+    const cumpleCategoria = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.some(catSel => {
        const cs = catSel.toLowerCase();
        return prodCat.includes(cs) || prodNombre.includes(cs) || prodMarca.includes(cs);
     });
 
     // Precio
-    let cumplePrecio = preciosSeleccionados.length === 0 || preciosSeleccionados.some(rango => {
+    const cumplePrecio = preciosSeleccionados.length === 0 || preciosSeleccionados.some(rango => {
        const precio = prod.precioNumero || 0;
        if (rango === "Menos de $500.000") return precio < 500000;
        if (rango === "$500.000 - $1.000.000") return precio >= 500000 && precio <= 1000000;
@@ -124,8 +108,7 @@ function Catalogo() {
        return true;
     });
 
-    return cumpleMarca && cumpleCategoria && cumplePrecio;
->>>>>>> Stashed changes
+    return cumpleMarca && cumpleCategoria && cumplePrecio && cumpleBusqueda;
   });
 
   // Paginación (12 items por página aprox, pero aquí son 17 en total)
