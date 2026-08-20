@@ -84,6 +84,7 @@ function Productos() {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [productoEditando, setProductoEditando] = useState(null);
   const [busqueda, setBusqueda] = useState("");
+  const [categoriaFiltro, setCategoriaFiltro] = useState("todas");
   const proveedoresDisponibles = Array.from(new Set([
     "Proveedor Senabella",
     "TechSupply Inc.",
@@ -101,10 +102,18 @@ function Productos() {
     return clases[estado] || "";
   };
 
-  const productosFiltrados = productos.filter(producto =>
-    producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-    producto.categoria.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  const categoriasDisponibles = Array.from(new Map([
+    ...categorias.map((categoria) => categoria.nombre),
+    ...productos.map((producto) => producto.categoria || "General")
+  ].map((categoria) => [categoria.toLowerCase(), categoria])).values()).sort((a, b) => a.localeCompare(b));
+
+  const productosFiltrados = productos.filter((producto) => {
+    const textoBusqueda = busqueda.toLowerCase();
+    const categoria = producto.categoria || "General";
+    const coincideCategoria = categoriaFiltro === "todas" || categoria.toLowerCase() === categoriaFiltro.toLowerCase();
+    const coincideBusqueda = producto.nombre.toLowerCase().includes(textoBusqueda) || categoria.toLowerCase().includes(textoBusqueda);
+    return coincideCategoria && coincideBusqueda;
+  });
 
   const abrirModal = (producto = null) => {
     setProductoEditando(producto || {
@@ -182,6 +191,17 @@ function Productos() {
             onChange={(e) => setBusqueda(e.target.value)}
             className="admin-input-busqueda"
           />
+          <select
+            value={categoriaFiltro}
+            onChange={(e) => setCategoriaFiltro(e.target.value)}
+            className="admin-input-busqueda"
+            aria-label="Filtrar productos por categoría"
+          >
+            <option value="todas">Todas las categorías</option>
+            {categoriasDisponibles.map((categoria) => (
+              <option key={categoria} value={categoria}>{categoria}</option>
+            ))}
+          </select>
           <button 
             className="admin-boton admin-boton-primario"
             onClick={() => abrirModal()}

@@ -25,6 +25,7 @@ function Resumen() {
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [criterioTopProductos, setCriterioTopProductos] = useState("unidades"); // "unidades" o "ingresos"
+  const [categoriaProducto, setCategoriaProducto] = useState("todas");
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -268,12 +269,19 @@ function Resumen() {
   }, [datos.pedidos, criterioTopProductos]);
 
   const productosMasVendidosFiltrados = useMemo(() => {
-    if (!busquedaProducto.trim()) return todosProductosVendidos;
     const query = busquedaProducto.toLowerCase();
     return todosProductosVendidos.filter(
-      (p) => p.nombre.toLowerCase().includes(query) || p.categoria.toLowerCase().includes(query)
+      (p) => {
+        const coincideCategoria = categoriaProducto === "todas" || p.categoria === categoriaProducto;
+        const coincideBusqueda = !query || p.nombre.toLowerCase().includes(query) || p.categoria.toLowerCase().includes(query);
+        return coincideCategoria && coincideBusqueda;
+      }
     );
-  }, [todosProductosVendidos, busquedaProducto]);
+  }, [todosProductosVendidos, busquedaProducto, categoriaProducto]);
+
+  const categoriasProductos = useMemo(() => {
+    return Array.from(new Set(todosProductosVendidos.map((producto) => producto.categoria))).sort((a, b) => a.localeCompare(b));
+  }, [todosProductosVendidos]);
 
   const totalUnidadesVendidas = useMemo(() => {
     return todosProductosVendidos.reduce((total, p) => total + p.ventas, 0);
@@ -410,6 +418,19 @@ function Resumen() {
               className="admin-input-busqueda"
               style={{ width: "200px" }}
             />
+
+            <select
+              value={categoriaProducto}
+              onChange={(e) => setCategoriaProducto(e.target.value)}
+              className="admin-input-busqueda"
+              aria-label="Filtrar productos por categoría"
+              style={{ width: "180px" }}
+            >
+              <option value="todas">Todas las categorías</option>
+              {categoriasProductos.map((categoria) => (
+                <option key={categoria} value={categoria}>{categoria}</option>
+              ))}
+            </select>
 
             <div style={{ display: "flex", background: "#f1f5f9", borderRadius: "8px", padding: "2px", border: "1px solid #e2e8f0" }}>
               <button
