@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { crearUsuario, buscarPorCorreo } from "../../utils/usuariosBd";
 import "./registro.css";
@@ -19,6 +19,30 @@ function Registro() {
   const [mensajeExito, setMensajeExito] = useState("");
 
   const navigate = useNavigate();
+
+  const [modoOscuro, setModoOscuro] = useState(
+    localStorage.getItem("modoOscuro") === "activado"
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem("modoOscuro") === "activado") {
+      document.body.classList.add("modo-oscuro");
+    } else {
+      document.body.classList.remove("modo-oscuro");
+    }
+  }, []);
+
+  const alternarModoOscuro = () => {
+    const nuevoEstado = !modoOscuro;
+    setModoOscuro(nuevoEstado);
+    if (nuevoEstado) {
+      document.body.classList.add("modo-oscuro");
+      localStorage.setItem("modoOscuro", "activado");
+    } else {
+      document.body.classList.remove("modo-oscuro");
+      localStorage.setItem("modoOscuro", "desactivado");
+    }
+  };
 
   const manejarCambio = (e) => {
     const { id, value } = e.target;
@@ -126,6 +150,14 @@ function Registro() {
         <i className="fa-solid fa-arrow-left"></i>
         <span>Inicio</span>
       </Link>
+
+      <button 
+        className="btn-modo-oscuro-flotante" 
+        onClick={alternarModoOscuro}
+        title="Alternar Modo Oscuro"
+      >
+        <i className={modoOscuro ? "fa-solid fa-sun" : "fa-solid fa-moon"}></i>
+      </button>
 
       <main className="contenedor-registro">
         <div className="tarjeta-registro">

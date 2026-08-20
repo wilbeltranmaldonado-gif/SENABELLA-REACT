@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { validarLogin } from "../../utils/usuariosBd";
 import "./login.css";
@@ -13,6 +13,30 @@ function Login() {
   const [mensajeError, setMensajeError] = useState("");
   const [mensajeExito, setMensajeExito] = useState("");
   const navigate = useNavigate();
+
+  const [modoOscuro, setModoOscuro] = useState(
+    localStorage.getItem("modoOscuro") === "activado"
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem("modoOscuro") === "activado") {
+      document.body.classList.add("modo-oscuro");
+    } else {
+      document.body.classList.remove("modo-oscuro");
+    }
+  }, []);
+
+  const alternarModoOscuro = () => {
+    const nuevoEstado = !modoOscuro;
+    setModoOscuro(nuevoEstado);
+    if (nuevoEstado) {
+      document.body.classList.add("modo-oscuro");
+      localStorage.setItem("modoOscuro", "activado");
+    } else {
+      document.body.classList.remove("modo-oscuro");
+      localStorage.setItem("modoOscuro", "desactivado");
+    }
+  };
 
   const manejarCambio = (e) => {
     const { name, value } = e.target;
@@ -82,6 +106,15 @@ function Login() {
         <i className="fa-solid fa-arrow-left"></i>
         <span>Inicio</span>
       </Link>
+
+      {/* Botón modo oscuro flotante */}
+      <button 
+        className="btn-modo-oscuro-flotante" 
+        onClick={alternarModoOscuro}
+        title="Alternar Modo Oscuro"
+      >
+        <i className={modoOscuro ? "fa-solid fa-sun" : "fa-solid fa-moon"}></i>
+      </button>
 
       {/* Contenedor principal de inicio de sesión */}
       <main className="contenedor-registro">
