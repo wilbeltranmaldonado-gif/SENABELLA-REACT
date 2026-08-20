@@ -128,7 +128,7 @@ function iniciarCarritoGlobal() {
 
 export default function Header() {
   const [modoOscuro, setModoOscuro] = useState(false);
-  const [ubicacion, setUbicacion] = useState("Ingresa tu ubicación");
+  const [ubicacion, setUbicacion] = useState("Ciudad");
   const [menuUbicacionAbierto, setMenuUbicacionAbierto] = useState(false);
   const [menuTarjetasAbierto, setMenuTarjetasAbierto] = useState(false);
   const [menuAyudaAbierto, setMenuAyudaAbierto] = useState(false);
@@ -152,9 +152,22 @@ export default function Header() {
     }
 
     // Ubicación guardada
-    const ubicacionGuardada = localStorage.getItem("ubicacion");
+    let ubicacionGuardada = localStorage.getItem("ubicacion");
+    if (!ubicacionGuardada) {
+      try {
+        const user = JSON.parse(localStorage.getItem("senabella_usuario"));
+        if (user && user.ciudad) {
+          ubicacionGuardada = user.ciudad;
+          localStorage.setItem("ubicacion", user.ciudad);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
     if (ubicacionGuardada) {
       setUbicacion(ubicacionGuardada);
+    } else {
+      setUbicacion("Ciudad");
     }
 
     // Enlace de cuenta según sesión / rol
@@ -199,6 +212,22 @@ export default function Header() {
     const actualizar = () => setCantidadCarrito(window.SenabellaCart.obtenerTotalCantidad());
     window.addEventListener(EVENTO_CARRITO_ACTUALIZADO, actualizar);
     return () => window.removeEventListener(EVENTO_CARRITO_ACTUALIZADO, actualizar);
+  }, []);
+
+  // ------------------------------------------
+  // Escuchar actualizaciones de ubicación (desde checkout/perfil)
+  // ------------------------------------------
+  useEffect(() => {
+    const actualizarUbicacion = () => {
+      const nuevaUbicacion = localStorage.getItem("ubicacion");
+      if (nuevaUbicacion) {
+        setUbicacion(nuevaUbicacion);
+      } else {
+        setUbicacion("Ciudad");
+      }
+    };
+    window.addEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
+    return () => window.removeEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
   }, []);
 
   // ------------------------------------------
@@ -411,40 +440,9 @@ export default function Header() {
       </nav>
 
       <div className="sub-navegacion">
-        <div className="menu-desplegable" ref={contenedorUbicacionRef}>
-          <button
-            className="boton-ubicacion boton-desplegable"
-            id="boton-ubicacion"
-            onClick={(e) => {
-              e.stopPropagation();
-              setMenuUbicacionAbierto(!menuUbicacionAbierto);
-            }}
-          >
-            <i className="fa-solid fa-location-dot"></i>
-            <span id="texto-ubicacion">{ubicacion}</span>
-            <i className="fa-solid fa-chevron-down"></i>
-          </button>
-
-          <div
-            className={`contenido-desplegable${menuUbicacionAbierto ? " mostrar" : ""}`}
-            id="menu-ubicacion"
-            style={{ minWidth: "220px" }}
-          >
-            {CIUDADES.map((ciudad) => (
-              <a
-                href="#"
-                className="opcion-ciudad"
-                key={ciudad}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  seleccionarCiudad(ciudad);
-                }}
-              >
-                {ciudad}
-              </a>
-            ))}
-          </div>
+        <div className="indicador-ubicacion">
+          <i className="fa-solid fa-location-dot"></i>
+          <span id="texto-ubicacion">{ubicacion}</span>
         </div>
 
         <div className="enlaces-navegacion">

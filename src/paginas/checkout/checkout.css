@@ -91,7 +91,8 @@
   box-shadow: 0 0 0 3px rgba(132, 184, 20, 0.1);
 }
 
-.campo-checkout input.error {
+.campo-checkout input.error,
+.campo-checkout select.error {
   border-color: #e63946;
 }
 
