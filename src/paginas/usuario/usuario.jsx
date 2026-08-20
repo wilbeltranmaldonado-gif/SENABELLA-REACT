@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { CIUDADES } from "../../datos";
 import "./usuario.css";
 
 function Usuario() {
@@ -31,13 +30,31 @@ function Usuario() {
       navigate("/login");
       return;
     }
+
+    const sincronizarDatosUsuario = () => {
+      try {
+        const u = JSON.parse(localStorage.getItem("senabella_usuario")) || {};
+        setUsuario(u);
+        const ords = JSON.parse(localStorage.getItem("senabella_user_orders")) || [];
+        setOrdenes(ords);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    sincronizarDatosUsuario();
+    window.addEventListener("storage", sincronizarDatosUsuario);
+    window.addEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+    return () => {
+      window.removeEventListener("storage", sincronizarDatosUsuario);
+      window.removeEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+    };
   }, [navigate]);
 
   const handleLogout = () => {
     if (window.confirm("¿Seguro que quieres cerrar sesión?")) {
       localStorage.removeItem("senabella_sesion");
       localStorage.removeItem("senabella_rol");
-      localStorage.removeItem("ubicacion");
       navigate("/");
       setTimeout(() => window.location.reload(), 100);
     }
@@ -105,11 +122,6 @@ function Usuario() {
     };
     
     localStorage.setItem("senabella_usuario", JSON.stringify(actualizado));
-    // Sincronizar la ciudad con la ubicación del encabezado
-    if (ciudad) {
-      localStorage.setItem("ubicacion", ciudad);
-      window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
-    }
     setUsuario(actualizado);
 
     setMensajeEnvio({ texto: "✓ Datos de envío guardados correctamente.", tipo: "exito" });
@@ -171,7 +183,8 @@ function Usuario() {
                   <input
                     name="nombre"
                     type="text"
-                    defaultValue={usuario.nombre || ""}
+                    value={usuario.nombre || ""}
+                    onChange={(e) => setUsuario({ ...usuario, nombre: e.target.value })}
                     required
                     placeholder="Ej. María García"
                     className="usuario-input"
@@ -182,7 +195,8 @@ function Usuario() {
                   <input
                     name="email"
                     type="email"
-                    defaultValue={usuario.email || usuario.correo || ""}
+                    value={usuario.email || usuario.correo || ""}
+                    onChange={(e) => setUsuario({ ...usuario, email: e.target.value, correo: e.target.value })}
                     required
                     placeholder="Ej. maria@email.com"
                     className="usuario-input"
@@ -193,7 +207,8 @@ function Usuario() {
                   <input
                     name="celular"
                     type="tel"
-                    defaultValue={usuario.celular || ""}
+                    value={usuario.celular || ""}
+                    onChange={(e) => setUsuario({ ...usuario, celular: e.target.value })}
                     placeholder="Ej. 300 123 4567"
                     className="usuario-input"
                   />
@@ -292,7 +307,8 @@ function Usuario() {
                   <input
                     name="celular"
                     type="tel"
-                    defaultValue={usuario.celular || ""}
+                    value={usuario.celular || ""}
+                    onChange={(e) => setUsuario({ ...usuario, celular: e.target.value })}
                     required
                     placeholder="Ej. 300 123 4567"
                     className="usuario-input"
@@ -303,25 +319,24 @@ function Usuario() {
                   <input
                     name="direccion"
                     type="text"
-                    defaultValue={usuario.direccion || ""}
+                    value={usuario.direccion || ""}
+                    onChange={(e) => setUsuario({ ...usuario, direccion: e.target.value })}
                     required
                     placeholder="Ej. Calle 123 # 45 - 67, Apto 201"
                     className="usuario-input"
                   />
                 </div>
                 <div className="usuario-grupo-campo">
-                  <label className="usuario-label">Ciudad *</label>
-                  <select
+                  <label className="usuario-label">Ciudad / Municipio *</label>
+                  <input
                     name="ciudad"
+                    type="text"
+                    value={usuario.ciudad || ""}
+                    onChange={(e) => setUsuario({ ...usuario, ciudad: e.target.value })}
                     required
-                    defaultValue={usuario.ciudad || ""}
+                    placeholder="Ej. Bogotá"
                     className="usuario-input"
-                  >
-                    <option value="">Selecciona tu ciudad</option>
-                    {CIUDADES.map((ciudad) => (
-                      <option key={ciudad} value={ciudad}>{ciudad}</option>
-                    ))}
-                  </select>
+                  />
                 </div>
                 <button type="submit" className="usuario-boton-guardar">
                   <i className="fa-solid fa-floppy-disk"></i> Guardar Datos de Envío

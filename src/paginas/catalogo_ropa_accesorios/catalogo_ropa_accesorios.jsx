@@ -151,6 +151,17 @@ function CatalogoRopaAccesorios() {
     }
   };
 
+  const abrirDetalle = (prod) => {
+    localStorage.setItem("productoSeleccionado", JSON.stringify({
+      ...prod,
+      titulo: prod.nombre,
+      precioActual: prod.precio,
+      precioAntiguo: prod.precioSecundario1 || prod.precioSecundario,
+      descripcion: prod.descripcion || `${prod.nombre}. Producto seleccionado de Senabella con compra segura y soporte especializado.`,
+      origen: "/catalogo-ropa-accesorios",
+    }));
+  };
+
   return (
     <div className="catalogo-ropa-contenedor">
       {/* Categorías circulares */}
@@ -452,9 +463,9 @@ function CatalogoRopaAccesorios() {
           <div className="tarjeta-producto">
             {productosPaginados.map((prod) => (
               <div className="tar-producto" key={prod.id}>
-                <a href="#!">
+                <Link to="/detalle_producto" onClick={() => abrirDetalle(prod)}>
                   <img src={prod.imagen} alt={prod.nombre} />
-                </a>
+                </Link>
                 <div className="etiqueta">
                   <span>{prod.etiqueta || "MODA"}</span>
                 </div>

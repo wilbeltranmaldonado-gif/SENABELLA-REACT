@@ -1,3 +1,4 @@
+.detalle-producto-page {
 
 .pagina-producto {
   max-width: 1180px;
@@ -8,22 +9,6 @@
 /* Botón superior de navegación */
 .contenedor-volver {
   margin-bottom: 18px;
-}
-
-.btn-volver {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #333d45;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.95rem;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border: 1px solid #e4e7eb;
-  border-radius: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: all 0.25s ease;
 }
 
 .btn-volver:hover {
@@ -54,6 +39,12 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
+}
+
+.detalle-producto-page .imagen-producto {
+  width: auto;
+  height: auto;
+  object-fit: initial;
 }
 
 .btn-favorito-detalle {
@@ -89,12 +80,13 @@
 }
 
 .imagen-producto > img {
-  width: auto;
-  max-width: 100%;
+  width: 100%;
+  max-width: 420px;
   height: 340px;
   max-height: 340px;
   object-fit: contain;
   border-radius: 16px;
+  flex-shrink: 0;
   transition: transform 0.3s ease;
 }
 
@@ -476,4 +468,49 @@
   .carousel {
     grid-template-columns: 1fr;
   }
+}
+
+}
+
+body.modo-oscuro .detalle-producto-page .btn-volver,
+body.modo-oscuro .detalle-producto-page .tarjeta-producto,
+body.modo-oscuro .detalle-producto-page .recomendaciones,
+body.modo-oscuro .detalle-producto-page .info-box {
+  background: #1e1e1e;
+  color: #f1f1f1;
+  border-color: #333333;
+}
+
+body.modo-oscuro .detalle-producto-page .imagen-producto {
+  background: #181818;
+}
+
+body.modo-oscuro .detalle-producto-page .info-producto h1,
+body.modo-oscuro .detalle-producto-page .recomendaciones-header h2,
+body.modo-oscuro .detalle-producto-page .info-box h3,
+body.modo-oscuro .detalle-producto-page .reco-card h3 {
+  color: #f1f1f1;
+}
+
+body.modo-oscuro .detalle-producto-page .descripcion,
+body.modo-oscuro .detalle-producto-page .recomendaciones-header p,
+body.modo-oscuro .detalle-producto-page .reco-card p,
+body.modo-oscuro .detalle-producto-page .info-box p {
+  color: #c5c5c5;
+}
+
+body.modo-oscuro .detalle-producto-page .mini-miniaturas img,
+body.modo-oscuro .detalle-producto-page .reco-card {
+  background: #242424;
+  border-color: #444444;
+}
+
+body.modo-oscuro .detalle-producto-page .precio-antiguo {
+  color: #aaaaaa;
+}
+
+.detalle-producto-page .imagen-producto {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: initial !important;
 }

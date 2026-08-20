@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CIUDADES } from "../../datos";
 import "./checkout.css";
 
 const leerJSON = (clave, valorInicial) => {
@@ -43,11 +42,20 @@ function Checkout() {
     const usuarioActualizado = { ...usuario, [campo]: valor };
     setUsuario(usuarioActualizado);
     localStorage.setItem("senabella_usuario", JSON.stringify(usuarioActualizado));
-    // Si cambia la ciudad, actualizar también la ubicación del encabezado
-    if (campo === "ciudad" && valor) {
-      localStorage.setItem("ubicacion", valor);
-      window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
+    
+    // Sincronizar también con la base de datos de usuarios
+    try {
+      const usuariosBD = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+      const emailActual = (usuario.email || usuario.correo || "").toLowerCase();
+      const idx = usuariosBD.findIndex((u) => (u.correo || u.email || "").toLowerCase() === emailActual);
+      if (idx !== -1) {
+        usuariosBD[idx] = { ...usuariosBD[idx], [campo]: valor };
+        localStorage.setItem("senabella_usuarios", JSON.stringify(usuariosBD));
+      }
+    } catch (e) {
+      console.warn(e);
     }
+
     if (errores[campo]) {
       setErrores((prev) => ({ ...prev, [campo]: false }));
     }
@@ -56,27 +64,56 @@ function Checkout() {
   const procesarOrden = (imagenBase64) => {
     const numero = "SENA-" + Math.floor(100000 + Math.random() * 900000);
     const fecha = new Date().toLocaleDateString("es-CO", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
+    
+    // Asegurar que los datos de envío y contacto queden guardados en el perfil del usuario
+    const usuarioActualizado = {
+      ...usuario,
+      direccion: String(usuario.direccion || "").trim(),
+      ciudad: String(usuario.ciudad || "").trim(),
+      celular: String(usuario.celular || "").trim()
+    };
+    
+    localStorage.setItem("senabella_usuario", JSON.stringify(usuarioActualizado));
+
+    // Actualizar en base de datos persistente de usuarios
+    try {
+      const usuariosBD = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+      const emailUsuario = (usuario.email || usuario.correo || "").toLowerCase();
+      const idx = usuariosBD.findIndex((u) => (u.correo || u.email || "").toLowerCase() === emailUsuario);
+      if (idx !== -1) {
+        usuariosBD[idx] = {
+          ...usuariosBD[idx],
+          direccion: usuarioActualizado.direccion,
+          ciudad: usuarioActualizado.ciudad,
+          celular: usuarioActualizado.celular
+        };
+        localStorage.setItem("senabella_usuarios", JSON.stringify(usuariosBD));
+      }
+    } catch (e) {
+      console.warn("No se pudo actualizar senabella_usuarios:", e);
+    }
+
     const detalleOrden = {
       numero,
       fecha,
       total: formatoMoneda(totalPrecio),
       metodoPago,
-      direccion: usuario.direccion,
-      ciudad: usuario.ciudad,
+      direccion: usuarioActualizado.direccion,
+      ciudad: usuarioActualizado.ciudad,
       productos: items
     };
     const ordenAdmin = {
       ...detalleOrden,
       id: numero,
       cliente: {
-        nombre: usuario.nombre || "Cliente",
-        email: usuario.email || usuario.correo || "-",
-        direccion: usuario.direccion,
-        ciudad: usuario.ciudad,
-        telefono: usuario.celular
+        nombre: usuarioActualizado.nombre || "Cliente",
+        email: usuarioActualizado.email || usuarioActualizado.correo || "-",
+        direccion: usuarioActualizado.direccion,
+        ciudad: usuarioActualizado.ciudad,
+        telefono: usuarioActualizado.celular
       },
-      email: usuario.email || usuario.correo || "-",
-      telefono: usuario.celular,
+      email: usuarioActualizado.email || usuarioActualizado.correo || "-",
+      telefono: usuarioActualizado.celular,
       items: items.length,
       comprobante: imagenBase64,
       estado: "pendiente"
@@ -98,7 +135,7 @@ function Checkout() {
       }
     }
     
-    // Disparar sincronización con el panel admin
+    // Disparar sincronización con el panel de usuario y admin
     window.dispatchEvent(new Event("storage"));
     window.dispatchEvent(new Event("senabella_orders_updated"));
 
@@ -177,21 +214,14 @@ function Checkout() {
               />
             </div>
             <div className="grupo-inputs">
-              <div className="campo-checkout">
-                <label>Ciudad</label>
-                <select
-                  value={usuario.ciudad || ""}
-                  onChange={(e) => handleCambioCampo("ciudad", e.target.value)}
-                  required
-                  className={errores.ciudad ? "error" : ""}
-                >
-                  <option value="">Selecciona tu ciudad</option>
-                  {CIUDADES.map((ciudad) => (
-                    <option key={ciudad} value={ciudad}>{ciudad}</option>
-                  ))}
-                </select>
-                {errores.ciudad && <span className="mensaje-error" style={{ display: "block" }}>Por favor, selecciona tu ciudad de entrega.</span>}
-              </div>
+              <Campo
+                label="Ciudad / Municipio"
+                valor={usuario.ciudad || ""}
+                alCambiar={(e) => handleCambioCampo("ciudad", e.target.value)}
+                placeholder="Ej. Bogotá, Medellín, Cali..."
+                error={errores.ciudad}
+                mensaje="Por favor, ingresa la ciudad de entrega."
+              />
               <Campo
                 label="Teléfono / Celular de contacto"
                 valor={usuario.celular || ""}

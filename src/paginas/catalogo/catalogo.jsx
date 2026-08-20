@@ -149,6 +149,18 @@ function Catalogo() {
     }
   };
 
+  const abrirDetalle = (prod) => {
+    localStorage.setItem("productoSeleccionado", JSON.stringify({
+      ...prod,
+      titulo: prod.nombre,
+      precioActual: prod.precio,
+      precioAntiguo: prod.precioSecundario1 || prod.precioSecundario,
+      descripcion: prod.descripcion || `${prod.nombre}. Producto seleccionado de Senabella con compra segura y soporte especializado.`,
+      imagen: prod.imagen,
+      origen: "/catalogo",
+    }));
+  };
+
   return (
     <>
       <section className="categorias-circulares">
@@ -343,9 +355,9 @@ function Catalogo() {
             {productosPaginados.map(prod => (
               <div className="tar-producto" key={`${prod.id}-${prod.nombre}`}>
                 {prod.promocion && <span className="promocion">{prod.promocion}</span>}
-                <a href="#">
+                <Link to="/detalle_producto" onClick={() => abrirDetalle(prod)}>
                   <img src={prod.imagen || imagenFallback} alt={prod.marca} onError={usarImagenFallback} />
-                </a>
+                </Link>
                 <div className="etiqueta">
                   <span>{prod.etiqueta}</span>
                   {prod.envioGratis && <span className="etiqueta-envio">Envío gratis</span>}

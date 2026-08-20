@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Encabezado from "./componentes/encabezado/encabezado";
 import PieDePagina from "./componentes/pie_de_pagina/pie_de_pagina";
+import BotonSubir from "./componentes/boton_subir/boton_subir";
 
 import Inicio from "./paginas/inicio/inicio";
 import Catalogo from "./paginas/catalogo/catalogo";
@@ -18,9 +20,15 @@ import Soporte from "./paginas/soporte/soporte";
 import Favoritos from "./paginas/favoritos/favoritos";
 import Checkout from "./paginas/checkout/checkout";
 import Confirmacion from "./paginas/confirmacion/confirmacion";
+import DetalleProducto from "./paginas/detalle_producto/detalle_producto";
 
 function App() {
     const location = useLocation();
+
+    // Scroll to top en cada cambio de ruta
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
 
     // Rutas donde NO se muestra el encabezado ni el pie de página
     const rutasSinLayout = ["/administrador", "/login", "/registro"];
@@ -46,8 +54,10 @@ function App() {
                 <Route path="/favoritos" element={<Favoritos />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/confirmacion" element={<Confirmacion />} />
+                <Route path="/detalle_producto" element={<DetalleProducto />} />
             </Routes>
 
+            <BotonSubir />
             {!ocultarLayout && <PieDePagina />}
         </>
     );
