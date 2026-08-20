@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../../css/checkout.css";
+import "./checkout.css";
 
 const leerJSON = (clave, valorInicial) => {
   try { return JSON.parse(localStorage.getItem(clave)) || valorInicial; } catch { return valorInicial; }

@@ -73,6 +73,30 @@
   padding: 0 20px;
 }
 
+.productos-parejas-grid .card {
+  position: relative;
+}
+
+.productos-parejas-grid .btn-favorito {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #767676;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.productos-parejas-grid .btn-favorito:hover,
+.productos-parejas-grid .btn-favorito.favorito-activo {
+  color: #e63946;
+}
+
 /* TARJETAS INFORMATIVAS */
 .parejas-info-cards {
   display: grid;

@@ -1,11 +1,28 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './parejas.css';
 import { Link, useNavigate } from 'react-router-dom';
 import imgPareja from '../../assets/pareja.jpeg';
 import imgImages from '../../assets/images.jpeg';
+import { iniciarFavoritosGlobal } from '../favoritos/favoritos';
 
 function Parejas() {
   const navigate = useNavigate();
+  const [favoritos, setFavoritos] = useState([]);
+
+  const productosParejas = [
+    { nombre: 'Chaqueta coordinada - Él', descripcion: 'Chaqueta coordinada para él - Diseño moderno y cómodo para salidas y celebraciones.', precio: '$189.900', precioAntiguo: '$209.900', imagen: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=400&q=80' },
+    { nombre: 'Chaqueta coordinada - Ella', descripcion: 'Chaqueta coordinada para ella - Diseño romántico y ligero para celebraciones en pareja.', precio: '$179.900', precioAntiguo: '$199.900', imagen: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=400&q=80' },
+    { nombre: 'Set camisetas pareja', descripcion: 'Set de camisetas coordinadas para pareja, diseño casual ideal para el día a día.', precio: '$129.900', precioAntiguo: '$149.900', imagen: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=400&q=80' },
+    { nombre: 'Bufandas coordinadas', descripcion: 'Bufandas coordinadas para pareja, ideales para el frío. Tejido suave y abrigado.', precio: '$89.900', precioAntiguo: '$109.900', imagen: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?auto=format&fit=crop&w=400&q=80' },
+  ];
+
+  useEffect(() => {
+    iniciarFavoritosGlobal();
+    const sincronizarFavoritos = () => setFavoritos(window.SenabellaFavoritos.obtenerLista());
+    sincronizarFavoritos();
+    window.addEventListener('senabella-favoritos-actualizado', sincronizarFavoritos);
+    return () => window.removeEventListener('senabella-favoritos-actualizado', sincronizarFavoritos);
+  }, []);
 
   useEffect(() => {
     // Animaciones al hacer scroll
@@ -95,6 +112,30 @@ function Parejas() {
       window.SenabellaToast(producto.nombre + " agregado al carrito", "fa-cart-shopping", "exito");
     }
   };
+
+  const handleFavorito = (e, producto) => {
+    e.preventDefault();
+    e.stopPropagation();
+    iniciarFavoritosGlobal();
+    const agregado = window.SenabellaFavoritos.toggleFavorito({
+      nombre: producto.nombre,
+      marca: 'COLECCIÓN PAREJAS',
+      imagen: producto.imagen,
+      precio: producto.precio,
+      referencia: 'SENABELLA',
+    });
+    if (window.SenabellaToast) {
+      window.SenabellaToast(
+        agregado ? 'Agregado a favoritos' : 'Eliminado de favoritos',
+        agregado ? 'fa-heart' : 'fa-heart-crack',
+        'exito'
+      );
+    }
+  };
+
+  const esFavorito = (nombre) => favoritos.some(
+    (favorito) => favorito.nombre?.trim().toLowerCase() === nombre.trim().toLowerCase()
+  );
 
   return (
     <main>
@@ -192,14 +233,17 @@ function Parejas() {
         <section className="productos-parejas">
           <div className="productos-encabezado">
             <h2>Productos para parejas</h2>
-            <Link to="/catalogo_ropa_accesorios" className="btn btn-outline-primary btn-sm">Ver todo</Link>
+            <Link to="/catalogo-ropa-accesorios" className="btn btn-outline-primary btn-sm">Ver todo</Link>
           </div>
 
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 productos-parejas-grid">
 
             <div className="col">
-              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas('Chaqueta coordinada - Él','SENABELLA MODA','Chaqueta coordinada para él - Diseño moderno y cómodo para salidas y celebraciones.','$ 189.900','$ 209.900','https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=400&q=80')}>
+              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas(productosParejas[0].nombre,'SENABELLA MODA',productosParejas[0].descripcion,productosParejas[0].precio,productosParejas[0].precioAntiguo,productosParejas[0].imagen)}>
                 <div className="card-badge badge-nuevo">Nuevo</div>
+                <button type="button" className={`btn-favorito ${esFavorito(productosParejas[0].nombre) ? 'favorito-activo' : ''}`} aria-label="Agregar a favoritos" onClick={(e) => handleFavorito(e, productosParejas[0])}>
+                  <i className={`${esFavorito(productosParejas[0].nombre) ? 'fa-solid' : 'fa-regular'} fa-heart`}></i>
+                </button>
                 <img
                   src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=400&q=80"
                   className="card-img-top p-3 object-fit-contain" height="200" alt="Chaqueta coordinada para él" loading="lazy" />
@@ -214,8 +258,11 @@ function Parejas() {
             </div>
 
             <div className="col">
-              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas('Chaqueta coordinada - Ella','SENABELLA MODA','Chaqueta coordinada para ella - Diseño romántico y ligero para celebraciones en pareja.','$ 179.900','$ 199.900','https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=400&q=80')}>
+              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas(productosParejas[1].nombre,'SENABELLA MODA',productosParejas[1].descripcion,productosParejas[1].precio,productosParejas[1].precioAntiguo,productosParejas[1].imagen)}>
                 <div className="card-badge badge-nuevo">Nuevo</div>
+                <button type="button" className={`btn-favorito ${esFavorito(productosParejas[1].nombre) ? 'favorito-activo' : ''}`} aria-label="Agregar a favoritos" onClick={(e) => handleFavorito(e, productosParejas[1])}>
+                  <i className={`${esFavorito(productosParejas[1].nombre) ? 'fa-solid' : 'fa-regular'} fa-heart`}></i>
+                </button>
                 <img
                   src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=400&q=80"
                   className="card-img-top p-3 object-fit-contain" height="200" alt="Chaqueta coordinada para ella" loading="lazy" />
@@ -230,8 +277,11 @@ function Parejas() {
             </div>
 
             <div className="col">
-              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas('Set camisetas pareja','SENABELLA MODA','Set de camisetas coordinadas para pareja, diseño casual ideal para el día a día.','$ 129.900','$ 149.900','https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=400&q=80')}>
+              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas(productosParejas[2].nombre,'SENABELLA MODA',productosParejas[2].descripcion,productosParejas[2].precio,productosParejas[2].precioAntiguo,productosParejas[2].imagen)}>
                 <div className="card-badge">-15%</div>
+                <button type="button" className={`btn-favorito ${esFavorito(productosParejas[2].nombre) ? 'favorito-activo' : ''}`} aria-label="Agregar a favoritos" onClick={(e) => handleFavorito(e, productosParejas[2])}>
+                  <i className={`${esFavorito(productosParejas[2].nombre) ? 'fa-solid' : 'fa-regular'} fa-heart`}></i>
+                </button>
                 <img
                   src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=400&q=80"
                   className="card-img-top p-3 object-fit-contain" height="200" alt="Set de camisetas para pareja" loading="lazy" />
@@ -246,8 +296,11 @@ function Parejas() {
             </div>
 
             <div className="col">
-              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas('Bufandas coordinadas','SENABELLA MODA','Bufandas coordinadas para pareja, ideales para el frío. Tejido suave y abrigado.','$ 89.900','$ 109.900','https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?auto=format&fit=crop&w=400&q=80')}>
+              <div className="card h-100 shadow-sm border-0" style={{cursor:'pointer'}} onClick={() => verProductoParejas(productosParejas[3].nombre,'SENABELLA MODA',productosParejas[3].descripcion,productosParejas[3].precio,productosParejas[3].precioAntiguo,productosParejas[3].imagen)}>
                 <div className="card-badge">-25%</div>
+                <button type="button" className={`btn-favorito ${esFavorito(productosParejas[3].nombre) ? 'favorito-activo' : ''}`} aria-label="Agregar a favoritos" onClick={(e) => handleFavorito(e, productosParejas[3])}>
+                  <i className={`${esFavorito(productosParejas[3].nombre) ? 'fa-solid' : 'fa-regular'} fa-heart`}></i>
+                </button>
                 <img
                   src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?auto=format&fit=crop&w=400&q=80"
                   className="card-img-top p-3 object-fit-contain" height="200" alt="Bufandas coordinadas pareja" loading="lazy" />

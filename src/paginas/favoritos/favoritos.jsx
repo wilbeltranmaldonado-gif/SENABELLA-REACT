@@ -25,6 +25,14 @@ function guardarFavoritosEnStorage(lista) {
   }
 }
 
+function obtenerImagen(producto) {
+  return producto.imagen || producto.img || "";
+}
+
+function obtenerPrecio(producto) {
+  return producto.precio || producto.precioTexto || "$ 0";
+}
+
 // ==========================================
 // UTILIDADES GLOBALES DE FAVORITOS
 // ==========================================
@@ -105,8 +113,8 @@ function Favoritos() {
       window.SenabellaCart.agregarProducto({
         nombre: prod.nombre,
         marca: prod.marca || "SENABELLA",
-        precioText: prod.precio,
-        img: prod.imagen,
+        precioText: obtenerPrecio(prod),
+        img: obtenerImagen(prod),
         cantidad: 1,
       });
     }
@@ -219,7 +227,7 @@ function Favoritos() {
                       <i className="fa-solid fa-heart"></i>
                     </button>
                     <a href="#">
-                      <img src={prod.imagen} alt={prod.nombre} className="fav-imagen" />
+                      <img src={obtenerImagen(prod)} alt={prod.nombre} className="fav-imagen" />
                     </a>
                     <div className="fav-etiquetas">
                       {prod.etiqueta && <span className="fav-etiqueta">{prod.etiqueta}</span>}
@@ -243,7 +251,7 @@ function Favoritos() {
                       <span className="fav-debito">Débito</span>
                     </div>
                     <div className="fav-precio">
-                      {prod.precio}
+                      {obtenerPrecio(prod)}
                       {prod.descuento && (
                         <span className="fav-descuento">{prod.descuento}</span>
                       )}
