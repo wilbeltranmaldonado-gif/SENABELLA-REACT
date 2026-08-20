@@ -114,7 +114,7 @@ export function validarLogin(correo, password) {
 /* ------------------------------------------------------------------
    Inicialización — crea o actualiza el admin por defecto
 ------------------------------------------------------------------ */
-const ADMIN_PASSWORD = "Admin";
+const ADMIN_PASSWORD = "Admin123";
 
 function _inicializar() {
   const lista = obtenerUsuarios();
