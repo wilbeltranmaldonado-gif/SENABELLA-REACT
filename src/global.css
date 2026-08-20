@@ -1,0 +1,5 @@
+/* Estilos globales requeridos para el modo oscuro */
+body.modo-oscuro {
+  background-color: #121212 !important;
+  color: #f1f1f1 !important;
+}
