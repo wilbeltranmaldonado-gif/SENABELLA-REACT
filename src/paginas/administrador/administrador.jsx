@@ -30,19 +30,64 @@ function obtenerNotificaciones() {
   }
 }
 
+function calcularCantidadesSidebar() {
+  let pedidos = 0;
+  let productos = 0;
+  let clientes = 0;
+  let categorias = 0;
+  let proveedores = 0;
+  let usuarios = 0;
+
+  try {
+    pedidos = obtenerPedidosAdmin().length;
+  } catch {
+    pedidos = 0;
+  }
+
+  try {
+    const prodsGuardados = JSON.parse(localStorage.getItem("senabella_admin_products") || "null");
+    if (Array.isArray(prodsGuardados) && prodsGuardados.length > 0) {
+      productos = prodsGuardados.length;
+    } else {
+      productos = 15;
+    }
+  } catch {
+    productos = 15;
+  }
+
+  try {
+    const usrs = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+    const noAdmin = usrs.filter((u) => u.rol !== "administrador");
+    clientes = noAdmin.length > 0 ? noAdmin.length : 3;
+    usuarios = usrs.length > 0 ? usrs.length : 4;
+  } catch {
+    clientes = 3;
+    usuarios = 4;
+  }
+
+  try {
+    const cats = JSON.parse(localStorage.getItem("senabella_categories") || "null");
+    categorias = Array.isArray(cats) && cats.length > 0 ? cats.length : 5;
+  } catch {
+    categorias = 5;
+  }
+
+  try {
+    const sups = JSON.parse(localStorage.getItem("senabella_suppliers") || "null");
+    proveedores = Array.isArray(sups) && sups.length > 0 ? sups.length : 3;
+  } catch {
+    proveedores = 3;
+  }
+
+  return { pedidos, productos, clientes, categorias, proveedores, usuarios };
+}
+
 function Administrador() {
   const [vistaActual, setVistaActual] = useState("resumen");
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
   const [notificaciones, setNotificaciones] = useState(obtenerNotificaciones);
-  const [cantidadPedidos, setCantidadPedidos] = useState(() => obtenerPedidosAdmin().length);
-  const [cantidadUsuarios, setCantidadUsuarios] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("senabella_usuarios") || "[]").filter((usuario) => usuario.rol !== "administrador").length;
-    } catch {
-      return 0;
-    }
-  });
+  const [cantidades, setCantidades] = useState(calcularCantidadesSidebar);
   const [modoOscuro, setModoOscuro] = useState(false);
   const [notificacionesLeidas, setNotificacionesLeidas] = useState({});
   
@@ -65,24 +110,16 @@ function Administrador() {
   const notificacionesNoLeidas = notificaciones.filter((notificacion) => !notificacionesLeidas[notificacion.id]).length;
 
   useEffect(() => {
-    const actualizarCantidadPedidos = () => {
-      setCantidadPedidos(obtenerPedidosAdmin().length);
+    const actualizarCantidades = () => {
+      setCantidades(calcularCantidadesSidebar());
+      setNotificaciones(obtenerNotificaciones());
     };
 
-    window.addEventListener("storage", actualizarCantidadPedidos);
-    window.addEventListener("senabella_orders_updated", actualizarCantidadPedidos);
-    const actualizarCantidadUsuarios = () => {
-      try {
-        setCantidadUsuarios(JSON.parse(localStorage.getItem("senabella_usuarios") || "[]").filter((usuario) => usuario.rol !== "administrador").length);
-      } catch {
-        setCantidadUsuarios(0);
-      }
-    };
-    window.addEventListener("storage", actualizarCantidadUsuarios);
+    window.addEventListener("storage", actualizarCantidades);
+    window.addEventListener("senabella_orders_updated", actualizarCantidades);
     return () => {
-      window.removeEventListener("storage", actualizarCantidadPedidos);
-      window.removeEventListener("senabella_orders_updated", actualizarCantidadPedidos);
-      window.removeEventListener("storage", actualizarCantidadUsuarios);
+      window.removeEventListener("storage", actualizarCantidades);
+      window.removeEventListener("senabella_orders_updated", actualizarCantidades);
     };
   }, []);
 
@@ -160,14 +197,14 @@ function Administrador() {
   const itemsNavegacion = [
     { titulo: "General", items: [
       { id: "resumen", icono: "fa-gauge-high", texto: "Resumen" },
-      { id: "pedidos", icono: "fa-cart-shopping", texto: "Pedidos", badge: String(cantidadPedidos) },
-      { id: "productos", icono: "fa-box", texto: "Productos" },
-      { id: "clientes", icono: "fa-users", texto: "Clientes" },
+      { id: "pedidos", icono: "fa-cart-shopping", texto: "Pedidos", badge: String(cantidades.pedidos) },
+      { id: "productos", icono: "fa-box", texto: "Productos", badge: String(cantidades.productos) },
+      { id: "clientes", icono: "fa-users", texto: "Clientes", badge: String(cantidades.clientes) },
     ]},
     { titulo: "Catálogo", items: [
-      { id: "categorias", icono: "fa-tags", texto: "Categorías" },
-      { id: "proveedores", icono: "fa-truck-field", texto: "Proveedores" },
-      { id: "usuarios", icono: "fa-user-shield", texto: "Usuarios", badge: String(cantidadUsuarios) },
+      { id: "categorias", icono: "fa-tags", texto: "Categorías", badge: String(cantidades.categorias) },
+      { id: "proveedores", icono: "fa-truck-field", texto: "Proveedores", badge: String(cantidades.proveedores) },
+      { id: "usuarios", icono: "fa-user-shield", texto: "Usuarios", badge: String(cantidades.usuarios) },
     ]},
     { titulo: "Cuenta", items: [
       { id: "reportes", icono: "fa-chart-line", texto: "Reportes" },

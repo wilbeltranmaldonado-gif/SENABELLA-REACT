@@ -2989,4 +2989,198 @@ body.cuerpo-admin.modo-oscuro .modal-pedido-total-resumen strong {
   color: #f8fafc;
 }
 
+/* ==========================================
+   FILTROS ESTÉTICOS DE PEDIDOS
+========================================== */
+.pedidos-toolbar-estetico {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.pedidos-filtro-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.pedidos-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.pedidos-chip-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.pedidos-chip-btn.activo {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+}
+
+.pedidos-chip-btn .pedidos-chip-contador {
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+
+.pedidos-chip-btn.activo .pedidos-chip-contador {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.pedidos-filtros-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pedidos-select-estetico {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  outline: none;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.pedidos-select-estetico:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+.pedidos-select-estetico:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: #ffffff;
+}
+
+.pedidos-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.pedidos-search-wrap i.icono-lupa {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.pedidos-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px 34px 8px 36px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #1e293b;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.pedidos-search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: #ffffff;
+}
+
+.pedidos-btn-limpiar {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.pedidos-btn-limpiar:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Modo oscuro para filtros de pedidos */
+body.cuerpo-admin.modo-oscuro .pedidos-toolbar-estetico {
+  background: #1a1f2c;
+  border-color: #2e384d;
+}
+
+body.cuerpo-admin.modo-oscuro .pedidos-chip-btn {
+  background: #141822;
+  border-color: #2e384d;
+  color: #94a3b8;
+}
+
+body.cuerpo-admin.modo-oscuro .pedidos-chip-btn:hover {
+  background: #1f2636;
+  color: #f8fafc;
+}
+
+body.cuerpo-admin.modo-oscuro .pedidos-chip-btn.activo {
+  background: #84b814;
+  color: #111827;
+  border-color: #84b814;
+}
+
+body.cuerpo-admin.modo-oscuro .pedidos-select-estetico,
+body.cuerpo-admin.modo-oscuro .pedidos-search-input {
+  background: #141822;
+  border-color: #2e384d;
+  color: #f8fafc;
+}
+
+body.cuerpo-admin.modo-oscuro .pedidos-btn-limpiar {
+  background: #141822;
+  border-color: #2e384d;
+  color: #94a3b8;
+}
+
+body.cuerpo-admin.modo-oscuro .pedidos-btn-limpiar:hover {
+  background: #1f2636;
+  color: #f8fafc;
+}
+
 

@@ -76,10 +76,21 @@ function Checkout() {
       estado: "pendiente"
     };
 
-    localStorage.setItem("ultima_orden_senabella", JSON.stringify(detalleOrden));
-    localStorage.setItem("senabella_user_orders", JSON.stringify([detalleOrden, ...leerJSON("senabella_user_orders", [])]));
-    localStorage.setItem("senabella_admin_orders", JSON.stringify([ordenAdmin, ...leerJSON("senabella_admin_orders", [])]));
-    localStorage.setItem("senabella_cart_db", JSON.stringify(leerJSON("senabella_cart_db", []).filter((item) => !item.checked)));
+    try {
+      localStorage.setItem("ultima_orden_senabella", JSON.stringify(detalleOrden));
+      localStorage.setItem("senabella_user_orders", JSON.stringify([detalleOrden, ...leerJSON("senabella_user_orders", [])]));
+      localStorage.setItem("senabella_admin_orders", JSON.stringify([ordenAdmin, ...leerJSON("senabella_admin_orders", [])]));
+      localStorage.setItem("senabella_cart_db", JSON.stringify(leerJSON("senabella_cart_db", []).filter((item) => !item.checked)));
+    } catch (err) {
+      console.warn("Storage quota limit reached, saving without heavy payload", err);
+      ordenAdmin.comprobante = null;
+      try {
+        localStorage.setItem("senabella_admin_orders", JSON.stringify([ordenAdmin, ...leerJSON("senabella_admin_orders", [])]));
+        localStorage.setItem("senabella_cart_db", JSON.stringify(leerJSON("senabella_cart_db", []).filter((item) => !item.checked)));
+      } catch (e2) {
+        console.error(e2);
+      }
+    }
     
     // Disparar sincronización con el panel admin
     window.dispatchEvent(new Event("storage"));
@@ -105,10 +116,35 @@ function Checkout() {
     setProcesando(true);
     if (comprobante) {
       const lector = new FileReader();
-      lector.onload = (eventoLectura) => setTimeout(() => procesarOrden(eventoLectura.target?.result), 600);
+      lector.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 650;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressed = canvas.toDataURL("image/jpeg", 0.65);
+          setTimeout(() => procesarOrden(compressed), 400);
+        };
+        img.onerror = () => setTimeout(() => procesarOrden(e.target?.result), 400);
+        img.src = e.target?.result;
+      };
       lector.readAsDataURL(comprobante);
     } else {
-      setTimeout(() => procesarOrden(null), 600);
+      setTimeout(() => procesarOrden(null), 400);
     }
   };
 
