@@ -128,51 +128,51 @@ function Pedidos() {
   };
 
   const cambiarEstado = (id, nuevoEstado) => {
-    setPedidos((pedidosActuales) => {
-      const base = pedidosActuales.length ? pedidosActuales : pedidosDemo;
-      const pedidosActualizados = base.map((pedido) => {
-        const identificador = pedido.id || pedido.numero;
-        return identificador === id ? { ...pedido, estado: nuevoEstado } : pedido;
-      });
-      localStorage.setItem("senabella_admin_orders", JSON.stringify(pedidosActualizados));
+    const base = pedidos.length ? pedidos : pedidosDemo;
+    const pedidosActualizados = base.map((pedido) => {
+      const identificador = pedido.id || pedido.numero;
+      return identificador === id ? { ...pedido, estado: nuevoEstado } : pedido;
+    });
+    localStorage.setItem("senabella_admin_orders", JSON.stringify(pedidosActualizados));
+    setPedidos(pedidosActualizados);
+    setTimeout(() => {
       window.dispatchEvent(new Event("storage"));
       window.dispatchEvent(new Event("senabella_orders_updated"));
-      return pedidosActualizados;
-    });
+    }, 0);
   };
 
   const guardarPedidoEditado = (pedidoActualizado) => {
     const id = pedidoActualizado.id || pedidoActualizado.numero;
-    setPedidos((pedidosActuales) => {
-      const base = pedidosActuales.length ? pedidosActuales : pedidosDemo;
-      const actualizados = base.map((p) => {
-        const identificador = p.id || p.numero;
-        return identificador === id ? pedidoActualizado : p;
-      });
-      localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+    const base = pedidos.length ? pedidos : pedidosDemo;
+    const actualizados = base.map((p) => {
+      const identificador = p.id || p.numero;
+      return identificador === id ? pedidoActualizado : p;
+    });
+    localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+    setPedidos(actualizados);
+    setPedidoSeleccionado(null);
+    setTimeout(() => {
       window.dispatchEvent(new Event("storage"));
       window.dispatchEvent(new Event("senabella_orders_updated"));
-      return actualizados;
-    });
-    setPedidoSeleccionado(null);
+    }, 0);
   };
 
   const handleEliminarPedido = (id) => {
     if (!window.confirm(`¿Estás seguro de que deseas eliminar el pedido ${id}? Esta acción no se puede deshacer.`)) {
       return;
     }
-    setPedidos((pedidosActuales) => {
-      const base = pedidosActuales.length ? pedidosActuales : pedidosDemo;
-      const actualizados = base.filter((p) => {
-        const identificador = p.id || p.numero;
-        return identificador !== id;
-      });
-      localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+    const base = pedidos.length ? pedidos : pedidosDemo;
+    const actualizados = base.filter((p) => {
+      const identificador = p.id || p.numero;
+      return identificador !== id;
+    });
+    localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+    setPedidos(actualizados);
+    setPedidoSeleccionado(null);
+    setTimeout(() => {
       window.dispatchEvent(new Event("storage"));
       window.dispatchEvent(new Event("senabella_orders_updated"));
-      return actualizados;
-    });
-    setPedidoSeleccionado(null);
+    }, 0);
     if (window.SenabellaToast) {
       window.SenabellaToast(`Pedido ${id} eliminado correctamente`, "fa-trash-can", "exito");
     }
