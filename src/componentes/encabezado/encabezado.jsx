@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./encabezado.css";
 import { CIUDADES, ENLACES_MENU_MOVIL } from "../../datos";
+import { iniciarFavoritosGlobal } from "../../paginas/favoritos/favoritos";
 
 const EVENTO_CARRITO_ACTUALIZADO = "senabella-cart-actualizado";
 
@@ -134,6 +135,7 @@ export default function Header() {
   const [menuMovilAbierto, setMenuMovilAbierto] = useState(false);
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
+  const [cantidadFavoritos, setCantidadFavoritos] = useState(0);
   const [cuenta, setCuenta] = useState({ texto: "Iniciar sesión", href: "/login", isReact: true });
   const navigate = useNavigate();
 
@@ -171,6 +173,8 @@ export default function Header() {
     iniciarToastGlobal();
     iniciarCarritoGlobal();
     setCantidadCarrito(window.SenabellaCart.obtenerTotalCantidad());
+    iniciarFavoritosGlobal();
+    setCantidadFavoritos(window.SenabellaFavoritos.obtenerLista().length);
 
     // Prellenar buscador si viene un término en la URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -178,6 +182,14 @@ export default function Header() {
     if (terminoUrl) {
       setTerminoBusqueda(terminoUrl);
     }
+  }, []);
+
+  useEffect(() => {
+    const actualizarFavoritos = () => {
+      setCantidadFavoritos(window.SenabellaFavoritos?.obtenerLista().length || 0);
+    };
+    window.addEventListener("senabella-favoritos-actualizado", actualizarFavoritos);
+    return () => window.removeEventListener("senabella-favoritos-actualizado", actualizarFavoritos);
   }, []);
 
   // ------------------------------------------
@@ -326,8 +338,9 @@ export default function Header() {
             </div>
           </div>
 
-          <Link to="/favoritos">
-            <i className="fa-regular fa-heart icono-corazon"></i>
+          <Link to="/favoritos" className={`icono-favoritos${cantidadFavoritos > 0 ? " favoritos-con-productos" : ""}`} aria-label={`Favoritos: ${cantidadFavoritos} productos`}>
+            <i className={`${cantidadFavoritos > 0 ? "fa-solid" : "fa-regular"} fa-heart icono-corazon`}></i>
+            {cantidadFavoritos > 0 && <span className="contador-favoritos">{cantidadFavoritos}</span>}
           </Link>
 
           <Link to="/carrito" className="icono-carrito">
@@ -360,6 +373,30 @@ export default function Header() {
         <div className="menu-movil-enlaces">
           {ENLACES_MENU_MOVIL.map((enlace) => {
             const isReactRoute = enlace.href.startsWith("/");
+            const esEnlaceFavoritos = enlace.texto === "Favoritos";
+            const contenidoEnlace = (
+              <>
+                <i className={`${esEnlaceFavoritos && cantidadFavoritos > 0 ? "fa-solid fa-heart favoritos-movil-con-productos" : enlace.icono}`}></i>
+                {enlace.texto}
+                {esEnlaceFavoritos && cantidadFavoritos > 0 && (
+                  <span className="contador-favoritos contador-favoritos-movil">{cantidadFavoritos}</span>
+                )}
+              </>
+            );
+
+            if (esEnlaceFavoritos) {
+              return (
+                <Link
+                  to="/favoritos"
+                  key={enlace.href}
+                  className="enlace-favoritos-movil"
+                  aria-label={`Favoritos: ${cantidadFavoritos} productos`}
+                >
+                  {contenidoEnlace}
+                </Link>
+              );
+            }
+
             return isReactRoute ? (
               <Link to={enlace.href} key={enlace.href}>
                 <i className={enlace.icono}></i> {enlace.texto}
