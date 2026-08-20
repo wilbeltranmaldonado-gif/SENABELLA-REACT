@@ -23,9 +23,6 @@ function Inicio() {
     }
   };
 
-  // ==========================================
-  // MODAL
-  // ==========================================
 
   const abrirVistaRapida = (producto) => {
     localStorage.setItem("productoSeleccionado", JSON.stringify({
@@ -45,9 +42,7 @@ function Inicio() {
     document.body.style.overflow = "";
   };
 
-  // ==========================================
-  // SCROLL
-  // ==========================================
+ 
 
   useEffect(() => {
     iniciarFavoritosGlobal(); // Inicializar favoritos globales al montar
@@ -63,9 +58,7 @@ function Inicio() {
     };
   }, []);
 
-  // ==========================================
-  // ESCAPE PARA CERRAR MODAL
-  // ==========================================
+
 
   useEffect(() => {
     const manejarEscape = (e) => {
@@ -81,9 +74,9 @@ function Inicio() {
     };
   }, []);
 
-  // ==========================================
+
   // ANIMACIONES AL HACER SCROLL
-  // ==========================================
+
 
   useEffect(() => {
     const elementos = document.querySelectorAll(
@@ -108,9 +101,9 @@ function Inicio() {
     return () => observer.disconnect();
   }, []);
 
-  // ==========================================
-  // CARRUSEL
-  // ==========================================
+ 
+  // Carrusel pagina inicio
+
 
   const [slideActual, setSlideActual] = useState(0);
 
@@ -122,17 +115,15 @@ function Inicio() {
     return () => clearInterval(intervalo);
   }, []);
 
-  // ==========================================
-  // RENDER
-  // ==========================================
+
 
   return (
     <>
       <main className="container my-4">
 
-        {/* ==========================================
-            BANNER OFERTA
-        ========================================== */}
+        {/*
+            Banner de ofertas
+        */}
 
         <section className="banner-oferta seccion-animada mb-4">
           <div className="banner-oferta-contenido">
@@ -159,9 +150,7 @@ function Inicio() {
           </div>
         </section>
 
-        {/* ==========================================
-            CATEGORÍAS
-        ========================================== */}
+        {/* CATEGORÍAS*/}
 
         <section className="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3 text-center mb-4 categorias-inicio seccion-animada">
 
@@ -190,9 +179,7 @@ function Inicio() {
 
         </section>
 
-        {/* ==========================================
-            CARRUSEL
-        ========================================== */}
+        {/* CARRUSEL IMAGENES */}
 
         <section
           id="bannerCarousel"
@@ -272,9 +259,7 @@ function Inicio() {
 
         </section>
 
-        {/* ==========================================
-            PRODUCTOS
-        ========================================== */}
+        {/* PRODUCTOS PAGINA INICIO */}
 
         <section className="mb-5 seccion-animada">
 
@@ -394,9 +379,7 @@ function Inicio() {
           </div>
         </section>
 
-        {/* ==========================================
-            PROMOCIONES
-        ========================================== */}
+        {/* PROMOCIONES */}
 
         <section className="containersg mb-5 seccion-animada">
 
@@ -433,9 +416,9 @@ function Inicio() {
 
       </main>
 
-      {/* ==========================================
-          MODAL VISTA RÁPIDA
-      ========================================== */}
+      {
+
+      }
 
       {modalAbierto && productoModal && (
 
@@ -606,9 +589,7 @@ function Inicio() {
 
 
 
-      {/* ==========================================
-          VOLVER ARRIBA
-      ========================================== */}
+      {/*Boton vover arriba */}
 
       <button
         id="btn-volver-arriba"

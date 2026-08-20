@@ -22,7 +22,7 @@ export const categoriasInicio = [
     ruta: "/catalogo",
   },
   {
-    nombre: "TECNO",
+    nombre: "TECNOLOGÍA",
     categoria: "tecno",
     imagen: imgTablets,
     ruta: "/catalogo",
