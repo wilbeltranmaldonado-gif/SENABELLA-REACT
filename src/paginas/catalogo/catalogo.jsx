@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./catalogo.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   categoriasCirculares,
   productosIniciales,
@@ -17,7 +17,6 @@ const usarImagenFallback = (evento) => {
 };
 
 function Catalogo() {
-  const navigate = useNavigate();
   const [productosAdmin, setProductosAdmin] = useState(() => {
     try {
       const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
@@ -148,19 +147,6 @@ function Catalogo() {
         "exito"
       );
     }
-  };
-
-  const abrirDetalle = (prod) => {
-    localStorage.setItem("productoSeleccionado", JSON.stringify({
-      titulo: prod.nombre,
-      marca: prod.marca || "SENABELLA",
-      descripcion: prod.nombre,
-      precioActual: prod.precio,
-      precioAntiguo: prod.precioSecundario || prod.precioSecundario1 || prod.precio,
-      imagen: prod.imagen || imagenFallback,
-      origen: "/catalogo",
-    }));
-    navigate("/detalle_producto");
   };
 
   return (
@@ -357,15 +343,15 @@ function Catalogo() {
             {productosPaginados.map(prod => (
               <div className="tar-producto" key={`${prod.id}-${prod.nombre}`}>
                 {prod.promocion && <span className="promocion">{prod.promocion}</span>}
-                <a href="#" onClick={(e) => { e.preventDefault(); abrirDetalle(prod); }}>
+                <a href="#">
                   <img src={prod.imagen || imagenFallback} alt={prod.marca} onError={usarImagenFallback} />
                 </a>
                 <div className="etiqueta">
                   <span>{prod.etiqueta}</span>
                   {prod.envioGratis && <span className="etiqueta-envio">Envío gratis</span>}
                 </div>
-                <div className="nom-producto" onClick={() => abrirDetalle(prod)} style={{ cursor: "pointer" }}>{prod.marca}</div>
-                <div className="descripcion" onClick={() => abrirDetalle(prod)} style={{ cursor: "pointer" }}>{prod.nombre}</div>
+                <div className="nom-producto">{prod.marca}</div>
+                <div className="descripcion">{prod.nombre}</div>
                 <div className="referencia">
                   {prod.referencia} {prod.verificado && <i className="fa-solid fa-check-circle"></i>}
                 </div>
