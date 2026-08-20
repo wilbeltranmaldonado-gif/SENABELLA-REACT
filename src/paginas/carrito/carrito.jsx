@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./carrito.css";
 import { Link, useNavigate } from "react-router-dom";
 import { sugerenciasCarrito } from "../../datos";
+import { obtenerStockDeProducto } from "../../utils/stock";
 
 function Carrito() {
   const navigate = useNavigate();
@@ -77,8 +78,9 @@ function Carrito() {
   const cambiarCantidad = (id, delta) => {
     setItemsCarrito(itemsCarrito.map(item => {
       if (item.id === id) {
+        const stockMaximo = obtenerStockDeProducto(item.nombre);
         const nuevaCantidad = item.cantidad + delta;
-        return { ...item, cantidad: Math.max(1, Math.min(20, nuevaCantidad)) };
+        return { ...item, cantidad: Math.max(1, Math.min(stockMaximo, nuevaCantidad)) };
       }
       return item;
     }));

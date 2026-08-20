@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./encabezado.css";
 import { CIUDADES, ENLACES_MENU_MOVIL } from "../../datos";
 import { iniciarFavoritosGlobal } from "../../paginas/favoritos/favoritos";
+import { obtenerStockDeProducto } from "../../utils/stock";
 
 const EVENTO_CARRITO_ACTUALIZADO = "senabella-cart-actualizado";
 
@@ -79,8 +80,11 @@ function iniciarCarritoGlobal() {
         (item) => item.nombre.trim().toLowerCase() === producto.nombre.trim().toLowerCase()
       );
 
+      const stockMaximo = obtenerStockDeProducto(producto.nombre);
+
       if (existente) {
-        existente.cantidad = (parseInt(existente.cantidad) || 1) + (parseInt(producto.cantidad) || 1);
+        const nuevaCantidad = (parseInt(existente.cantidad) || 1) + (parseInt(producto.cantidad) || 1);
+        existente.cantidad = Math.min(stockMaximo, nuevaCantidad);
         existente.checked = true;
       } else {
         items.push({
@@ -89,7 +93,7 @@ function iniciarCarritoGlobal() {
           color: producto.color || "Estándar",
           precioText: producto.precioText || "$ 0",
           img: producto.img || "",
-          cantidad: parseInt(producto.cantidad) || 1,
+          cantidad: Math.min(stockMaximo, parseInt(producto.cantidad) || 1),
           checked: true,
         });
       }

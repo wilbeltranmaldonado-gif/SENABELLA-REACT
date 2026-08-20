@@ -8,6 +8,7 @@ import {
   bannersInicio as banners,
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
+import { obtenerStockDeProducto } from "../../utils/stock";
 
 function Inicio() {
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -519,11 +520,12 @@ function Inicio() {
                     </span>
 
                     <button
-                      onClick={() =>
+                      onClick={() => {
+                        const stock = obtenerStockDeProducto(productoModal?.nombre);
                         setCantidad((cantidad) =>
-                          cantidad < 20 ? cantidad + 1 : 20
-                        )
-                      }
+                          cantidad < stock ? cantidad + 1 : stock
+                        );
+                      }}
                     >
                       +
                     </button>
