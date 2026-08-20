@@ -562,37 +562,5 @@
   }
 }
 
-/* ==========================================
-   TOAST EN FAVORITOS
-   ========================================== */
-.toast-senabella {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
-  min-width: 240px;
-  max-width: 340px;
-  width: auto;
-  border-left: 4px solid #27ae60;
-  animation: favToastEntrada 0.3s ease;
-  box-sizing: border-box;
-}
 
-@keyframes favToastEntrada {
-  from { transform: translateX(110%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
-}
-
-.toast-senabella i { font-size: 1rem; flex-shrink: 0; color: #27ae60; }
-.toast-senabella span { flex: 1; font-size: 0.83rem; font-weight: 500; color: #333; }
-.toast-senabella .toast-cerrar { background: none; border: none; color: #999; cursor: pointer; font-size: 0.8rem; padding: 2px; }
-.toast-exito { border-left-color: #27ae60; }
-.toast-info  { border-left-color: #3498db; }
 

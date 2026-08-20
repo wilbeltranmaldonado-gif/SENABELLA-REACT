@@ -606,5 +606,70 @@ body.modo-oscuro .menu-movil-enlaces a i {
   #theme-toggle {
     padding: 5px 8px;
     font-size: 13px;
-  }
+}
+
+/* ==========================================
+   TOAST SYSTEM (GLOBAL) - COMPACTO
+   ========================================== */
+.toast-senabella {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  top: auto !important;
+  z-index: 11000 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 14px !important;
+  background: #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+  min-width: 200px !important;
+  max-width: 300px !important;
+  width: auto !important;
+  border-left: 4px solid #27ae60 !important;
+  animation: toastGlobalEntrada 0.3s ease !important;
+  box-sizing: border-box !important;
+}
+
+@keyframes toastGlobalEntrada {
+  from { transform: translateX(110%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.toast-senabella i:first-child {
+  font-size: 1rem !important;
+  flex-shrink: 0 !important;
+  color: #27ae60 !important;
+}
+
+.toast-senabella span {
+  flex: 1 !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: #333333 !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+}
+
+.toast-senabella .toast-cerrar {
+  background: none !important;
+  border: none !important;
+  color: #999999 !important;
+  cursor: pointer !important;
+  padding: 2px !important;
+  font-size: 0.8rem !important;
+}
+
+.toast-senabella.toast-info { border-left-color: #3498db !important; }
+.toast-senabella.toast-info i:first-child { color: #3498db !important; }
+.toast-senabella.toast-advertencia { border-left-color: #f39c12 !important; }
+.toast-senabella.toast-advertencia i:first-child { color: #f39c12 !important; }
+
+body.modo-oscuro .toast-senabella {
+  background: #2a2a2a !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+}
+body.modo-oscuro .toast-senabella span {
+  color: #dddddd !important;
 }
