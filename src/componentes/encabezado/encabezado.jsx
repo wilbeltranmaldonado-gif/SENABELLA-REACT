@@ -434,8 +434,8 @@ export default function Header() {
               className={`contenido-desplegable${menuAyudaAbierto ? " mostrar" : ""}`}
               id="menu-ayuda"
             >
-              <a href="contacto.html">Contáctanos</a>
-              <a href="soporte.html">Soporte</a>
+              <NavLink to="/contacto" onClick={() => setMenuAyudaAbierto(false)}>Contáctanos</NavLink>
+              <NavLink to="/soporte" onClick={() => setMenuAyudaAbierto(false)}>Soporte</NavLink>
             </div>
           </div>
         </div>

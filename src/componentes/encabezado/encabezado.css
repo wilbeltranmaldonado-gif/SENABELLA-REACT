@@ -251,6 +251,12 @@
   color: var(--primary-color);
 }
 
+.contenido-desplegable a.active {
+  color: var(--primary-color);
+  font-weight: 700;
+  background-color: rgba(170, 209, 0, 0.08);
+}
+
 #menu-ayuda {
   left: auto;
   right: 0;

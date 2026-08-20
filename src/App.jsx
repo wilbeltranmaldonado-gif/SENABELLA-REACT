@@ -12,6 +12,8 @@ import Administrador from "./paginas/administrador/administrador";
 import Parejas from "./paginas/parejas/Parejas";
 import Login from "./paginas/login/login";
 import Usuario from "./paginas/usuario/usuario";
+import Contacto from "./paginas/contacto/contacto";
+import Soporte from "./paginas/soporte/soporte";
 
 function App() {
     const location = useLocation();
@@ -27,11 +29,12 @@ function App() {
                 <Route path="/catalogo-ropa-accesorios" element={<CatalogoRopaAccesorios />} />
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path="/tarjeta" element={<Tarjeta />} />
-                <Route path="/tarjetas" element={<Tarjeta />} />
                 <Route path="/administrador" element={<Administrador />} />
                 <Route path="/parejas" element={<Parejas />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/usuario" element={<Usuario />} />
+                <Route path="/contacto" element={<Contacto />} />
+                <Route path="/soporte" element={<Soporte />} />
             </Routes>
 
             {!esRutaAdministrador && <PieDePagina />}

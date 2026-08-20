@@ -7,9 +7,9 @@ function Footer() {
       <div className="pie-pagina-superior">
         <div>
           <h3>Servicio al cliente</h3>
-          <a href="soporte.html">Ayuda</a>
-          <a href="contacto.html">Cambio y devoluciones</a>
-          <a href="contacto.html">Garantías</a>
+          <Link to="/soporte">Ayuda</Link>
+          <Link to="/contacto">Cambio y devoluciones</Link>
+          <Link to="/contacto">Garantías</Link>
         </div>
 
         <div>
@@ -21,8 +21,8 @@ function Footer() {
 
         <div>
           <h3>Acerca de Senabella</h3>
-          <a href="contacto.html">Nuestra empresa</a>
-          <a href="contacto.html">Trabaja con nosotros</a>
+          <Link to="/contacto">Nuestra empresa</Link>
+          <Link to="/contacto">Trabaja con nosotros</Link>
           <Link to="/catalogo">Tiendas</Link>
         </div>
       </div>

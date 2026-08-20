@@ -24,8 +24,8 @@ export const ENLACES_MENU_MOVIL = [
   { href: "vender.html", icono: "fa-solid fa-store", texto: "Vende en Senabella.com" },
   { href: "/tarjeta", icono: "fa-solid fa-credit-card", texto: "Tarjetas y cuentas" },
   { href: "/parejas", icono: "fa-solid fa-heart", texto: "Parejas" },
-  { href: "contacto.html", icono: "fa-solid fa-envelope", texto: "Contáctanos" },
-  { href: "soporte.html", icono: "fa-solid fa-headset", texto: "Soporte" },
+  { href: "/contacto", icono: "fa-solid fa-envelope", texto: "Contáctanos" },
+  { href: "/soporte", icono: "fa-solid fa-headset", texto: "Soporte" },
   { href: "favoritos.html", icono: "fa-regular fa-heart", texto: "Favoritos" },
   { href: "/carrito", icono: "fa-solid fa-cart-shopping", texto: "Carrito" },
 ];
