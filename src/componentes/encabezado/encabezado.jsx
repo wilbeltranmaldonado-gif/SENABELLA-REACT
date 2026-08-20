@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./encabezado.css";
 import { CIUDADES, ENLACES_MENU_MOVIL } from "../../datos";
 
@@ -135,6 +135,7 @@ export default function Header() {
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
   const [cuenta, setCuenta] = useState({ texto: "Iniciar sesión", href: "/login", isReact: true });
+  const navigate = useNavigate();
 
   const contenedorUbicacionRef = useRef(null);
 
@@ -245,12 +246,10 @@ export default function Header() {
   // ------------------------------------------
   const ejecutarBusqueda = () => {
     const termino = terminoBusqueda.trim();
-    const esPaginaCatalogo = window.location.pathname.toLowerCase().endsWith("catalogo.html");
+    const esPaginaCatalogo = window.location.pathname.toLowerCase().includes("/catalogo");
 
     if (!esPaginaCatalogo) {
-      window.location.href = termino
-        ? `catalogo.html?busqueda=${encodeURIComponent(termino)}`
-        : "catalogo.html";
+      navigate(termino ? `/catalogo?busqueda=${encodeURIComponent(termino)}` : "/catalogo");
     } else {
       const url = new URL(window.location.href);
       if (termino) {
@@ -259,7 +258,8 @@ export default function Header() {
         url.searchParams.delete("busqueda");
       }
       window.history.pushState({}, "", url);
-      document.dispatchEvent(new CustomEvent("busquedaEjecutada", { detail: termino }));
+      // Trigger navigation event so that Catalogo can pick it up
+      navigate(url.pathname + url.search);
     }
   };
 

@@ -4,319 +4,263 @@ import "./usuario.css";
 
 function Usuario() {
   const [seccionActiva, setSeccionActiva] = useState("mi-perfil");
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useState({});
+  const [ordenes, setOrdenes] = useState([]);
+  const [mensajePerfil, setMensajePerfil] = useState({ texto: "", tipo: "" });
+  const [mensajeEnvio, setMensajeEnvio] = useState({ texto: "", tipo: "" });
+  
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar si el usuario está logueado
-    const sesionActiva = localStorage.getItem("senabella_sesion") === "activa";
-    if (!sesionActiva) {
+    // Verificar sesión
+    if (localStorage.getItem("senabella_sesion") !== "activa") {
       navigate("/login");
       return;
     }
 
-    // Verificar el rol del usuario
-    const rolUsuario = localStorage.getItem("senabella_rol");
-    if (rolUsuario === "administrador") {
-      navigate("/administrador");
-      return;
+    try {
+      const user = JSON.parse(localStorage.getItem("senabella_usuario")) || {};
+      setUsuario(user);
+    } catch (e) {
+      console.error(e);
     }
 
-    // Cargar datos del usuario
-    const usuarioGuardado = localStorage.getItem("senabella_usuario");
-    if (usuarioGuardado) {
-      setUsuario(JSON.parse(usuarioGuardado));
+    try {
+      const orders = JSON.parse(localStorage.getItem("senabella_user_orders")) || [];
+      setOrdenes(orders);
+    } catch (e) {
+      console.error(e);
     }
   }, [navigate]);
 
-  const cambiarSeccion = (seccion) => {
-    setSeccionActiva(seccion);
-  };
-
-  const cerrarSesion = () => {
-    localStorage.setItem("senabella_sesion", "inactiva");
-    localStorage.removeItem("senabella_rol");
-    localStorage.removeItem("senabella_usuario");
-    localStorage.removeItem("recordar_sesion");
-    window.location.href = "/";
-  };
-
-  const itemsMenu = [
-    { id: "mi-perfil", icono: "fa-user", texto: "Mi Perfil" },
-    { id: "mis-compras", icono: "fa-box-open", texto: "Mis compras" },
-    { id: "datos-envio", icono: "fa-address-card", texto: "Datos de Envío y Contacto" },
-  ];
-
-  const renderizarContenido = () => {
-    switch (seccionActiva) {
-      case "mi-perfil":
-        return <MiPerfil usuario={usuario} setUsuario={setUsuario} />;
-      case "mis-compras":
-        return <MisCompras usuario={usuario} />;
-      case "datos-envio":
-        return <DatosEnvio usuario={usuario} />;
-      default:
-        return <MiPerfil usuario={usuario} setUsuario={setUsuario} />;
+  const handleLogout = () => {
+    if (window.confirm("¿Seguro que quieres cerrar sesión?")) {
+      localStorage.removeItem("senabella_sesion");
+      localStorage.removeItem("senabella_rol");
+      navigate("/");
+      // Forzar recarga si es necesario para limpiar estado global de encabezado
+      setTimeout(() => window.location.reload(), 100);
     }
   };
 
-  const obtenerTituloSeccion = () => {
-    const titulos = {
-      "mi-perfil": "Mi Perfil",
-      "mis-compras": "Mis Compras",
-      "datos-envio": "Datos de Envío y Contacto"
-    };
-    return titulos[seccionActiva] || "Mi Perfil";
-  };
-
-  if (!usuario) {
-    return <div className="usuario-cargando">Cargando...</div>;
-  }
-
-  return (
-    <div className="usuario-page">
-      <div className="contenedor">
-        {/* Ruta de navegación */}
-        <div className="migas-pan">
-          <Link to="/"><i className="fa-solid fa-chevron-left"></i> Inicio</Link>
-        </div>
-
-        <h1 className="titulo-pagina">Mi perfil</h1>
-
-        <div className="diseno-perfil">
-          {/* BARRA LATERAL/Menú de la cuenta */}
-          <nav className="barra-lateral">
-            {itemsMenu.map((item) => (
-              <a
-                href="#"
-                key={item.id}
-                className={`elemento-menu${seccionActiva === item.id ? " activo" : ""}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  cambiarSeccion(item.id);
-                }}
-              >
-                <div className="elemento-menu-izquierda">
-                  <i className={`fa-solid ${item.icono}`}></i>
-                  <span>{item.texto}</span>
-                </div>
-                <i className="fa-solid fa-chevron-right"></i>
-              </a>
-            ))}
-
-            <a
-              href="#"
-              className="elemento-menu cerrar-sesion"
-              onClick={(e) => {
-                e.preventDefault();
-                cerrarSesion();
-              }}
-            >
-              <div className="elemento-menu-izquierda">
-                <i className="fa-solid fa-power-off"></i>
-                <span>Cerrar sesión</span>
-              </div>
-              <i className="fa-solid fa-chevron-right"></i>
-            </a>
-          </nav>
-
-          {/* Detalles de la pestaña activa */}
-          <main className="tarjeta-contenido">
-            <h2 className="titulo-seccion">{obtenerTituloSeccion()}</h2>
-            <div className="lista-campos">
-              {renderizarContenido()}
-            </div>
-          </main>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Componentes de cada sección
-function MiPerfil({ usuario, setUsuario }) {
-  const [editando, setEditando] = useState(false);
-  const [formData, setFormData] = useState({
-    nombre: usuario?.nombre || "",
-    email: usuario?.email || "",
-    telefono: "",
-    direccion: ""
-  });
-
-  const guardarCambios = (e) => {
+  const guardarPerfil = (e) => {
     e.preventDefault();
-    setUsuario({ ...usuario, ...formData });
-    localStorage.setItem("senabella_usuario", JSON.stringify({ ...usuario, ...formData }));
-    setEditando(false);
+    const nombre = e.target.elements.nombre.value.trim();
+    const email = e.target.elements.email.value.trim();
+    const celular = e.target.elements.celular.value.trim();
+    const password = e.target.elements.password.value;
+
+    if (!nombre) {
+      setMensajePerfil({ texto: "Por favor ingresa tu nombre completo.", tipo: "error" });
+      return;
+    }
+    if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+      setMensajePerfil({ texto: "Ingresa un correo electrónico válido.", tipo: "error" });
+      return;
+    }
+    if (password && password.length < 6) {
+      setMensajePerfil({ texto: "La contraseña debe tener mínimo 6 caracteres.", tipo: "error" });
+      return;
+    }
+
+    const actualizado = { ...usuario, nombre, email, celular };
+    if (password) actualizado.password = password;
+    
+    localStorage.setItem("senabella_usuario", JSON.stringify(actualizado));
+    setUsuario(actualizado);
+    
+    setMensajePerfil({ texto: "\u2713 Datos guardados correctamente.", tipo: "exito" });
+    if (window.SenabellaToast) {
+      window.SenabellaToast("Perfil actualizado", "fa-circle-check", "exito");
+    }
+    e.target.elements.password.value = "";
+    
+    setTimeout(() => setMensajePerfil({ texto: "", tipo: "" }), 4000);
   };
 
-  if (editando) {
-    return (
-      <form onSubmit={guardarCambios} className="formulario-perfil">
-        <div className="campo-grupo">
-          <label>Nombre completo</label>
-          <input
-            type="text"
-            value={formData.nombre}
-            onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-            required
-          />
-        </div>
-        <div className="campo-grupo">
-          <label>Email</label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            required
-          />
-        </div>
-        <div className="campo-grupo">
-          <label>Teléfono</label>
-          <input
-            type="tel"
-            value={formData.telefono}
-            onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-          />
-        </div>
-        <div className="campo-grupo">
-          <label>Dirección</label>
-          <input
-            type="text"
-            value={formData.direccion}
-            onChange={(e) => setFormData({ ...formData, direccion: e.target.value })}
-          />
-        </div>
-        <div className="acciones-formulario">
-          <button type="button" onClick={() => setEditando(false)}>Cancelar</button>
-          <button type="submit" className="btn-primario">Guardar cambios</button>
-        </div>
-      </form>
-    );
-  }
+  const guardarEnvio = (e) => {
+    e.preventDefault();
+    const celular = e.target.elements.celular.value.trim();
+    const direccion = e.target.elements.direccion.value.trim();
+    const ciudad = e.target.elements.ciudad.value.trim();
 
-  return (
-    <div className="perfil-vista">
-      <div className="info-usuario">
-        <div className="avatar-grande">
-          <i className="fa-solid fa-user"></i>
-        </div>
-        <div className="detalles-usuario">
-          <h3>{usuario?.nombre || "Usuario"}</h3>
-          <p>{usuario?.email || ""}</p>
-          <span className="rol-badge">{usuario?.rol || "usuario"}</span>
-        </div>
-      </div>
-      <button className="btn-editar" onClick={() => setEditando(true)}>
-        <i className="fa-solid fa-pen"></i> Editar perfil
-      </button>
-    </div>
-  );
-}
+    if (!celular) {
+      setMensajeEnvio({ texto: "Por favor ingresa tu celular de contacto.", tipo: "error" });
+      return;
+    }
+    if (!direccion) {
+      setMensajeEnvio({ texto: "Por favor ingresa una dirección de envío.", tipo: "error" });
+      return;
+    }
+    if (!ciudad) {
+      setMensajeEnvio({ texto: "Por favor ingresa la ciudad.", tipo: "error" });
+      return;
+    }
 
-function MisCompras({ usuario }) {
-  const compras = [
-    { id: "#SN-10482", fecha: "2024-08-19", total: "$125.00", estado: "Entregado", productos: 3 },
-    { id: "#SN-10478", fecha: "2024-08-17", total: "$178.00", estado: "En camino", productos: 4 },
-    { id: "#SN-10470", fecha: "2024-08-15", total: "$89.50", estado: "Entregado", productos: 2 },
+    const actualizado = { 
+      ...usuario, 
+      celular: celular.replace(/[^0-9\s]/g, ""), 
+      direccion, 
+      ciudad 
+    };
+    
+    localStorage.setItem("senabella_usuario", JSON.stringify(actualizado));
+    setUsuario(actualizado);
+
+    setMensajeEnvio({ texto: "\u2713 Datos de envío guardados correctamente.", tipo: "exito" });
+    if (window.SenabellaToast) {
+      window.SenabellaToast("Datos de envío actualizados", "fa-circle-check", "exito");
+    }
+    setTimeout(() => setMensajeEnvio({ texto: "", tipo: "" }), 4000);
+  };
+
+  const menuItems = [
+    { id: "mi-perfil", texto: "Mi Perfil", icono: "fa-user" },
+    { id: "mis-compras", texto: "Mis compras", icono: "fa-box-open" },
+    { id: "datos-envio", texto: "Datos de Envío y Contacto", icono: "fa-address-card" },
   ];
 
   return (
-    <div className="compras-vista">
-      <div className="compras-lista">
-        {compras.map((compra) => (
-          <div key={compra.id} className="compra-item">
-            <div className="compra-info">
-              <h4>{compra.id}</h4>
-              <p>{compra.fecha}</p>
-              <span className={`estado-compra ${compra.estado === "Entregado" ? "entregado" : "en-camino"}`}>
-                {compra.estado}
-              </span>
-            </div>
-            <div className="compra-total">
-              <p>{compra.total}</p>
-              <small>{compra.productos} productos</small>
-            </div>
-          </div>
-        ))}
+    <div className="contenedor">
+      <div className="migas-pan">
+        <Link to="/"><i className="fa-solid fa-chevron-left"></i> Inicio</Link>
+        <span style={{ margin: "0 8px", color: "var(--text-muted)" }}>/</span>
+        <span>Mi cuenta</span>
       </div>
-      {compras.length === 0 && (
-        <div className="sin-compras">
-          <i className="fa-solid fa-box-open"></i>
-          <p>No tienes compras aún</p>
-        </div>
-      )}
-    </div>
-  );
-}
 
-function DatosEnvio({ usuario }) {
-  const [datos, setDatos] = useState({
-    direccion: "",
-    ciudad: "",
-    departamento: "",
-    codigoPostal: "",
-    telefono: ""
-  });
+      <h1 className="titulo-pagina">Mi perfil</h1>
 
-  const guardarDatos = (e) => {
-    e.preventDefault();
-    localStorage.setItem("senabella_datos_envio", JSON.stringify(datos));
-    alert("Datos de envío guardados exitosamente");
-  };
+      <div className="diseno-perfil">
+        {/* BARRA LATERAL */}
+        <nav className="barra-lateral">
+          {menuItems.map(item => (
+            <button
+              key={item.id}
+              className={`elemento-menu ${seccionActiva === item.id ? "activo" : ""}`}
+              onClick={() => setSeccionActiva(item.id)}
+            >
+              <div className="elemento-menu-izquierda">
+                <i className={`fa-solid ${item.icono}`}></i>
+                <span>{item.texto}</span>
+              </div>
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
+          ))}
+          <button className="elemento-menu" onClick={handleLogout}>
+            <div className="elemento-menu-izquierda">
+              <i className="fa-solid fa-power-off"></i>
+              <span>Cerrar sesión</span>
+            </div>
+            <i className="fa-solid fa-chevron-right"></i>
+          </button>
+        </nav>
 
-  return (
-    <div className="envio-vista">
-      <form onSubmit={guardarDatos} className="formulario-perfil">
-        <div className="campo-grupo">
-          <label>Dirección</label>
-          <input
-            type="text"
-            value={datos.direccion}
-            onChange={(e) => setDatos({ ...datos, direccion: e.target.value })}
-            placeholder="Calle 123, Apto 45"
-          />
-        </div>
-        <div className="campo-grupo">
-          <label>Ciudad</label>
-          <input
-            type="text"
-            value={datos.ciudad}
-            onChange={(e) => setDatos({ ...datos, ciudad: e.target.value })}
-            placeholder="Bogotá"
-          />
-        </div>
-        <div className="campo-grupo">
-          <label>Departamento</label>
-          <input
-            type="text"
-            value={datos.departamento}
-            onChange={(e) => setDatos({ ...datos, departamento: e.target.value })}
-            placeholder="Cundinamarca"
-          />
-        </div>
-        <div className="campo-grupo">
-          <label>Código Postal</label>
-          <input
-            type="text"
-            value={datos.codigoPostal}
-            onChange={(e) => setDatos({ ...datos, codigoPostal: e.target.value })}
-            placeholder="110111"
-          />
-        </div>
-        <div className="campo-grupo">
-          <label>Teléfono de contacto</label>
-          <input
-            type="tel"
-            value={datos.telefono}
-            onChange={(e) => setDatos({ ...datos, telefono: e.target.value })}
-            placeholder="+57 300 123 4567"
-          />
-        </div>
-        <div className="acciones-formulario">
-          <button type="submit" className="btn-primario">Guardar datos de envío</button>
-        </div>
-      </form>
+        {/* CONTENIDO PRINCIPAL */}
+        <main className="tarjeta-contenido">
+          {seccionActiva === "mi-perfil" && (
+            <>
+              <h2 className="titulo-seccion">Mi Perfil</h2>
+              <form onSubmit={guardarPerfil} className="formulario" style={{ marginTop: "15px" }} noValidate>
+                <div style={{ marginBottom: "15px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>Nombre completo *</label>
+                  <input name="nombre" type="text" defaultValue={usuario.nombre || ""} required placeholder="Ej. María García" style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px" }} />
+                </div>
+                <div style={{ marginBottom: "15px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>Correo electrónico *</label>
+                  <input name="email" type="email" defaultValue={usuario.email || ""} required placeholder="Ej. maria@email.com" style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px" }} />
+                </div>
+                <div style={{ marginBottom: "15px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>Celular</label>
+                  <input name="celular" type="tel" defaultValue={usuario.celular || ""} placeholder="Ej. 300 123 4567" style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px" }} />
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>
+                    Nueva contraseña <span style={{ fontWeight: 400, color: "var(--text-muted, #666)", fontSize: "0.85em" }}>(dejar en blanco para no cambiarla)</span>
+                  </label>
+                  <input name="password" type="password" placeholder="Mínimo 6 caracteres" style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px" }} />
+                </div>
+                <button type="submit" style={{ width: "100%", padding: "13px", borderRadius: "8px", background: "var(--primary-color, #84b814)", color: "#fff", border: "none", fontSize: "1rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+                  <i className="fa-solid fa-floppy-disk"></i> Guardar datos
+                </button>
+                {mensajePerfil.texto && (
+                  <div style={{ marginTop: "14px", padding: "10px 14px", borderRadius: "8px", fontSize: "0.9rem", fontWeight: 500, backgroundColor: mensajePerfil.tipo === "exito" ? "#eafaf1" : "#fdecea", color: mensajePerfil.tipo === "exito" ? "#1e8449" : "#c0392b", border: mensajePerfil.tipo === "exito" ? "1px solid #a9dfbf" : "1px solid #f5c6c6" }}>
+                    {mensajePerfil.texto}
+                  </div>
+                )}
+              </form>
+            </>
+          )}
+
+          {seccionActiva === "mis-compras" && (
+            <>
+              <h2 className="titulo-seccion">Mis compras</h2>
+              {ordenes.length === 0 ? (
+                <p className="estado-vacio">Aún no has realizado ninguna compra.</p>
+              ) : (
+                <div>
+                  {ordenes.map((orden, index) => (
+                    <div key={index} className="grupo-info" style={{ alignItems: "flex-start", flexDirection: "column", gap: "8px", marginBottom: "15px", border: "1px solid #eee", borderRadius: "8px", padding: "15px" }}>
+                      <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <span className="etiqueta-info">Orden: {orden.numero}</span>
+                        <span style={{ fontWeight: "bold", color: "var(--color-exito, #27ae60)" }}>{orden.total}</span>
+                      </div>
+                      <div className="valor-info" style={{ fontSize: "0.9em", marginBottom: 0 }}>Fecha: {orden.fecha}</div>
+                      <div className="valor-info" style={{ fontSize: "0.9em", marginBottom: 0 }}>Método: {orden.metodoPago?.toUpperCase()}</div>
+                      <div className="valor-info" style={{ fontSize: "0.9em", marginBottom: 0 }}>Enviado a: {orden.direccion}, {orden.ciudad}</div>
+                      {orden.productos && orden.productos.length > 0 && (
+                        <div style={{ marginTop: "10px", width: "100%" }}>
+                          <strong style={{ fontSize: "0.9em", display: "block", marginBottom: "8px" }}>Productos:</strong>
+                          {orden.productos.map((prod, i) => (
+                            <div key={i} style={{ fontSize: "0.85em", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid #eee" }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                                <img src={prod.imagen || "../assets/default-product.png"} alt={prod.nombre} style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "4px", border: "1px solid #ddd" }} />
+                                <span>{prod.cantidad}x {prod.nombre}</span>
+                              </div>
+                              <span>${Math.round(prod.precio || 0).toLocaleString("es-CO")}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          {seccionActiva === "datos-envio" && (
+            <>
+              <h2 className="titulo-seccion">Datos de Envío y Contacto</h2>
+              <form onSubmit={guardarEnvio} className="formulario" style={{ marginTop: "15px" }}>
+                <div style={{ marginBottom: "15px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>Nombre Completo</label>
+                  <input type="text" value={usuario.nombre || ""} readOnly style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px", backgroundColor: "#f9f9f9", color: "#666" }} title="No se puede cambiar el nombre desde aquí" />
+                </div>
+                <div style={{ marginBottom: "15px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>Celular de Contacto *</label>
+                  <input name="celular" type="tel" defaultValue={usuario.celular || ""} required placeholder="Ej. 300 123 4567" style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px" }} />
+                </div>
+                <div style={{ marginBottom: "15px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>Dirección de Envío *</label>
+                  <input name="direccion" type="text" defaultValue={usuario.direccion || ""} required placeholder="Ej. Calle 123 # 45 - 67" style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px" }} />
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: 500 }}>Ciudad *</label>
+                  <input name="ciudad" type="text" defaultValue={usuario.ciudad || ""} required placeholder="Ej. Bogotá" style={{ width: "100%", padding: "10px", border: "1px solid var(--border-color, #eee)", borderRadius: "8px" }} />
+                </div>
+                <button type="submit" style={{ width: "100%", padding: "13px", borderRadius: "8px", background: "var(--primary-color, #84b814)", color: "#fff", border: "none", fontSize: "1rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+                  <i className="fa-solid fa-floppy-disk"></i> Guardar datos
+                </button>
+                {mensajeEnvio.texto && (
+                  <div style={{ marginTop: "14px", padding: "10px 14px", borderRadius: "8px", fontSize: "0.9rem", fontWeight: 500, backgroundColor: mensajeEnvio.tipo === "exito" ? "#eafaf1" : "#fdecea", color: mensajeEnvio.tipo === "exito" ? "#1e8449" : "#c0392b", border: mensajeEnvio.tipo === "exito" ? "1px solid #a9dfbf" : "1px solid #f5c6c6" }}>
+                    {mensajeEnvio.texto}
+                  </div>
+                )}
+              </form>
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

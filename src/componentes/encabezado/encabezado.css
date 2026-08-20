@@ -628,13 +628,16 @@ body.modo-oscuro .menu-movil-enlaces a i {
   max-width: 300px !important;
   width: auto !important;
   border-left: 4px solid #27ae60 !important;
-  animation: toastGlobalEntrada 0.3s ease !important;
   box-sizing: border-box !important;
+
+  transform: translateX(110%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-@keyframes toastGlobalEntrada {
-  from { transform: translateX(110%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
+.toast-senabella.toast-visible {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
 }
 
 .toast-senabella i:first-child {

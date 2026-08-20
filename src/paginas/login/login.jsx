@@ -68,9 +68,9 @@ function Login() {
         // Redirigir según el rol
         setTimeout(() => {
           if (usuario.rol === "administrador") {
-            window.location.href = "/administrador";
+            navigate("/administrador");
           } else {
-            window.location.href = "/";
+            navigate("/usuario");
           }
         }, 1000);
       } else {
