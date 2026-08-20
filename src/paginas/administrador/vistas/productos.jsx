@@ -146,6 +146,8 @@ function Productos() {
       localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
       sincronizarCategorias(productosActualizados);
     }
+    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new Event("senabella_products_updated"));
     cerrarModal();
   };
 
@@ -155,6 +157,8 @@ function Productos() {
       setProductos(productosActualizados);
       localStorage.setItem(PRODUCTOS_ADMIN_KEY, JSON.stringify(productosActualizados));
       sincronizarCategorias(productosActualizados);
+      window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event("senabella_products_updated"));
     }
   };
 

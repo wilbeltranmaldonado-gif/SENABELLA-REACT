@@ -147,13 +147,18 @@ function DetalleProducto() {
   };
 
   const agregarAlCarrito = () => {
-    window.SenabellaCart?.agregarProducto(productoCarrito);
-    window.SenabellaToast?.("Producto agregado al carrito", "fa-cart-plus", "exito");
+    const agregado = window.SenabellaCart?.agregarProducto(productoCarrito);
+    if (agregado) {
+      window.SenabellaToast?.("Producto agregado al carrito", "fa-cart-plus", "exito");
+    }
+    return agregado;
   };
 
   const comprarAhora = () => {
-    agregarAlCarrito();
-    navigate("/carrito");
+    const agregado = agregarAlCarrito();
+    if (agregado) {
+      navigate("/carrito");
+    }
   };
 
   return (

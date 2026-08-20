@@ -75,16 +75,29 @@ function iniciarCarritoGlobal() {
     },
 
     agregarProducto(producto) {
+      const stockMaximo = obtenerStockDeProducto(producto.nombre);
+      if (stockMaximo <= 0) {
+        if (window.SenabellaToast) {
+          window.SenabellaToast(`"${producto.nombre}" está agotado en inventario`, "fa-triangle-exclamation", "error");
+        }
+        return false;
+      }
+
       const items = this.obtenerItems();
       const existente = items.find(
         (item) => item.nombre.trim().toLowerCase() === producto.nombre.trim().toLowerCase()
       );
 
-      const stockMaximo = obtenerStockDeProducto(producto.nombre);
-
       if (existente) {
-        const nuevaCantidad = (parseInt(existente.cantidad) || 1) + (parseInt(producto.cantidad) || 1);
-        existente.cantidad = Math.min(stockMaximo, nuevaCantidad);
+        const cantidadSolicitada = parseInt(producto.cantidad) || 1;
+        const cantidadActual = parseInt(existente.cantidad) || 1;
+        if (cantidadActual >= stockMaximo) {
+          if (window.SenabellaToast) {
+            window.SenabellaToast(`Máximo alcanzado: Solo hay ${stockMaximo} unidad(es) de "${producto.nombre}"`, "fa-circle-info", "advertencia");
+          }
+          return false;
+        }
+        existente.cantidad = Math.min(stockMaximo, cantidadActual + cantidadSolicitada);
         existente.checked = true;
       } else {
         items.push({
@@ -99,6 +112,7 @@ function iniciarCarritoGlobal() {
       }
 
       this.guardarItems(items);
+      return true;
     },
 
     eliminarProducto(nombre) {

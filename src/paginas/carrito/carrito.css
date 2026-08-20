@@ -291,23 +291,115 @@
   margin-bottom: 10px;
 }
 
-/* Botón para ver el detalle de un producto sugerido */
-.boton-ver-producto {
+.badge-stock-resumen-sugerencias {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.contenedor-img-sugerencia {
+  position: relative;
   width: 100%;
-  background-color: #333d45;
-  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badge-stock-sugerencia {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(22, 101, 52, 0.9);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
+}
+
+.acciones-tarjeta-sugerencia {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.boton-ver-sugerencia {
+  width: 100%;
+  background-color: #f8fafc;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 7px 0;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.boton-ver-sugerencia:hover {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.boton-agregar-sugerencia {
+  width: 100%;
+  background: linear-gradient(135deg, #84b814 0%, #6e9a0c 100%);
+  color: #0d2805;
   border: none;
   border-radius: 20px;
   padding: 8px 0;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 5px;
-  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(132, 184, 20, 0.25);
+  transition: all 0.2s ease;
 }
 
-.boton-ver-producto:hover {
-  background-color: #21282e;
+.boton-agregar-sugerencia:hover {
+  background: linear-gradient(135deg, #91c817 0%, #7aa80e 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(132, 184, 20, 0.35);
+}
+
+body.modo-oscuro .badge-stock-resumen-sugerencias {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+body.modo-oscuro .boton-ver-sugerencia {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+body.modo-oscuro .boton-ver-sugerencia:hover {
+  background-color: #334155;
+  color: #ffffff;
 }
 
 /* Contenedor principal del pie de página */
