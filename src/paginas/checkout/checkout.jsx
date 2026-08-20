@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CIUDADES } from "../../datos";
 import "./checkout.css";
 
 const leerJSON = (clave, valorInicial) => {
@@ -42,6 +43,11 @@ function Checkout() {
     const usuarioActualizado = { ...usuario, [campo]: valor };
     setUsuario(usuarioActualizado);
     localStorage.setItem("senabella_usuario", JSON.stringify(usuarioActualizado));
+    // Si cambia la ciudad, actualizar también la ubicación del encabezado
+    if (campo === "ciudad" && valor) {
+      localStorage.setItem("ubicacion", valor);
+      window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
+    }
     if (errores[campo]) {
       setErrores((prev) => ({ ...prev, [campo]: false }));
     }
@@ -171,14 +177,21 @@ function Checkout() {
               />
             </div>
             <div className="grupo-inputs">
-              <Campo
-                label="Ciudad / Municipio"
-                valor={usuario.ciudad || ""}
-                alCambiar={(e) => handleCambioCampo("ciudad", e.target.value)}
-                placeholder="Ej. Bogotá, Medellín, Cali..."
-                error={errores.ciudad}
-                mensaje="Por favor, ingresa la ciudad de entrega."
-              />
+              <div className="campo-checkout">
+                <label>Ciudad</label>
+                <select
+                  value={usuario.ciudad || ""}
+                  onChange={(e) => handleCambioCampo("ciudad", e.target.value)}
+                  required
+                  className={errores.ciudad ? "error" : ""}
+                >
+                  <option value="">Selecciona tu ciudad</option>
+                  {CIUDADES.map((ciudad) => (
+                    <option key={ciudad} value={ciudad}>{ciudad}</option>
+                  ))}
+                </select>
+                {errores.ciudad && <span className="mensaje-error" style={{ display: "block" }}>Por favor, selecciona tu ciudad de entrega.</span>}
+              </div>
               <Campo
                 label="Teléfono / Celular de contacto"
                 valor={usuario.celular || ""}

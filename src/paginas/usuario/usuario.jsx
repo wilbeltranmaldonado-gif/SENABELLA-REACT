@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { CIUDADES } from "../../datos";
 import "./usuario.css";
 
 function Usuario() {
@@ -36,6 +37,7 @@ function Usuario() {
     if (window.confirm("¿Seguro que quieres cerrar sesión?")) {
       localStorage.removeItem("senabella_sesion");
       localStorage.removeItem("senabella_rol");
+      localStorage.removeItem("ubicacion");
       navigate("/");
       setTimeout(() => window.location.reload(), 100);
     }
@@ -103,6 +105,11 @@ function Usuario() {
     };
     
     localStorage.setItem("senabella_usuario", JSON.stringify(actualizado));
+    // Sincronizar la ciudad con la ubicación del encabezado
+    if (ciudad) {
+      localStorage.setItem("ubicacion", ciudad);
+      window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
+    }
     setUsuario(actualizado);
 
     setMensajeEnvio({ texto: "✓ Datos de envío guardados correctamente.", tipo: "exito" });
@@ -303,15 +310,18 @@ function Usuario() {
                   />
                 </div>
                 <div className="usuario-grupo-campo">
-                  <label className="usuario-label">Ciudad / Municipio *</label>
-                  <input
+                  <label className="usuario-label">Ciudad *</label>
+                  <select
                     name="ciudad"
-                    type="text"
-                    defaultValue={usuario.ciudad || ""}
                     required
-                    placeholder="Ej. Bogotá"
+                    defaultValue={usuario.ciudad || ""}
                     className="usuario-input"
-                  />
+                  >
+                    <option value="">Selecciona tu ciudad</option>
+                    {CIUDADES.map((ciudad) => (
+                      <option key={ciudad} value={ciudad}>{ciudad}</option>
+                    ))}
+                  </select>
                 </div>
                 <button type="submit" className="usuario-boton-guardar">
                   <i className="fa-solid fa-floppy-disk"></i> Guardar Datos de Envío

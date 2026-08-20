@@ -197,15 +197,11 @@
   color: #4a4a4a;
 }
 
-.boton-ubicacion {
+.indicador-ubicacion {
   display: flex;
   align-items: center;
   gap: 6px;
   font-weight: bold;
-}
-
-.boton-ubicacion:hover {
-  color: var(--primary-color);
 }
 
 .enlaces-navegacion {
@@ -443,7 +439,7 @@ body.modo-oscuro .sub-navegacion {
 
 body.modo-oscuro .contenido_principal a,
 body.modo-oscuro .sub-navegacion a,
-body.modo-oscuro .boton-ubicacion {
+body.modo-oscuro .indicador-ubicacion {
   color: white;
 }
 
