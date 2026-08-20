@@ -264,16 +264,16 @@ function Catalogo() {
               </div>
               {filtroCategoriaAbierto && (
                 <div className="categorias-lista">
-                  {categoriasListaLateral.map((cat, i) => (
+                  {categoriasCirculares.map((catObj, i) => (
                     <div key={i} style={{ marginBottom: "5px" }}>
                       <label style={{ cursor: 'pointer' }}>
                         <input
                           type="checkbox"
-                          checked={categoriasSeleccionadas.includes(cat.toLowerCase())}
-                          onChange={() => toggleCategoria(cat.toLowerCase())}
+                          checked={categoriasSeleccionadas.includes(catObj.categoria)}
+                          onChange={() => toggleCategoria(catObj.categoria)}
                           style={{ marginRight: "8px" }}
                         />
-                        {cat}
+                        {catObj.titulo}
                       </label>
                     </div>
                   ))}

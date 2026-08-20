@@ -17,6 +17,8 @@ function CatalogoRopaAccesorios() {
   const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState(queryCat ? [queryCat.toLowerCase()] : []);
   const [marcasSeleccionadas, setMarcasSeleccionadas] = useState([]);
   const [preciosSeleccionados, setPreciosSeleccionados] = useState([]);
+  const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
+  const [descuentosSeleccionados, setDescuentosSeleccionados] = useState([]);
   const [ordenSeleccionado, setOrdenSeleccionado] = useState("Recomendados");
   const [paginaActual, setPaginaActual] = useState(1);
   const [soloDomicilio, setSoloDomicilio] = useState(false);
@@ -89,6 +91,32 @@ function CatalogoRopaAccesorios() {
       });
     }
 
+    // Filtro por descuento
+    if (descuentosSeleccionados.length > 0) {
+       resultado = resultado.filter((p) => {
+          if (!p.descuento) return false;
+          const descVal = parseInt(p.descuento.replace(/[^0-9]/g, '')) || 0;
+          return descuentosSeleccionados.some(desc => {
+             if (desc === "20% o más") return descVal >= 20;
+             if (desc === "30% o más") return descVal >= 30;
+             if (desc === "40% o más") return descVal >= 40;
+             return false;
+          });
+       });
+    }
+
+    // Filtro por talla
+    if (tallasSeleccionadas.length > 0) {
+       resultado = resultado.filter((p) => {
+          const upperName = p.nombre.toUpperCase();
+          return tallasSeleccionadas.some(talla => {
+             const regex = new RegExp(`\\b${talla}\\b`);
+             const rangeRegex = new RegExp(`\\b[A-Z]+-[A-Z]+\\b`);
+             return regex.test(upperName) || rangeRegex.test(upperName) || p.categoria === 'calzado' || p.categoria === 'accesorios';
+          });
+       });
+    }
+
     // Ordenamiento
     if (ordenSeleccionado === "Menor precio") {
       resultado.sort((a, b) => a.precioNumero - b.precioNumero);
@@ -97,7 +125,7 @@ function CatalogoRopaAccesorios() {
     }
 
     return resultado;
-  }, [marcasSeleccionadas, categoriasSeleccionadas, preciosSeleccionados, ordenSeleccionado, queryBusqueda]);
+  }, [marcasSeleccionadas, categoriasSeleccionadas, preciosSeleccionados, tallasSeleccionadas, descuentosSeleccionados, ordenSeleccionado, queryBusqueda]);
 
   // Paginación (12 productos por página)
   const itemsPorPagina = 12;
@@ -121,6 +149,16 @@ function CatalogoRopaAccesorios() {
 
   const togglePrecio = (rango) => {
     setPreciosSeleccionados((prev) => (prev.includes(rango) ? prev.filter(r => r !== rango) : [...prev, rango]));
+    setPaginaActual(1);
+  };
+
+  const toggleTalla = (talla) => {
+    setTallasSeleccionadas((prev) => (prev.includes(talla) ? prev.filter(t => t !== talla) : [...prev, talla]));
+    setPaginaActual(1);
+  };
+
+  const toggleDescuento = (desc) => {
+    setDescuentosSeleccionados((prev) => (prev.includes(desc) ? prev.filter(d => d !== desc) : [...prev, desc]));
     setPaginaActual(1);
   };
 
@@ -333,8 +371,13 @@ function CatalogoRopaAccesorios() {
                 <div className="opciones-filtro-lateral">
                   {["XS", "S", "M", "L", "XL"].map((talla, idx) => (
                     <div key={idx}>
-                      <label>
-                        <input type="checkbox" value={talla} /> {talla}
+                      <label style={{ cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={tallasSeleccionadas.includes(talla)}
+                          onChange={() => toggleTalla(talla)}
+                          style={{ marginRight: "8px" }}
+                        /> {talla}
                       </label>
                     </div>
                   ))}
@@ -399,21 +442,18 @@ function CatalogoRopaAccesorios() {
               </div>
               {filtroDescuentosAbierto && (
                 <div className="opciones-filtro-lateral">
-                  <div>
-                    <label>
-                      <input type="checkbox" /> 20% o más
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" /> 30% o más
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input type="checkbox" /> 40% o más
-                    </label>
-                  </div>
+                  {["20% o más", "30% o más", "40% o más"].map((desc, idx) => (
+                    <div key={idx}>
+                      <label style={{ cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={descuentosSeleccionados.includes(desc)}
+                          onChange={() => toggleDescuento(desc)}
+                          style={{ marginRight: "8px" }}
+                        /> {desc}
+                      </label>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

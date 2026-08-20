@@ -19,13 +19,13 @@ export const categoriasInicio = [
     categoria: "ofertas",
     imagen:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5trp8CEafbpi6qOXT-FjQ11HqgD7petZxuYnIIeCfA&s=10",
-    ruta: "/catalogo?categoria=ofertas",
+    ruta: "/catalogo",
   },
   {
     nombre: "TECNO",
     categoria: "tecno",
     imagen: imgTablets,
-    ruta: "/catalogo?categoria=tecno",
+    ruta: "/catalogo",
   },
   {
     nombre: "MUJER",
@@ -56,29 +56,20 @@ export const categorias = categoriasInicio;
 export const promocionesInicio = [
   {
     imagen:
-      "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltb64adf7df7412925/6a59c7ae3d25ec046fccbe95/powercard16_home_suplementos_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-    ruta: "/catalogo?busqueda=suplementos",
-  },
-  {
-    imagen:
       "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltf413d366cc29e9bf/6a5a7cfd5c7ce2611d2d8c44/powercard10_home_belleza_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-    ruta: "/catalogo?busqueda=belleza",
+    ruta: "/catalogo-ropa-accesorios?busqueda=belleza",
   },
   {
     imagen:
       "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt5da4c0580b8c656d/6a59c7bf15befe0a433a8a5a/powercard7_home_relojes_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-    ruta: "/catalogo?busqueda=reloj",
+    ruta: "/catalogo-ropa-accesorios?busqueda=reloj",
   },
   {
     imagen:
       "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltd4a47313d2285f26/6a63ec4398a7f19022344b73/powercard9_home_moda_mujer_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
     ruta: "/catalogo-ropa-accesorios?categoria=mujer",
   },
-  {
-    imagen:
-      "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltc8501095a0ace138/6a59c7ae1d6cdc171efb0209/powercard14_home_ropa_cama_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-    ruta: "/catalogo?busqueda=cama",
-  },
+
   {
     imagen:
       "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt1626d2cca9a6757c/6a59c7ae1d6cdc852ffb020d/powercard13_home_tablets_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
@@ -100,9 +91,18 @@ export const promociones = promocionesInicio;
 
 // 3. Banners del carrusel principal
 export const bannersInicio = [
-  "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltbe35baee88cd51d6/6a57c00691d0075f65be69d8/Banner-doble02-landing-mujer-colombia-disena-dto-cyber_desk.png?auto=webp&disable=upscale&quality=70&width=1280",
-  "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltc5b14ee48b0288b5/6a57defcade6f5a0546e68e4/Banner-doble02-landing-mujer-imperdibles-accesorios-relojes-MK-price-cyber_desk.png?auto=webp&disable=upscale&quality=70&width=1280",
-  "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt0d2994fac24f0fb9/6a29da3fec6a5e4bb177ac7e/bannerdoble07_landing_tecnologia_computadores_mejorestablets_30dcto_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
+  {
+    imagen: "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltbe35baee88cd51d6/6a57c00691d0075f65be69d8/Banner-doble02-landing-mujer-colombia-disena-dto-cyber_desk.png?auto=webp&disable=upscale&quality=70&width=1280",
+    ruta: "/catalogo-ropa-accesorios?categoria=mujer"
+  },
+  {
+    imagen: "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltc5b14ee48b0288b5/6a57defcade6f5a0546e68e4/Banner-doble02-landing-mujer-imperdibles-accesorios-relojes-MK-price-cyber_desk.png?auto=webp&disable=upscale&quality=70&width=1280",
+    ruta: "/catalogo-ropa-accesorios?categoria=relojes"
+  },
+  {
+    imagen: "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt0d2994fac24f0fb9/6a29da3fec6a5e4bb177ac7e/bannerdoble07_landing_tecnologia_computadores_mejorestablets_30dcto_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
+    ruta: "/catalogo"
+  }
 ];
 
 export const banners = bannersInicio;

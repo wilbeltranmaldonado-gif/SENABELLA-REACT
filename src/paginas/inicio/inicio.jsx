@@ -220,11 +220,11 @@ function Inicio() {
                 className={`carousel-item ${
                   slideActual === index ? "active" : ""
                 }`}
-                key={banner}
+                key={banner.imagen}
               >
-                <Link to="/catalogo?categoria=ofertas">
+                <Link to={banner.ruta}>
                   <img
-                    src={banner}
+                    src={banner.imagen}
                     className="d-block w-100"
                     alt={`Promoción Banner ${index + 1}`}
                   />
