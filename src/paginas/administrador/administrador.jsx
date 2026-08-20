@@ -149,11 +149,18 @@ function Administrador() {
     setSidebarAbierto(false);
   };
 
+  const [modalLogoutAbierto, setModalLogoutAbierto] = useState(false);
+
   // ==========================================
-  // CERRAR SESIÓN
+  // CERRAR SESIÓN CON CONFIRMACIÓN
   // ==========================================
 
-  const cerrarSesion = () => {
+  const solicitarCerrarSesion = () => {
+    setModalLogoutAbierto(true);
+    setSidebarAbierto(false);
+  };
+
+  const ejecutarCerrarSesion = () => {
     localStorage.setItem("senabella_sesion", "inactiva");
     localStorage.removeItem("senabella_rol");
     localStorage.removeItem("senabella_usuario");
@@ -269,7 +276,7 @@ function Administrador() {
 
         <div className="admin-sidebar-footer">
           <Link to="/" onClick={() => setSidebarAbierto(false)}><i className="fa-solid fa-store"></i> Volver a la tienda</Link>
-          <a href="#" onClick={(e) => { e.preventDefault(); cerrarSesion(); }}>
+          <a href="#" onClick={(e) => { e.preventDefault(); solicitarCerrarSesion(); }}>
             <i className="fa-solid fa-power-off"></i> Cerrar sesión
           </a>
         </div>
@@ -341,6 +348,54 @@ function Administrador() {
           {renderizarVista()}
         </main>
       </div>
+
+      {/* ==========================================
+           MODAL DE CONFIRMACIÓN DE CIERRE DE SESIÓN
+      ========================================== */}
+      {modalLogoutAbierto && (
+        <div 
+          className="admin-modal-overlay" 
+          onClick={() => setModalLogoutAbierto(false)}
+          style={{ backdropFilter: "blur(4px)", background: "rgba(15, 23, 42, 0.6)", zIndex: 9999 }}
+        >
+          <div 
+            className="admin-modal" 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ maxWidth: "420px", width: "90%", borderRadius: "16px", overflow: "hidden", textAlign: "center", padding: "28px 24px", boxShadow: "0 20px 40px rgba(0,0,0,0.3)" }}
+          >
+            <div style={{ width: "56px", height: "56px", borderRadius: "50%", background: "#fee2e2", color: "#dc2626", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px auto", fontSize: "24px" }}>
+              <i className="fa-solid fa-power-off"></i>
+            </div>
+
+            <h3 style={{ margin: "0 0 8px 0", fontSize: "18px", color: "#0f172a", fontWeight: 700 }}>
+              ¿Cerrar sesión de administrador?
+            </h3>
+            
+            <p style={{ margin: "0 0 24px 0", fontSize: "13.5px", color: "#64748b", lineHeight: "1.5" }}>
+              Tendrás que volver a ingresar tus credenciales para acceder nuevamente al panel de control.
+            </p>
+
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
+              <button 
+                type="button" 
+                className="admin-boton admin-boton-secundario"
+                onClick={() => setModalLogoutAbierto(false)}
+                style={{ flex: 1 }}
+              >
+                <i className="fa-solid fa-xmark"></i> Cancelar
+              </button>
+              <button 
+                type="button" 
+                className="admin-boton admin-boton-peligro"
+                onClick={ejecutarCerrarSesion}
+                style={{ flex: 1 }}
+              >
+                <i className="fa-solid fa-arrow-right-from-bracket"></i> Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

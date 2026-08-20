@@ -291,10 +291,13 @@ export default function Header() {
   // ------------------------------------------
   const ejecutarBusqueda = () => {
     const termino = terminoBusqueda.trim();
-    const esPaginaCatalogo = window.location.pathname.toLowerCase().includes("/catalogo");
+    const rutaActual = window.location.pathname.toLowerCase();
+    const esCatalogoRopa = rutaActual.includes("/catalogo-ropa-accesorios");
+    const esPaginaCatalogo = rutaActual === "/catalogo" || esCatalogoRopa;
+    const rutaBusqueda = esCatalogoRopa ? "/catalogo-ropa-accesorios" : "/catalogo";
 
     if (!esPaginaCatalogo) {
-      navigate(termino ? `/catalogo?busqueda=${encodeURIComponent(termino)}` : "/catalogo");
+      navigate(termino ? `${rutaBusqueda}?busqueda=${encodeURIComponent(termino)}` : rutaBusqueda);
     } else {
       const url = new URL(window.location.href);
       if (termino) {

@@ -12,6 +12,7 @@ import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 function CatalogoRopaAccesorios() {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryCat = searchParams.get("categoria") || "";
+  const queryBusqueda = (searchParams.get("busqueda") || "").trim().toLowerCase();
 
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(queryCat);
   const [marcaSeleccionada, setMarcaSeleccionada] = useState("");
@@ -65,6 +66,14 @@ function CatalogoRopaAccesorios() {
       });
     }
 
+    if (queryBusqueda) {
+      resultado = resultado.filter((p) => [p.nombre, p.marca, p.categoria, p.referencia]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(queryBusqueda));
+    }
+
     // Ordenamiento
     if (ordenSeleccionado === "Menor precio") {
       resultado.sort((a, b) => a.precioNumero - b.precioNumero);
@@ -73,7 +82,7 @@ function CatalogoRopaAccesorios() {
     }
 
     return resultado;
-  }, [marcaSeleccionada, categoriaSeleccionada, ordenSeleccionado]);
+  }, [marcaSeleccionada, categoriaSeleccionada, ordenSeleccionado, queryBusqueda]);
 
   // Paginación (12 productos por página)
   const itemsPorPagina = 12;

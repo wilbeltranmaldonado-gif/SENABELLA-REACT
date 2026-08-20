@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./catalogo.css";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   categoriasCirculares,
   productosIniciales,
@@ -17,6 +17,8 @@ const usarImagenFallback = (evento) => {
 };
 
 function Catalogo() {
+  const [searchParams] = useSearchParams();
+  const busqueda = (searchParams.get("busqueda") || "").trim().toLowerCase();
   const [productosAdmin, setProductosAdmin] = useState(() => {
     try {
       const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
@@ -70,6 +72,11 @@ function Catalogo() {
   const productosFiltrados = productosDisponibles.filter(prod => {
     let cumpleMarca = marcaSeleccionada === "" || prod.marca === marcaSeleccionada;
     let cumpleCategoria = true;
+    const textoProducto = [prod.nombre, prod.marca, prod.categoria, prod.referencia]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    const cumpleBusqueda = !busqueda || textoProducto.includes(busqueda);
     
     if (categoriaSeleccionada !== "") {
       cumpleCategoria = prod.nombre.toLowerCase().includes(categoriaSeleccionada) ||
@@ -77,7 +84,7 @@ function Catalogo() {
               prod.categoria?.toLowerCase().includes(categoriaSeleccionada);
     }
     
-    return cumpleMarca && cumpleCategoria;
+    return cumpleMarca && cumpleCategoria && cumpleBusqueda;
   });
 
   // Paginación (12 items por página aprox, pero aquí son 17 en total)
