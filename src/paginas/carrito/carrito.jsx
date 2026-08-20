@@ -72,10 +72,20 @@ function Carrito() {
     };
   }, []);
   
-  // Sugerencias basadas ÚNICAMENTE en productos del catálogo real que tienen stock > 0
+  // Sugerencias aleatorias basadas ÚNICAMENTE en productos del catálogo real con stock > 0
   const [sugerencias, setSugerencias] = useState([]);
 
-  const cargarSugerenciasCatalogo = () => {
+  // Función para mezclar aleatoriamente los elementos (Fisher-Yates)
+  const mezclarArray = (array) => {
+    const copia = [...array];
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+  };
+
+  const cargarSugerenciasCatalogo = (aleatorio = false) => {
     try {
       // 1. Obtener productos administrados y catálogo base
       const guardadosAdmin = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
@@ -119,19 +129,25 @@ function Carrito() {
         }
       });
 
-      setSugerencias(Array.from(mapaUnicos.values()).slice(0, 10));
+      const listaUnica = Array.from(mapaUnicos.values());
+      // Si se requiere orden aleatorio (al entrar a la página), mezclar
+      const seleccionados = aleatorio ? mezclarArray(listaUnica) : listaUnica;
+      setSugerencias(seleccionados.slice(0, 10));
     } catch (e) {
       console.error("Error al cargar sugerencias del catálogo:", e);
     }
   };
 
   useEffect(() => {
-    cargarSugerenciasCatalogo();
-    window.addEventListener("storage", cargarSugerenciasCatalogo);
-    window.addEventListener("senabella_products_updated", cargarSugerenciasCatalogo);
+    // Al entrar al carrito, cargar de forma aleatoria los productos disponibles
+    cargarSugerenciasCatalogo(true);
+
+    const actualizarStockSinRemezclar = () => cargarSugerenciasCatalogo(false);
+    window.addEventListener("storage", actualizarStockSinRemezclar);
+    window.addEventListener("senabella_products_updated", actualizarStockSinRemezclar);
     return () => {
-      window.removeEventListener("storage", cargarSugerenciasCatalogo);
-      window.removeEventListener("senabella_products_updated", cargarSugerenciasCatalogo);
+      window.removeEventListener("storage", actualizarStockSinRemezclar);
+      window.removeEventListener("senabella_products_updated", actualizarStockSinRemezclar);
     };
   }, []);
 
