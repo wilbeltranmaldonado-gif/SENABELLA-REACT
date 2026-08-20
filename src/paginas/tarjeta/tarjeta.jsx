@@ -208,7 +208,7 @@ function Tarjeta() {
           </h1>
           <p>
             Tu tarjeta exclusiva para estudiantes del SENA. Disfruta de
-            beneficios, descuentos y mucho más en todos nuestros productos.
+            beneficios, descuentos y mucho más en todos nuestros productos en tiendas FISICAS.
           </p>
           <a
             href="#formulario-solicitud"
