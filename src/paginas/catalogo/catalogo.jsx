@@ -8,6 +8,13 @@ import {
   categoriasListaLateral,
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
+import imagenFallback from "../../assets/teclado.webp";
+
+const usarImagenFallback = (evento) => {
+  if (evento.currentTarget.src !== imagenFallback) {
+    evento.currentTarget.src = imagenFallback;
+  }
+};
 
 function Catalogo() {
   const [productosAdmin, setProductosAdmin] = useState(() => {
@@ -44,12 +51,16 @@ function Catalogo() {
   const productosAdministrados = productosAdmin.map((producto) => ({
     ...producto,
     marca: "SENABELLA",
-    imagen: producto.imagen || "https://via.placeholder.com/480x480?text=Producto",
+    imagen: producto.imagen || imagenFallback,
     referencia: producto.categoria,
     precioNumero: Number(String(producto.precio).replace(/[^\d]/g, "")) || 0,
   }));
+  const nombresTecnologia = new Set(productosIniciales.map((producto) => producto.nombre));
+  const productosTecnologiaAdmin = productosAdministrados.filter((producto) => (
+    !producto.origenCatalogo || nombresTecnologia.has(producto.nombre)
+  ));
   const productosDisponibles = Array.from(
-    new Map([...productosAdministrados, ...productosIniciales].map((producto) => [producto.nombre, producto])).values()
+    new Map([...productosTecnologiaAdmin, ...productosIniciales].map((producto) => [producto.nombre, producto])).values()
   );
   
   // ==========================================
@@ -330,10 +341,10 @@ function Catalogo() {
 
           <div className="tarjeta-producto">
             {productosPaginados.map(prod => (
-              <div className="tar-producto" key={prod.id}>
+              <div className="tar-producto" key={`${prod.id}-${prod.nombre}`}>
                 {prod.promocion && <span className="promocion">{prod.promocion}</span>}
                 <a href="#">
-                  <img src={prod.imagen} alt={prod.marca} />
+                  <img src={prod.imagen || imagenFallback} alt={prod.marca} onError={usarImagenFallback} />
                 </a>
                 <div className="etiqueta">
                   <span>{prod.etiqueta}</span>

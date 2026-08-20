@@ -42,6 +42,7 @@ const leerProveedores = () => {
 
 function Proveedores() {
   const [proveedores, setProveedores] = useState(leerProveedores);
+  const [aviso, setAviso] = useState("");
 
   const [modalAbierto, setModalAbierto] = useState(false);
   const [proveedorEditando, setProveedorEditando] = useState(null);
@@ -87,6 +88,7 @@ function Proveedores() {
     }
     setProveedores(proveedoresActualizados);
     localStorage.setItem(PROVEEDORES_KEY, JSON.stringify(proveedoresActualizados));
+    setAviso(proveedorEditando.id ? "Proveedor actualizado correctamente." : "Proveedor creado correctamente.");
     cerrarModal();
   };
 
@@ -95,11 +97,19 @@ function Proveedores() {
       const proveedoresActualizados = proveedores.filter(p => p.id !== id);
       setProveedores(proveedoresActualizados);
       localStorage.setItem(PROVEEDORES_KEY, JSON.stringify(proveedoresActualizados));
+      setAviso("Proveedor eliminado correctamente.");
     }
   };
 
   return (
     <div className="vista-proveedores">
+      {aviso && (
+        <div className="admin-aviso-exito" role="status">
+          <i className="fa-solid fa-circle-check"></i>
+          <span>{aviso}</span>
+          <button onClick={() => setAviso("")} aria-label="Cerrar aviso"><i className="fa-solid fa-xmark"></i></button>
+        </div>
+      )}
       <div className="admin-cabecera-vista">
         <h2 className="admin-seccion-titulo">Gestión de proveedores</h2>
         <button 
@@ -134,10 +144,10 @@ function Proveedores() {
                 <td>{contarProductos(proveedor.nombre)}</td>
                 <td>
                   <div className="admin-acciones-tabla">
-                    <button onClick={() => abrirModal(proveedor)}>
+                    <button className="admin-boton-icono" title="Editar proveedor" onClick={() => abrirModal(proveedor)}>
                       <i className="fa-solid fa-pen"></i>
                     </button>
-                    <button onClick={() => eliminarProveedor(proveedor.id)}>
+                    <button className="admin-boton-icono admin-boton-icono-danger" title="Eliminar proveedor" onClick={() => eliminarProveedor(proveedor.id)}>
                       <i className="fa-solid fa-trash"></i>
                     </button>
                   </div>
@@ -154,7 +164,7 @@ function Proveedores() {
           <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
             <div className="admin-modal-cabecera">
               <h3>{proveedorEditando?.id ? "Editar proveedor" : "Agregar proveedor"}</h3>
-              <button onClick={cerrarModal}>
+              <button className="admin-modal-cerrar" onClick={cerrarModal} title="Cerrar">
                 <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
@@ -196,9 +206,12 @@ function Proveedores() {
                 />
               </div>
               <div className="admin-modal-pie">
-                <button type="button" onClick={cerrarModal}>Cancelar</button>
-                <button type="submit" className="admin-boton-primario">
-                  {proveedorEditando?.id ? "Actualizar" : "Agregar"}
+                <button type="button" className="admin-boton admin-boton-secundario" onClick={cerrarModal}>
+                  <i className="fa-solid fa-xmark"></i> Cancelar
+                </button>
+                <button type="submit" className="admin-boton admin-boton-primario">
+                  <i className={`fa-solid ${proveedorEditando?.id ? "fa-pen-to-square" : "fa-plus"}`}></i>
+                  {proveedorEditando?.id ? "Actualizar proveedor" : "Crear proveedor"}
                 </button>
               </div>
             </form>
