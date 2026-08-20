@@ -4,8 +4,14 @@ import "./usuario.css";
 
 function Usuario() {
   const [seccionActiva, setSeccionActiva] = useState("mi-perfil");
-  const [usuario, setUsuario] = useState({});
-  const [ordenes, setOrdenes] = useState([]);
+  const [usuario, setUsuario] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("senabella_usuario")) || {}; }
+    catch { return {}; }
+  });
+  const [ordenes, setOrdenes] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("senabella_user_orders")) || []; }
+    catch { return []; }
+  });
   const [mensajePerfil, setMensajePerfil] = useState({ texto: "", tipo: "" });
   const [mensajeEnvio, setMensajeEnvio] = useState({ texto: "", tipo: "" });
   
@@ -23,20 +29,6 @@ function Usuario() {
     if (localStorage.getItem("senabella_sesion") !== "activa") {
       navigate("/login");
       return;
-    }
-
-    try {
-      const user = JSON.parse(localStorage.getItem("senabella_usuario")) || {};
-      setUsuario(user);
-    } catch (e) {
-      console.error(e);
-    }
-
-    try {
-      const orders = JSON.parse(localStorage.getItem("senabella_user_orders")) || [];
-      setOrdenes(orders);
-    } catch (e) {
-      console.error(e);
     }
   }, [navigate]);
 
