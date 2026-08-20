@@ -297,3 +297,58 @@
     font-size: 13px;
   }
 }
+
+/* ==========================================
+   MODO OSCURO - USUARIO
+   ========================================== */
+body.modo-oscuro .titulo-pagina,
+body.modo-oscuro .titulo-seccion,
+body.modo-oscuro .valor-info,
+body.modo-oscuro .elemento-menu {
+  color: #fff !important;
+}
+
+body.modo-oscuro .migas-pan a,
+body.modo-oscuro .migas-pan span,
+body.modo-oscuro .etiqueta-info,
+body.modo-oscuro .info-icon-tooltip,
+body.modo-oscuro .estado-vacio,
+body.modo-oscuro .elemento-menu .fa-chevron-right {
+  color: #bbb !important;
+}
+
+body.modo-oscuro .barra-lateral,
+body.modo-oscuro .tarjeta-contenido {
+  background-color: #1e1e1e !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.modo-oscuro .elemento-menu {
+  border-bottom-color: #333 !important;
+}
+
+body.modo-oscuro .elemento-menu:hover {
+  background-color: #292929 !important;
+}
+
+body.modo-oscuro .elemento-menu.activo {
+  background-color: rgba(132, 184, 20, 0.1) !important;
+  border-left-color: #84b814 !important;
+}
+
+body.modo-oscuro .grupo-info {
+  border-bottom-color: #333 !important;
+}
+
+body.modo-oscuro .boton-editar {
+  color: #84b814 !important;
+}
+
+@media (max-width: 992px) {
+  body.modo-oscuro .elemento-menu {
+    border-right-color: #333 !important;
+  }
+  body.modo-oscuro .elemento-menu.activo {
+    border-bottom-color: #84b814 !important;
+  }
+}
