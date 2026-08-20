@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import "./catalogo.css";
+<<<<<<< Updated upstream
 import { Link, useSearchParams } from "react-router-dom";
+=======
+import { Link, useLocation } from "react-router-dom";
+>>>>>>> Stashed changes
 import {
   categoriasCirculares,
   productosIniciales,
@@ -27,9 +31,19 @@ function Catalogo() {
       return [];
     }
   });
+  const location = useLocation();
   const [paginaActual, setPaginaActual] = useState(1);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
-  const [marcaSeleccionada, setMarcaSeleccionada] = useState("");
+  const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
+  const [marcasSeleccionadas, setMarcasSeleccionadas] = useState([]);
+  const [preciosSeleccionados, setPreciosSeleccionados] = useState([]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const catUrl = params.get('categoria');
+    const busqUrl = params.get('busqueda');
+    if (catUrl) setCategoriasSeleccionadas([catUrl]);
+    if (busqUrl) setCategoriasSeleccionadas([busqUrl]);
+  }, [location.search]);
 
   const [filtroEntregaAbierto, setFiltroEntregaAbierto] = useState(true);
   const [filtroCategoriaAbierto, setFiltroCategoriaAbierto] = useState(true);
@@ -70,6 +84,7 @@ function Catalogo() {
   // ==========================================
   
   const productosFiltrados = productosDisponibles.filter(prod => {
+<<<<<<< Updated upstream
     let cumpleMarca = marcaSeleccionada === "" || prod.marca === marcaSeleccionada;
     let cumpleCategoria = true;
     const textoProducto = [prod.nombre, prod.marca, prod.categoria, prod.referencia]
@@ -85,6 +100,32 @@ function Catalogo() {
     }
     
     return cumpleMarca && cumpleCategoria && cumpleBusqueda;
+=======
+    const prodCat = (prod.categoria || prod.etiqueta || "").toLowerCase();
+    const prodNombre = prod.nombre.toLowerCase();
+    const prodMarca = prod.marca.toLowerCase();
+
+    // Marca
+    let cumpleMarca = marcasSeleccionadas.length === 0 || marcasSeleccionadas.includes(prod.marca);
+
+    // Categoria
+    let cumpleCategoria = categoriasSeleccionadas.length === 0 || categoriasSeleccionadas.some(catSel => {
+       const cs = catSel.toLowerCase();
+       return prodCat.includes(cs) || prodNombre.includes(cs) || prodMarca.includes(cs);
+    });
+
+    // Precio
+    let cumplePrecio = preciosSeleccionados.length === 0 || preciosSeleccionados.some(rango => {
+       const precio = prod.precioNumero || 0;
+       if (rango === "Menos de $500.000") return precio < 500000;
+       if (rango === "$500.000 - $1.000.000") return precio >= 500000 && precio <= 1000000;
+       if (rango === "$1.000.000 - $2.000.000") return precio > 1000000 && precio <= 2000000;
+       if (rango === "Más de $2.000.000") return precio > 2000000;
+       return true;
+    });
+
+    return cumpleMarca && cumpleCategoria && cumplePrecio;
+>>>>>>> Stashed changes
   });
 
   // Paginación (12 items por página aprox, pero aquí son 17 en total)
@@ -98,12 +139,17 @@ function Catalogo() {
   // ==========================================
   
   const toggleCategoria = (cat) => {
-    setCategoriaSeleccionada(prev => prev === cat ? "" : cat);
+    setCategoriasSeleccionadas(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]);
     setPaginaActual(1);
   };
   
   const toggleMarca = (marca) => {
-    setMarcaSeleccionada(prev => prev === marca ? "" : marca);
+    setMarcasSeleccionadas(prev => prev.includes(marca) ? prev.filter(m => m !== marca) : [...prev, marca]);
+    setPaginaActual(1);
+  };
+
+  const togglePrecio = (rango) => {
+    setPreciosSeleccionados(prev => prev.includes(rango) ? prev.filter(r => r !== rango) : [...prev, rango]);
     setPaginaActual(1);
   };
 
@@ -173,12 +219,12 @@ function Catalogo() {
       <section className="categorias-circulares">
         {categoriasCirculares.map((cat, idx) => (
           <div 
-            className={`categoria ${categoriaSeleccionada === cat.categoria ? 'circulo-activo' : ''}`} 
+            className={`categoria ${categoriasSeleccionadas.includes(cat.categoria) ? 'circulo-activo' : ''}`} 
             key={idx}
             onClick={() => toggleCategoria(cat.categoria)}
-            style={{ cursor: 'pointer', transform: categoriaSeleccionada === cat.categoria ? 'scale(1.08)' : '' }}
+            style={{ cursor: 'pointer', transform: categoriasSeleccionadas.includes(cat.categoria) ? 'scale(1.08)' : '' }}
           >
-            <div className="imagen-cat" style={{ border: categoriaSeleccionada === cat.categoria ? '2px solid #84b814' : '' }}>
+            <div className="imagen-cat" style={{ border: categoriasSeleccionadas.includes(cat.categoria) ? '2px solid #84b814' : '' }}>
               <img src={cat.imagen} alt={cat.titulo} />
             </div>
             <div className="titulo-cat">{cat.titulo}</div>
@@ -234,13 +280,17 @@ function Catalogo() {
               {filtroCategoriaAbierto && (
                 <div className="categorias-lista">
                   {categoriasListaLateral.map((cat, i) => (
-                    <span 
-                      key={i} 
-                      className="categoria-lis" 
-                      style={{ cursor: 'pointer' }}
-                    >
-                      {cat}
-                    </span>
+                    <div key={i} style={{ marginBottom: "5px" }}>
+                      <label style={{ cursor: 'pointer' }}>
+                        <input
+                          type="checkbox"
+                          checked={categoriasSeleccionadas.includes(cat.toLowerCase())}
+                          onChange={() => toggleCategoria(cat.toLowerCase())}
+                          style={{ marginRight: "8px" }}
+                        />
+                        {cat}
+                      </label>
+                    </div>
                   ))}
                 </div>
               )}
@@ -263,8 +313,8 @@ function Catalogo() {
                       <label>
                         <input
                           type="checkbox"
-                          checked={marcaSeleccionada === m}
-                          onChange={() => setMarcaSeleccionada(marcaSeleccionada === m ? "" : m)}
+                          checked={marcasSeleccionadas.includes(m)}
+                          onChange={() => toggleMarca(m)}
                         />{" "}
                         {m}
                       </label>
@@ -285,10 +335,24 @@ function Catalogo() {
               </div>
               {filtroPrecioAbierto && (
                 <div className="opciones-filtro-lateral">
-                  <div><label><input type="checkbox" /> Menos de $500.000</label></div>
-                  <div><label><input type="checkbox" /> $500.000 - $1.000.000</label></div>
-                  <div><label><input type="checkbox" /> $1.000.000 - $2.000.000</label></div>
-                  <div><label><input type="checkbox" /> Más de $2.000.000</label></div>
+                  {[
+                    "Menos de $500.000",
+                    "$500.000 - $1.000.000",
+                    "$1.000.000 - $2.000.000",
+                    "Más de $2.000.000"
+                  ].map(rango => (
+                    <div key={rango}>
+                      <label style={{ cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={preciosSeleccionados.includes(rango)}
+                          onChange={() => togglePrecio(rango)}
+                          style={{ marginRight: "8px" }}
+                        /> 
+                        {rango}
+                      </label>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -303,8 +367,8 @@ function Catalogo() {
               {marcasBotones.map(marca => (
                 <button 
                   key={marca}
-                  className={marcaSeleccionada === marca ? 'sn-activo' : ''}
-                  style={marcaSeleccionada === marca ? { background: '#84b814', color: '#fff' } : {}}
+                  className={marcasSeleccionadas.includes(marca) ? 'sn-activo' : ''}
+                  style={marcasSeleccionadas.includes(marca) ? { background: '#84b814', color: '#fff' } : {}}
                   onClick={() => toggleMarca(marca)}
                 >
                   {marca}
