@@ -180,8 +180,8 @@ function Usuario() {
 
   const menuItems = [
     { id: "mi-perfil", texto: "Mi Perfil", icono: "fa-user" },
-    { id: "mis-compras", texto: "Mis compras", icono: "fa-box-open" },
     { id: "datos-envio", texto: "Datos de Envío y Contacto", icono: "fa-address-card" },
+    { id: "mis-compras", texto: "Mis compras", icono: "fa-box-open" },
   ];
 
   return (
