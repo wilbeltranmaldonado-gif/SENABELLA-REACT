@@ -209,6 +209,35 @@ export default function Header() {
     return () => window.removeEventListener("senabella-favoritos-actualizado", actualizarFavoritos);
   }, []);
 
+  useEffect(() => {
+    const actualizarUbicacion = () => {
+      let ubicacionGuardada = localStorage.getItem("ubicacion");
+      try {
+        const user = JSON.parse(localStorage.getItem("senabella_usuario"));
+        if (user && user.ciudad) {
+          ubicacionGuardada = user.ciudad;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      if (ubicacionGuardada) {
+        setUbicacion(ubicacionGuardada);
+      } else {
+        setUbicacion("Ciudad");
+      }
+    };
+
+    actualizarUbicacion();
+    window.addEventListener("storage", actualizarUbicacion);
+    window.addEventListener("senabella_ubicacion_actualizada", actualizarUbicacion);
+    window.addEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
+    return () => {
+      window.removeEventListener("storage", actualizarUbicacion);
+      window.removeEventListener("senabella_ubicacion_actualizada", actualizarUbicacion);
+      window.removeEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
+    };
+  }, []);
+
   // ------------------------------------------
   // Escuchar actualizaciones del carrito
   // ------------------------------------------
@@ -216,22 +245,6 @@ export default function Header() {
     const actualizar = () => setCantidadCarrito(window.SenabellaCart.obtenerTotalCantidad());
     window.addEventListener(EVENTO_CARRITO_ACTUALIZADO, actualizar);
     return () => window.removeEventListener(EVENTO_CARRITO_ACTUALIZADO, actualizar);
-  }, []);
-
-  // ------------------------------------------
-  // Escuchar actualizaciones de ubicación (desde checkout/perfil)
-  // ------------------------------------------
-  useEffect(() => {
-    const actualizarUbicacion = () => {
-      const nuevaUbicacion = localStorage.getItem("ubicacion");
-      if (nuevaUbicacion) {
-        setUbicacion(nuevaUbicacion);
-      } else {
-        setUbicacion("Ciudad");
-      }
-    };
-    window.addEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
-    return () => window.removeEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
   }, []);
 
   // ------------------------------------------
@@ -284,6 +297,32 @@ export default function Header() {
     setUbicacion(ciudad);
     localStorage.setItem("ubicacion", ciudad);
     setMenuUbicacionAbierto(false);
+
+    // Actualizar también en el perfil activo del usuario si está iniciada la sesión
+    try {
+      const user = JSON.parse(localStorage.getItem("senabella_usuario"));
+      if (user && typeof user === "object") {
+        const userActualizado = { ...user, ciudad };
+        localStorage.setItem("senabella_usuario", JSON.stringify(userActualizado));
+
+        // Actualizar en base de datos persistente de usuarios
+        const usuariosBD = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+        const emailActual = (user.email || user.correo || "").toLowerCase();
+        const idx = usuariosBD.findIndex((u) => (u.correo || u.email || "").toLowerCase() === emailActual);
+        if (idx !== -1) {
+          usuariosBD[idx] = { ...usuariosBD[idx], ciudad };
+          localStorage.setItem("senabella_usuarios", JSON.stringify(usuariosBD));
+        }
+      }
+    } catch (e) {
+      console.warn("Error al sincronizar ciudad desde el header con el perfil:", e);
+    }
+
+    // Disparar eventos reactivos bidireccionales
+    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new Event("senabella_ubicacion_actualizada"));
+    window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
+    window.dispatchEvent(new Event("senabella_orders_updated"));
   };
 
   // ------------------------------------------

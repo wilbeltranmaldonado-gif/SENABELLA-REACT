@@ -197,6 +197,36 @@
   box-shadow: 0 0 0 3px rgba(132, 184, 20, 0.15);
 }
 
+.usuario-select {
+  cursor: pointer;
+  appearance: auto;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.usuario-select optgroup {
+  font-weight: 700;
+  color: #475569;
+  background-color: #f1f5f9;
+}
+
+.usuario-select option {
+  font-weight: 400;
+  color: #0f172a;
+  background-color: #ffffff;
+  padding: 4px 8px;
+}
+
+body.modo-oscuro .usuario-select optgroup {
+  background-color: #1e293b;
+  color: #94a3b8;
+}
+
+body.modo-oscuro .usuario-select option {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
 .usuario-input-readonly {
   background-color: #f8fafc;
   color: #64748b;

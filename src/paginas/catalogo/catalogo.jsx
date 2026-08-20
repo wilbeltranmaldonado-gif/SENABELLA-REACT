@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import "./catalogo.css";
+<<<<<<< Updated upstream
 import { Link, useLocation, useSearchParams } from "react-router-dom";
+=======
+import { Link, useSearchParams } from "react-router-dom";
+>>>>>>> Stashed changes
 import {
   categoriasCirculares,
   productosIniciales,
@@ -83,6 +87,11 @@ function Catalogo() {
     const prodCat = (prod.categoria || prod.etiqueta || "").toLowerCase();
     const prodNombre = prod.nombre.toLowerCase();
     const prodMarca = (prod.marca || "").toLowerCase();
+<<<<<<< Updated upstream
+=======
+
+    // Búsqueda
+>>>>>>> Stashed changes
     const textoProducto = [prod.nombre, prod.marca, prod.categoria, prod.referencia]
       .filter(Boolean)
       .join(" ")
