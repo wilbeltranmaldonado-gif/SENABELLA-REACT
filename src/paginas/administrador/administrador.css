@@ -98,10 +98,9 @@
 }
 
 .admin-sidebar-logo img {
-  width: 28px;
-  height: 28px;
+  width: 140px;
+  height: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1);
   display: block;
 }
 
@@ -358,6 +357,11 @@
   background-color: #ffffff;
   color: var(--admin-danger);
   border: 2px solid var(--primary-color);
+}
+
+.admin-dropdown-item.no-leido {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid #3b82f6;
 }
 
 .admin-icono-boton {

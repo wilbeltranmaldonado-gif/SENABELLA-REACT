@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Encabezado from "./componentes/encabezado/encabezado";
 import PieDePagina from "./componentes/pie_de_pagina/pie_de_pagina";
@@ -14,9 +14,12 @@ import Login from "./paginas/login/login";
 import Usuario from "./paginas/usuario/usuario";
 
 function App() {
+    const location = useLocation();
+    const esRutaAdministrador = location.pathname === "/administrador";
+
     return (
         <>
-            <Encabezado />
+            {!esRutaAdministrador && <Encabezado />}
 
             <Routes>
                 <Route path="/" element={<Inicio />} />
@@ -31,7 +34,7 @@ function App() {
                 <Route path="/usuario" element={<Usuario />} />
             </Routes>
 
-            <PieDePagina />
+            {!esRutaAdministrador && <PieDePagina />}
         </>
     );
 }

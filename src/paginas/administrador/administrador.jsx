@@ -19,6 +19,12 @@ function Administrador() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
   const [contadorNotificaciones, setContadorNotificaciones] = useState(3);
+  const [modoOscuro, setModoOscuro] = useState(false);
+  const [notificacionesLeidas, setNotificacionesLeidas] = useState({
+    stockBajo: false,
+    pedidoNuevo: false,
+    reseñaNueva: false
+  });
   
   const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
@@ -172,8 +178,7 @@ function Administrador() {
         ref={sidebarRef}
       >
         <div className="admin-sidebar-logo">
-          <img src="../assets/logo.png" alt="Senabella" onError={(e) => { e.target.style.display = 'none'; }} />
-          <span>Admin</span>
+          <img src="../src/assets/logo.png" alt="Senabella" style={{ width: "140px", height: "auto" }} onError={(e) => { e.target.style.display = 'none'; }} />
         </div>
 
         <nav className="admin-nav">
@@ -246,12 +251,13 @@ function Administrador() {
                 <div className="admin-dropdown-titulo">Notificaciones</div>
                 <a 
                   href="#" 
-                  className="admin-dropdown-item"
+                  className={`admin-dropdown-item${!notificacionesLeidas.stockBajo ? " no-leido" : ""}`}
                   onClick={(e) => {
                     e.preventDefault();
                     if (contadorNotificaciones > 0) {
                       setContadorNotificaciones(contadorNotificaciones - 1);
                     }
+                    setNotificacionesLeidas(prev => ({ ...prev, stockBajo: true }));
                   }}
                 >
                   <i className="fa-solid fa-triangle-exclamation texto-warning"></i>
@@ -262,12 +268,13 @@ function Administrador() {
                 </a>
                 <a 
                   href="#" 
-                  className="admin-dropdown-item"
+                  className={`admin-dropdown-item${!notificacionesLeidas.pedidoNuevo ? " no-leido" : ""}`}
                   onClick={(e) => {
                     e.preventDefault();
                     if (contadorNotificaciones > 0) {
                       setContadorNotificaciones(contadorNotificaciones - 1);
                     }
+                    setNotificacionesLeidas(prev => ({ ...prev, pedidoNuevo: true }));
                   }}
                 >
                   <i className="fa-solid fa-cart-shopping texto-info"></i>
@@ -278,12 +285,13 @@ function Administrador() {
                 </a>
                 <a 
                   href="#" 
-                  className="admin-dropdown-item"
+                  className={`admin-dropdown-item${!notificacionesLeidas.reseñaNueva ? " no-leido" : ""}`}
                   onClick={(e) => {
                     e.preventDefault();
                     if (contadorNotificaciones > 0) {
                       setContadorNotificaciones(contadorNotificaciones - 1);
                     }
+                    setNotificacionesLeidas(prev => ({ ...prev, reseñaNueva: true }));
                   }}
                 >
                   <i className="fa-solid fa-star texto-success"></i>
