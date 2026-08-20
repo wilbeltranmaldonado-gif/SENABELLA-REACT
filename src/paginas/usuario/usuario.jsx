@@ -14,6 +14,7 @@ function Usuario() {
   });
   const [mensajePerfil, setMensajePerfil] = useState({ texto: "", tipo: "" });
   const [mensajeEnvio, setMensajeEnvio] = useState({ texto: "", tipo: "" });
+  const [modalLogoutAbierto, setModalLogoutAbierto] = useState(false);
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,13 +52,13 @@ function Usuario() {
     };
   }, [navigate]);
 
-  const handleLogout = () => {
-    if (window.confirm("¿Seguro que quieres cerrar sesión?")) {
-      localStorage.removeItem("senabella_sesion");
-      localStorage.removeItem("senabella_rol");
-      navigate("/");
-      setTimeout(() => window.location.reload(), 100);
-    }
+  const confirmarCerrarSesion = () => {
+    localStorage.removeItem("senabella_sesion");
+    localStorage.removeItem("senabella_rol");
+    localStorage.removeItem("senabella_usuario");
+    localStorage.removeItem("recordar_sesion");
+    navigate("/");
+    setTimeout(() => window.location.reload(), 100);
   };
 
   const guardarPerfil = (e) => {
@@ -163,7 +164,7 @@ function Usuario() {
               <i className="fa-solid fa-chevron-right"></i>
             </button>
           ))}
-          <button className="elemento-menu elemento-menu-logout" onClick={handleLogout}>
+          <button className="elemento-menu elemento-menu-logout" onClick={() => setModalLogoutAbierto(true)}>
             <div className="elemento-menu-izquierda">
               <i className="fa-solid fa-power-off"></i>
               <span>Cerrar sesión</span>
@@ -352,6 +353,101 @@ function Usuario() {
           )}
         </main>
       </div>
+
+      {/* MODAL DE CONFIRMACIÓN DE CIERRE DE SESIÓN */}
+      {modalLogoutAbierto && (
+        <div 
+          className="admin-modal-overlay" 
+          onClick={() => setModalLogoutAbierto(false)}
+          style={{ 
+            position: "fixed", 
+            top: 0, 
+            left: 0, 
+            width: "100%", 
+            height: "100%", 
+            background: "rgba(15, 23, 42, 0.6)", 
+            backdropFilter: "blur(4px)", 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center", 
+            zIndex: 99999 
+          }}
+        >
+          <div 
+            className="usuario-modal-confirmacion" 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ 
+              maxWidth: "420px", 
+              width: "90%", 
+              borderRadius: "16px", 
+              background: "#ffffff", 
+              textAlign: "center", 
+              padding: "28px 24px", 
+              boxShadow: "0 20px 40px rgba(0,0,0,0.25)" 
+            }}
+          >
+            <div style={{ width: "56px", height: "56px", borderRadius: "50%", background: "#fee2e2", color: "#dc2626", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px auto", fontSize: "24px" }}>
+              <i className="fa-solid fa-power-off"></i>
+            </div>
+
+            <h3 style={{ margin: "0 0 8px 0", fontSize: "19px", color: "#0f172a", fontWeight: 700 }}>
+              ¿Cerrar tu sesión?
+            </h3>
+            
+            <p style={{ margin: "0 0 24px 0", fontSize: "14px", color: "#64748b", lineHeight: "1.5" }}>
+              Tendrás que volver a iniciar sesión para acceder a tu historial de compras y datos de envío.
+            </p>
+
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
+              <button 
+                type="button" 
+                onClick={() => setModalLogoutAbierto(false)}
+                style={{ 
+                  flex: 1, 
+                  padding: "10px 16px", 
+                  borderRadius: "8px", 
+                  border: "1px solid #cbd5e1", 
+                  background: "#f8fafc", 
+                  color: "#334155", 
+                  fontWeight: 600, 
+                  fontSize: "14px", 
+                  cursor: "pointer", 
+                  display: "inline-flex", 
+                  alignItems: "center", 
+                  justifyContent: "center", 
+                  gap: "8px",
+                  transition: "all 0.2s ease" 
+                }}
+              >
+                <i className="fa-solid fa-xmark"></i> Cancelar
+              </button>
+              <button 
+                type="button" 
+                onClick={confirmarCerrarSesion}
+                style={{ 
+                  flex: 1, 
+                  padding: "10px 16px", 
+                  borderRadius: "8px", 
+                  border: "none", 
+                  background: "linear-gradient(135deg, #ef4444, #dc2626)", 
+                  color: "#ffffff", 
+                  fontWeight: 700, 
+                  fontSize: "14px", 
+                  cursor: "pointer", 
+                  display: "inline-flex", 
+                  alignItems: "center", 
+                  justifyContent: "center", 
+                  gap: "8px",
+                  boxShadow: "0 4px 12px rgba(220, 38, 38, 0.3)",
+                  transition: "all 0.2s ease" 
+                }}
+              >
+                <i className="fa-solid fa-arrow-right-from-bracket"></i> Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
