@@ -1,3 +1,5 @@
+// Este modal permite editar la información de un cliente desde el administrador.
+
 import { useState } from "react";
 
 function ModalEditarCliente({ cliente, alCerrar, alGuardar }) {

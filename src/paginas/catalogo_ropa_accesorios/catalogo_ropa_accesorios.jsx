@@ -1,3 +1,5 @@
+// Esta vista muestra el catálogo de ropa, accesorios y moda.
+
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import "./catalogo_ropa_accesorios.css";

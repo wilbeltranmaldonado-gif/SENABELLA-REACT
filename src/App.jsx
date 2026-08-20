@@ -1,3 +1,5 @@
+// Este archivo define la estructura general de la app y organiza las rutas principales de la tienda.
+
 import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 

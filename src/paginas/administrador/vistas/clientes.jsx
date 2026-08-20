@@ -1,3 +1,5 @@
+// Esta vista muestra la información de clientes y su relación con los pedidos.
+
 import { useState, useEffect, useMemo } from "react";
 import { obtenerUsuarios, actualizarUsuario } from "../../../utils/usuariosBd";
 import ModalEditarCliente from "./modalEditarCliente";

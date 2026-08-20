@@ -1,3 +1,5 @@
+// Este archivo crea el panel de administración con una vista general del negocio.
+
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { obtenerPedidosAdmin } from "../../datos";

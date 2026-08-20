@@ -1,3 +1,5 @@
+// Esta vista administra el stock, precios y catalogación de productos.
+
 import { useState } from "react";
 import { productosIniciales, productosRopaAccesorios } from "../../../datos";
 

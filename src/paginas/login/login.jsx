@@ -1,3 +1,5 @@
+// Este componente permite iniciar sesión en la tienda con validaciones básicas.
+
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { validarLogin } from "../../utils/usuariosBd";

@@ -1,3 +1,5 @@
+// Este archivo inicializa la aplicación y monta el router principal en el DOM.
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";

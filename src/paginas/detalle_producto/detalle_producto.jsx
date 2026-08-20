@@ -1,3 +1,5 @@
+// Esta vista muestra la información detallada de un producto seleccionado.
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../../css/detalle_producto.css";

@@ -1,3 +1,5 @@
+// Este archivo gestiona la base de datos local de usuarios y la autenticación del sistema.
+
 const CLAVE_BD = "senabella_usuarios";
 const CORREO_ADMIN = "admin@senabella.com";
 

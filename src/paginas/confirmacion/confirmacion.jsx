@@ -1,3 +1,5 @@
+// Esta vista muestra la confirmación final después de una compra exitosa.
+
 import { Link } from "react-router-dom";
 import "./confirmacion.css";
 

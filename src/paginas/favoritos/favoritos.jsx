@@ -1,3 +1,5 @@
+// Este componente administra la lista de productos favoritos del usuario.
+
 import { useState, useEffect } from "react";
 import "./favoritos.css";
 import { Link } from "react-router-dom";

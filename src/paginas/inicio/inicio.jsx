@@ -1,3 +1,5 @@
+// Esta vista presenta la página de inicio con promociones, categorías y productos destacados.
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./inicio.css";

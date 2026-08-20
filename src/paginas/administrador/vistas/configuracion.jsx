@@ -1,3 +1,5 @@
+// Esta vista permite ajustar la configuración general de la tienda.
+
 import { useState, useEffect } from "react";
 
 function Configuracion() {

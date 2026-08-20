@@ -1,3 +1,5 @@
+// Esta vista ofrece ayuda, dudas frecuentes y soporte al cliente.
+
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./soporte.css";
@@ -191,7 +193,7 @@ function Soporte() {
               type="text"
               id="busqueda-soporte"
               placeholder="Buscar artículos, guías o ayuda..."
-              autocomplete="off"
+              autoComplete="off"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               onKeyUp={handleBusquedaKeyUp}

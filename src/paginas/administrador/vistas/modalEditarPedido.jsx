@@ -1,3 +1,5 @@
+// Este modal facilita la edición del estado o detalles de un pedido.
+
 import { useState, useRef } from "react";
 
 function ModalEditarPedido({ pedido, alCerrar, alGuardar, alEliminar }) {

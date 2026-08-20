@@ -1,3 +1,5 @@
+// Este componente muestra el pie de página con información útil y enlaces del sitio.
+
 import { Link } from "react-router-dom";
 import "./pie_de_pagina.css";
 

@@ -1,3 +1,5 @@
+// Este componente agrega el botón para volver al inicio de la página.
+
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./boton_subir.css";

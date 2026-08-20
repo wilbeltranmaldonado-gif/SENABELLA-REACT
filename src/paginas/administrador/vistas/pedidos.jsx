@@ -1,3 +1,5 @@
+// Esta vista lista y gestiona los pedidos recibidos por la tienda.
+
 import { useEffect, useState, useMemo } from "react";
 import { obtenerPedidosAdmin, pedidosDemo } from "../../../datos";
 import ModalEditarPedido from "./modalEditarPedido";

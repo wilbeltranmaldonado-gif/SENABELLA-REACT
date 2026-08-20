@@ -1,3 +1,5 @@
+// Esta vista presenta el catálogo principal de productos tecnológicos.
+
 import { useState, useEffect } from "react";
 import "./catalogo.css";
 import { Link, useLocation, useSearchParams } from "react-router-dom";

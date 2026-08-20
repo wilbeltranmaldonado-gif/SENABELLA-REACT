@@ -1,3 +1,5 @@
+// Esta vista maneja la gestión de usuarios y roles del sistema.
+
 import { useState, useEffect, useMemo } from "react";
 import { obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario as borrarUsuario } from "../../../utils/usuariosBd";
 

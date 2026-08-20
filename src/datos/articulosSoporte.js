@@ -1,3 +1,5 @@
+// Este archivo contiene la información de ayuda y preguntas frecuentes del soporte.
+
 const articulosSoporte = [
   {
     id: 1,

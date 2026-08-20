@@ -1,3 +1,5 @@
+// Este componente muestra la tarjeta exclusiva para estudiantes del SENA y su formulario de solicitud.
+
 import { useState, useEffect, useMemo } from "react";
 import "./tarjeta.css";
 import logoImg from "../../assets/logo.png";
@@ -16,7 +18,7 @@ function Tarjeta() {
   const [procesando, setProcesando] = useState(false);
   const [solicitudEnviada, setSolicitudEnviada] = useState(false);
 
-  // Generar datos estables para las 20 partículas del hero
+  // Creamos las partículas del fondo para darle movimiento y un aspecto más dinámico
   const particulas = useMemo(() => {
     return Array.from({ length: 20 }, (_, i) => ({
       id: i,
@@ -27,7 +29,7 @@ function Tarjeta() {
     }));
   }, []);
 
-  // Animación al hacer scroll (Intersection Observer)
+  // Cuando los elementos entran en pantalla, los mostramos con una pequeña animación
   useEffect(() => {
     const elementos = document.querySelectorAll(
       ".beneficio-tarjeta, .stat-item, .paso-item"
@@ -56,7 +58,7 @@ function Tarjeta() {
     return () => observador.disconnect();
   }, [solicitudEnviada]);
 
-  // Animación de contadores de estadísticas
+  // Animamos los números de las estadísticas cuando la sección aparece en pantalla
   useEffect(() => {
     const animarContador = (elemento, valorFinal, duracion) => {
       const esNumero = /^\d/.test(valorFinal);
@@ -107,7 +109,7 @@ function Tarjeta() {
     return () => contadorObservador.disconnect();
   }, []);
 
-  // Manejadores de cambios con validaciones
+  // Controlamos el valor que ingresa el usuario para evitar datos inválidos o demasiado largos
   const handleNombreChange = (e) => {
     const limpio = e.target.value.replace(/[0-9]/g, "").slice(0, 32);
     setFormData((prev) => ({ ...prev, nombreCompleto: limpio }));
@@ -182,7 +184,7 @@ function Tarjeta() {
 
   return (
     <main>
-      {/* HERO SECTION */}
+      {/* Sección principal con el mensaje promocional y la invitación a solicitar la tarjeta */}
       <section className="tarjetas-hero">
         <div className="hero-particulas" id="hero-particulas">
           {particulas.map((p) => (
@@ -221,7 +223,7 @@ function Tarjeta() {
         </div>
       </section>
 
-      {/* SECCIÓN BENEFICIOS */}
+      {/* Beneficios que recibe el estudiante con la tarjeta */}
       <section className="beneficios-seccion" id="beneficios">
         <div className="beneficios-contenedor">
           <h2 className="seccion-titulo">
@@ -285,7 +287,7 @@ function Tarjeta() {
         </div>
       </section>
 
-      {/* SECCIÓN VISTA PREVIA TARJETA */}
+      {/* Vista previa de la tarjeta para que el usuario vea cómo quedará */}
       <section className="preview-seccion">
         <div className="preview-contenedor">
           <h2 className="seccion-titulo">
@@ -339,7 +341,7 @@ function Tarjeta() {
             </div>
           </div>
 
-          {/* Estadísticas */}
+          {/* Indicadores del impacto y alcance de la tarjeta */}
           <div className="stats-grid">
             <div className="stat-item">
               <div className="stat-numero" id="stat-usuarios">
@@ -363,7 +365,7 @@ function Tarjeta() {
         </div>
       </section>
 
-      {/* SECCIÓN FORMULARIO */}
+      {/* Formulario para registrar la solicitud de la tarjeta del estudiante */}
       <section className="formulario-seccion" id="formulario-solicitud">
         <div className="formulario-contenedor">
           <div className="formulario-info">

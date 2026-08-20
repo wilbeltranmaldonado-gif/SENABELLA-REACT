@@ -1,3 +1,5 @@
+// Este archivo centraliza el cálculo y la gestión del inventario disponible.
+
 import { productosIniciales, productosRopaAccesorios } from "../datos";
 
 const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";

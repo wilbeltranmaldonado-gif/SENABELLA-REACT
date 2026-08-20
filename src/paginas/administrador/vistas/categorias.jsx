@@ -1,3 +1,5 @@
+// Esta vista administra la creación y edición de categorías del catálogo.
+
 import { useState } from "react";
 
 const CATEGORIAS_KEY = "senabella_categories";

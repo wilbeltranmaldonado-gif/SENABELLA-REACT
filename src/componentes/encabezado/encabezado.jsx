@@ -1,3 +1,5 @@
+// Este componente renderiza el encabezado principal, el menú y los accesos rápidos del usuario.
+
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./encabezado.css";

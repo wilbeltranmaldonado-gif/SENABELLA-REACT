@@ -1,3 +1,5 @@
+// Esta vista presenta la sección de parejas y productos recomendados para ella y él.
+
 import { useEffect, useState } from 'react';
 import './parejas.css';
 import { Link, useNavigate } from 'react-router-dom';

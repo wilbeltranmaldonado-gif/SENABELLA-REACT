@@ -1,3 +1,5 @@
+// Este componente muestra el carrito de compras con productos, total y sugerencias.
+
 import { useState, useEffect } from "react";
 import "./carrito.css";
 import { Link, useNavigate } from "react-router-dom";

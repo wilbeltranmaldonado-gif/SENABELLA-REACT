@@ -1,3 +1,5 @@
+// Esta vista organiza la información de proveedores y sus relaciones con la tienda.
+
 import { useState } from "react";
 
 const PROVEEDORES_KEY = "senabella_suppliers";

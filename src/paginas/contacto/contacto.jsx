@@ -1,3 +1,5 @@
+// Este componente renderiza el formulario de contacto del sitio.
+
 import { useState, useRef } from "react";
 import "./contacto.css";
 

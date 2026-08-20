@@ -1,3 +1,5 @@
+// Esta vista presenta reportes y métricas clave del negocio.
+
 import { useState, useEffect, useMemo } from "react";
 import { obtenerPedidosAdmin } from "../../../datos";
 

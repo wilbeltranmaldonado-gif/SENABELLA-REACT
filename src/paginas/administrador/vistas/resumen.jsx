@@ -1,3 +1,5 @@
+// Esta vista ofrece un resumen general con indicadores operativos del administrador.
+
 import { useEffect, useRef, useState, useMemo } from "react";
 import { productosIniciales, obtenerPedidosAdmin, pedidosDemo } from "../../../datos";
 import ModalEditarPedido from "./modalEditarPedido";

@@ -1,3 +1,5 @@
+// Este componente gestiona la finalización de compra y la validación del pedido.
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./checkout.css";
