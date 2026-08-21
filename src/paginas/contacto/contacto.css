@@ -28,7 +28,11 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 50% 50%, rgba(170, 209, 0, 0.12) 0%, transparent 50%);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(170, 209, 0, 0.12) 0%,
+    transparent 50%
+  );
   pointer-events: none;
 }
 
@@ -497,7 +501,10 @@
 .faq-respuesta {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.35s ease, margin 0.35s ease;
+  transition:
+    max-height 0.35s ease,
+    padding 0.35s ease,
+    margin 0.35s ease;
   font-size: 0.88rem;
   color: #666666;
   line-height: 1.6;

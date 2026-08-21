@@ -32,7 +32,7 @@ function Tarjeta() {
   // Cuando los elementos entran en pantalla, los mostramos con una pequeña animación
   useEffect(() => {
     const elementos = document.querySelectorAll(
-      ".beneficio-tarjeta, .stat-item, .paso-item"
+      ".beneficio-tarjeta, .stat-item, .paso-item",
     );
 
     const observador = new IntersectionObserver(
@@ -45,7 +45,7 @@ function Tarjeta() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     elementos.forEach((el, index) => {
@@ -101,7 +101,7 @@ function Tarjeta() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     contadorObservador.observe(statsGrid);
@@ -157,7 +157,10 @@ function Tarjeta() {
   };
 
   const handleProgramaChange = (e) => {
-    setFormData((prev) => ({ ...prev, programa: e.target.value.slice(0, 100) }));
+    setFormData((prev) => ({
+      ...prev,
+      programa: e.target.value.slice(0, 100),
+    }));
   };
 
   const handleScrollToForm = (e) => {
@@ -185,12 +188,12 @@ function Tarjeta() {
   return (
     <main>
       {/* Sección principal con el mensaje promocional y la invitación a solicitar la tarjeta */}
-      <section className="tarjetas-hero">
-        <div className="hero-particulas" id="hero-particulas">
+      <section className='tarjetas-hero'>
+        <div className='hero-particulas' id='hero-particulas'>
           {particulas.map((p) => (
             <div
               key={p.id}
-              className="hero-particula"
+              className='hero-particula'
               style={{
                 left: p.left,
                 top: p.top,
@@ -200,9 +203,9 @@ function Tarjeta() {
             />
           ))}
         </div>
-        <div className="hero-contenido">
-          <span className="hero-etiqueta">
-            <i className="fa-solid fa-id-card"></i>
+        <div className='hero-contenido'>
+          <span className='hero-etiqueta'>
+            <i className='fa-solid fa-id-card'></i>
             Exclusivo para estudiantes SENA
           </span>
           <h1>
@@ -210,60 +213,61 @@ function Tarjeta() {
           </h1>
           <p>
             Tu tarjeta exclusiva para estudiantes del SENA. Disfruta de
-            beneficios, descuentos y mucho más en todos nuestros productos en tiendas FISICAS.
+            beneficios, descuentos y mucho más en todos nuestros productos en
+            tiendas FISICAS.
           </p>
           <a
-            href="#formulario-solicitud"
-            className="hero-boton"
+            href='#formulario-solicitud'
+            className='hero-boton'
             onClick={handleScrollToForm}
           >
-            <i className="fa-solid fa-paper-plane"></i>
+            <i className='fa-solid fa-paper-plane'></i>
             Solicitar Ahora
           </a>
         </div>
       </section>
 
       {/* Beneficios que recibe el estudiante con la tarjeta */}
-      <section className="beneficios-seccion" id="beneficios">
-        <div className="beneficios-contenedor">
-          <h2 className="seccion-titulo">
+      <section className='beneficios-seccion' id='beneficios'>
+        <div className='beneficios-contenedor'>
+          <h2 className='seccion-titulo'>
             Beneficios <span>Exclusivos</span>
           </h2>
-          <p className="seccion-subtitulo">
+          <p className='seccion-subtitulo'>
             Descubre todo lo que tu Tarjeta Senabella puede hacer por ti
           </p>
 
-          <div className="beneficios-grid">
+          <div className='beneficios-grid'>
             {/* Beneficio 1 */}
-            <div className="beneficio-tarjeta">
-              <div className="beneficio-icono">
-                <i className="fa-solid fa-percent"></i>
+            <div className='beneficio-tarjeta'>
+              <div className='beneficio-icono'>
+                <i className='fa-solid fa-percent'></i>
               </div>
               <h3>Descuentos Exclusivos</h3>
               <p>
                 Hasta un 30% de descuento en marcas seleccionadas y productos
                 favoritos.
               </p>
-              <div className="beneficio-badge">Popular</div>
+              <div className='beneficio-badge'>Popular</div>
             </div>
 
             {/* Beneficio 2 */}
-            <div className="beneficio-tarjeta">
-              <div className="beneficio-icono">
-                <i className="fa-solid fa-truck-fast"></i>
+            <div className='beneficio-tarjeta'>
+              <div className='beneficio-icono'>
+                <i className='fa-solid fa-truck-fast'></i>
               </div>
               <h3>Envío Gratis</h3>
               <p>
-                Disfruta de envíos sin costo en todos los comercios aliados a nivel
-                nacional.
+                Disfruta de envíos sin costo en todos los comercios aliados a
+                nivel nacional.
               </p>
-              <div className="beneficio-badge">Nuevo</div>
+              <div className='beneficio-badge'>Nuevo</div>
             </div>
 
             {/* Beneficio 3 */}
-            <div className="beneficio-tarjeta">
-              <div className="beneficio-icono">
-                <i className="fa-solid fa-coins"></i>
+            <div className='beneficio-tarjeta'>
+              <div className='beneficio-icono'>
+                <i className='fa-solid fa-coins'></i>
               </div>
               <h3>Puntos por Compra</h3>
               <p>
@@ -273,9 +277,9 @@ function Tarjeta() {
             </div>
 
             {/* Beneficio 4 */}
-            <div className="beneficio-tarjeta">
-              <div className="beneficio-icono">
-                <i className="fa-solid fa-star"></i>
+            <div className='beneficio-tarjeta'>
+              <div className='beneficio-icono'>
+                <i className='fa-solid fa-star'></i>
               </div>
               <h3>Promociones Especiales</h3>
               <p>
@@ -288,53 +292,53 @@ function Tarjeta() {
       </section>
 
       {/* Vista previa de la tarjeta para que el usuario vea cómo quedará */}
-      <section className="preview-seccion">
-        <div className="preview-contenedor">
-          <h2 className="seccion-titulo">
+      <section className='preview-seccion'>
+        <div className='preview-contenedor'>
+          <h2 className='seccion-titulo'>
             Tu Tarjeta <span>Digital</span>
           </h2>
-          <p className="seccion-subtitulo">
+          <p className='seccion-subtitulo'>
             Lleva tus beneficios a donde quieras
           </p>
 
-          <div className="tarjeta-preview-wrapper">
-            <div className="tarjeta-fisica" id="tarjeta-fisica">
+          <div className='tarjeta-preview-wrapper'>
+            <div className='tarjeta-fisica' id='tarjeta-fisica'>
               {/* Decoraciones */}
-              <div className="tarjeta-circulo tarjeta-circulo-1"></div>
-              <div className="tarjeta-circulo tarjeta-circulo-2"></div>
-              <div className="tarjeta-circulo tarjeta-circulo-3"></div>
+              <div className='tarjeta-circulo tarjeta-circulo-1'></div>
+              <div className='tarjeta-circulo tarjeta-circulo-2'></div>
+              <div className='tarjeta-circulo tarjeta-circulo-3'></div>
 
               {/* Contenido de la tarjeta */}
-              <div className="tarjeta-header">
-                <div className="tarjeta-logo">
-                  <img src={logoImg} alt="Senabella" height="30" />
+              <div className='tarjeta-header'>
+                <div className='tarjeta-logo'>
+                  <img src={logoImg} alt='Senabella' height='30' />
                 </div>
-                <div className="tarjeta-tipo">
-                  <i className="fa-solid fa-wifi"></i>
+                <div className='tarjeta-tipo'>
+                  <i className='fa-solid fa-wifi'></i>
                 </div>
               </div>
 
-              <div className="tarjeta-chip">
-                <i className="fa-solid fa-microchip"></i>
+              <div className='tarjeta-chip'>
+                <i className='fa-solid fa-microchip'></i>
               </div>
 
-              <div className="tarjeta-numero">
+              <div className='tarjeta-numero'>
                 **** &nbsp; **** &nbsp; **** &nbsp; 4281
               </div>
 
-              <div className="tarjeta-footer">
-                <div className="tarjeta-titular">
-                  <span className="tarjeta-label">TITULAR</span>
-                  <span className="tarjeta-valor" id="preview-nombre">
+              <div className='tarjeta-footer'>
+                <div className='tarjeta-titular'>
+                  <span className='tarjeta-label'>TITULAR</span>
+                  <span className='tarjeta-valor' id='preview-nombre'>
                     {nombrePreview}
                   </span>
                 </div>
-                <div className="tarjeta-vencimiento">
-                  <span className="tarjeta-label">VENCE</span>
-                  <span className="tarjeta-valor">12/28</span>
+                <div className='tarjeta-vencimiento'>
+                  <span className='tarjeta-label'>VENCE</span>
+                  <span className='tarjeta-valor'>12/28</span>
                 </div>
-                <div className="tarjeta-marca">
-                  <i className="fa-solid fa-graduation-cap"></i>
+                <div className='tarjeta-marca'>
+                  <i className='fa-solid fa-graduation-cap'></i>
                   SENA
                 </div>
               </div>
@@ -342,59 +346,59 @@ function Tarjeta() {
           </div>
 
           {/* Indicadores del impacto y alcance de la tarjeta */}
-          <div className="stats-grid">
-            <div className="stat-item">
-              <div className="stat-numero" id="stat-usuarios">
+          <div className='stats-grid'>
+            <div className='stat-item'>
+              <div className='stat-numero' id='stat-usuarios'>
                 5,000+
               </div>
-              <div className="stat-texto">Estudiantes activos</div>
+              <div className='stat-texto'>Estudiantes activos</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-numero">150+</div>
-              <div className="stat-texto">Comercios aliados</div>
+            <div className='stat-item'>
+              <div className='stat-numero'>150+</div>
+              <div className='stat-texto'>Comercios aliados</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-numero">30%</div>
-              <div className="stat-texto">Descuento máximo</div>
+            <div className='stat-item'>
+              <div className='stat-numero'>30%</div>
+              <div className='stat-texto'>Descuento máximo</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-numero">24/7</div>
-              <div className="stat-texto">Soporte disponible</div>
+            <div className='stat-item'>
+              <div className='stat-numero'>24/7</div>
+              <div className='stat-texto'>Soporte disponible</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Formulario para registrar la solicitud de la tarjeta del estudiante */}
-      <section className="formulario-seccion" id="formulario-solicitud">
-        <div className="formulario-contenedor">
-          <div className="formulario-info">
-            <h2 className="seccion-titulo texto-blanco">
+      <section className='formulario-seccion' id='formulario-solicitud'>
+        <div className='formulario-contenedor'>
+          <div className='formulario-info'>
+            <h2 className='seccion-titulo texto-blanco'>
               Solicita tu <span>Tarjeta</span>
             </h2>
-            <p className="seccion-subtitulo texto-blanco-opaco">
+            <p className='seccion-subtitulo texto-blanco-opaco'>
               Completa el formulario y recibe tu tarjeta en tu centro de
               formación.
             </p>
 
-            <div className="pasos-lista">
-              <div className="paso-item">
-                <div className="paso-numero">1</div>
-                <div className="paso-texto">
+            <div className='pasos-lista'>
+              <div className='paso-item'>
+                <div className='paso-numero'>1</div>
+                <div className='paso-texto'>
                   <strong>Completa tus datos</strong>
                   <span>Llena el formulario con tu información personal</span>
                 </div>
               </div>
-              <div className="paso-item">
-                <div className="paso-numero">2</div>
-                <div className="paso-texto">
+              <div className='paso-item'>
+                <div className='paso-numero'>2</div>
+                <div className='paso-texto'>
                   <strong>Verificación</strong>
                   <span>Validaremos tu matrícula con el SENA</span>
                 </div>
               </div>
-              <div className="paso-item">
-                <div className="paso-numero">3</div>
-                <div className="paso-texto">
+              <div className='paso-item'>
+                <div className='paso-numero'>3</div>
+                <div className='paso-texto'>
                   <strong>Recibe tu tarjeta</strong>
                   <span>Recógela en tu centro de formación</span>
                 </div>
@@ -402,35 +406,35 @@ function Tarjeta() {
             </div>
           </div>
 
-          <div className="formulario-card">
+          <div className='formulario-card'>
             {!solicitudEnviada ? (
-              <form id="formulario-tarjeta" onSubmit={handleSubmit}>
-                <div className="grupo-fila">
-                  <div className="grupo-campo">
-                    <label htmlFor="nombre-completo">
-                      <i className="fa-solid fa-user"></i>
+              <form id='formulario-tarjeta' onSubmit={handleSubmit}>
+                <div className='grupo-fila'>
+                  <div className='grupo-campo'>
+                    <label htmlFor='nombre-completo'>
+                      <i className='fa-solid fa-user'></i>
                       Nombre completo
                     </label>
                     <input
-                      type="text"
-                      id="nombre-completo"
-                      placeholder="Ej: Juan Pérez García"
+                      type='text'
+                      id='nombre-completo'
+                      placeholder='Ej: Juan Pérez García'
                       maxLength={32}
                       value={formData.nombreCompleto}
                       onChange={handleNombreChange}
                       required
                     />
                   </div>
-                  <div className="grupo-campo">
-                    <label htmlFor="documento">
-                      <i className="fa-solid fa-id-card"></i>
+                  <div className='grupo-campo'>
+                    <label htmlFor='documento'>
+                      <i className='fa-solid fa-id-card'></i>
                       Número de documento
                     </label>
                     <input
-                      type="text"
-                      id="documento"
-                      placeholder="Ej: 1234567890"
-                      inputMode="numeric"
+                      type='text'
+                      id='documento'
+                      placeholder='Ej: 1234567890'
+                      inputMode='numeric'
                       maxLength={28}
                       value={formData.documento}
                       onChange={handleDocumentoChange}
@@ -439,31 +443,31 @@ function Tarjeta() {
                   </div>
                 </div>
 
-                <div className="grupo-fila">
-                  <div className="grupo-campo">
-                    <label htmlFor="correo">
-                      <i className="fa-solid fa-envelope"></i>
+                <div className='grupo-fila'>
+                  <div className='grupo-campo'>
+                    <label htmlFor='correo'>
+                      <i className='fa-solid fa-envelope'></i>
                       Correo electrónico
                     </label>
                     <input
-                      type="email"
-                      id="correo"
-                      placeholder="Ej: juan@ejemplo.com"
+                      type='email'
+                      id='correo'
+                      placeholder='Ej: juan@ejemplo.com'
                       maxLength={50}
                       value={formData.correo}
                       onChange={handleCorreoChange}
                       required
                     />
                   </div>
-                  <div className="grupo-campo">
-                    <label htmlFor="telefono">
-                      <i className="fa-solid fa-phone"></i>
+                  <div className='grupo-campo'>
+                    <label htmlFor='telefono'>
+                      <i className='fa-solid fa-phone'></i>
                       Teléfono
                     </label>
                     <input
-                      type="tel"
-                      id="telefono"
-                      placeholder="Ej: 300 123 4567"
+                      type='tel'
+                      id='telefono'
+                      placeholder='Ej: 300 123 4567'
                       maxLength={15}
                       value={formData.telefono}
                       onChange={handleTelefonoChange}
@@ -474,15 +478,15 @@ function Tarjeta() {
                   </div>
                 </div>
 
-                <div className="grupo-campo">
-                  <label htmlFor="programa">
-                    <i className="fa-solid fa-book"></i>
+                <div className='grupo-campo'>
+                  <label htmlFor='programa'>
+                    <i className='fa-solid fa-book'></i>
                     Programa de formación SENA
                   </label>
                   <input
-                    type="text"
-                    id="programa"
-                    placeholder="Ej: Tecnólogo en Análisis y Desarrollo de Software"
+                    type='text'
+                    id='programa'
+                    placeholder='Ej: Tecnólogo en Análisis y Desarrollo de Software'
                     maxLength={100}
                     value={formData.programa}
                     onChange={handleProgramaChange}
@@ -490,51 +494,54 @@ function Tarjeta() {
                   />
                 </div>
 
-                <div className="grupo-campo">
-                  <label htmlFor="centro">
-                    <i className="fa-solid fa-building"></i>
+                <div className='grupo-campo'>
+                  <label htmlFor='centro'>
+                    <i className='fa-solid fa-building'></i>
                     Centro de formación
                   </label>
                   <select
-                    id="centro"
+                    id='centro'
                     value={formData.centro}
                     onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, centro: e.target.value }))
+                      setFormData((prev) => ({
+                        ...prev,
+                        centro: e.target.value,
+                      }))
                     }
                     required
                   >
-                    <option value="">Selecciona tu centro...</option>
-                    <option value="servicios-financieros">
+                    <option value=''>Selecciona tu centro...</option>
+                    <option value='servicios-financieros'>
                       Centro de Servicios Financieros
                     </option>
-                    <option value="gestion-mercados">
+                    <option value='gestion-mercados'>
                       Centro de Gestión de Mercados
                     </option>
-                    <option value="tecnologias-transporte">
+                    <option value='tecnologias-transporte'>
                       Centro de Tecnologías del Transporte
                     </option>
-                    <option value="gestion-industrial">
+                    <option value='gestion-industrial'>
                       Centro de Gestión Industrial
                     </option>
-                    <option value="electricidad-electronica">
+                    <option value='electricidad-electronica'>
                       Centro de Electricidad, Electrónica y Telecomunicaciones
                     </option>
-                    <option value="manufactura-textil">
+                    <option value='manufactura-textil'>
                       Centro de Manufactura en Textil y Cuero
                     </option>
-                    <option value="servicios-salud">
+                    <option value='servicios-salud'>
                       Centro de Formación en Servicios de Salud
                     </option>
-                    <option value="gestion-administrativa">
+                    <option value='gestion-administrativa'>
                       Centro de Gestión Administrativa
                     </option>
                   </select>
                 </div>
 
-                <div className="formulario-check">
+                <div className='formulario-check'>
                   <input
-                    type="checkbox"
-                    id="terminos"
+                    type='checkbox'
+                    id='terminos'
                     checked={formData.terminos}
                     onChange={(e) =>
                       setFormData((prev) => ({
@@ -544,34 +551,35 @@ function Tarjeta() {
                     }
                     required
                   />
-                  <label htmlFor="terminos">
-                    Acepto los <a href="#!">términos y condiciones</a> y la{" "}
-                    <a href="#!">política de privacidad</a>
+                  <label htmlFor='terminos'>
+                    Acepto los <a href='#!'>términos y condiciones</a> y la{" "}
+                    <a href='#!'>política de privacidad</a>
                   </label>
                 </div>
 
                 <button
-                  type="submit"
-                  className="boton-solicitar"
-                  id="boton-solicitar"
+                  type='submit'
+                  className='boton-solicitar'
+                  id='boton-solicitar'
                   disabled={procesando}
                 >
                   {procesando ? (
                     <>
-                      <i className="fa-solid fa-spinner fa-spin"></i> Procesando...
+                      <i className='fa-solid fa-spinner fa-spin'></i>{" "}
+                      Procesando...
                     </>
                   ) : (
                     <>
-                      <i className="fa-solid fa-paper-plane"></i> Solicitar mi
+                      <i className='fa-solid fa-paper-plane'></i> Solicitar mi
                       tarjeta
                     </>
                   )}
                 </button>
               </form>
             ) : (
-              <div className="mensaje-exito mostrar" id="mensaje-exito">
-                <div className="exito-icono">
-                  <i className="fa-solid fa-circle-check"></i>
+              <div className='mensaje-exito mostrar' id='mensaje-exito'>
+                <div className='exito-icono'>
+                  <i className='fa-solid fa-circle-check'></i>
                 </div>
                 <h4>¡Solicitud enviada exitosamente!</h4>
                 <p>

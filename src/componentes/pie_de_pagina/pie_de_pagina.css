@@ -9,13 +9,13 @@
 }
 
 .pie-pagina-superior {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 30px 20px;
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    flex-wrap: wrap;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
 }
 
 .pie-pagina-superior h3 {

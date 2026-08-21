@@ -3,7 +3,6 @@
    React + React Router
    ========================================================= */
 
-
 /* =========================================================
    VARIABLES
    ========================================================= */
@@ -30,7 +29,6 @@
   --hover-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
-
 /* =========================================================
    CONTENEDOR PRINCIPAL
    ========================================================= */
@@ -40,18 +38,12 @@ main.container {
   width: 96%;
 }
 
-
 /* =========================================================
    BANNER DE OFERTAS
    ========================================================= */
 
 .banner-oferta {
-  background: linear-gradient(
-    135deg,
-    #1a1a2e 0%,
-    #16213e 40%,
-    #0f3460 100%
-  );
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
 
   border-radius: 16px;
   padding: 28px 36px;
@@ -104,11 +96,7 @@ main.container {
 .badge-oferta {
   display: inline-block;
 
-  background: linear-gradient(
-    135deg,
-    #aad100,
-    #84b814
-  );
+  background: linear-gradient(135deg, #aad100, #84b814);
 
   color: #1a1a2e;
   padding: 4px 12px;
@@ -120,7 +108,6 @@ main.container {
 
   margin-bottom: 8px;
 }
-
 
 /* =========================================================
    CATEGORÍAS
@@ -159,11 +146,7 @@ main.container {
 
   transform: translateY(-4px);
 
-  background: linear-gradient(
-    135deg,
-    #f0ffd0,
-    #fff
-  );
+  background: linear-gradient(135deg, #f0ffd0, #fff);
 }
 
 .categorias-inicio img {
@@ -172,7 +155,6 @@ main.container {
   width: 100%;
   object-fit: contain;
 }
-
 
 /* =========================================================
    CARRUSEL
@@ -187,8 +169,7 @@ main.container {
   border-radius: 20px;
   overflow: hidden;
 
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .carousel-item {
@@ -241,7 +222,6 @@ main.container {
   height: 40px;
 }
 
-
 /* =========================================================
    BARRA DE PROGRESO DEL CARRUSEL
    ========================================================= */
@@ -270,7 +250,6 @@ main.container {
   }
 }
 
-
 /* =========================================================
    PRODUCTOS
    ========================================================= */
@@ -293,8 +272,7 @@ main.container {
 .card:hover {
   transform: translateY(-6px);
 
-  box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
 }
 
 .card-img-top {
@@ -331,11 +309,7 @@ main.container {
   top: 12px;
   left: 12px;
 
-  background: linear-gradient(
-    135deg,
-    #e74c3c,
-    #c0392b
-  );
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
 
   color: #fff;
 
@@ -350,15 +324,10 @@ main.container {
 }
 
 .card-badge.badge-nuevo {
-  background: linear-gradient(
-    135deg,
-    #aad100,
-    #84b814
-  );
+  background: linear-gradient(135deg, #aad100, #84b814);
 
   color: #1a1a2e;
 }
-
 
 /* =========================================================
    MODAL
@@ -410,12 +379,9 @@ main.container {
 
   transform: translateY(30px) scale(0.95);
 
-  transition:
-    transform 0.35s
-    cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
 }
 
 .modal-visible .modal-contenido {
@@ -629,26 +595,17 @@ main.container {
 .modal-btn-carrito {
   border: none;
 
-  background: linear-gradient(
-    135deg,
-    #aad100,
-    #84b814
-  );
+  background: linear-gradient(135deg, #aad100, #84b814);
 
   color: #1a1a2e;
 }
 
 .modal-btn-carrito:hover {
-  background: linear-gradient(
-    135deg,
-    #96b800,
-    #7aa010
-  );
+  background: linear-gradient(135deg, #96b800, #7aa010);
 
   transform: translateY(-2px);
 
-  box-shadow:
-    0 4px 12px rgba(132, 184, 20, 0.35);
+  box-shadow: 0 4px 12px rgba(132, 184, 20, 0.35);
 }
 
 .modal-btn-comprar {
@@ -691,10 +648,6 @@ main.container {
   color: #27ae60;
 }
 
-
-
-
-
 /* =========================================================
    VOLVER ARRIBA
    ========================================================= */
@@ -712,11 +665,7 @@ main.container {
 
   border: none;
 
-  background: linear-gradient(
-    135deg,
-    #aad100,
-    #84b814
-  );
+  background: linear-gradient(135deg, #aad100, #84b814);
 
   color: #1a1a2e;
 
@@ -724,8 +673,7 @@ main.container {
 
   cursor: pointer;
 
-  box-shadow:
-    0 4px 16px rgba(132, 184, 20, 0.35);
+  box-shadow: 0 4px 16px rgba(132, 184, 20, 0.35);
 
   opacity: 0;
 
@@ -755,10 +703,8 @@ main.container {
 #btn-volver-arriba:hover {
   transform: translateY(-4px);
 
-  box-shadow:
-    0 8px 24px rgba(132, 184, 20, 0.5);
+  box-shadow: 0 8px 24px rgba(132, 184, 20, 0.5);
 }
-
 
 /* =========================================================
    ANIMACIONES
@@ -796,7 +742,6 @@ main.container {
   transform: translateY(0);
 }
 
-
 /* =========================================================
    PROMOCIONES
    ========================================================= */
@@ -828,8 +773,7 @@ main.container {
 
   border-radius: 18px;
 
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 
   transition: all 0.3s ease;
 
@@ -844,18 +788,12 @@ main.container {
   filter: brightness(0.92);
 }
 
-
 /* =========================================================
    MODO OSCURO
    ========================================================= */
 
 body.modo-oscuro .banner-oferta {
-  background: linear-gradient(
-    135deg,
-    #0a0a12 0%,
-    #0e1526 40%,
-    #0a2240 100%
-  );
+  background: linear-gradient(135deg, #0a0a12 0%, #0e1526 40%, #0a2240 100%);
 }
 
 body.modo-oscuro .hover-shadow {
@@ -927,14 +865,11 @@ body.modo-oscuro .modal-beneficios div {
   color: #999;
 }
 
-
-
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
 @media (max-width: 992px) {
-
   .carousel-item img {
     height: 420px;
   }
@@ -942,12 +877,9 @@ body.modo-oscuro .modal-beneficios div {
   .promo-img {
     height: 40vh;
   }
-
 }
 
-
 @media (max-width: 768px) {
-
   main.container {
     width: 94%;
   }
@@ -995,17 +927,13 @@ body.modo-oscuro .modal-beneficios div {
     flex-direction: column;
   }
 
-
   #btn-volver-arriba {
     right: 20px;
     bottom: 20px;
   }
-
 }
 
-
 @media (max-width: 576px) {
-
   .banner-oferta {
     padding: 20px;
   }
@@ -1047,8 +975,8 @@ body.modo-oscuro .modal-beneficios div {
   .modal-beneficios {
     gap: 8px;
   }
-
-}.btn-agregar-carrito {
+}
+.btn-agregar-carrito {
   width: 100%;
   background: linear-gradient(135deg, #aad100, #84b814);
   color: #1a1a2e;
