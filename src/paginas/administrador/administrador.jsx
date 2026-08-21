@@ -230,9 +230,6 @@ function Administrador() {
   const cambiarVista = (vista) => {
     setVistaActual(vista);
     setSidebarAbierto(false); // Cerramos el sidebar en móvil al cambiar
-  const cambiarVista = (vista) => {
-    setVistaActual(vista);
-    setSidebarAbierto(false); // Cerramos el sidebar en móvil al cambiar
   };
 
   // Estado para el modal emergente de cerrar sesión
