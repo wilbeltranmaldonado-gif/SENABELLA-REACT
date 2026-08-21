@@ -3,7 +3,7 @@ body.modo-oscuro {
   background-color: #121212 !important;
   color: #f1f1f1 !important;
 }
-
+/*Algo*/
 /* Botón flotante para alternar modo oscuro en Login / Registro */
 .btn-modo-oscuro-flotante {
   position: absolute;
