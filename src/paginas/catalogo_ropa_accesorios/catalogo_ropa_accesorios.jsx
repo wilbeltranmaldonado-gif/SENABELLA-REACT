@@ -10,7 +10,7 @@ import {
   productosRopaAccesorios,
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
-import { cumpleBusquedaInteligente } from "../../utils/search";
+import { cumpleBusquedaInteligente } from "../../utilidades/busqueda";
 
 function CatalogoRopaAccesorios() {
   const [searchParams] = useSearchParams();

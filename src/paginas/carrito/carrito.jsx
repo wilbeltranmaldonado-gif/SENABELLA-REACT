@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import "./carrito.css";
 import { Link, useNavigate } from "react-router-dom";
 import { productosIniciales, productosRopaAccesorios } from "../../datos";
-import { obtenerStockDeProducto } from "../../utils/stock";
+import { obtenerStockDeProducto } from "../../utilidades/inventario";
 
 function Carrito() {
   const navigate = useNavigate();

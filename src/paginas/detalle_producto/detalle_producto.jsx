@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./detalle_producto.css";
 import { productosIniciales, productosRopaAccesorios } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
-import { obtenerStockDeProducto } from "../../utils/stock";
+import { obtenerStockDeProducto } from "../../utilidades/inventario";
 import imagenFallback from "../../assets/teclado.webp";
 
 const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";

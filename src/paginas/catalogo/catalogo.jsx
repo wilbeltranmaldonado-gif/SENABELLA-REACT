@@ -10,7 +10,7 @@ import {
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 import imagenFallback from "../../assets/teclado.webp";
-import { cumpleBusquedaInteligente } from "../../utils/search";
+import { cumpleBusquedaInteligente } from "../../utilidades/busqueda";
 
 const usarImagenFallback = (evento) => {
   if (evento.currentTarget.src !== imagenFallback) {

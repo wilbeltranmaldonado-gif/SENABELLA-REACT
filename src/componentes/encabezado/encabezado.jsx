@@ -5,8 +5,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./encabezado.css";
 import { ENLACES_MENU_MOVIL } from "../../datos";
 import { iniciarFavoritosGlobal } from "../../paginas/favoritos/favoritos";
-import { obtenerStockDeProducto } from "../../utils/stock";
-import { esBusquedaDeRopa } from "../../utils/search";
+import { obtenerStockDeProducto } from "../../utilidades/inventario";
+import { esBusquedaDeRopa } from "../../utilidades/busqueda";
 
 const EVENTO_CARRITO_ACTUALIZADO = "senabella-cart-actualizado";
 
