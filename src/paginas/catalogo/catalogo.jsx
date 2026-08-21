@@ -48,7 +48,13 @@ function Catalogo() {
   const [filtroMarcaAbierto, setFiltroMarcaAbierto] = useState(true);
   const [filtroPrecioAbierto, setFiltroPrecioAbierto] = useState(true);
 
+  const [actualizarFavs, setActualizarFavs] = useState(0);
+
   useEffect(() => {
+    iniciarFavoritosGlobal();
+    const actualizarFav = () => setActualizarFavs(prev => prev + 1);
+    window.addEventListener("senabella-favoritos-actualizado", actualizarFav);
+
     const actualizarProductos = () => {
       try {
         const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
@@ -59,7 +65,10 @@ function Catalogo() {
     };
     actualizarProductos();
     window.addEventListener("storage", actualizarProductos);
-    return () => window.removeEventListener("storage", actualizarProductos);
+    return () => {
+      window.removeEventListener("storage", actualizarProductos);
+      window.removeEventListener("senabella-favoritos-actualizado", actualizarFav);
+    };
   }, []);
 
   const productosAdministrados = productosAdmin.map((producto) => ({
@@ -159,9 +168,6 @@ function Catalogo() {
       precioSecundario: prod.precioSecundario,
       promocion: prod.promocion,
     });
-    e.target.classList.toggle("fa-solid", esFav);
-    e.target.classList.toggle("fa-regular", !esFav);
-    e.target.style.color = esFav ? "#e63946" : "";
     if (window.SenabellaToast) {
       window.SenabellaToast(
         esFav ? "Agregado a favoritos" : "Eliminado de favoritos",
@@ -427,7 +433,11 @@ function Catalogo() {
                   {prod.referencia} {prod.verificado && <i className="fa-solid fa-check-circle"></i>}
                 </div>
                 
-                <i className="fa-regular fa-heart favorite-btn" onClick={(e) => agregarFavorito(e, prod)} style={{ cursor: 'pointer' }}></i>
+                <i 
+                  className={`fa-heart favorite-btn ${window.SenabellaFavoritos?.esFavorito(prod.nombre) ? 'fa-solid' : 'fa-regular'}`} 
+                  onClick={(e) => agregarFavorito(e, prod)} 
+                  style={{ cursor: 'pointer', color: window.SenabellaFavoritos?.esFavorito(prod.nombre) ? '#e63946' : '' }}
+                ></i>
                 
                 <div>
                   <div className="metodo">

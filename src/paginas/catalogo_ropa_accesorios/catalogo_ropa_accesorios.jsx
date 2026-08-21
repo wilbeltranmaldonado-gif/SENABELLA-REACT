@@ -34,10 +34,17 @@ function CatalogoRopaAccesorios() {
   const [filtroDescuentosAbierto, setFiltroDescuentosAbierto] = useState(false);
 
   // Sincronizar parámetro de búsqueda de la URL
+  const [actualizarFavs, setActualizarFavs] = useState(0);
   useEffect(() => {
+    iniciarFavoritosGlobal();
+    const actualizarFav = () => setActualizarFavs(prev => prev + 1);
+    window.addEventListener("senabella-favoritos-actualizado", actualizarFav);
+    
     if (queryCat) {
       setCategoriasSeleccionadas([queryCat.toLowerCase()]);
     }
+    
+    return () => window.removeEventListener("senabella-favoritos-actualizado", actualizarFav);
   }, [queryCat]);
 
   // Filtrado reactivo de productos
@@ -181,10 +188,6 @@ function CatalogoRopaAccesorios() {
       precioSecundario: prod.precioSecundario,
       precioSecundario1: prod.precioSecundario1
     });
-
-    e.target.classList.toggle("fa-solid", esFav);
-    e.target.classList.toggle("fa-regular", !esFav);
-    e.target.style.color = esFav ? "#e63946" : "";
 
     if (window.SenabellaToast) {
       window.SenabellaToast(
@@ -544,9 +547,9 @@ function CatalogoRopaAccesorios() {
                   {prod.referencia || "Por SENABELLA MODA"}
                 </div>
                 <i
-                  className="fa-regular fa-heart favorite-btn"
+                  className={`fa-heart favorite-btn ${window.SenabellaFavoritos?.esFavorito(prod.nombre) ? 'fa-solid' : 'fa-regular'}`}
                   onClick={(e) => handleFavorito(e, prod)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer', color: window.SenabellaFavoritos?.esFavorito(prod.nombre) ? '#e63946' : '' }}
                 ></i>
                 <div>
                   <div className="metodo">

@@ -46,8 +46,14 @@ function Inicio() {
 
  
 
+  const [actualizarFavs, setActualizarFavs] = useState(0);
+
   useEffect(() => {
     iniciarFavoritosGlobal(); // Inicializar favoritos globales al montar
+    
+    const actualizar = () => setActualizarFavs(prev => prev + 1);
+    window.addEventListener("senabella-favoritos-actualizado", actualizar);
+
     const manejarScroll = () => {
       setMostrarArriba(window.scrollY > 400);
     };
@@ -56,6 +62,7 @@ function Inicio() {
 
     return () => {
       window.removeEventListener("scroll", manejarScroll);
+      window.removeEventListener("senabella-favoritos-actualizado", actualizar);
       document.body.style.overflow = "";
     };
   }, []);
@@ -318,7 +325,8 @@ function Inicio() {
 
                   <div className="card-body position-relative d-flex flex-column justify-content-between">
                     <i 
-                      className="fa-regular fa-heart favorite-btn"
+                      className={`fa-heart favorite-btn ${window.SenabellaFavoritos?.esFavorito(producto.nombre) ? 'fa-solid' : 'fa-regular'}`}
+                      style={{ color: window.SenabellaFavoritos?.esFavorito(producto.nombre) ? '#e63946' : '' }}
                       onClick={(e) => {
                         e.stopPropagation();
                         // Inicializar y usar el sistema global de favoritos
@@ -337,9 +345,6 @@ function Inicio() {
                           esFav ? "Agregado a favoritos" : "Eliminado de favoritos",
                           "exito"
                         );
-                        e.currentTarget.classList.toggle('fa-regular');
-                        e.currentTarget.classList.toggle('fa-solid');
-                        e.currentTarget.style.color = e.currentTarget.classList.contains('fa-solid') ? '#e63946' : '';
                       }}
                       title="Agregar a Favoritos"
                     ></i>
