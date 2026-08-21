@@ -25,8 +25,12 @@ function Clientes() {
   const cargarDatos = () => {
     try {
       // Filtramos únicamente a los clientes (excluimos a los administradores)
-      const u = obtenerUsuarios().filter((usuario) => usuario.rol !== "administrador");
-      const p = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
+      const u = obtenerUsuarios().filter(
+        (usuario) => usuario.rol !== "administrador",
+      );
+      const p = JSON.parse(
+        localStorage.getItem("senabella_admin_orders") || "[]",
+      );
       setUsuariosRaw(u);
       setPedidosRaw(p);
     } catch {
@@ -48,14 +52,24 @@ function Clientes() {
 
   const clientes = useMemo(() => {
     return usuariosRaw.map((usuario) => {
-      const emailUsuario = (usuario.correo || usuario.email || "").toLowerCase();
+      const emailUsuario = (
+        usuario.correo ||
+        usuario.email ||
+        ""
+      ).toLowerCase();
       const ordenes = pedidosRaw.filter((pedido) => {
-        const emailPedido = (pedido.cliente?.email || pedido.email || "").toLowerCase();
+        const emailPedido = (
+          pedido.cliente?.email ||
+          pedido.email ||
+          ""
+        ).toLowerCase();
         return emailPedido && emailPedido === emailUsuario;
       });
 
       const total = ordenes.reduce((suma, pedido) => {
-        return suma + (Number(String(pedido.total || "").replace(/[^\d]/g, "")) || 0);
+        return (
+          suma + (Number(String(pedido.total || "").replace(/[^\d]/g, "")) || 0)
+        );
       }, 0);
 
       return {
@@ -65,7 +79,7 @@ function Clientes() {
         ciudad: usuario.ciudad || "No especificada",
         direccion: usuario.direccion || "No especificada",
         pedidos: ordenes.length,
-        totalGastado: `$ ${total.toLocaleString("es-CO")}`
+        totalGastado: `$ ${total.toLocaleString("es-CO")}`,
       };
     });
   }, [usuariosRaw, pedidosRaw]);
@@ -73,12 +87,23 @@ function Clientes() {
   const clientesFiltrados = useMemo(() => {
     const q = busqueda.trim().toLowerCase();
     if (!q) return clientes;
-    return clientes.filter((cliente) =>
-      String(cliente.nombre || "").toLowerCase().includes(q) ||
-      String(cliente.email || "").toLowerCase().includes(q) ||
-      String(cliente.telefono || "").toLowerCase().includes(q) ||
-      String(cliente.ciudad || "").toLowerCase().includes(q) ||
-      String(cliente.id || "").toLowerCase().includes(q)
+    return clientes.filter(
+      (cliente) =>
+        String(cliente.nombre || "")
+          .toLowerCase()
+          .includes(q) ||
+        String(cliente.email || "")
+          .toLowerCase()
+          .includes(q) ||
+        String(cliente.telefono || "")
+          .toLowerCase()
+          .includes(q) ||
+        String(cliente.ciudad || "")
+          .toLowerCase()
+          .includes(q) ||
+        String(cliente.id || "")
+          .toLowerCase()
+          .includes(q),
     );
   }, [clientes, busqueda]);
 
@@ -90,13 +115,19 @@ function Clientes() {
       celular: clienteActualizado.celular,
       ciudad: clienteActualizado.ciudad,
       direccion: clienteActualizado.direccion,
-      estado: clienteActualizado.estado
+      estado: clienteActualizado.estado,
     });
 
     // 2. Sincronizar nombre/contacto en las órdenes de compra asociadas
     try {
-      const pedidos = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
-      const emailAntiguo = (clienteSeleccionado?.email || clienteSeleccionado?.correo || "").toLowerCase();
+      const pedidos = JSON.parse(
+        localStorage.getItem("senabella_admin_orders") || "[]",
+      );
+      const emailAntiguo = (
+        clienteSeleccionado?.email ||
+        clienteSeleccionado?.correo ||
+        ""
+      ).toLowerCase();
       const pedidosActualizados = pedidos.map((p) => {
         const emailPed = (p.cliente?.email || p.email || "").toLowerCase();
         if (emailPed === emailAntiguo) {
@@ -109,13 +140,16 @@ function Clientes() {
               email: clienteActualizado.correo,
               telefono: clienteActualizado.celular,
               ciudad: clienteActualizado.ciudad,
-              direccion: clienteActualizado.direccion
-            }
+              direccion: clienteActualizado.direccion,
+            },
           };
         }
         return p;
       });
-      localStorage.setItem("senabella_admin_orders", JSON.stringify(pedidosActualizados));
+      localStorage.setItem(
+        "senabella_admin_orders",
+        JSON.stringify(pedidosActualizados),
+      );
     } catch (e) {
       console.warn("Error al sincronizar órdenes con el cliente:", e);
     }
@@ -127,16 +161,20 @@ function Clientes() {
     setClienteSeleccionado(null);
 
     if (window.SenabellaToast) {
-      window.SenabellaToast("Datos del cliente guardados con éxito", "fa-user-check", "exito");
+      window.SenabellaToast(
+        "Datos del cliente guardados con éxito",
+        "fa-user-check",
+        "exito",
+      );
     }
   };
 
   return (
-    <div className="vista-clientes">
+    <div className='vista-clientes'>
       {/* CABECERA */}
-      <div className="admin-cabecera-vista">
+      <div className='admin-cabecera-vista'>
         <div>
-          <h2 className="admin-seccion-titulo" style={{ margin: "0 0 4px 0" }}>
+          <h2 className='admin-seccion-titulo' style={{ margin: "0 0 4px 0" }}>
             Gestión de Clientes
           </h2>
           <span style={{ fontSize: "12px", color: "#64748b" }}>
@@ -144,21 +182,21 @@ function Clientes() {
           </span>
         </div>
 
-        <div className="admin-filtros">
+        <div className='admin-filtros'>
           <input
-            type="text"
-            placeholder="Buscar por nombre, email o ciudad..."
+            type='text'
+            placeholder='Buscar por nombre, email o ciudad...'
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
-            className="admin-input-busqueda"
+            className='admin-input-busqueda'
             style={{ width: "260px" }}
           />
         </div>
       </div>
 
       {/* TABLA DE CLIENTES */}
-      <div className="admin-tabla-contenedor">
-        <table className="admin-tabla">
+      <div className='admin-tabla-contenedor'>
+        <table className='admin-tabla'>
           <thead>
             <tr>
               <th style={{ width: "60px" }}>ID</th>
@@ -175,11 +213,34 @@ function Clientes() {
           <tbody>
             {clientesFiltrados.map((cliente) => (
               <tr key={cliente.id}>
-                <td><strong>#{cliente.id}</strong></td>
                 <td>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "linear-gradient(135deg, #84b814, #65900c)", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "12px" }}>
-                      {String(cliente.nombre || "C").charAt(0).toUpperCase()}
+                  <strong>#{cliente.id}</strong>
+                </td>
+                <td>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "50%",
+                        background: "linear-gradient(135deg, #84b814, #65900c)",
+                        color: "#ffffff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: 700,
+                        fontSize: "12px",
+                      }}
+                    >
+                      {String(cliente.nombre || "C")
+                        .charAt(0)
+                        .toUpperCase()}
                     </div>
                     <strong>{cliente.nombre}</strong>
                   </div>
@@ -188,27 +249,41 @@ function Clientes() {
                 <td>{cliente.telefono}</td>
                 <td>{cliente.ciudad}</td>
                 <td style={{ textAlign: "center" }}>
-                  <span className="admin-badge" style={{ fontSize: "11px", background: "#eff6ff", color: "#2563eb", fontWeight: 700 }}>
-                    {cliente.pedidos} {cliente.pedidos === 1 ? "orden" : "órdenes"}
+                  <span
+                    className='admin-badge'
+                    style={{
+                      fontSize: "11px",
+                      background: "#eff6ff",
+                      color: "#2563eb",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {cliente.pedidos}{" "}
+                    {cliente.pedidos === 1 ? "orden" : "órdenes"}
                   </span>
                 </td>
-                <td style={{ color: "#16a34a", fontWeight: 700 }}>{cliente.totalGastado}</td>
+                <td style={{ color: "#16a34a", fontWeight: 700 }}>
+                  {cliente.totalGastado}
+                </td>
                 <td>{cliente.fechaRegistro || "-"}</td>
                 <td>
-                  <div className="admin-acciones-tabla" style={{ justifyContent: "center" }}>
-                    <button 
-                      className="admin-boton-icono" 
-                      title="Editar datos del cliente" 
+                  <div
+                    className='admin-acciones-tabla'
+                    style={{ justifyContent: "center" }}
+                  >
+                    <button
+                      className='admin-boton-icono'
+                      title='Editar datos del cliente'
                       onClick={() => setClienteSeleccionado(cliente)}
                     >
-                      <i className="fa-solid fa-pen-to-square"></i>
+                      <i className='fa-solid fa-pen-to-square'></i>
                     </button>
-                    <button 
-                      className="admin-boton-icono" 
-                      title="Ver detalles comerciales" 
+                    <button
+                      className='admin-boton-icono'
+                      title='Ver detalles comerciales'
                       onClick={() => setClienteSeleccionado(cliente)}
                     >
-                      <i className="fa-solid fa-eye"></i>
+                      <i className='fa-solid fa-eye'></i>
                     </button>
                   </div>
                 </td>
@@ -219,8 +294,11 @@ function Clientes() {
       </div>
 
       {clientesFiltrados.length === 0 && (
-        <div className="admin-vacio">
-          <i className="fa-solid fa-users" style={{ fontSize: "32px", color: "#94a3b8", marginBottom: "10px" }}></i>
+        <div className='admin-vacio'>
+          <i
+            className='fa-solid fa-users'
+            style={{ fontSize: "32px", color: "#94a3b8", marginBottom: "10px" }}
+          ></i>
           <p>No se encontraron clientes registrados con ese criterio.</p>
         </div>
       )}

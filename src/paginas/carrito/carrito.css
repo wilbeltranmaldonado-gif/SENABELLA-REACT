@@ -1,4 +1,3 @@
-
 /* Contenedor principal de la vista del carrito con sus respectivos productos*/
 .contenedor-carrito {
   max-width: 1250px;
@@ -133,7 +132,7 @@
 }
 
 /* Selector numérico de cantidad */
-.selector-cantidad{
+.selector-cantidad {
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
@@ -141,15 +140,13 @@
   overflow: hidden;
 }
 
-.selector-cantidad p{
+.selector-cantidad p {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 12px;
   width: 30px;
 }
-
-
 
 .selector-cantidad button {
   background: transparent;
@@ -163,7 +160,6 @@
   font-size: 10px;
   color: #333;
 }
-
 
 /* Contenedor de la garantía extendida */
 .caja-garantia {

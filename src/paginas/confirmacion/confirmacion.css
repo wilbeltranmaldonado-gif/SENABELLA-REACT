@@ -50,9 +50,18 @@
 
 /* Animación de pulsación */
 @keyframes pulsoExito {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(132, 184, 20, 0.4); }
-  70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(132, 184, 20, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(132, 184, 20, 0); }
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(132, 184, 20, 0.4);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px rgba(132, 184, 20, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(132, 184, 20, 0);
+  }
 }
 
 .icono-exito-wrapper {
@@ -212,11 +221,11 @@ body.modo-oscuro .btn-ver-mis-compras:hover {
   .detalle-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .acciones-confirmacion {
     flex-direction: column;
   }
-  
+
   .tarjeta-confirmacion {
     padding: 40px 20px;
   }

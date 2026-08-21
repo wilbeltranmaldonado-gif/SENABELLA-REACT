@@ -1,8 +1,10 @@
 /* HERO BANNER */
 .parejas-hero {
   min-height: 72vh;
-  background: linear-gradient(135deg, rgba(45, 24, 33, 0.65), rgba(90, 20, 50, 0.45)),
-    url("https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+  background:
+    linear-gradient(135deg, rgba(45, 24, 33, 0.65), rgba(90, 20, 50, 0.45)),
+    url("https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80")
+      center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,7 +278,11 @@
   right: -10%;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(170, 209, 0, 0.12) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(170, 209, 0, 0.12) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
   pointer-events: none;
 }
@@ -295,7 +301,6 @@
 }
 
 @keyframes heartbeat {
-
   0%,
   100% {
     transform: scale(1);

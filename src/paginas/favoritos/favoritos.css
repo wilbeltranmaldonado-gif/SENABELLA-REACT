@@ -185,7 +185,9 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   overflow: hidden;
 }
 
@@ -319,9 +321,15 @@
   font-weight: bold;
 }
 
-.fav-unica  { background-color: #e60000; }
-.fav-cmr    { background-color: #00a650; }
-.fav-debito { background-color: #333; }
+.fav-unica {
+  background-color: #e60000;
+}
+.fav-cmr {
+  background-color: #00a650;
+}
+.fav-debito {
+  background-color: #333;
+}
 
 /* Precio */
 .fav-precio {
@@ -406,7 +414,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .fav-sugerencia-tarjeta:hover {
@@ -639,5 +649,3 @@ body.modo-oscuro .fav-sugerencia-btn-carrito {
   background: linear-gradient(135deg, #aad100, #84b814) !important;
   color: #111 !important;
 }
-
-

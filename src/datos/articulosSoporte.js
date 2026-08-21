@@ -6,7 +6,15 @@ const articulosSoporte = [
     titulo: "¿Cómo realizar seguimiento a mi pedido en tiempo real?",
     tiempo: "2 min",
     cat: "Mis Pedidos",
-    keywords: ["pedidos", "pedido", "rastreo", "guia", "seguimiento", "donde esta mi pedido", "estado"],
+    keywords: [
+      "pedidos",
+      "pedido",
+      "rastreo",
+      "guia",
+      "seguimiento",
+      "donde esta mi pedido",
+      "estado",
+    ],
     contenido: `
       <h4>Seguimiento paso a paso</h4>
       <p>Puedes rastrear el estado de tu compra fácilmente siguiendo estos pasos:</p>
@@ -19,10 +27,18 @@ const articulosSoporte = [
   },
   {
     id: 2,
-    titulo: "¿Puedo modificar o cambiar los productos de un pedido ya realizado?",
+    titulo:
+      "¿Puedo modificar o cambiar los productos de un pedido ya realizado?",
     tiempo: "2 min",
     cat: "Mis Pedidos",
-    keywords: ["pedidos", "pedido", "modificar", "cambiar", "cancelar", "editar"],
+    keywords: [
+      "pedidos",
+      "pedido",
+      "modificar",
+      "cambiar",
+      "cancelar",
+      "editar",
+    ],
     contenido: `
       <h4>Modificación de pedidos</h4>
       <p>Una vez confirmado el pedido, nuestro centro de distribución inicia la preparación inmediatamente.</p>
@@ -33,7 +49,14 @@ const articulosSoporte = [
     titulo: "¿Qué hago si mi pedido aparece entregado pero no lo he recibido?",
     tiempo: "3 min",
     cat: "Mis Pedidos",
-    keywords: ["pedidos", "pedido", "entregado", "no recibido", "perdido", "novedad"],
+    keywords: [
+      "pedidos",
+      "pedido",
+      "entregado",
+      "no recibido",
+      "perdido",
+      "novedad",
+    ],
     contenido: `
       <h4>Verificación de entrega</h4>
       <p>Si la guía de transporte figura como entregada pero no tienes tu paquete:</p>
@@ -48,7 +71,17 @@ const articulosSoporte = [
     titulo: "Tiempos y costos de envío a nivel nacional",
     tiempo: "2 min",
     cat: "Envíos y Entregas",
-    keywords: ["envíos y entregas", "envios", "envio", "entregas", "entrega", "costo", "tarifa", "tiempo", "cobertura"],
+    keywords: [
+      "envíos y entregas",
+      "envios",
+      "envio",
+      "entregas",
+      "entrega",
+      "costo",
+      "tarifa",
+      "tiempo",
+      "cobertura",
+    ],
     contenido: `
       <h4>Tiempos estimados de entrega</h4>
       <ul>
@@ -63,7 +96,15 @@ const articulosSoporte = [
     titulo: "¿Cómo funciona el servicio de Envío Express en el mismo día?",
     tiempo: "2 min",
     cat: "Envíos y Entregas",
-    keywords: ["envíos y entregas", "envios", "express", "mismo dia", "urgente", "rapido", "bogota"],
+    keywords: [
+      "envíos y entregas",
+      "envios",
+      "express",
+      "mismo dia",
+      "urgente",
+      "rapido",
+      "bogota",
+    ],
     contenido: `
       <h4>Entrega el mismo día en Bogotá</h4>
       <p>Para la ciudad de Bogotá ofrecemos entrega el mismo día si realizas tu pedido de lunes a viernes antes de las 12:00 PM.</p>
@@ -74,7 +115,13 @@ const articulosSoporte = [
     titulo: "¿Qué sucede si no me encuentro en casa al momento de la entrega?",
     tiempo: "2 min",
     cat: "Envíos y Entregas",
-    keywords: ["envíos y entregas", "ausente", "reintento", "visita", "transportadora"],
+    keywords: [
+      "envíos y entregas",
+      "ausente",
+      "reintento",
+      "visita",
+      "transportadora",
+    ],
     contenido: `
       <h4>Gestión de reintentos</h4>
       <p>La empresa de mensajería realizará hasta 3 intentos de entrega en la dirección indicada.</p>
@@ -85,7 +132,15 @@ const articulosSoporte = [
     titulo: "Pasos para gestionar una devolución o cambio de prenda",
     tiempo: "3 min",
     cat: "Cambios y Devoluciones",
-    keywords: ["cambios y devoluciones", "cambios", "devoluciones", "devolucion", "cambio", "retracto", "talla"],
+    keywords: [
+      "cambios y devoluciones",
+      "cambios",
+      "devoluciones",
+      "devolucion",
+      "cambio",
+      "retracto",
+      "talla",
+    ],
     contenido: `
       <h4>Proceso de cambio o devolución</h4>
       <p>Cuentas con <strong>30 días calendario</strong> tras la entrega para realizar cambios de productos sin uso.</p>
@@ -100,7 +155,13 @@ const articulosSoporte = [
     titulo: "¿Quién cubre los costos de envío por cambios de producto?",
     tiempo: "2 min",
     cat: "Cambios y Devoluciones",
-    keywords: ["cambios y devoluciones", "costo", "flete", "quien paga", "envio cambio"],
+    keywords: [
+      "cambios y devoluciones",
+      "costo",
+      "flete",
+      "quien paga",
+      "envio cambio",
+    ],
     contenido: `
       <h4>Política de fletes por cambio</h4>
       <p>Si la devolución es por un defecto de calidad o error en el despacho por parte de Senabella, <strong>nosotros asumimos el 100% de los fletes</strong>.</p>
@@ -111,7 +172,14 @@ const articulosSoporte = [
     titulo: "Política de reembolso de dinero y derecho de retracto",
     tiempo: "3 min",
     cat: "Cambios y Devoluciones",
-    keywords: ["cambios y devoluciones", "reembolso", "retracto", "devolucion dinero", "banco", "tarjeta"],
+    keywords: [
+      "cambios y devoluciones",
+      "reembolso",
+      "retracto",
+      "devolucion dinero",
+      "banco",
+      "tarjeta",
+    ],
     contenido: `
       <h4>Derecho de retracto legal</h4>
       <p>De acuerdo con el Estatuto del Consumidor, cuentas con 5 días hábiles siguientes a la entrega para ejercer el retracto de compra.</p>
@@ -122,7 +190,16 @@ const articulosSoporte = [
     titulo: "¿Qué hago si mi pago con tarjeta fue rechazado?",
     tiempo: "1 min",
     cat: "Pagos y Facturación",
-    keywords: ["pagos y facturación", "pagos", "facturacion", "pago", "rechazado", "tarjeta", "error", "banco"],
+    keywords: [
+      "pagos y facturación",
+      "pagos",
+      "facturacion",
+      "pago",
+      "rechazado",
+      "tarjeta",
+      "error",
+      "banco",
+    ],
     contenido: `
       <h4>Solución a pagos rechazados</h4>
       <p>Si tu pago no fue procesado exitosamente, revisa los siguientes puntos:</p>
@@ -137,7 +214,16 @@ const articulosSoporte = [
     titulo: "Medios de pago disponibles y compras a cuotas",
     tiempo: "2 min",
     cat: "Pagos y Facturación",
-    keywords: ["pagos y facturación", "medios de pago", "pse", "nequi", "addi", "efecty", "tarjeta", "cuotas"],
+    keywords: [
+      "pagos y facturación",
+      "medios de pago",
+      "pse",
+      "nequi",
+      "addi",
+      "efecty",
+      "tarjeta",
+      "cuotas",
+    ],
     contenido: `
       <h4>Métodos de pago habilitados</h4>
       <p>En Senabella disponemos de diversas opciones para tu comodidad:</p>
@@ -153,7 +239,13 @@ const articulosSoporte = [
     titulo: "¿Cómo descargar mi factura electrónica de venta?",
     tiempo: "2 min",
     cat: "Pagos y Facturación",
-    keywords: ["pagos y facturación", "factura", "factura electronica", "dian", "pdf"],
+    keywords: [
+      "pagos y facturación",
+      "factura",
+      "factura electronica",
+      "dian",
+      "pdf",
+    ],
     contenido: `
       <h4>Obtención de factura electrónica</h4>
       <p>Tras cada compra aprobada, el sistema emite automáticamente la factura electrónica validada por la DIAN.</p>
@@ -164,7 +256,16 @@ const articulosSoporte = [
     titulo: "Guía de tallas: ¿Cómo elegir la medida perfecta?",
     tiempo: "4 min",
     cat: "Mi Cuenta",
-    keywords: ["mi cuenta", "cuenta", "tallas", "medidas", "pecho", "cintura", "cadera", "guia de tallas"],
+    keywords: [
+      "mi cuenta",
+      "cuenta",
+      "tallas",
+      "medidas",
+      "pecho",
+      "cintura",
+      "cadera",
+      "guia de tallas",
+    ],
     contenido: `
       <h4>Cómo tomar tus medidas</h4>
       <p>Utiliza una cinta métrica sobre el cuerpo para obtener la medida en centímetros:</p>
@@ -180,7 +281,14 @@ const articulosSoporte = [
     titulo: "¿Cómo restablecer o cambiar la contraseña de mi cuenta?",
     tiempo: "2 min",
     cat: "Mi Cuenta",
-    keywords: ["mi cuenta", "cuenta", "contraseña", "clave", "recuperar", "olvide"],
+    keywords: [
+      "mi cuenta",
+      "cuenta",
+      "contraseña",
+      "clave",
+      "recuperar",
+      "olvide",
+    ],
     contenido: `
       <h4>Recuperación de contraseña</h4>
       <p>Para recuperar tu clave de acceso:</p>
@@ -205,7 +313,15 @@ const articulosSoporte = [
     titulo: "¿Cómo ingresar un código de descuento o Gift Card?",
     tiempo: "1 min",
     cat: "Promociones y Cupones",
-    keywords: ["promociones y cupones", "promociones", "cupones", "cupon", "descuento", "gift card", "codigo"],
+    keywords: [
+      "promociones y cupones",
+      "promociones",
+      "cupones",
+      "cupon",
+      "descuento",
+      "gift card",
+      "codigo",
+    ],
     contenido: `
       <h4>Aplicación de cupones</h4>
       <p>Durante la pantalla de resumen de pago (Checkout):</p>
@@ -220,7 +336,14 @@ const articulosSoporte = [
     titulo: "Términos y condiciones de ofertas de temporada",
     tiempo: "2 min",
     cat: "Promociones y Cupones",
-    keywords: ["promociones y cupones", "promociones", "oferta", "descuentos", "cyber", "rebajas"],
+    keywords: [
+      "promociones y cupones",
+      "promociones",
+      "oferta",
+      "descuentos",
+      "cyber",
+      "rebajas",
+    ],
     contenido: `
       <h4>Condiciones generales de promociones</h4>
       <p>Los cupones de descuento y promociones activas no son acumulables con otras promociones del sitio salvo indicación contraria.</p>
@@ -231,7 +354,15 @@ const articulosSoporte = [
     titulo: "¿Cómo tramitar una garantía por defectos de fábrica?",
     tiempo: "3 min",
     cat: "Garantías y Calidad",
-    keywords: ["garantías y calidad", "garantias", "calidad", "defecto", "costura", "reclamo", "imperfeccion"],
+    keywords: [
+      "garantías y calidad",
+      "garantias",
+      "calidad",
+      "defecto",
+      "costura",
+      "reclamo",
+      "imperfeccion",
+    ],
     contenido: `
       <h4>Solicitud de garantía</h4>
       <p>Todas las prendas Senabella poseen <strong>30 días de garantía legal</strong> contra defectos de confección o cierres.</p>
@@ -242,7 +373,15 @@ const articulosSoporte = [
     titulo: "Guía de lavado y conservación de prendas delicadas",
     tiempo: "2 min",
     cat: "Garantías y Calidad",
-    keywords: ["garantías y calidad", "garantias", "calidad", "lavado", "cuidado", "telas", "mantenimiento"],
+    keywords: [
+      "garantías y calidad",
+      "garantias",
+      "calidad",
+      "lavado",
+      "cuidado",
+      "telas",
+      "mantenimiento",
+    ],
     contenido: `
       <h4>Tips de conservación</h4>
       <ul>
@@ -256,7 +395,15 @@ const articulosSoporte = [
     titulo: "Ubicaciones y horarios de nuestras tiendas físicas",
     tiempo: "2 min",
     cat: "Tiendas Físicas",
-    keywords: ["tiendas físicas", "tiendas", "boutiques", "locales", "ubicar", "donde comprar", "horarios"],
+    keywords: [
+      "tiendas físicas",
+      "tiendas",
+      "boutiques",
+      "locales",
+      "ubicar",
+      "donde comprar",
+      "horarios",
+    ],
     contenido: `
       <h4>Boutiques Senabella en Colombia</h4>
       <p>Visita nuestras tiendas exclusivas para conocer y probar nuestras colecciones:</p>
