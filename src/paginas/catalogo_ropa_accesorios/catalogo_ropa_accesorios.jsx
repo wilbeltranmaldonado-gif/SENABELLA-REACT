@@ -14,13 +14,9 @@ import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 function CatalogoRopaAccesorios() {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryCat = searchParams.get("categoria") || "";
-  const queryBusqueda = (searchParams.get("busqueda") || "")
-    .trim()
-    .toLowerCase();
+  const queryBusqueda = (searchParams.get("busqueda") || "").trim().toLowerCase();
 
-  const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState(
-    queryCat ? [queryCat.toLowerCase()] : [],
-  );
+  const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState(queryCat ? [queryCat.toLowerCase()] : []);
   const [marcasSeleccionadas, setMarcasSeleccionadas] = useState([]);
   const [preciosSeleccionados, setPreciosSeleccionados] = useState([]);
   const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
@@ -38,10 +34,17 @@ function CatalogoRopaAccesorios() {
   const [filtroDescuentosAbierto, setFiltroDescuentosAbierto] = useState(false);
 
   // Sincronizar parámetro de búsqueda de la URL
+  const [actualizarFavs, setActualizarFavs] = useState(0);
   useEffect(() => {
+    iniciarFavoritosGlobal();
+    const actualizarFav = () => setActualizarFavs(prev => prev + 1);
+    window.addEventListener("senabella-favoritos-actualizado", actualizarFav);
+    
     if (queryCat) {
       setCategoriasSeleccionadas([queryCat.toLowerCase()]);
     }
+    
+    return () => window.removeEventListener("senabella-favoritos-actualizado", actualizarFav);
   }, [queryCat]);
 
   // Filtrado reactivo de productos
@@ -50,8 +53,8 @@ function CatalogoRopaAccesorios() {
 
     // Filtro por marca
     if (marcasSeleccionadas.length > 0) {
-      resultado = resultado.filter((p) =>
-        marcasSeleccionadas.includes(p.marca),
+      resultado = resultado.filter(
+        (p) => marcasSeleccionadas.includes(p.marca)
       );
     }
 
@@ -60,57 +63,28 @@ function CatalogoRopaAccesorios() {
       resultado = resultado.filter((p) => {
         const prodCat = (p.categoria || "").toLowerCase();
         const prodNombre = p.nombre.toLowerCase();
-
-        return categoriasSeleccionadas.some((catSel) => {
-          const catLower = catSel.toLowerCase();
-          return (
-            prodCat.includes(catLower) ||
-            prodNombre.includes(catLower) ||
-            (catLower === "mujer" &&
-              (prodCat === "mujer" ||
-                prodNombre.includes("mujer") ||
-                prodNombre.includes("femenina") ||
-                prodNombre.includes("vestido") ||
-                prodNombre.includes("falda") ||
-                prodNombre.includes("blusa"))) ||
-            (catLower === "hombre" &&
-              (prodCat === "hombre" ||
-                prodNombre.includes("hombre") ||
-                prodNombre.includes("masculina") ||
-                prodNombre.includes("camisa") ||
-                prodNombre.includes("chaqueta") ||
-                prodNombre.includes("jean"))) ||
-            (catLower === "calzado" &&
-              (prodCat === "calzado" ||
-                prodNombre.includes("tenis") ||
-                prodNombre.includes("calzado") ||
-                prodNombre.includes("running"))) ||
-            (catLower === "accesorios" &&
-              (prodCat === "accesorios" ||
-                prodNombre.includes("mochila") ||
-                prodNombre.includes("reloj") ||
-                prodNombre.includes("bufanda"))) ||
-            (catLower === "relojes" &&
-              (prodCat === "relojes" || prodNombre.includes("reloj"))) ||
-            (catLower === "belleza" &&
-              (prodCat === "belleza" || prodNombre.includes("belleza"))) ||
-            (catLower === "parejas" &&
-              (prodCat === "parejas" ||
-                prodNombre.includes("pareja") ||
-                prodNombre.includes("coordinad")))
-          );
+        
+        return categoriasSeleccionadas.some(catSel => {
+           const catLower = catSel.toLowerCase();
+           return prodCat.includes(catLower) ||
+                  prodNombre.includes(catLower) ||
+                  (catLower === "mujer" && (prodCat === "mujer" || prodNombre.includes("mujer") || prodNombre.includes("femenina") || prodNombre.includes("vestido") || prodNombre.includes("falda") || prodNombre.includes("blusa"))) ||
+                  (catLower === "hombre" && (prodCat === "hombre" || prodNombre.includes("hombre") || prodNombre.includes("masculina") || prodNombre.includes("camisa") || prodNombre.includes("chaqueta") || prodNombre.includes("jean"))) ||
+                  (catLower === "calzado" && (prodCat === "calzado" || prodNombre.includes("tenis") || prodNombre.includes("calzado") || prodNombre.includes("running"))) ||
+                  (catLower === "accesorios" && (prodCat === "accesorios" || prodNombre.includes("mochila") || prodNombre.includes("reloj") || prodNombre.includes("bufanda"))) ||
+                  (catLower === "relojes" && (prodCat === "relojes" || prodNombre.includes("reloj"))) ||
+                  (catLower === "belleza" && (prodCat === "belleza" || prodNombre.includes("belleza"))) ||
+                  (catLower === "parejas" && (prodCat === "parejas" || prodNombre.includes("pareja") || prodNombre.includes("coordinad")));
         });
       });
     }
 
     if (queryBusqueda) {
-      resultado = resultado.filter((p) =>
-        [p.nombre, p.marca, p.categoria, p.referencia]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase()
-          .includes(queryBusqueda),
-      );
+      resultado = resultado.filter((p) => [p.nombre, p.marca, p.categoria, p.referencia]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(queryBusqueda));
     }
 
     // Filtro por precio
@@ -119,8 +93,7 @@ function CatalogoRopaAccesorios() {
         const precio = p.precioNumero || 0;
         return preciosSeleccionados.some((rango) => {
           if (rango === "Menos de $100.000") return precio < 100000;
-          if (rango === "$100.000 - $200.000")
-            return precio >= 100000 && precio <= 200000;
+          if (rango === "$100.000 - $200.000") return precio >= 100000 && precio <= 200000;
           if (rango === "Más de $200.000") return precio > 200000;
           return true;
         });
@@ -129,33 +102,28 @@ function CatalogoRopaAccesorios() {
 
     // Filtro por descuento
     if (descuentosSeleccionados.length > 0) {
-      resultado = resultado.filter((p) => {
-        if (!p.descuento) return false;
-        const descVal = parseInt(p.descuento.replace(/[^0-9]/g, "")) || 0;
-        return descuentosSeleccionados.some((desc) => {
-          if (desc === "20% o más") return descVal >= 20;
-          if (desc === "30% o más") return descVal >= 30;
-          if (desc === "40% o más") return descVal >= 40;
-          return false;
-        });
-      });
+       resultado = resultado.filter((p) => {
+          if (!p.descuento) return false;
+          const descVal = parseInt(p.descuento.replace(/[^0-9]/g, '')) || 0;
+          return descuentosSeleccionados.some(desc => {
+             if (desc === "20% o más") return descVal >= 20;
+             if (desc === "30% o más") return descVal >= 30;
+             if (desc === "40% o más") return descVal >= 40;
+             return false;
+          });
+       });
     }
 
     // Filtro por talla
     if (tallasSeleccionadas.length > 0) {
-      resultado = resultado.filter((p) => {
-        const upperName = p.nombre.toUpperCase();
-        return tallasSeleccionadas.some((talla) => {
-          const regex = new RegExp(`\\b${talla}\\b`);
-          const rangeRegex = new RegExp(`\\b[A-Z]+-[A-Z]+\\b`);
-          return (
-            regex.test(upperName) ||
-            rangeRegex.test(upperName) ||
-            p.categoria === "calzado" ||
-            p.categoria === "accesorios"
-          );
-        });
-      });
+       resultado = resultado.filter((p) => {
+          const upperName = p.nombre.toUpperCase();
+          return tallasSeleccionadas.some(talla => {
+             const regex = new RegExp(`\\b${talla}\\b`);
+             const rangeRegex = new RegExp(`\\b[A-Z]+-[A-Z]+\\b`);
+             return regex.test(upperName) || rangeRegex.test(upperName) || p.categoria === 'calzado' || p.categoria === 'accesorios';
+          });
+       });
     }
 
     // Ordenamiento
@@ -166,70 +134,49 @@ function CatalogoRopaAccesorios() {
     }
 
     return resultado;
-  }, [
-    marcasSeleccionadas,
-    categoriasSeleccionadas,
-    preciosSeleccionados,
-    tallasSeleccionadas,
-    descuentosSeleccionados,
-    ordenSeleccionado,
-    queryBusqueda,
-  ]);
+  }, [marcasSeleccionadas, categoriasSeleccionadas, preciosSeleccionados, tallasSeleccionadas, descuentosSeleccionados, ordenSeleccionado, queryBusqueda]);
 
   // Paginación (12 productos por página)
   const itemsPorPagina = 12;
-  const paginasTotales =
-    Math.ceil(productosFiltrados.length / itemsPorPagina) || 1;
+  const paginasTotales = Math.ceil(productosFiltrados.length / itemsPorPagina) || 1;
   const inicioIndice = (paginaActual - 1) * itemsPorPagina;
   const productosPaginados = productosFiltrados.slice(
     inicioIndice,
-    inicioIndice + itemsPorPagina,
+    inicioIndice + itemsPorPagina
   );
 
   const toggleCategoria = (cat) => {
     const normalizada = cat.toLowerCase().replace("moda ", "");
-    setCategoriasSeleccionadas((prev) =>
-      prev.includes(normalizada)
-        ? prev.filter((c) => c !== normalizada)
-        : [...prev, normalizada],
-    );
+    setCategoriasSeleccionadas(prev => prev.includes(normalizada) ? prev.filter(c => c !== normalizada) : [...prev, normalizada]);
     setPaginaActual(1);
   };
 
   const toggleMarca = (marca) => {
-    setMarcasSeleccionadas((prev) =>
-      prev.includes(marca) ? prev.filter((m) => m !== marca) : [...prev, marca],
-    );
+    setMarcasSeleccionadas((prev) => (prev.includes(marca) ? prev.filter(m => m !== marca) : [...prev, marca]));
     setPaginaActual(1);
   };
 
   const togglePrecio = (rango) => {
-    setPreciosSeleccionados((prev) =>
-      prev.includes(rango) ? prev.filter((r) => r !== rango) : [...prev, rango],
-    );
+    setPreciosSeleccionados((prev) => (prev.includes(rango) ? prev.filter(r => r !== rango) : [...prev, rango]));
     setPaginaActual(1);
   };
 
   const toggleTalla = (talla) => {
-    setTallasSeleccionadas((prev) =>
-      prev.includes(talla) ? prev.filter((t) => t !== talla) : [...prev, talla],
-    );
+    setTallasSeleccionadas((prev) => (prev.includes(talla) ? prev.filter(t => t !== talla) : [...prev, talla]));
     setPaginaActual(1);
   };
 
   const toggleDescuento = (desc) => {
-    setDescuentosSeleccionados((prev) =>
-      prev.includes(desc) ? prev.filter((d) => d !== desc) : [...prev, desc],
-    );
+    setDescuentosSeleccionados((prev) => (prev.includes(desc) ? prev.filter(d => d !== desc) : [...prev, desc]));
     setPaginaActual(1);
   };
 
   const handleFavorito = (e, prod) => {
     e.preventDefault();
     e.stopPropagation();
-
+    
     iniciarFavoritosGlobal();
-
+    
     const esFav = window.SenabellaFavoritos.toggleFavorito({
       nombre: prod.nombre,
       marca: prod.marca || "SENABELLA",
@@ -239,18 +186,14 @@ function CatalogoRopaAccesorios() {
       etiqueta: prod.etiqueta,
       referencia: prod.referencia,
       precioSecundario: prod.precioSecundario,
-      precioSecundario1: prod.precioSecundario1,
+      precioSecundario1: prod.precioSecundario1
     });
-
-    e.target.classList.toggle("fa-solid", esFav);
-    e.target.classList.toggle("fa-regular", !esFav);
-    e.target.style.color = esFav ? "#e63946" : "";
 
     if (window.SenabellaToast) {
       window.SenabellaToast(
         esFav ? "Agregado a favoritos" : "Eliminado de favoritos",
         esFav ? "fa-heart" : "fa-heart-crack",
-        "exito",
+        "exito"
       );
     }
   };
@@ -269,31 +212,26 @@ function CatalogoRopaAccesorios() {
       window.SenabellaToast(
         `${prod.nombre.slice(0, 32)}... añadido al carrito`,
         "fa-cart-plus",
-        "exito",
+        "exito"
       );
     }
   };
 
   const abrirDetalle = (prod) => {
-    localStorage.setItem(
-      "productoSeleccionado",
-      JSON.stringify({
-        ...prod,
-        titulo: prod.nombre,
-        precioActual: prod.precio,
-        precioAntiguo: prod.precioSecundario1 || prod.precioSecundario,
-        descripcion:
-          prod.descripcion ||
-          `${prod.nombre}. Producto seleccionado de Senabella con compra segura y soporte especializado.`,
-        origen: "/catalogo-ropa-accesorios",
-      }),
-    );
+    localStorage.setItem("productoSeleccionado", JSON.stringify({
+      ...prod,
+      titulo: prod.nombre,
+      precioActual: prod.precio,
+      precioAntiguo: prod.precioSecundario1 || prod.precioSecundario,
+      descripcion: prod.descripcion || `${prod.nombre}. Producto seleccionado de Senabella con compra segura y soporte especializado.`,
+      origen: "/catalogo-ropa-accesorios",
+    }));
   };
 
   return (
-    <div className='catalogo-ropa-contenedor'>
+    <div className="catalogo-ropa-contenedor">
       {/* Categorías circulares */}
-      <section className='categorias-circulares'>
+      <section className="categorias-circulares">
         {categoriasCircularesRopa.map((cat, idx) => (
           <div
             key={idx}
@@ -302,83 +240,77 @@ function CatalogoRopaAccesorios() {
             }`}
             onClick={() => toggleCategoria(cat.categoria)}
           >
-            <div className='imagen-cat'>
+            <div className="imagen-cat">
               <img src={cat.imagen} alt={cat.titulo} />
             </div>
-            <div className='titulo-cat'>{cat.titulo}</div>
+            <div className="titulo-cat">{cat.titulo}</div>
           </div>
         ))}
       </section>
 
       {/* Contenido Principal */}
-      <main className='main'>
+      <main className="main">
         {/* Menú lateral de filtros */}
-        <aside className='menu_lateral'>
-          <div className='contenido-menu'>
-            <div className='menu-texto'>
+        <aside className="menu_lateral">
+          <div className="contenido-menu">
+            <div className="menu-texto">
               <h3>Moda</h3>
               <h2>Ropa y Accesorios</h2>
-              <div className='resultados'>
+              <div className="resultados">
                 Resultados ({productosFiltrados.length})
               </div>
             </div>
 
             {/* Filtro: Tipo de Entrega */}
-            <div className='filtro'>
+            <div className="filtro">
               <div
-                className='filtro1'
+                className="filtro1"
                 onClick={() => setFiltroEntregaAbierto(!filtroEntregaAbierto)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               >
                 Tipo de Entrega
-                <i
-                  className={`fa-solid ${filtroEntregaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}
-                ></i>
+                <i className={`fa-solid ${filtroEntregaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
               {filtroEntregaAbierto && (
                 <>
-                  <div className='opcion-domicilio'>
+                  <div className="opcion-domicilio">
                     <div>
-                      <i className='fa-solid fa-truck'></i>
+                      <i className="fa-solid fa-truck"></i>
                       Envío a domicilio
                     </div>
                     <input
-                      type='checkbox'
+                      type="checkbox"
                       checked={soloDomicilio}
                       onChange={(e) => setSoloDomicilio(e.target.checked)}
                     />
                   </div>
-                  <div className='info-entrega'>
-                    <span className='texto-gratis'>Gratis</span>
-                    <span className='texto-2'>Llega mañana</span>
+                  <div className="info-entrega">
+                    <span className="texto-gratis">Gratis</span>
+                    <span className="texto-2">Llega mañana</span>
                   </div>
                 </>
               )}
             </div>
 
             {/* Filtro: Categoría */}
-            <div className='filtro'>
+            <div className="filtro">
               <div
-                className='filtro1'
-                onClick={() =>
-                  setFiltroCategoriaAbierto(!filtroCategoriaAbierto)
-                }
-                style={{ cursor: "pointer" }}
+                className="filtro1"
+                onClick={() => setFiltroCategoriaAbierto(!filtroCategoriaAbierto)}
+                style={{ cursor: 'pointer' }}
               >
                 Categoría
-                <i
-                  className={`fa-solid ${filtroCategoriaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}
-                ></i>
+                <i className={`fa-solid ${filtroCategoriaAbierto ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
               </div>
               {filtroCategoriaAbierto && (
-                <div className='categorias-lista'>
+                <div className="categorias-lista">
                   {categoriasListaLateralRopa.map((cat, idx) => {
                     const valor = cat.toLowerCase().replace("moda ", "");
                     return (
                       <div key={idx} style={{ marginBottom: "5px" }}>
-                        <label style={{ cursor: "pointer" }}>
+                        <label style={{ cursor: 'pointer' }}>
                           <input
-                            type='checkbox'
+                            type="checkbox"
                             checked={categoriasSeleccionadas.includes(valor)}
                             onChange={() => toggleCategoria(valor)}
                             style={{ marginRight: "8px" }}
@@ -393,25 +325,27 @@ function CatalogoRopaAccesorios() {
             </div>
 
             {/* Filtro: Marca */}
-            <div className='filtro'>
+            <div className="filtro">
               <div
-                className='filtro1'
+                className="filtro1"
                 onClick={() => setFiltroMarcaAbierto(!filtroMarcaAbierto)}
               >
                 Marca
                 <i
                   className={`fa-solid ${
-                    filtroMarcaAbierto ? "fa-chevron-up" : "fa-chevron-down"
+                    filtroMarcaAbierto
+                      ? "fa-chevron-up"
+                      : "fa-chevron-down"
                   }`}
                 ></i>
               </div>
               {filtroMarcaAbierto && (
-                <div className='opciones-filtro-lateral'>
+                <div className="opciones-filtro-lateral">
                   {marcasRopa.map((m, idx) => (
                     <div key={idx}>
                       <label>
                         <input
-                          type='checkbox'
+                          type="checkbox"
                           checked={marcasSeleccionadas.includes(m)}
                           onChange={() => toggleMarca(m)}
                         />{" "}
@@ -424,30 +358,31 @@ function CatalogoRopaAccesorios() {
             </div>
 
             {/* Filtro: Talla */}
-            <div className='filtro'>
+            <div className="filtro">
               <div
-                className='filtro1'
+                className="filtro1"
                 onClick={() => setFiltroTallaAbierto(!filtroTallaAbierto)}
               >
                 Talla
                 <i
                   className={`fa-solid ${
-                    filtroTallaAbierto ? "fa-chevron-up" : "fa-chevron-down"
+                    filtroTallaAbierto
+                      ? "fa-chevron-up"
+                      : "fa-chevron-down"
                   }`}
                 ></i>
               </div>
               {filtroTallaAbierto && (
-                <div className='opciones-filtro-lateral'>
+                <div className="opciones-filtro-lateral">
                   {["XS", "S", "M", "L", "XL"].map((talla, idx) => (
                     <div key={idx}>
-                      <label style={{ cursor: "pointer" }}>
-                        <input
-                          type='checkbox'
+                      <label style={{ cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
                           checked={tallasSeleccionadas.includes(talla)}
                           onChange={() => toggleTalla(talla)}
                           style={{ marginRight: "8px" }}
-                        />{" "}
-                        {talla}
+                        /> {talla}
                       </label>
                     </div>
                   ))}
@@ -456,33 +391,35 @@ function CatalogoRopaAccesorios() {
             </div>
 
             {/* Filtro: Precio */}
-            <div className='filtro'>
+            <div className="filtro">
               <div
-                className='filtro1'
+                className="filtro1"
                 onClick={() => setFiltroPrecioAbierto(!filtroPrecioAbierto)}
               >
                 Precio
                 <i
                   className={`fa-solid ${
-                    filtroPrecioAbierto ? "fa-chevron-up" : "fa-chevron-down"
+                    filtroPrecioAbierto
+                      ? "fa-chevron-up"
+                      : "fa-chevron-down"
                   }`}
                 ></i>
               </div>
               {filtroPrecioAbierto && (
-                <div className='opciones-filtro-lateral'>
+                <div className="opciones-filtro-lateral">
                   {[
                     "Menos de $100.000",
                     "$100.000 - $200.000",
-                    "Más de $200.000",
-                  ].map((rango) => (
+                    "Más de $200.000"
+                  ].map(rango => (
                     <div key={rango}>
-                      <label style={{ cursor: "pointer" }}>
-                        <input
-                          type='checkbox'
+                      <label style={{ cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
                           checked={preciosSeleccionados.includes(rango)}
                           onChange={() => togglePrecio(rango)}
                           style={{ marginRight: "8px" }}
-                        />
+                        /> 
                         {rango}
                       </label>
                     </div>
@@ -492,9 +429,9 @@ function CatalogoRopaAccesorios() {
             </div>
 
             {/* Filtro: Descuentos */}
-            <div className='filtro'>
+            <div className="filtro">
               <div
-                className='filtro1'
+                className="filtro1"
                 onClick={() =>
                   setFiltroDescuentosAbierto(!filtroDescuentosAbierto)
                 }
@@ -509,17 +446,16 @@ function CatalogoRopaAccesorios() {
                 ></i>
               </div>
               {filtroDescuentosAbierto && (
-                <div className='opciones-filtro-lateral'>
+                <div className="opciones-filtro-lateral">
                   {["20% o más", "30% o más", "40% o más"].map((desc, idx) => (
                     <div key={idx}>
-                      <label style={{ cursor: "pointer" }}>
-                        <input
-                          type='checkbox'
+                      <label style={{ cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox" 
                           checked={descuentosSeleccionados.includes(desc)}
                           onChange={() => toggleDescuento(desc)}
                           style={{ marginRight: "8px" }}
-                        />{" "}
-                        {desc}
+                        /> {desc}
                       </label>
                     </div>
                   ))}
@@ -530,13 +466,13 @@ function CatalogoRopaAccesorios() {
         </aside>
 
         {/* Sección Productos y Marcas */}
-        <section className='marca'>
+        <section className="marca">
           {/* Botones de Marca */}
-          <div className='filtro-marca'>
-            <span className='titulo-marca'>
+          <div className="filtro-marca">
+            <span className="titulo-marca">
               Filtrar por <strong>Marca</strong>
             </span>
-            <div className='botones'>
+            <div className="botones">
               {marcasRopa.map((m, idx) => (
                 <button
                   key={idx}
@@ -550,94 +486,100 @@ function CatalogoRopaAccesorios() {
           </div>
 
           {/* Ordenamiento y Paginación */}
-          <div className='recomendacion'>
-            <div className='recomendacion1'>
+          <div className="recomendacion">
+            <div className="recomendacion1">
               <span>Ordenar por:</span>
               <select
-                className='opciones-recomendacion'
+                className="opciones-recomendacion"
                 value={ordenSeleccionado}
                 onChange={(e) => setOrdenSeleccionado(e.target.value)}
               >
-                <option value='Recomendados'>Recomendados</option>
-                <option value='Menor precio'>Menor precio</option>
-                <option value='Mayor precio'>Mayor precio</option>
+                <option value="Recomendados">Recomendados</option>
+                <option value="Menor precio">Menor precio</option>
+                <option value="Mayor precio">Mayor precio</option>
               </select>
             </div>
 
-            <div className='num-pagina'>
+            <div className="num-pagina">
               <i
-                className='fa-solid fa-chevron-left'
-                onClick={() => setPaginaActual((prev) => Math.max(prev - 1, 1))}
+                className="fa-solid fa-chevron-left"
+                onClick={() =>
+                  setPaginaActual((prev) => Math.max(prev - 1, 1))
+                }
               ></i>
               {Array.from({ length: paginasTotales }, (_, i) => i + 1).map(
                 (num) => (
                   <span
                     key={num}
-                    className={`pag-2 ${paginaActual === num ? "active" : ""}`}
+                    className={`pag-2 ${
+                      paginaActual === num ? "active" : ""
+                    }`}
                     onClick={() => setPaginaActual(num)}
                   >
                     {num}
                   </span>
-                ),
+                )
               )}
               <i
-                className='fa-solid fa-chevron-right'
+                className="fa-solid fa-chevron-right"
                 onClick={() =>
-                  setPaginaActual((prev) => Math.min(prev + 1, paginasTotales))
+                  setPaginaActual((prev) =>
+                    Math.min(prev + 1, paginasTotales)
+                  )
                 }
               ></i>
             </div>
           </div>
 
           {/* Grid de Productos */}
-          <div className='tarjeta-producto'>
+          <div className="tarjeta-producto">
             {productosPaginados.map((prod) => (
-              <div className='tar-producto' key={prod.id}>
-                <Link to='/detalle_producto' onClick={() => abrirDetalle(prod)}>
+              <div className="tar-producto" key={prod.id}>
+                <Link to="/detalle_producto" onClick={() => abrirDetalle(prod)}>
                   <img src={prod.imagen} alt={prod.nombre} />
                 </Link>
-                <div className='etiqueta'>
+                <div className="etiqueta">
                   <span>{prod.etiqueta || "MODA"}</span>
                 </div>
-                <div className='nom-producto'>{prod.marca}</div>
-                <div className='descripcion'>{prod.nombre}</div>
-                <div className='referencia'>
+                <div className="nom-producto">{prod.marca}</div>
+                <div className="descripcion">{prod.nombre}</div>
+                <div className="referencia">
                   {prod.referencia || "Por SENABELLA MODA"}
                 </div>
                 <i
-                  className='fa-regular fa-heart favorite-btn'
+                  className={`fa-heart favorite-btn ${window.SenabellaFavoritos?.esFavorito(prod.nombre) ? 'fa-solid' : 'fa-regular'}`}
                   onClick={(e) => handleFavorito(e, prod)}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: 'pointer', color: window.SenabellaFavoritos?.esFavorito(prod.nombre) ? '#e63946' : '' }}
                 ></i>
                 <div>
-                  <div className='metodo'>
-                    <span className='unica'>ÚNICA</span>
-                    <span className='cmr'>CMR</span>
-                    <span className='debito'>Débito</span>
+                  <div className="metodo">
+                    <span className="unica">ÚNICA</span>
+                    <span className="cmr">CMR</span>
+                    <span className="debito">Débito</span>
                   </div>
-                  <div className='precio'>
+                  <div className="precio">
                     {prod.precio}{" "}
                     {prod.descuento && (
-                      <span className='descuento'>{prod.descuento}</span>
+                      <span className="descuento">{prod.descuento}</span>
                     )}
                   </div>
                   {prod.precioSecundario && (
-                    <div className='precio-secundario'>
+                    <div className="precio-secundario">
                       {prod.precioSecundario}
                     </div>
                   )}
                   {prod.precioSecundario1 && (
-                    <div className='precio-secundario1'>
+                    <div className="precio-secundario1">
                       {prod.precioSecundario1}
                     </div>
                   )}
                 </div>
 
                 <button
-                  className='btn-agregar-carrito'
+                  className="btn-agregar-carrito"
                   onClick={() => handleAgregarAlCarrito(prod)}
                 >
-                  <i className='fa-solid fa-cart-plus'></i> Añadir al carrito
+                  <i className="fa-solid fa-cart-plus"></i> Añadir al carrito
                 </button>
               </div>
             ))}
