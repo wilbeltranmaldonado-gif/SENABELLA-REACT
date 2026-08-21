@@ -6,6 +6,7 @@ import "./encabezado.css";
 import { CIUDADES, ENLACES_MENU_MOVIL } from "../../datos";
 import { iniciarFavoritosGlobal } from "../../paginas/favoritos/favoritos";
 import { obtenerStockDeProducto } from "../../utils/stock";
+import { esBusquedaDeRopa } from "../../utils/search";
 
 const EVENTO_CARRITO_ACTUALIZADO = "senabella-cart-actualizado";
 
@@ -414,30 +415,21 @@ export default function Header() {
   // ------------------------------------------
   const ejecutarBusqueda = () => {
     const termino = terminoBusqueda.trim();
-    const rutaActual = window.location.pathname.toLowerCase();
-    const esCatalogoRopa = rutaActual.includes("/catalogo-ropa-accesorios");
-    const esPaginaCatalogo = rutaActual === "/catalogo" || esCatalogoRopa;
-    const rutaBusqueda = esCatalogoRopa
+    if (!termino) {
+      const rutaActual = window.location.pathname.toLowerCase();
+      if (rutaActual.includes("/catalogo-ropa-accesorios")) {
+        navigate("/catalogo-ropa-accesorios");
+      } else {
+        navigate("/catalogo");
+      }
+      return;
+    }
+
+    const destino = esBusquedaDeRopa(termino)
       ? "/catalogo-ropa-accesorios"
       : "/catalogo";
 
-    if (!esPaginaCatalogo) {
-      navigate(
-        termino
-          ? `${rutaBusqueda}?busqueda=${encodeURIComponent(termino)}`
-          : rutaBusqueda,
-      );
-    } else {
-      const url = new URL(window.location.href);
-      if (termino) {
-        url.searchParams.set("busqueda", termino);
-      } else {
-        url.searchParams.delete("busqueda");
-      }
-      window.history.pushState({}, "", url);
-      // Trigger navigation event so that Catalogo can pick it up
-      navigate(url.pathname + url.search);
-    }
+    navigate(`${destino}?busqueda=${encodeURIComponent(termino)}`);
   };
 
   const manejarEnterBusqueda = (e) => {

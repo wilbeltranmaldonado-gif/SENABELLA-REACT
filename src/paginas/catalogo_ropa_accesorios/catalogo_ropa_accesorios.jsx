@@ -10,6 +10,7 @@ import {
   productosRopaAccesorios,
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
+import { cumpleBusquedaInteligente } from "../../utils/search";
 
 function CatalogoRopaAccesorios() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -80,11 +81,7 @@ function CatalogoRopaAccesorios() {
     }
 
     if (queryBusqueda) {
-      resultado = resultado.filter((p) => [p.nombre, p.marca, p.categoria, p.referencia]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase()
-        .includes(queryBusqueda));
+      resultado = resultado.filter((p) => cumpleBusquedaInteligente(p, queryBusqueda));
     }
 
     // Filtro por precio
