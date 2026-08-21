@@ -10,12 +10,10 @@ import {
   bannersInicio as banners,
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
-import { obtenerStockDeProducto } from "../../utils/stock";
+
 
 function Inicio() {
-  const [modalAbierto, setModalAbierto] = useState(false);
-  const [productoModal, setProductoModal] = useState(null);
-  const [cantidad, setCantidad] = useState(1);
+
   const [mostrarArriba, setMostrarArriba] = useState(false);
   const navigate = useNavigate();
   const mostrarToast = (mensaje, tipo = "exito") => {
@@ -38,11 +36,7 @@ function Inicio() {
     navigate("/detalle_producto");
   };
 
-  const cerrarModal = () => {
-    setModalAbierto(false);
-    setProductoModal(null);
-    document.body.style.overflow = "";
-  };
+
 
  
 
@@ -57,25 +51,12 @@ function Inicio() {
 
     return () => {
       window.removeEventListener("scroll", manejarScroll);
-      document.body.style.overflow = "";
     };
   }, []);
 
 
 
-  useEffect(() => {
-    const manejarEscape = (e) => {
-      if (e.key === "Escape") {
-        cerrarModal();
-      }
-    };
 
-    document.addEventListener("keydown", manejarEscape);
-
-    return () => {
-      document.removeEventListener("keydown", manejarEscape);
-    };
-  }, []);
 
 
   // ANIMACIONES AL HACER SCROLL
@@ -416,177 +397,6 @@ function Inicio() {
         </section>
 
       </main>
-
-      {
-
-      }
-
-      {modalAbierto && productoModal && (
-
-        <div
-          className="modal-overlay modal-visible"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              cerrarModal();
-            }
-          }}
-        >
-
-          <div className="modal-contenido">
-
-            <button
-              className="modal-cerrar"
-              onClick={cerrarModal}
-            >
-              <i className="fa-solid fa-xmark"></i>
-            </button>
-
-            <div className="modal-cuerpo">
-
-              <div className="modal-imagen">
-
-                <img
-                  src={productoModal.imagen}
-                  alt={productoModal.nombre}
-                />
-
-              </div>
-
-              <div className="modal-info">
-
-                <h2 className="modal-nombre">
-                  {productoModal.nombre}
-                </h2>
-
-                <p className="modal-precio">
-                  {productoModal.precio}
-                </p>
-
-                <div className="modal-rating">
-
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star-half-stroke"></i>
-
-                  <span className="modal-rating-text">
-                    4.5 (128 reseñas)
-                  </span>
-
-                </div>
-
-                <p className="modal-descripcion">
-                  Producto de alta calidad disponible en Senabella.
-                  Envío gratis a todo Colombia.
-                </p>
-
-                <div className="modal-cantidad">
-
-                  <label>
-                    Cantidad:
-                  </label>
-
-                  <div className="modal-selector-cantidad">
-
-                    <button
-                      onClick={() =>
-                        setCantidad((cantidad) =>
-                          cantidad > 1 ? cantidad - 1 : 1
-                        )
-                      }
-                    >
-                      −
-                    </button>
-
-                    <span className="modal-num-cantidad">
-                      {cantidad}
-                    </span>
-
-                    <button
-                      onClick={() => {
-                        const stock = obtenerStockDeProducto(productoModal?.nombre);
-                        setCantidad((cantidad) =>
-                          cantidad < stock ? cantidad + 1 : stock
-                        );
-                      }}
-                    >
-                      +
-                    </button>
-
-                  </div>
-
-                </div>
-
-                <div className="modal-acciones">
-
-                  <button
-                    className="modal-btn-carrito"
-                    onClick={() => {
-                      if (window.SenabellaCart) {
-                        window.SenabellaCart.agregarProducto({
-                          nombre: productoModal.nombre,
-                          precioText: productoModal.precio,
-                          img: productoModal.imagen,
-                          cantidad: cantidad
-                        });
-                      }
-                      mostrarToast(
-                        `${productoModal.nombre} agregado al carrito`,
-                        "exito"
-                      );
-                      cerrarModal();
-                    }}
-                  >
-                    <i className="fa-solid fa-cart-plus"></i>
-                    Agregar al carrito
-                  </button>
-
-                  <button
-                    className="modal-btn-comprar"
-                    onClick={() => {
-                      mostrarToast(
-                        "Redirigiendo al checkout",
-                        "fa-bolt",
-                        "info"
-                      );
-                      cerrarModal();
-                    }}
-                  >
-                    <i className="fa-solid fa-bolt"></i>
-                    Comprar ahora
-                  </button>
-
-                </div>
-
-                <div className="modal-beneficios">
-
-                  <div>
-                    <i className="fa-solid fa-truck-fast"></i>
-                    Envío gratis
-                  </div>
-
-                  <div>
-                    <i className="fa-solid fa-shield-halved"></i>
-                    Compra protegida
-                  </div>
-
-                  <div>
-                    <i className="fa-solid fa-rotate-left"></i>
-                    Devolución gratis
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      )}
 
 
 
