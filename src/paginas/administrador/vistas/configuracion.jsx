@@ -16,8 +16,6 @@ function Configuracion() {
     nombreTienda: "Senabella",
     email: "contacto@senabella.com",
     telefono: "+57 300 123 4567",
-    moneda: "COP",
-    idioma: "es",
     notificacionesEmail: true,
     notificacionesPedidos: true,
     notificacionesStock: true,
@@ -47,6 +45,16 @@ function Configuracion() {
   const guardarConfiguracion = (e) => {
     e.preventDefault();
     localStorage.setItem("senabella_config", JSON.stringify(configuracion));
+    
+    // Disparar evento global para que el resto de la aplicación se entere
+    window.dispatchEvent(
+      new CustomEvent("senabella-config-actualizada", { detail: configuracion })
+    );
+
+    if (window.SenabellaToast) {
+      window.SenabellaToast("Configuración guardada exitosamente", "fa-save", "exito");
+    }
+
     setGuardado(true);
     setTimeout(() => setGuardado(false), 3000);
   };
@@ -95,36 +103,6 @@ function Configuracion() {
           </div>
         </div>
 
-        {/* PREFERENCIAS */}
-        <div className='admin-seccion'>
-          <h3 className='admin-seccion-subtitulo'>Preferencias</h3>
-          <div className='admin-form-grid'>
-            <div className='admin-form-grupo'>
-              <label>Moneda</label>
-              <select
-                name='moneda'
-                value={configuracion.moneda}
-                onChange={manejarCambio}
-              >
-                <option value='COP'>Peso Colombiano (COP)</option>
-                <option value='USD'>Dólar Americano (USD)</option>
-                <option value='EUR'>Euro (EUR)</option>
-              </select>
-            </div>
-            <div className='admin-form-grupo'>
-              <label>Idioma</label>
-              <select
-                name='idioma'
-                value={configuracion.idioma}
-                onChange={manejarCambio}
-              >
-                <option value='es'>Español</option>
-                <option value='en'>English</option>
-                <option value='pt'>Português</option>
-              </select>
-            </div>
-          </div>
-        </div>
 
         {/* NOTIFICACIONES */}
         <div className='admin-seccion'>

@@ -80,11 +80,6 @@ export const promocionesInicio = [
       "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt51f7cce65f3e83cd/6a677af55f2918326a139dd0/Imperdible3_home_computador_lenovo_ideapad_cyber_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
     ruta: "/catalogo?busqueda=lenovo",
   },
-  {
-    imagen:
-      "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/blt008e3e85bf2c1c75/6a675c0cb08d720383bb7b25/Imperdible2_home_electro_tv_samsung_40pul_cyber_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
-    ruta: "/catalogo?busqueda=samsung",
-  },
 ];
 
 export const promociones = promocionesInicio;
