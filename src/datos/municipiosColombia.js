@@ -37,8 +37,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "San José del Guaviare",
       "Inírida",
       "Puerto Carreño",
-      "Mitú"
-    ]
+      "Mitú",
+    ],
   },
   {
     departamento: "Cundinamarca",
@@ -65,8 +65,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Pacho",
       "Silvania",
       "Gachancipá",
-      "Choachí"
-    ]
+      "Choachí",
+    ],
   },
   {
     departamento: "Antioquia",
@@ -94,8 +94,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Amagá",
       "Yarumal",
       "Segovia",
-      "Puerto Berrío"
-    ]
+      "Puerto Berrío",
+    ],
   },
   {
     departamento: "Valle del Cauca",
@@ -116,8 +116,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Caicedonia",
       "El Cerrito",
       "Dagua",
-      "Guacarí"
-    ]
+      "Guacarí",
+    ],
   },
   {
     departamento: "Santander",
@@ -135,8 +135,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Vélez",
       "Rionegro (Santander)",
       "Sabana de Torres",
-      "Zapatoca"
-    ]
+      "Zapatoca",
+    ],
   },
   {
     departamento: "Norte de Santander",
@@ -149,8 +149,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Chinácota",
       "El Zulia",
       "Ábrego",
-      "Sardinata"
-    ]
+      "Sardinata",
+    ],
   },
   {
     departamento: "Atlántico",
@@ -164,8 +164,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Palmar de Varela",
       "Santo Tomás",
       "Sabanagrande",
-      "Polonuevo"
-    ]
+      "Polonuevo",
+    ],
   },
   {
     departamento: "Bolívar",
@@ -177,8 +177,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "María La Baja",
       "San Juan Nepomuceno",
       "Santa Rosa del Sur",
-      "Mompox (Santa Cruz de Mompox)"
-    ]
+      "Mompox (Santa Cruz de Mompox)",
+    ],
   },
   {
     departamento: "Boyacá",
@@ -192,8 +192,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Moniquirá",
       "Samacá",
       "Garagoa",
-      "Nobsa"
-    ]
+      "Nobsa",
+    ],
   },
   {
     departamento: "Caldas",
@@ -206,8 +206,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Salamina",
       "Aguadas",
       "Supía",
-      "Pensilvania"
-    ]
+      "Pensilvania",
+    ],
   },
   {
     departamento: "Risaralda",
@@ -218,8 +218,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Belén de Umbría",
       "Santuario",
       "Quinchía",
-      "Marsella"
-    ]
+      "Marsella",
+    ],
   },
   {
     departamento: "Quindío",
@@ -230,8 +230,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Quimbaya",
       "Circasia",
       "Salento",
-      "Filandia"
-    ]
+      "Filandia",
+    ],
   },
   {
     departamento: "Tolima",
@@ -245,8 +245,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Flandes",
       "Fresno",
       "Purificación",
-      "Guamo"
-    ]
+      "Guamo",
+    ],
   },
   {
     departamento: "Huila",
@@ -258,8 +258,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Rivera",
       "Palermo",
       "Gigante",
-      "San Agustín"
-    ]
+      "San Agustín",
+    ],
   },
   {
     departamento: "Nariño",
@@ -270,8 +270,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "La Unión",
       "Samaniego",
       "Sandoná",
-      "Buesaco"
-    ]
+      "Buesaco",
+    ],
   },
   {
     departamento: "Cauca",
@@ -283,8 +283,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Miranda",
       "Corinto",
       "Guachené",
-      "El Tambo"
-    ]
+      "El Tambo",
+    ],
   },
   {
     departamento: "Córdoba",
@@ -296,8 +296,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Tierralta",
       "Planeta Rica",
       "Ciénaga de Oro",
-      "Chinú"
-    ]
+      "Chinú",
+    ],
   },
   {
     departamento: "Cesar",
@@ -308,8 +308,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Curumaní",
       "La Jagua de Ibirico",
       "El Paso",
-      "San Alberto"
-    ]
+      "San Alberto",
+    ],
   },
   {
     departamento: "Magdalena",
@@ -320,8 +320,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Plato",
       "Aracataca",
       "Zona Bananera",
-      "Pivijay"
-    ]
+      "Pivijay",
+    ],
   },
   {
     departamento: "La Guajira",
@@ -332,8 +332,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "San Juan del Cesar",
       "Villanueva",
       "Manaure",
-      "Hatonuevo"
-    ]
+      "Hatonuevo",
+    ],
   },
   {
     departamento: "Meta",
@@ -344,8 +344,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "San Martín",
       "Cumaral",
       "Puerto Gaitán",
-      "Restrepo"
-    ]
+      "Restrepo",
+    ],
   },
   {
     departamento: "Casanare",
@@ -355,8 +355,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Tauramena",
       "Monterrey",
       "Paz de Ariporo",
-      "Maní"
-    ]
+      "Maní",
+    ],
   },
   {
     departamento: "Sucre",
@@ -367,8 +367,8 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Santiago de Tolú",
       "Sampués",
       "Toluviejo",
-      "Coveñas"
-    ]
+      "Coveñas",
+    ],
   },
   {
     departamento: "Caquetá, Chocó y Amazonía / Orinoquía",
@@ -385,9 +385,11 @@ export const MUNICIPIOS_COLOMBIA_AGRUPADOS = [
       "Villagarzón",
       "Saravena",
       "Tame",
-      "Fortul"
-    ]
-  }
+      "Fortul",
+    ],
+  },
 ];
 
-export const TODOS_LOS_MUNICIPIOS = MUNICIPIOS_COLOMBIA_AGRUPADOS.flatMap((g) => g.municipios);
+export const TODOS_LOS_MUNICIPIOS = MUNICIPIOS_COLOMBIA_AGRUPADOS.flatMap(
+  (g) => g.municipios,
+);

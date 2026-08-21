@@ -11,7 +11,7 @@ function Configuracion() {
     idioma: "es",
     notificacionesEmail: true,
     notificacionesPedidos: true,
-    notificacionesStock: true
+    notificacionesStock: true,
   });
 
   const [guardado, setGuardado] = useState(false);
@@ -28,7 +28,7 @@ function Configuracion() {
     const { name, value, type, checked } = e.target;
     setConfiguracion({
       ...configuracion,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -40,39 +40,42 @@ function Configuracion() {
   };
 
   return (
-    <div className="vista-configuracion">
-      <div className="admin-cabecera-vista">
-        <h2 className="admin-seccion-titulo">Configuración del sistema</h2>
+    <div className='vista-configuracion'>
+      <div className='admin-cabecera-vista'>
+        <h2 className='admin-seccion-titulo'>Configuración del sistema</h2>
       </div>
 
-      <form onSubmit={guardarConfiguracion} className="admin-configuracion-form">
+      <form
+        onSubmit={guardarConfiguracion}
+        className='admin-configuracion-form'
+      >
         {/* INFORMACIÓN GENERAL */}
-        <div className="admin-seccion">
-          <h3 className="admin-seccion-subtitulo">Información general</h3>
-          <div className="admin-form-grid">
-            <div className="admin-form-grupo">
+        <div className='admin-seccion'>
+          <h3 className='admin-seccion-subtitulo'>Información general</h3>
+          <div className='admin-form-grid'>
+            <div className='admin-form-grupo'>
               <label>Nombre de la tienda</label>
               <input
-                type="text"
-                name="nombreTienda"
+                type='text'
+                name='nombreTienda'
                 value={configuracion.nombreTienda}
                 onChange={manejarCambio}
               />
             </div>
-            <div className="admin-form-grupo">
+            <div className='admin-form-grupo'>
               <label>Email de contacto</label>
               <input
-                type="email"
-                name="email"
+                type='email'
+                name='email'
                 value={configuracion.email}
                 onChange={manejarCambio}
               />
             </div>
-            <div className="admin-form-grupo">
+            <div className='admin-form-grupo'>
               <label>Teléfono</label>
               <input
-                type="text"
-                name="telefono"
+                type='text'
+                name='telefono'
                 value={configuracion.telefono}
                 onChange={manejarCambio}
               />
@@ -81,62 +84,62 @@ function Configuracion() {
         </div>
 
         {/* PREFERENCIAS */}
-        <div className="admin-seccion">
-          <h3 className="admin-seccion-subtitulo">Preferencias</h3>
-          <div className="admin-form-grid">
-            <div className="admin-form-grupo">
+        <div className='admin-seccion'>
+          <h3 className='admin-seccion-subtitulo'>Preferencias</h3>
+          <div className='admin-form-grid'>
+            <div className='admin-form-grupo'>
               <label>Moneda</label>
               <select
-                name="moneda"
+                name='moneda'
                 value={configuracion.moneda}
                 onChange={manejarCambio}
               >
-                <option value="COP">Peso Colombiano (COP)</option>
-                <option value="USD">Dólar Americano (USD)</option>
-                <option value="EUR">Euro (EUR)</option>
+                <option value='COP'>Peso Colombiano (COP)</option>
+                <option value='USD'>Dólar Americano (USD)</option>
+                <option value='EUR'>Euro (EUR)</option>
               </select>
             </div>
-            <div className="admin-form-grupo">
+            <div className='admin-form-grupo'>
               <label>Idioma</label>
               <select
-                name="idioma"
+                name='idioma'
                 value={configuracion.idioma}
                 onChange={manejarCambio}
               >
-                <option value="es">Español</option>
-                <option value="en">English</option>
-                <option value="pt">Português</option>
+                <option value='es'>Español</option>
+                <option value='en'>English</option>
+                <option value='pt'>Português</option>
               </select>
             </div>
           </div>
         </div>
 
         {/* NOTIFICACIONES */}
-        <div className="admin-seccion">
-          <h3 className="admin-seccion-subtitulo">Notificaciones</h3>
-          <div className="admin-form-checkboxes">
-            <label className="admin-checkbox">
+        <div className='admin-seccion'>
+          <h3 className='admin-seccion-subtitulo'>Notificaciones</h3>
+          <div className='admin-form-checkboxes'>
+            <label className='admin-checkbox'>
               <input
-                type="checkbox"
-                name="notificacionesEmail"
+                type='checkbox'
+                name='notificacionesEmail'
                 checked={configuracion.notificacionesEmail}
                 onChange={manejarCambio}
               />
               <span>Recibir notificaciones por email</span>
             </label>
-            <label className="admin-checkbox">
+            <label className='admin-checkbox'>
               <input
-                type="checkbox"
-                name="notificacionesPedidos"
+                type='checkbox'
+                name='notificacionesPedidos'
                 checked={configuracion.notificacionesPedidos}
                 onChange={manejarCambio}
               />
               <span>Notificaciones de nuevos pedidos</span>
             </label>
-            <label className="admin-checkbox">
+            <label className='admin-checkbox'>
               <input
-                type="checkbox"
-                name="notificacionesStock"
+                type='checkbox'
+                name='notificacionesStock'
                 checked={configuracion.notificacionesStock}
                 onChange={manejarCambio}
               />
@@ -146,13 +149,14 @@ function Configuracion() {
         </div>
 
         {/* BOTONES DE ACCIÓN */}
-        <div className="admin-configuracion-acciones">
-          <button type="submit" className="admin-boton admin-boton-primario">
-            <i className="fa-solid fa-save"></i> Guardar cambios
+        <div className='admin-configuracion-acciones'>
+          <button type='submit' className='admin-boton admin-boton-primario'>
+            <i className='fa-solid fa-save'></i> Guardar cambios
           </button>
           {guardado && (
-            <span className="admin-guardado-exito">
-              <i className="fa-solid fa-check"></i> Configuración guardada exitosamente
+            <span className='admin-guardado-exito'>
+              <i className='fa-solid fa-check'></i> Configuración guardada
+              exitosamente
             </span>
           )}
         </div>

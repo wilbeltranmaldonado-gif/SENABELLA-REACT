@@ -6,11 +6,7 @@
   height: 48px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(
-    135deg,
-    #aad100,
-    #84b814
-  );
+  background: linear-gradient(135deg, #aad100, #84b814);
   color: #1a1a2e;
   font-size: 1.1rem;
   cursor: pointer;

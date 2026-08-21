@@ -674,7 +674,9 @@ body.modo-oscuro .menu-movil-enlaces a i {
 
   transform: translateX(110%);
   opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .toast-senabella.toast-visible {
@@ -706,10 +708,18 @@ body.modo-oscuro .menu-movil-enlaces a i {
   font-size: 0.8rem !important;
 }
 
-.toast-senabella.toast-info { border-left-color: #3498db !important; }
-.toast-senabella.toast-info i:first-child { color: #3498db !important; }
-.toast-senabella.toast-advertencia { border-left-color: #f39c12 !important; }
-.toast-senabella.toast-advertencia i:first-child { color: #f39c12 !important; }
+.toast-senabella.toast-info {
+  border-left-color: #3498db !important;
+}
+.toast-senabella.toast-info i:first-child {
+  color: #3498db !important;
+}
+.toast-senabella.toast-advertencia {
+  border-left-color: #f39c12 !important;
+}
+.toast-senabella.toast-advertencia i:first-child {
+  color: #f39c12 !important;
+}
 
 body.modo-oscuro .toast-senabella {
   background: #2a2a2a !important;

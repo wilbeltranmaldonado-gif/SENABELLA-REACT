@@ -30,8 +30,12 @@ function iniciarToastGlobal() {
       const toast = document.createElement("div");
       toast.className = "toast-senabella toast-" + (tipo || "exito");
       toast.innerHTML =
-        '<i class="fa-solid ' + (icono || "fa-circle-check") + '"></i>' +
-        "<span>" + mensaje + "</span>" +
+        '<i class="fa-solid ' +
+        (icono || "fa-circle-check") +
+        '"></i>' +
+        "<span>" +
+        mensaje +
+        "</span>" +
         '<button class="toast-cerrar"><i class="fa-solid fa-xmark"></i></button>';
 
       contenedorToast.appendChild(toast);
@@ -80,14 +84,20 @@ function iniciarCarritoGlobal() {
       const stockMaximo = obtenerStockDeProducto(producto.nombre);
       if (stockMaximo <= 0) {
         if (window.SenabellaToast) {
-          window.SenabellaToast(`"${producto.nombre}" está agotado en inventario`, "fa-triangle-exclamation", "error");
+          window.SenabellaToast(
+            `"${producto.nombre}" está agotado en inventario`,
+            "fa-triangle-exclamation",
+            "error",
+          );
         }
         return false;
       }
 
       const items = this.obtenerItems();
       const existente = items.find(
-        (item) => item.nombre.trim().toLowerCase() === producto.nombre.trim().toLowerCase()
+        (item) =>
+          item.nombre.trim().toLowerCase() ===
+          producto.nombre.trim().toLowerCase(),
       );
 
       if (existente) {
@@ -95,11 +105,18 @@ function iniciarCarritoGlobal() {
         const cantidadActual = parseInt(existente.cantidad) || 1;
         if (cantidadActual >= stockMaximo) {
           if (window.SenabellaToast) {
-            window.SenabellaToast(`Máximo alcanzado: Solo hay ${stockMaximo} unidad(es) de "${producto.nombre}"`, "fa-circle-info", "advertencia");
+            window.SenabellaToast(
+              `Máximo alcanzado: Solo hay ${stockMaximo} unidad(es) de "${producto.nombre}"`,
+              "fa-circle-info",
+              "advertencia",
+            );
           }
           return false;
         }
-        existente.cantidad = Math.min(stockMaximo, cantidadActual + cantidadSolicitada);
+        existente.cantidad = Math.min(
+          stockMaximo,
+          cantidadActual + cantidadSolicitada,
+        );
         existente.checked = true;
       } else {
         items.push({
@@ -119,7 +136,8 @@ function iniciarCarritoGlobal() {
 
     eliminarProducto(nombre) {
       const items = this.obtenerItems().filter(
-        (item) => item.nombre.trim().toLowerCase() !== nombre.trim().toLowerCase()
+        (item) =>
+          item.nombre.trim().toLowerCase() !== nombre.trim().toLowerCase(),
       );
       this.guardarItems(items);
     },
@@ -131,7 +149,10 @@ function iniciarCarritoGlobal() {
 
     obtenerTotalCantidad() {
       const items = this.obtenerItems();
-      return items.reduce((sum, item) => sum + (parseInt(item.cantidad) || 1), 0);
+      return items.reduce(
+        (sum, item) => sum + (parseInt(item.cantidad) || 1),
+        0,
+      );
     },
 
     actualizarBadge() {
@@ -156,7 +177,11 @@ export default function Header() {
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
   const [cantidadFavoritos, setCantidadFavoritos] = useState(0);
-  const [cuenta, setCuenta] = useState({ texto: "Iniciar sesión", href: "/login", isReact: true });
+  const [cuenta, setCuenta] = useState({
+    texto: "Iniciar sesión",
+    href: "/login",
+    isReact: true,
+  });
   const navigate = useNavigate();
 
   const contenedorUbicacionRef = useRef(null);
@@ -197,7 +222,11 @@ export default function Header() {
     if (!sesionActiva) {
       setCuenta({ texto: "Iniciar sesión", href: "/login", isReact: true });
     } else if (rolUsuario === "administrador") {
-      setCuenta({ texto: "Panel Admin", href: "/administrador", isReact: true });
+      setCuenta({
+        texto: "Panel Admin",
+        href: "/administrador",
+        isReact: true,
+      });
     } else {
       setCuenta({ texto: "Mi cuenta", href: "/usuario", isReact: true });
     }
@@ -219,10 +248,19 @@ export default function Header() {
 
   useEffect(() => {
     const actualizarFavoritos = () => {
-      setCantidadFavoritos(window.SenabellaFavoritos?.obtenerLista().length || 0);
+      setCantidadFavoritos(
+        window.SenabellaFavoritos?.obtenerLista().length || 0,
+      );
     };
-    window.addEventListener("senabella-favoritos-actualizado", actualizarFavoritos);
-    return () => window.removeEventListener("senabella-favoritos-actualizado", actualizarFavoritos);
+    window.addEventListener(
+      "senabella-favoritos-actualizado",
+      actualizarFavoritos,
+    );
+    return () =>
+      window.removeEventListener(
+        "senabella-favoritos-actualizado",
+        actualizarFavoritos,
+      );
   }, []);
 
   useEffect(() => {
@@ -245,12 +283,24 @@ export default function Header() {
 
     actualizarUbicacion();
     window.addEventListener("storage", actualizarUbicacion);
-    window.addEventListener("senabella_ubicacion_actualizada", actualizarUbicacion);
-    window.addEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
+    window.addEventListener(
+      "senabella_ubicacion_actualizada",
+      actualizarUbicacion,
+    );
+    window.addEventListener(
+      "senabella-ubicacion-actualizada",
+      actualizarUbicacion,
+    );
     return () => {
       window.removeEventListener("storage", actualizarUbicacion);
-      window.removeEventListener("senabella_ubicacion_actualizada", actualizarUbicacion);
-      window.removeEventListener("senabella-ubicacion-actualizada", actualizarUbicacion);
+      window.removeEventListener(
+        "senabella_ubicacion_actualizada",
+        actualizarUbicacion,
+      );
+      window.removeEventListener(
+        "senabella-ubicacion-actualizada",
+        actualizarUbicacion,
+      );
     };
   }, []);
 
@@ -258,9 +308,11 @@ export default function Header() {
   // Escuchar actualizaciones del carrito
   // ------------------------------------------
   useEffect(() => {
-    const actualizar = () => setCantidadCarrito(window.SenabellaCart.obtenerTotalCantidad());
+    const actualizar = () =>
+      setCantidadCarrito(window.SenabellaCart.obtenerTotalCantidad());
     window.addEventListener(EVENTO_CARRITO_ACTUALIZADO, actualizar);
-    return () => window.removeEventListener(EVENTO_CARRITO_ACTUALIZADO, actualizar);
+    return () =>
+      window.removeEventListener(EVENTO_CARRITO_ACTUALIZADO, actualizar);
   }, []);
 
   // ------------------------------------------
@@ -268,7 +320,10 @@ export default function Header() {
   // ------------------------------------------
   useEffect(() => {
     function manejarClickFuera(e) {
-      if (contenedorUbicacionRef.current && !contenedorUbicacionRef.current.contains(e.target)) {
+      if (
+        contenedorUbicacionRef.current &&
+        !contenedorUbicacionRef.current.contains(e.target)
+      ) {
         setMenuUbicacionAbierto(false);
       }
     }
@@ -319,19 +374,32 @@ export default function Header() {
       const user = JSON.parse(localStorage.getItem("senabella_usuario"));
       if (user && typeof user === "object") {
         const userActualizado = { ...user, ciudad };
-        localStorage.setItem("senabella_usuario", JSON.stringify(userActualizado));
+        localStorage.setItem(
+          "senabella_usuario",
+          JSON.stringify(userActualizado),
+        );
 
         // Actualizar en base de datos persistente de usuarios
-        const usuariosBD = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+        const usuariosBD = JSON.parse(
+          localStorage.getItem("senabella_usuarios") || "[]",
+        );
         const emailActual = (user.email || user.correo || "").toLowerCase();
-        const idx = usuariosBD.findIndex((u) => (u.correo || u.email || "").toLowerCase() === emailActual);
+        const idx = usuariosBD.findIndex(
+          (u) => (u.correo || u.email || "").toLowerCase() === emailActual,
+        );
         if (idx !== -1) {
           usuariosBD[idx] = { ...usuariosBD[idx], ciudad };
-          localStorage.setItem("senabella_usuarios", JSON.stringify(usuariosBD));
+          localStorage.setItem(
+            "senabella_usuarios",
+            JSON.stringify(usuariosBD),
+          );
         }
       }
     } catch (e) {
-      console.warn("Error al sincronizar ciudad desde el header con el perfil:", e);
+      console.warn(
+        "Error al sincronizar ciudad desde el header con el perfil:",
+        e,
+      );
     }
 
     // Disparar eventos reactivos bidireccionales
@@ -349,10 +417,16 @@ export default function Header() {
     const rutaActual = window.location.pathname.toLowerCase();
     const esCatalogoRopa = rutaActual.includes("/catalogo-ropa-accesorios");
     const esPaginaCatalogo = rutaActual === "/catalogo" || esCatalogoRopa;
-    const rutaBusqueda = esCatalogoRopa ? "/catalogo-ropa-accesorios" : "/catalogo";
+    const rutaBusqueda = esCatalogoRopa
+      ? "/catalogo-ropa-accesorios"
+      : "/catalogo";
 
     if (!esPaginaCatalogo) {
-      navigate(termino ? `${rutaBusqueda}?busqueda=${encodeURIComponent(termino)}` : rutaBusqueda);
+      navigate(
+        termino
+          ? `${rutaBusqueda}?busqueda=${encodeURIComponent(termino)}`
+          : rutaBusqueda,
+      );
     } else {
       const url = new URL(window.location.href);
       if (termino) {
@@ -375,68 +449,87 @@ export default function Header() {
 
   return (
     <>
-      <header className="contenido_principal">
+      <header className='contenido_principal'>
         <button
-          className="boton-hamburguesa"
-          id="boton-hamburguesa"
-          aria-label="Abrir menú"
+          className='boton-hamburguesa'
+          id='boton-hamburguesa'
+          aria-label='Abrir menú'
           onClick={(e) => {
             e.stopPropagation();
             setMenuMovilAbierto(true);
           }}
         >
-          <i className="fa-solid fa-bars"></i>
+          <i className='fa-solid fa-bars'></i>
         </button>
 
-        <div className="logo">
-          <Link to="/">
-            <img src="../src/assets/logo.png" alt="Senabella" width="130" height="50" />
+        <div className='logo'>
+          <Link to='/'>
+            <img
+              src='../src/assets/logo.png'
+              alt='Senabella'
+              width='130'
+              height='50'
+            />
           </Link>
         </div>
 
-        <div className="contenedor-busqueda">
+        <div className='contenedor-busqueda'>
           <input
-            type="text"
-            className="entrada-busqueda"
-            placeholder="Buscar en Senabella.com"
+            type='text'
+            className='entrada-busqueda'
+            placeholder='Buscar en Senabella.com'
             value={terminoBusqueda}
             onChange={(e) => setTerminoBusqueda(e.target.value)}
             onKeyDown={manejarEnterBusqueda}
           />
 
-          <button className="boton-busqueda" onClick={ejecutarBusqueda}>
-            <i className="fa-solid fa-magnifying-glass"></i>
+          <button className='boton-busqueda' onClick={ejecutarBusqueda}>
+            <i className='fa-solid fa-magnifying-glass'></i>
           </button>
         </div>
 
-        <button id="theme-toggle" className="btn btn-outline-secondary" onClick={alternarModoOscuro}>
+        <button
+          id='theme-toggle'
+          className='btn btn-outline-secondary'
+          onClick={alternarModoOscuro}
+        >
           <i className={`fa-solid ${modoOscuro ? "fa-sun" : "fa-moon"}`}></i>
-          <span className="texto-modo">{modoOscuro ? "Modo claro" : "Modo oscuro"}</span>
+          <span className='texto-modo'>
+            {modoOscuro ? "Modo claro" : "Modo oscuro"}
+          </span>
         </button>
 
-        <div className="acciones-usuario">
-          <div className="cuenta-usuario">
-            <div className="texto-usuario texto-usuario-bold">
+        <div className='acciones-usuario'>
+          <div className='cuenta-usuario'>
+            <div className='texto-usuario texto-usuario-bold'>
               {cuenta.isReact ? (
-                <Link to={cuenta.href} id="enlace-cuenta">
+                <Link to={cuenta.href} id='enlace-cuenta'>
                   {cuenta.texto}
                 </Link>
               ) : (
-                <a href={cuenta.href} id="enlace-cuenta">
+                <a href={cuenta.href} id='enlace-cuenta'>
                   {cuenta.texto}
                 </a>
               )}
             </div>
           </div>
 
-          <Link to="/favoritos" className={`icono-favoritos${cantidadFavoritos > 0 ? " favoritos-con-productos" : ""}`} aria-label={`Favoritos: ${cantidadFavoritos} productos`}>
-            <i className={`${cantidadFavoritos > 0 ? "fa-solid" : "fa-regular"} fa-heart icono-corazon`}></i>
-            {cantidadFavoritos > 0 && <span className="contador-favoritos">{cantidadFavoritos}</span>}
+          <Link
+            to='/favoritos'
+            className={`icono-favoritos${cantidadFavoritos > 0 ? " favoritos-con-productos" : ""}`}
+            aria-label={`Favoritos: ${cantidadFavoritos} productos`}
+          >
+            <i
+              className={`${cantidadFavoritos > 0 ? "fa-solid" : "fa-regular"} fa-heart icono-corazon`}
+            ></i>
+            {cantidadFavoritos > 0 && (
+              <span className='contador-favoritos'>{cantidadFavoritos}</span>
+            )}
           </Link>
 
-          <Link to="/carrito" className="icono-carrito">
-            <i className="fa-solid fa-cart-shopping"></i>
-            <p className="contador-carrito"> {cantidadCarrito} </p>
+          <Link to='/carrito' className='icono-carrito'>
+            <i className='fa-solid fa-cart-shopping'></i>
+            <p className='contador-carrito'> {cantidadCarrito} </p>
           </Link>
         </div>
       </header>
@@ -444,33 +537,40 @@ export default function Header() {
       {/* OVERLAY PARA MENÚ MÓVIL */}
       <div
         className={`menu-movil-overlay${menuMovilAbierto ? " overlay-visible" : ""}`}
-        id="menu-movil-overlay"
+        id='menu-movil-overlay'
         onClick={() => setMenuMovilAbierto(false)}
       ></div>
 
       {/* MENÚ LATERAL MÓVIL */}
-      <nav className={`menu-movil${menuMovilAbierto ? " menu-movil-abierto" : ""}`} id="menu-movil">
-        <div className="menu-movil-cabecera">
-          <span className="menu-movil-titulo">Menú</span>
+      <nav
+        className={`menu-movil${menuMovilAbierto ? " menu-movil-abierto" : ""}`}
+        id='menu-movil'
+      >
+        <div className='menu-movil-cabecera'>
+          <span className='menu-movil-titulo'>Menú</span>
           <button
-            className="menu-movil-cerrar"
-            id="menu-movil-cerrar"
-            aria-label="Cerrar menú"
+            className='menu-movil-cerrar'
+            id='menu-movil-cerrar'
+            aria-label='Cerrar menú'
             onClick={() => setMenuMovilAbierto(false)}
           >
-            <i className="fa-solid fa-xmark"></i>
+            <i className='fa-solid fa-xmark'></i>
           </button>
         </div>
-        <div className="menu-movil-enlaces">
+        <div className='menu-movil-enlaces'>
           {ENLACES_MENU_MOVIL.map((enlace) => {
             const isReactRoute = enlace.href.startsWith("/");
             const esEnlaceFavoritos = enlace.texto === "Favoritos";
             const contenidoEnlace = (
               <>
-                <i className={`${esEnlaceFavoritos && cantidadFavoritos > 0 ? "fa-solid fa-heart favoritos-movil-con-productos" : enlace.icono}`}></i>
+                <i
+                  className={`${esEnlaceFavoritos && cantidadFavoritos > 0 ? "fa-solid fa-heart favoritos-movil-con-productos" : enlace.icono}`}
+                ></i>
                 {enlace.texto}
                 {esEnlaceFavoritos && cantidadFavoritos > 0 && (
-                  <span className="contador-favoritos contador-favoritos-movil">{cantidadFavoritos}</span>
+                  <span className='contador-favoritos contador-favoritos-movil'>
+                    {cantidadFavoritos}
+                  </span>
                 )}
               </>
             );
@@ -478,9 +578,9 @@ export default function Header() {
             if (esEnlaceFavoritos) {
               return (
                 <Link
-                  to="/favoritos"
+                  to='/favoritos'
                   key={enlace.href}
-                  className="enlace-favoritos-movil"
+                  className='enlace-favoritos-movil'
                   aria-label={`Favoritos: ${cantidadFavoritos} productos`}
                 >
                   {contenidoEnlace}
@@ -501,38 +601,45 @@ export default function Header() {
         </div>
       </nav>
 
-      <div className="sub-navegacion">
-        <div className="indicador-ubicacion">
-          <i className="fa-solid fa-location-dot"></i>
-          <span id="texto-ubicacion">{ubicacion}</span>
+      <div className='sub-navegacion'>
+        <div className='indicador-ubicacion'>
+          <i className='fa-solid fa-location-dot'></i>
+          <span id='texto-ubicacion'>{ubicacion}</span>
         </div>
 
-        <div className="enlaces-navegacion">
-          <NavLink to="/catalogo">Productos Tecnológicos</NavLink>
-          <NavLink to="/catalogo-ropa-accesorios">Ropa y Accesorios</NavLink>
-    
-          {/* TARJETAS Y CUENTAS */}
-          <NavLink to="/tarjeta">Tarjeta Senabella</NavLink>
+        <div className='enlaces-navegacion'>
+          <NavLink to='/catalogo'>Productos Tecnológicos</NavLink>
+          <NavLink to='/catalogo-ropa-accesorios'>Ropa y Accesorios</NavLink>
 
-          <NavLink to="/parejas">Parejas</NavLink>
+          {/* TARJETAS Y CUENTAS */}
+          <NavLink to='/tarjeta'>Tarjeta Senabella</NavLink>
+
+          <NavLink to='/parejas'>Parejas</NavLink>
 
           {/* AYUDA */}
-          <div className="menu-desplegable">
+          <div className='menu-desplegable'>
             <button
               className={`boton-desplegable${menuAyudaAbierto ? " activo" : ""}`}
-              id="boton-ayuda"
+              id='boton-ayuda'
               onClick={() => setMenuAyudaAbierto(!menuAyudaAbierto)}
             >
               Ayuda
-              <i className="fa-solid fa-chevron-down"></i>
+              <i className='fa-solid fa-chevron-down'></i>
             </button>
 
             <div
               className={`contenido-desplegable${menuAyudaAbierto ? " mostrar" : ""}`}
-              id="menu-ayuda"
+              id='menu-ayuda'
             >
-              <NavLink to="/contacto" onClick={() => setMenuAyudaAbierto(false)}>Contáctanos</NavLink>
-              <NavLink to="/soporte" onClick={() => setMenuAyudaAbierto(false)}>Soporte</NavLink>
+              <NavLink
+                to='/contacto'
+                onClick={() => setMenuAyudaAbierto(false)}
+              >
+                Contáctanos
+              </NavLink>
+              <NavLink to='/soporte' onClick={() => setMenuAyudaAbierto(false)}>
+                Soporte
+              </NavLink>
             </div>
           </div>
         </div>

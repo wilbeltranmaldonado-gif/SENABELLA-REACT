@@ -421,7 +421,7 @@ body.modo-oscuro .img-producto-checkout {
   .contenedor-checkout {
     grid-template-columns: 1fr;
   }
-  
+
   .seccion-resumen-orden {
     position: static;
     order: -1; /* Muestra el resumen primero en móviles */
@@ -432,7 +432,7 @@ body.modo-oscuro .img-producto-checkout {
   .grupo-inputs {
     grid-template-columns: 1fr;
   }
-  
+
   .seccion-formulario,
   .seccion-resumen-orden {
     padding: 20px;

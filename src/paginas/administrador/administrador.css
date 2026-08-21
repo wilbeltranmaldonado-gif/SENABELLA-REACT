@@ -13,7 +13,7 @@
   --border-color: #e2e8f0;
   --text-main: #1a202c;
   --text-muted: #64748b;
-  
+
   /* Variables específicas del admin */
   --admin-sidebar-bg: #14171d;
   --admin-sidebar-bg-hover: #1f232b;
@@ -33,18 +33,32 @@
   --admin-radius: 14px;
   --admin-radius-lg: 18px;
 
-  --admin-sombra-suave: 0 1px 2px rgba(20, 23, 29, 0.04), 0 1px 3px rgba(20, 23, 29, 0.03);
-  --admin-sombra: 0 6px 16px -4px rgba(20, 23, 29, 0.08), 0 2px 6px -2px rgba(20, 23, 29, 0.05);
-  --admin-sombra-flotante: 0 20px 45px -12px rgba(20, 23, 29, 0.22), 0 4px 14px -4px rgba(20, 23, 29, 0.1);
+  --admin-sombra-suave:
+    0 1px 2px rgba(20, 23, 29, 0.04), 0 1px 3px rgba(20, 23, 29, 0.03);
+  --admin-sombra:
+    0 6px 16px -4px rgba(20, 23, 29, 0.08),
+    0 2px 6px -2px rgba(20, 23, 29, 0.05);
+  --admin-sombra-flotante:
+    0 20px 45px -12px rgba(20, 23, 29, 0.22),
+    0 4px 14px -4px rgba(20, 23, 29, 0.1);
   --admin-anillo-foco: 0 0 0 3px rgba(170, 209, 0, 0.35);
 
-  --admin-fuente-display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --admin-fuente-display:
+    "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
 }
 
 .cuerpo-admin {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   background-color: #f3f4f7;
   color: var(--text-main);
   display: flex;
@@ -177,7 +191,11 @@
 }
 
 .admin-nav-item.activo {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
   color: #16311a;
   font-weight: 600;
   box-shadow: 0 4px 12px -2px rgba(170, 209, 0, 0.4);
@@ -218,7 +236,9 @@
   color: var(--admin-sidebar-texto);
   text-decoration: none;
   font-size: 13.5px;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .admin-sidebar-footer a:hover {
@@ -292,7 +312,10 @@
   border-radius: 10px;
   padding: 10px 16px;
   color: var(--text-muted);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -341,7 +364,11 @@
 
 .admin-boton-notificaciones {
   position: relative;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
   color: #16311a;
   border: none;
   box-shadow: 0 2px 8px rgba(170, 209, 0, 0.3);
@@ -377,7 +404,10 @@
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  transition: background-color 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .admin-icono-boton:hover {
@@ -420,7 +450,9 @@
   border-radius: 999px;
   cursor: pointer;
   color: var(--text-main);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .admin-perfil-boton:hover {
@@ -461,7 +493,9 @@
   z-index: 50;
   opacity: 0;
   transform: translateY(-6px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
 }
 
 .admin-dropdown-notificaciones {
@@ -474,8 +508,14 @@
 }
 
 @keyframes admin-caida {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .admin-dropdown-titulo {
@@ -555,8 +595,14 @@
 }
 
 @keyframes admin-aparecer {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .admin-bienvenida {
@@ -587,7 +633,7 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-}/* --- Botones Estéticos del Panel Admin --- */
+} /* --- Botones Estéticos del Panel Admin --- */
 .admin-boton {
   display: inline-flex;
   align-items: center;
@@ -728,7 +774,9 @@
   gap: 10px;
   border: 1px solid var(--border-color);
   border-left: 3px solid var(--kpi-color, var(--primary-color));
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .admin-kpi:hover {
@@ -1028,7 +1076,9 @@
   font-size: 14px;
   padding: 6px 9px;
   border-radius: 7px;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .admin-tabla-boton:hover {
@@ -1130,7 +1180,10 @@
   border-radius: 7px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .admin-stock-boton:hover {
@@ -1404,7 +1457,9 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   display: flex;
   align-items: center;
   gap: 16px;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .admin-tarjeta-estadistica:hover {
@@ -1571,7 +1626,9 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 12px;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .admin-categoria-acciones button:hover {
@@ -1593,8 +1650,12 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
 }
 
 @keyframes admin-modal-aparecer {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .admin-modal {
@@ -1609,8 +1670,14 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
 }
 
 @keyframes admin-modal-entrar {
-  from { transform: scale(0.95) translateY(-10px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
+  from {
+    transform: scale(0.95) translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
 .admin-modal-cabecera {
@@ -1637,7 +1704,9 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   font-size: 18px;
   padding: 4px;
   border-radius: 6px;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .admin-modal-cabecera button:hover {
@@ -1726,7 +1795,9 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   border: 1px solid var(--border-color);
   background-color: #fff;
   color: var(--text-main);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .admin-modal-pie button:hover {
@@ -1863,9 +1934,15 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
 }
 
 /* Colores utilitarios reutilizados en el dropdown de notificaciones */
-.texto-warning { color: var(--admin-warning); }
-.texto-info { color: var(--admin-info); }
-.texto-success { color: var(--admin-success); }
+.texto-warning {
+  color: var(--admin-warning);
+}
+.texto-info {
+  color: var(--admin-info);
+}
+.texto-success {
+  color: var(--admin-success);
+}
 
 /* =========================================================================
    FORMULARIOS (usados dentro de modales)
@@ -1907,7 +1984,9 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   font-family: inherit;
   color: var(--text-main);
   background-color: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .admin-form-grupo input:focus,
@@ -2005,7 +2084,9 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   align-items: center;
   gap: 12px;
   background: #fff;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 
 .admin-categoria-tarjeta:hover {
@@ -2059,8 +2140,12 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
 }
 
 @keyframes admin-overlay-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .admin-modal {
@@ -2076,8 +2161,14 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
 }
 
 @keyframes admin-modal-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .admin-modal-header {
@@ -2107,7 +2198,9 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .admin-modal-cerrar:hover {
@@ -2182,12 +2275,21 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
 }
 
 @keyframes admin-toast-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes admin-toast-out {
-  to { opacity: 0; transform: translateY(8px); }
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 .admin-toast i {
@@ -2195,9 +2297,15 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   flex-shrink: 0;
 }
 
-.admin-toast.exito i { color: var(--primary-color); }
-.admin-toast.error i { color: #ff8a7a; }
-.admin-toast.info i { color: #7ab8f5; }
+.admin-toast.exito i {
+  color: var(--primary-color);
+}
+.admin-toast.error i {
+  color: #ff8a7a;
+}
+.admin-toast.info i {
+  color: #7ab8f5;
+}
 
 /* =========================================================================
    RESPONSIVE
@@ -2478,7 +2586,10 @@ body.cuerpo-admin.modo-oscuro .admin-sidebar-logo .admin-badge-pro {
   flex-direction: column;
   gap: 12px;
   position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
   cursor: pointer;
   overflow: hidden;
 }
@@ -2716,7 +2827,9 @@ body.cuerpo-admin.modo-oscuro .admin-producto-top-barra {
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .modal-pedido-btn-cerrar:hover {
@@ -2789,7 +2902,9 @@ body.cuerpo-admin.modo-oscuro .admin-producto-top-barra {
   padding: 8px 12px;
   font-size: 13px;
   color: #0f172a;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
   width: 100%;
 }
 
@@ -3018,7 +3133,9 @@ body.cuerpo-admin.modo-oscuro .admin-producto-top-barra {
   font-size: 14px;
   padding: 6px;
   border-radius: 6px;
-  transition: color 0.15s ease, background 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
 }
 
 .modal-pedido-btn-eliminar-prod:hover {
@@ -3312,5 +3429,3 @@ body.cuerpo-admin.modo-oscuro .pedidos-btn-limpiar:hover {
   background: #1f2636;
   color: #f8fafc;
 }
-
-

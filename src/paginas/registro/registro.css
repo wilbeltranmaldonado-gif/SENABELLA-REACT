@@ -10,7 +10,7 @@
   --color-error: #d9534f;
   --color-exito: #2e7d32;
   --color-advertencia: #f0ad4e;
-  --fuente-principal: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --fuente-principal: "Segoe UI", system-ui, -apple-system, sans-serif;
   --sombra-tarjeta: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
@@ -92,8 +92,14 @@ body.modo-oscuro {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tarjeta-registro h2 {
@@ -155,7 +161,9 @@ body.modo-oscuro {
   background-color: var(--color-blanco);
   color: var(--color-texto);
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .campo-wrapper input.has-toggle {
@@ -210,7 +218,9 @@ body.modo-oscuro {
   height: 100%;
   width: 0%;
   border-radius: 4px;
-  transition: width 0.3s ease, background-color 0.3s ease;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .fortaleza-texto {
@@ -257,13 +267,15 @@ body.modo-oscuro {
   margin-top: 1px;
 }
 
-.opcion-checkbox a, .pie-tarjeta a {
+.opcion-checkbox a,
+.pie-tarjeta a {
   color: var(--color-primario-oscuro);
   text-decoration: none;
   font-weight: 600;
 }
 
-.opcion-checkbox a:hover, .pie-tarjeta a:hover {
+.opcion-checkbox a:hover,
+.pie-tarjeta a:hover {
   text-decoration: underline;
 }
 
@@ -282,7 +294,10 @@ body.modo-oscuro {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
   box-shadow: 0 4px 12px rgba(124, 168, 43, 0.3);
 }
 
@@ -297,7 +312,8 @@ body.modo-oscuro {
 }
 
 /* Mensajes de validación */
-.mensaje-error, .mensaje-exito {
+.mensaje-error,
+.mensaje-exito {
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 13px;
@@ -309,8 +325,14 @@ body.modo-oscuro {
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mensaje-error {
@@ -335,8 +357,9 @@ body.modo-oscuro {
   font-size: 13px;
 }
 
-.separador-o::before, .separador-o::after {
-  content: '';
+.separador-o::before,
+.separador-o::after {
+  content: "";
   flex: 1;
   border-bottom: 1px solid var(--color-borde);
 }

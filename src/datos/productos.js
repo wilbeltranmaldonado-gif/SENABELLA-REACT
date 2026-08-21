@@ -57,14 +57,15 @@ export const productosCatalogo = [
   {
     id: 1,
     marca: "LENOVO",
-    nombre: "Kindle paperwhite 2024 32gb 7\" Signature Edition Negra",
+    nombre: 'Kindle paperwhite 2024 32gb 7" Signature Edition Negra',
     referencia: "por pctel computo",
     precio: "$ 979.900",
     precioNumero: 979900,
     precioSecundario: "$ 1.019.000",
     precioSecundario1: "$ 1.399.000",
     descuento: "-30%",
-    imagen: "https://media.falabella.com/falabellaCO/142972175_01/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com/falabellaCO/142972175_01/w=1200,h=1200,fit=pad",
     etiqueta: "CYBER",
   },
   {
@@ -77,20 +78,22 @@ export const productosCatalogo = [
     precioSecundario: "$ 709.900",
     precioSecundario1: "$ 1.199.000",
     descuento: "-43%",
-    imagen: "https://media.falabella.com.co/falabellaCO/137155110_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/137155110_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 3,
     marca: "HP",
-    nombre: "Portátil 15.6\" Full HD AMD Ryzen 7 7730U 16GB RAM 512GB SSD Plata",
+    nombre: 'Portátil 15.6" Full HD AMD Ryzen 7 7730U 16GB RAM 512GB SSD Plata',
     referencia: "Por Compumarket Bga",
     precio: "$ 1.979.900",
     precioNumero: 1979900,
     precioSecundario: "$ 2.099.900",
     precioSecundario1: "$ 3.699.780",
     descuento: "-46%",
-    imagen: "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
     envioGratis: true,
     promocion: "NUEVO - REPOTENCIADO",
@@ -105,34 +108,39 @@ export const productosCatalogo = [
     precioSecundario: "$ 2.790.000",
     precioSecundario1: "$ 3.599.900",
     descuento: "-44%",
-    imagen: "https://media.falabella.com.co/falabellaCO/73053329_1/width=340,height=340,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/73053329_1/width=340,height=340,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
     verificado: true,
   },
   {
     id: 5,
     marca: "HP",
-    nombre: "Portátil HP 15-Fc0276La Amd Ryzen7 7730U 8Cores/16Gb/ 1Tb Ssd/Fhd 15.6/ Plateado Natural Win11 1.59Kg",
+    nombre:
+      "Portátil HP 15-Fc0276La Amd Ryzen7 7730U 8Cores/16Gb/ 1Tb Ssd/Fhd 15.6/ Plateado Natural Win11 1.59Kg",
     referencia: "Por SENABELLA",
     precio: "$ 279.900",
     precioNumero: 279900,
     precioSecundario: "$ 299.900",
     precioSecundario1: "$ 599.900",
     descuento: "-53%",
-    imagen: "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 6,
     marca: "LENOVO",
-    nombre: "Tablet Lenovo Tab Plus 8GB RAM 128GB / 8 Speakers / Funda + auriculares Moto Buds - Gris",
+    nombre:
+      "Tablet Lenovo Tab Plus 8GB RAM 128GB / 8 Speakers / Funda + auriculares Moto Buds - Gris",
     referencia: "Lenovo asia pacific limited sucursal colombia",
     precio: "$ 809.900",
     precioNumero: 809900,
     precioSecundario: "$ 849.900",
     precioSecundario1: "$ 1.999.900",
     descuento: "-60%",
-    imagen: "https://media.falabella.com.co/falabellaCO/139001771_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/139001771_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
@@ -145,7 +153,8 @@ export const productosCatalogo = [
     precioSecundario: "$ 709.900",
     precioSecundario1: "$ 1.199.000",
     descuento: "-43%",
-    imagen: "https://media.falabella.com.co/falabellaCO/134370606_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/134370606_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
@@ -158,34 +167,39 @@ export const productosCatalogo = [
     precioSecundario: "$ 476.900",
     precioSecundario1: "$ 550.000",
     descuento: "-22%",
-    imagen: "https://media.falabella.com/falabellaCO/124164429_01/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com/falabellaCO/124164429_01/w=1200,h=1200,fit=pad",
     etiqueta: "CYBER",
     verificado: true,
   },
   {
     id: 9,
     marca: "DELL",
-    nombre: "Portátil Dell Inspiron 15 3520 Intel Core i5 16GB RAM 512GB SSD 15.6\"",
+    nombre:
+      'Portátil Dell Inspiron 15 3520 Intel Core i5 16GB RAM 512GB SSD 15.6"',
     referencia: "Por SENABELLA",
     precio: "$ 2.199.900",
     precioNumero: 2199900,
     precioSecundario: "$ 2.399.900",
     precioSecundario1: "$ 3.299.900",
     descuento: "-35%",
-    imagen: "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 10,
     marca: "ASUS",
-    nombre: "Portátil Gamer ASUS TUF Gaming F15 Intel Core i7 16GB RAM RTX 3050",
+    nombre:
+      "Portátil Gamer ASUS TUF Gaming F15 Intel Core i7 16GB RAM RTX 3050",
     referencia: "Por SENABELLA",
     precio: "$ 3.899.900",
     precioNumero: 3899900,
     precioSecundario: "$ 4.199.900",
     precioSecundario1: "$ 5.399.900",
     descuento: "-28%",
-    imagen: "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
@@ -198,59 +212,68 @@ export const productosCatalogo = [
     precioSecundario: "$ 849.900",
     precioSecundario1: "$ 1.099.900",
     descuento: "-25%",
-    imagen: "https://media.falabella.com.co/falabellaCO/137155110_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/137155110_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 12,
     marca: "ACER",
-    nombre: "Portátil Acer Aspire 5 Intel Core i5 8GB RAM 512GB SSD 15.6\" Full HD",
+    nombre:
+      'Portátil Acer Aspire 5 Intel Core i5 8GB RAM 512GB SSD 15.6" Full HD',
     referencia: "Por SENABELLA",
     precio: "$ 1.849.900",
     precioNumero: 1849900,
     precioSecundario: "$ 1.999.900",
     precioSecundario1: "$ 2.599.900",
     descuento: "-30%",
-    imagen: "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 13,
     marca: "LOGITECH",
-    nombre: "Kit Teclado y Mouse Inalámbrico Logitech MK270 Conexión USB 2.4GHz",
+    nombre:
+      "Kit Teclado y Mouse Inalámbrico Logitech MK270 Conexión USB 2.4GHz",
     referencia: "Por SENABELLA",
     precio: "$ 119.900",
     precioNumero: 119900,
     precioSecundario: "$ 139.900",
     precioSecundario1: "$ 159.900",
     descuento: "-20%",
-    imagen: "https://media.falabella.com.co/falabellaCO/124164429_01/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/124164429_01/w=1200,h=1200,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 14,
     marca: "MICROSOFT",
-    nombre: "Licencia Microsoft 365 Personal 1 Año Suscripción Digital 1 Usuario",
+    nombre:
+      "Licencia Microsoft 365 Personal 1 Año Suscripción Digital 1 Usuario",
     referencia: "Por SENABELLA",
     precio: "$ 249.900",
     precioNumero: 249900,
     precioSecundario: "$ 269.900",
     precioSecundario1: "$ 299.900",
     descuento: "-15%",
-    imagen: "https://media.falabella.com.co/falabellaCO/73424390_1/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/73424390_1/w=1200,h=1200,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 15,
     marca: "AMD",
-    nombre: "Procesador AMD Ryzen 7 5700G 8 Núcleos 3.8GHz Gráficos Radeon Vega",
+    nombre:
+      "Procesador AMD Ryzen 7 5700G 8 Núcleos 3.8GHz Gráficos Radeon Vega",
     referencia: "Por SENABELLA",
     precio: "$ 899.900",
     precioNumero: 899900,
     precioSecundario: "$ 949.900",
     precioSecundario1: "$ 1.199.900",
     descuento: "-25%",
-    imagen: "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
     etiqueta: "CYBER",
   },
   {
@@ -263,20 +286,23 @@ export const productosCatalogo = [
     precioSecundario: "$ 59.900",
     precioSecundario1: "$ 89.900",
     descuento: "-40%",
-    imagen: "https://media.falabella.com.co/falabellaCO/140922701_01/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/140922701_01/w=1200,h=1200,fit=pad",
     etiqueta: "CYBER",
   },
   {
     id: 17,
     marca: "JALTECH",
-    nombre: "Adaptador Hub USB Type-C 7 en 1 HDMI 4K USB 3.0 Lector de Tarjetas SD",
+    nombre:
+      "Adaptador Hub USB Type-C 7 en 1 HDMI 4K USB 3.0 Lector de Tarjetas SD",
     referencia: "Por SENABELLA",
     precio: "$ 89.900",
     precioNumero: 89900,
     precioSecundario: "$ 99.900",
     precioSecundario1: "$ 139.900",
     descuento: "-35%",
-    imagen: "https://media.falabella.com.co/falabellaCO/155656024_01/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/155656024_01/w=1200,h=1200,fit=pad",
     etiqueta: "CYBER",
   },
   {
@@ -287,7 +313,8 @@ export const productosCatalogo = [
     precio: "$ 2.399.900",
     precioNumero: 2399900,
     descuento: "-10%",
-    imagen: "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/73354813_01/width=340,height=340,quality=70,format=webp,fit=pad",
     etiqueta: "OFERTA",
     categoria: "desktop",
   },
@@ -299,7 +326,8 @@ export const productosCatalogo = [
     precio: "$ 2.899.900",
     precioNumero: 2899900,
     descuento: "-5%",
-    imagen: "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/127619968_01/width=480,height=480,quality=70,format=webp,fit=pad",
     etiqueta: "OFERTA",
     categoria: "todo-en-uno",
   },
@@ -311,19 +339,21 @@ export const productosCatalogo = [
     precio: "$ 699.900",
     precioNumero: 699900,
     descuento: "-0%",
-    imagen: "https://media.falabella.com.co/falabellaCO/73424390_1/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/73424390_1/w=1200,h=1200,fit=pad",
     etiqueta: "SOFTWARE",
     categoria: "software",
   },
   {
     id: 21,
     marca: "ASUS",
-    nombre: "Monitor ASUS ProArt Display 27\" 4K",
+    nombre: 'Monitor ASUS ProArt Display 27" 4K',
     referencia: "Por SENABELLA",
     precio: "$ 1.499.900",
     precioNumero: 1499900,
     descuento: "-15%",
-    imagen: "https://media.falabella.com.co/falabellaCO/124164429_01/w=1200,h=1200,fit=pad",
+    imagen:
+      "https://media.falabella.com.co/falabellaCO/124164429_01/w=1200,h=1200,fit=pad",
     etiqueta: "OFERTA",
     categoria: "monitor",
   },
@@ -338,7 +368,8 @@ export const productosRopaAccesorios = [
   {
     id: 101,
     marca: "SENABELLA",
-    nombre: "Vestido Elegante Mujer Fiesta Estampado Floral Moda Femenina Tallas S-XL",
+    nombre:
+      "Vestido Elegante Mujer Fiesta Estampado Floral Moda Femenina Tallas S-XL",
     categoria: "mujer",
     precio: "$ 129.900",
     precioNumero: 129900,
@@ -353,7 +384,8 @@ export const productosRopaAccesorios = [
   {
     id: 102,
     marca: "SENABELLA",
-    nombre: "Chaqueta de Cuero Sintético Hombre Slim Fit Moda Masculina Color Negro",
+    nombre:
+      "Chaqueta de Cuero Sintético Hombre Slim Fit Moda Masculina Color Negro",
     categoria: "hombre",
     precio: "$ 189.900",
     precioNumero: 189900,
@@ -383,7 +415,8 @@ export const productosRopaAccesorios = [
   {
     id: 104,
     marca: "ADIDAS",
-    nombre: "Tenis Urbano Mujer Adidas Grand Court 2.0 Negros Calzado Deportivo",
+    nombre:
+      "Tenis Urbano Mujer Adidas Grand Court 2.0 Negros Calzado Deportivo",
     categoria: "calzado",
     precio: "$ 279.900",
     precioNumero: 279900,
@@ -502,7 +535,7 @@ export const productosRopaAccesorios = [
   {
     id: 112,
     marca: "SENABELLA",
-    nombre: "Mochila Antirrobo USB Impermeable Laptop 15.6\" Viaje Urbano Negra",
+    nombre: 'Mochila Antirrobo USB Impermeable Laptop 15.6" Viaje Urbano Negra',
     categoria: "accesorios",
     precio: "$ 119.900",
     precioNumero: 119900,
@@ -517,7 +550,8 @@ export const productosRopaAccesorios = [
   {
     id: 113,
     marca: "ADIDAS",
-    nombre: "Sudadera con Capucha Hombre Adidas Essentials 3 Franjas Algodón Gris",
+    nombre:
+      "Sudadera con Capucha Hombre Adidas Essentials 3 Franjas Algodón Gris",
     categoria: "hombre",
     precio: "$ 169.900",
     precioNumero: 169900,
@@ -547,7 +581,8 @@ export const productosRopaAccesorios = [
   {
     id: 115,
     marca: "NIKE",
-    nombre: "Tenis Running Mujer Nike Revolution 6 Rosados Ligeros Amortiguación",
+    nombre:
+      "Tenis Running Mujer Nike Revolution 6 Rosados Ligeros Amortiguación",
     categoria: "calzado",
     precio: "$ 299.900",
     precioNumero: 299900,
@@ -575,7 +610,8 @@ export const productosRopaAccesorios = [
   {
     id: 117,
     marca: "SENABELLA",
-    nombre: "Conjunto coordinado moderno con tonos neutros y detalles sofisticados",
+    nombre:
+      "Conjunto coordinado moderno con tonos neutros y detalles sofisticados",
     categoria: "parejas",
     precio: "$ 289.900",
     precioNumero: 289900,
@@ -663,14 +699,16 @@ export const productosRopaAccesorios = [
   {
     id: 123,
     marca: "L'OREAL",
-    nombre: "Serum Facial Revitalift Ácido Hialurónico Anti Arrugas L'Oréal Paris",
+    nombre:
+      "Serum Facial Revitalift Ácido Hialurónico Anti Arrugas L'Oréal Paris",
     categoria: "belleza",
     precio: "$ 75.900",
     precioNumero: 75900,
     descuento: "-10%",
     etiqueta: "BELLEZA",
     referencia: "Por SENABELLA",
-    imagen: "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltf413d366cc29e9bf/6a5a7cfd5c7ce2611d2d8c44/powercard10_home_belleza_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
+    imagen:
+      "https://images.falabella.com/v3/assets/blt088e6fffbba20f16/bltf413d366cc29e9bf/6a5a7cfd5c7ce2611d2d8c44/powercard10_home_belleza_desk.jpg?auto=webp&disable=upscale&quality=70&width=1280",
   },
 ];
 

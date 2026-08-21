@@ -8,7 +8,7 @@ import "./login.css";
 function Login() {
   const [formData, setFormData] = useState({
     correo: "",
-    contrasena: ""
+    contrasena: "",
   });
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
   const [recordarSesion, setRecordarSesion] = useState(false);
@@ -17,7 +17,7 @@ function Login() {
   const navigate = useNavigate();
 
   const [modoOscuro, setModoOscuro] = useState(
-    localStorage.getItem("modoOscuro") === "activado"
+    localStorage.getItem("modoOscuro") === "activado",
   );
 
   useEffect(() => {
@@ -80,101 +80,116 @@ function Login() {
 
     localStorage.setItem("senabella_sesion", "activa");
     localStorage.setItem("senabella_rol", rol);
-    localStorage.setItem("senabella_usuario", JSON.stringify({
-      ...usuario,
-      nombre,
-      email: usuario.correo,
-      correo: usuario.correo,
-      rol,
-    }));
+    localStorage.setItem(
+      "senabella_usuario",
+      JSON.stringify({
+        ...usuario,
+        nombre,
+        email: usuario.correo,
+        correo: usuario.correo,
+        rol,
+      }),
+    );
 
     if (recordarSesion) {
       localStorage.setItem("recordar_sesion", "true");
     }
 
     if (rol === "administrador") {
-      setMensajeExito(`¡Bienvenido, ${nombre}! Redirigiendo al panel de administración...`);
-      setTimeout(() => { navigate("/administrador"); }, 1200);
+      setMensajeExito(
+        `¡Bienvenido, ${nombre}! Redirigiendo al panel de administración...`,
+      );
+      setTimeout(() => {
+        navigate("/administrador");
+      }, 1200);
     } else {
-      setMensajeExito(`¡Bienvenido de nuevo, ${nombre}! Redirigiendo a tu perfil...`);
-      setTimeout(() => { navigate("/usuario"); }, 1200);
+      setMensajeExito(
+        `¡Bienvenido de nuevo, ${nombre}! Redirigiendo a tu perfil...`,
+      );
+      setTimeout(() => {
+        navigate("/usuario");
+      }, 1200);
     }
   };
 
   return (
-    <div className="auth-page">
+    <div className='auth-page'>
       {/* Botón regresar al inicio */}
-      <Link to="/" className="boton-regresar" title="Volver al inicio">
-        <i className="fa-solid fa-arrow-left"></i>
+      <Link to='/' className='boton-regresar' title='Volver al inicio'>
+        <i className='fa-solid fa-arrow-left'></i>
         <span>Inicio</span>
       </Link>
 
       {/* Botón modo oscuro flotante */}
-      <button 
-        className="btn-modo-oscuro-flotante" 
+      <button
+        className='btn-modo-oscuro-flotante'
         onClick={alternarModoOscuro}
-        title="Alternar Modo Oscuro"
+        title='Alternar Modo Oscuro'
       >
         <i className={modoOscuro ? "fa-solid fa-sun" : "fa-solid fa-moon"}></i>
       </button>
 
       {/* Contenedor principal de inicio de sesión */}
-      <main className="contenedor-registro">
-        <div className="tarjeta-registro">
+      <main className='contenedor-registro'>
+        <div className='tarjeta-registro'>
           <h2>Bienvenido de nuevo</h2>
-          <p className="subtitulo">Ingresa tus datos para acceder a tu cuenta de Senabella</p>
+          <p className='subtitulo'>
+            Ingresa tus datos para acceder a tu cuenta de Senabella
+          </p>
 
-          <form onSubmit={manejarSubmit} className="formulario" noValidate>
+          <form onSubmit={manejarSubmit} className='formulario' noValidate>
             {/* Campo Correo */}
-            <div className="grupo-campo">
-              <label htmlFor="correoLogin">Correo electrónico</label>
-              <div className="campo-wrapper">
+            <div className='grupo-campo'>
+              <label htmlFor='correoLogin'>Correo electrónico</label>
+              <div className='campo-wrapper'>
                 <input
-                  type="email"
-                  id="correoLogin"
-                  name="correo"
+                  type='email'
+                  id='correoLogin'
+                  name='correo'
                   value={formData.correo}
                   onChange={manejarCambio}
-                  placeholder="nombre@ejemplo.com"
-                  maxLength="32"
+                  placeholder='nombre@ejemplo.com'
+                  maxLength='32'
                   required
                 />
-                <i className="fa-solid fa-envelope icono-campo"></i>
+                <i className='fa-solid fa-envelope icono-campo'></i>
               </div>
             </div>
 
             {/* Campo Contraseña */}
-            <div className="grupo-campo">
-              <label htmlFor="contrasenaLogin">Contraseña</label>
-              <div className="campo-wrapper">
+            <div className='grupo-campo'>
+              <label htmlFor='contrasenaLogin'>Contraseña</label>
+              <div className='campo-wrapper'>
                 <input
                   type={mostrarContrasena ? "text" : "password"}
-                  id="contrasenaLogin"
-                  name="contrasena"
+                  id='contrasenaLogin'
+                  name='contrasena'
                   value={formData.contrasena}
                   onChange={manejarCambio}
-                  className="has-toggle"
-                  placeholder="Ingresa tu contraseña"
-                  maxLength="30"
+                  className='has-toggle'
+                  placeholder='Ingresa tu contraseña'
+                  maxLength='30'
                   required
                 />
-                <i className="fa-solid fa-lock icono-campo"></i>
+                <i className='fa-solid fa-lock icono-campo'></i>
                 <button
-                  type="button"
-                  className="btn-toggle-pass"
+                  type='button'
+                  className='btn-toggle-pass'
                   onClick={() => setMostrarContrasena(!mostrarContrasena)}
-                  title="Ver / Ocultar contraseña"
+                  title='Ver / Ocultar contraseña'
                 >
-                  <i className={`fa-solid ${mostrarContrasena ? "fa-eye-slash" : "fa-eye"}`}></i>
+                  <i
+                    className={`fa-solid ${mostrarContrasena ? "fa-eye-slash" : "fa-eye"}`}
+                  ></i>
                 </button>
               </div>
             </div>
 
             {/* Opciones adicionales */}
-            <div className="grupo-opciones">
-              <label className="opcion-checkbox">
+            <div className='grupo-opciones'>
+              <label className='opcion-checkbox'>
                 <input
-                  type="checkbox"
+                  type='checkbox'
                   checked={recordarSesion}
                   onChange={(e) => setRecordarSesion(e.target.checked)}
                 />
@@ -184,26 +199,29 @@ function Login() {
 
             {/* Alertas de estado */}
             {mensajeError && (
-              <div className="mensaje-error" style={{ display: "flex" }}>
-                <i className="fa-solid fa-triangle-exclamation"></i>
+              <div className='mensaje-error' style={{ display: "flex" }}>
+                <i className='fa-solid fa-triangle-exclamation'></i>
                 <span>{mensajeError}</span>
               </div>
             )}
             {mensajeExito && (
-              <div className="mensaje-exito" style={{ display: "flex" }}>
-                <i className="fa-solid fa-circle-check"></i>
+              <div className='mensaje-exito' style={{ display: "flex" }}>
+                <i className='fa-solid fa-circle-check'></i>
                 <span>{mensajeExito}</span>
               </div>
             )}
 
             {/* Botón Iniciar Sesión */}
-            <button type="submit" className="boton-registro">
-              <i className="fa-solid fa-right-to-bracket"></i> Iniciar sesión
+            <button type='submit' className='boton-registro'>
+              <i className='fa-solid fa-right-to-bracket'></i> Iniciar sesión
             </button>
           </form>
 
-          <div className="pie-tarjeta">
-            <p>¿No tienes una cuenta? <Link to="/registro">Crea tu cuenta aquí</Link></p>
+          <div className='pie-tarjeta'>
+            <p>
+              ¿No tienes una cuenta?{" "}
+              <Link to='/registro'>Crea tu cuenta aquí</Link>
+            </p>
           </div>
         </div>
       </main>
