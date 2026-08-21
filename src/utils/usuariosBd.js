@@ -1,19 +1,30 @@
-// Este archivo gestiona la base de datos local de usuarios y la autenticación del sistema.
+// =============================================================================
+// MÓDULO: BASE DE DATOS Y GESTIÓN DE USUARIOS (SENABELLA)
+// -----------------------------------------------------------------------------
+// Este archivo simula una base de datos local usando localStorage para:
+// 1. Registrar nuevos usuarios (clientes y administradores).
+// 2. Autenticar inicios de sesión (validar correo y contraseña).
+// 3. Modificar datos de perfil (nombre, teléfono, dirección, ciudad).
+// 4. Eliminar cuentas o actualizar roles y permisos.
+// =============================================================================
 
 const CLAVE_BD = "senabella_usuarios";
 const CORREO_ADMIN = "admin@senabella.com";
 
 /* ------------------------------------------------------------------
-   Helpers internos
+   FUNCIONES AUXILIARES DE CODIFICACIÓN
 ------------------------------------------------------------------ */
+// Codifica contraseñas en Base64 para evitar guardarlas en texto plano en localStorage
 function _codificar(texto) {
   try { return btoa(unescape(encodeURIComponent(texto))); } catch (e) { return btoa(texto); }
 }
 
+// Decodifica la contraseña almacenada para comparar en el login
 function _decodificar(codigo) {
   try { return decodeURIComponent(escape(atob(codigo))); } catch (e) { return atob(codigo); }
 }
 
+// Genera la fecha actual en formato legible (ej: "21 ago 2026")
 function _hoy() {
   return new Date().toLocaleDateString("es-CO", {
     day: "2-digit", month: "short", year: "numeric",
@@ -21,8 +32,11 @@ function _hoy() {
 }
 
 /* ------------------------------------------------------------------
-   CRUD de localStorage
+   OPERACIONES CRUD (Crear, Leer, Actualizar, Eliminar)
 ------------------------------------------------------------------ */
+/**
+ * Obtiene la lista completa de usuarios registrados en el sistema
+ */
 export function obtenerUsuarios() {
   try {
     return JSON.parse(localStorage.getItem(CLAVE_BD) || "[]");
@@ -31,15 +45,24 @@ export function obtenerUsuarios() {
   }
 }
 
+/**
+ * Guarda una lista de usuarios en localStorage
+ */
 export function guardarUsuarios(lista) {
   localStorage.setItem(CLAVE_BD, JSON.stringify(lista));
 }
 
+/**
+ * Busca un usuario por su dirección de correo electrónico
+ */
 export function buscarPorCorreo(correo) {
   const lista = obtenerUsuarios();
   return lista.find((u) => u.correo.toLowerCase() === correo.toLowerCase()) || null;
 }
 
+/**
+ * Registra un nuevo usuario en la base de datos
+ */
 export function crearUsuario({ nombre, correo, password, celular = "", direccion = "", ciudad = "", rol = "cliente" }) {
   if (!nombre || !correo || !password) {
     return { ok: false, mensaje: "Todos los campos son obligatorios." };

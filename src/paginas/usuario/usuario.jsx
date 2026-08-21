@@ -1,4 +1,13 @@
-// Esta vista permite ver y actualizar la información del perfil del usuario.
+// =============================================================================
+// COMPONENTE: PANEL DE USUARIO (MI CUENTA SENABELLA)
+// -----------------------------------------------------------------------------
+// Esta página permite a los clientes registrados gestionar su cuenta:
+// 1. "Mi Perfil": Actualizar nombre, correo, celular y contraseña de acceso.
+// 2. "Datos de Envío y Contacto": Configurar su dirección y ciudad de entrega (Colombia).
+// 3. "Mis compras": Consultar el historial completo de pedidos realizados,
+//    detallando número de orden, fecha, método de pago, productos y montos.
+// 4. Modal de confirmación para cerrar sesión de manera segura.
+// =============================================================================
 
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -9,7 +18,10 @@ import {
 } from "../../datos";
 
 function Usuario() {
-  const [seccionActiva, setSeccionActiva] = useState("mi-perfil");
+  // --- ESTADOS PRINCIPALES DEL PANEL DE USUARIO ---
+  const [seccionActiva, setSeccionActiva] = useState("mi-perfil"); // Pestaña activa ('mi-perfil', 'datos-envio', 'mis-compras')
+  
+  // Datos del usuario logueado en la sesión
   const [usuario, setUsuario] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("senabella_usuario")) || {};
@@ -17,6 +29,8 @@ function Usuario() {
       return {};
     }
   });
+
+  // Historial de compras/órdenes del usuario
   const [ordenes, setOrdenes] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("senabella_user_orders")) || [];
@@ -24,26 +38,37 @@ function Usuario() {
       return [];
     }
   });
+
+  // Mensajes de éxito o error al guardar
   const [mensajePerfil, setMensajePerfil] = useState({ texto: "", tipo: "" });
   const [mensajeEnvio, setMensajeEnvio] = useState({ texto: "", tipo: "" });
+  
+  // Control del modal de confirmación para cerrar sesión
   const [modalLogoutAbierto, setModalLogoutAbierto] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
+  // =========================================================================
+  // EFECTO 1: Si se pasa una sección específica en la navegación (ej: desde checkout)
+  // =========================================================================
   useEffect(() => {
     if (location.state && location.state.seccion) {
       setSeccionActiva(location.state.seccion);
     }
   }, [location.state]);
 
+  // =========================================================================
+  // EFECTO 2: VERIFICAR SESIÓN ACTIVA Y SINCRONIZAR DATOS
+  // =========================================================================
   useEffect(() => {
-    // Verificar sesión
+    // Si no hay sesión activa, redirigir inmediatamente a la página de login
     if (localStorage.getItem("senabella_sesion") !== "activa") {
       navigate("/login");
       return;
     }
 
+    // Función para leer los datos más actualizados desde localStorage
     const sincronizarDatosUsuario = () => {
       try {
         const u = JSON.parse(localStorage.getItem("senabella_usuario")) || {};
@@ -61,36 +86,24 @@ function Usuario() {
     };
 
     sincronizarDatosUsuario();
+    
+    // Escuchar eventos globales del navegador para actualizar la vista en tiempo real
     window.addEventListener("storage", sincronizarDatosUsuario);
-    window.addEventListener(
-      "senabella_orders_updated",
-      sincronizarDatosUsuario,
-    );
-    window.addEventListener(
-      "senabella_ubicacion_actualizada",
-      sincronizarDatosUsuario,
-    );
-    window.addEventListener(
-      "senabella-ubicacion-actualizada",
-      sincronizarDatosUsuario,
-    );
+    window.addEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+    window.addEventListener("senabella_ubicacion_actualizada", sincronizarDatosUsuario);
+    window.addEventListener("senabella-ubicacion-actualizada", sincronizarDatosUsuario);
+
     return () => {
       window.removeEventListener("storage", sincronizarDatosUsuario);
-      window.removeEventListener(
-        "senabella_orders_updated",
-        sincronizarDatosUsuario,
-      );
-      window.removeEventListener(
-        "senabella_ubicacion_actualizada",
-        sincronizarDatosUsuario,
-      );
-      window.removeEventListener(
-        "senabella-ubicacion-actualizada",
-        sincronizarDatosUsuario,
-      );
+      window.removeEventListener("senabella_orders_updated", sincronizarDatosUsuario);
+      window.removeEventListener("senabella_ubicacion_actualizada", sincronizarDatosUsuario);
+      window.removeEventListener("senabella-ubicacion-actualizada", sincronizarDatosUsuario);
     };
   }, [navigate]);
 
+  /**
+   * Cierra la sesión del cliente eliminando los datos almacenados y redirigiendo al inicio
+   */
   const confirmarCerrarSesion = () => {
     localStorage.removeItem("senabella_sesion");
     localStorage.removeItem("senabella_rol");
@@ -100,6 +113,9 @@ function Usuario() {
     setTimeout(() => window.location.reload(), 100);
   };
 
+  /**
+   * Valida y guarda los cambios en el perfil personal (Nombre, Correo, Celular y Contraseña)
+   */
   const guardarPerfil = (e) => {
     e.preventDefault();
     const nombre = e.target.elements.nombre.value.trim();
@@ -147,6 +163,10 @@ function Usuario() {
     setTimeout(() => setMensajePerfil({ texto: "", tipo: "" }), 4000);
   };
 
+  /**
+   * Valida y guarda los datos de envío (Dirección, Celular y Ciudad de Entrega).
+   * Además sincroniza la información con la base de datos de usuarios y la cabecera.
+   */
   const guardarEnvio = (e) => {
     e.preventDefault();
     const celular = e.target.elements.celular.value.trim();
@@ -179,10 +199,11 @@ function Usuario() {
       ciudad,
     };
 
+    // 1. Guardar en la sesión del usuario actual
     localStorage.setItem("senabella_usuario", JSON.stringify(actualizado));
     setUsuario(actualizado);
 
-    // Sincronizar en la base de datos de usuarios
+    // 2. Sincronizar en la lista general de usuarios de la tienda
     try {
       const usuariosBD = JSON.parse(
         localStorage.getItem("senabella_usuarios") || "[]",
@@ -207,6 +228,7 @@ function Usuario() {
       );
     }
 
+    // 3. Notificar a toda la app que la ubicación ha cambiado (para el encabezado)
     if (ciudad) {
       localStorage.setItem("ubicacion", ciudad);
       window.dispatchEvent(new Event("senabella_ubicacion_actualizada"));
@@ -230,6 +252,9 @@ function Usuario() {
     setTimeout(() => setMensajeEnvio({ texto: "", tipo: "" }), 4000);
   };
 
+  /**
+   * Maneja el cambio de ciudad desde el selector desplegable
+   */
   const handleCambioCiudad = (nuevaCiudad) => {
     setUsuario((prev) => ({ ...prev, ciudad: nuevaCiudad }));
     if (nuevaCiudad) {
@@ -240,6 +265,7 @@ function Usuario() {
     }
   };
 
+  // Opciones del menú de navegación lateral del usuario
   const menuItems = [
     { id: "mi-perfil", texto: "Mi Perfil", icono: "fa-user" },
     {
