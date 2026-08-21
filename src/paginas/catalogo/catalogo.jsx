@@ -7,7 +7,6 @@ import {
   categoriasCirculares,
   productosIniciales,
   marcasBotones,
-  categoriasListaLateral,
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 import imagenFallback from "../../assets/teclado.webp";
@@ -49,12 +48,8 @@ function Catalogo() {
   const [filtroMarcaAbierto, setFiltroMarcaAbierto] = useState(true);
   const [filtroPrecioAbierto, setFiltroPrecioAbierto] = useState(true);
 
-  const [actualizarFavs, setActualizarFavs] = useState(0);
-
   useEffect(() => {
     iniciarFavoritosGlobal();
-    const actualizarFav = () => setActualizarFavs(prev => prev + 1);
-    window.addEventListener("senabella-favoritos-actualizado", actualizarFav);
 
     const actualizarProductos = () => {
       try {
@@ -68,7 +63,6 @@ function Catalogo() {
     window.addEventListener("storage", actualizarProductos);
     return () => {
       window.removeEventListener("storage", actualizarProductos);
-      window.removeEventListener("senabella-favoritos-actualizado", actualizarFav);
     };
   }, []);
 

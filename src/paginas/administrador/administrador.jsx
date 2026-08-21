@@ -1,13 +1,6 @@
 // =============================================================================
 // COMPONENTE PRINCIPAL: PANEL DE ADMINISTRADOR (SENABELLA)
-// -----------------------------------------------------------------------------
-// Este componente actúa como el "esqueleto" o contenedor maestro del panel de control.
-// Controla:
-// 1. La barra lateral de navegación (Sidebar) para cambiar entre secciones/vistas.
-// 2. La barra superior (Topbar) con modo oscuro y campana de notificaciones.
-// 3. El estado de la sesión y el modal de confirmación para cerrar sesión.
-// 4. El renderizado dinámico de la vista seleccionada (Resumen, Pedidos, Productos, etc.)
-// =============================================================================
+
 
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -151,7 +144,6 @@ function Administrador() {
   const [modoOscuro, setModoOscuro] = useState(false); // Tema visual claro/oscuro
   const [notificacionesLeidas, setNotificacionesLeidas] = useState({}); // Registro de notificaciones marcadas como leídas
   const sidebarRef = useRef(null);
-  const overlayRef = useRef(null);
 
   // =========================================================================
   // EFECTO 1: CARGAR CONFIGURACIONES INICIALES Y TEMA

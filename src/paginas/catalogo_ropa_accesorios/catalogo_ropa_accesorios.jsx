@@ -13,7 +13,7 @@ import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 import { cumpleBusquedaInteligente } from "../../utils/search";
 
 function CatalogoRopaAccesorios() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const queryCat = searchParams.get("categoria") || "";
   const queryBusqueda = (searchParams.get("busqueda") || "").trim().toLowerCase();
 
@@ -35,17 +35,13 @@ function CatalogoRopaAccesorios() {
   const [filtroDescuentosAbierto, setFiltroDescuentosAbierto] = useState(false);
 
   // Sincronizar parámetro de búsqueda de la URL
-  const [actualizarFavs, setActualizarFavs] = useState(0);
   useEffect(() => {
     iniciarFavoritosGlobal();
-    const actualizarFav = () => setActualizarFavs(prev => prev + 1);
-    window.addEventListener("senabella-favoritos-actualizado", actualizarFav);
     
     if (queryCat) {
       setCategoriasSeleccionadas([queryCat.toLowerCase()]);
     }
     
-    return () => window.removeEventListener("senabella-favoritos-actualizado", actualizarFav);
   }, [queryCat]);
 
   // Filtrado reactivo de productos

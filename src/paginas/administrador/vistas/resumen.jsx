@@ -145,7 +145,7 @@ function Resumen() {
     window.addEventListener("senabella_orders_updated", actualizarDatos);
     // Cargar Chart.js dinámicamente
     const loadChartJS = async () => {
-      if (typeof Chart === "undefined") {
+      if (typeof window.Chart === "undefined") {
         const script = document.createElement("script");
         script.src =
           "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js";
@@ -168,7 +168,7 @@ function Resumen() {
 
       try {
         // Crear gráfica de ventas simplificada
-        chartInstance.current = new Chart(ctx, {
+        chartInstance.current = new window.Chart(ctx, {
           type: "line",
           data: {
             labels: [

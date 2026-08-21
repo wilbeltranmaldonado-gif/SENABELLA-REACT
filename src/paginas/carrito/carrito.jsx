@@ -80,6 +80,8 @@ function Carrito() {
         ajustarCantidadesAStockAdmin,
       );
     };
+    // La función se mantiene estable durante el ciclo de vida de esta vista.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sugerencias aleatorias basadas ÚNICAMENTE en productos del catálogo real con stock > 0

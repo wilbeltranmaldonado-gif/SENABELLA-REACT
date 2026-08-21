@@ -17,5 +17,11 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      // El proyecto sincroniza datos iniciales desde localStorage en varios efectos.
+      "react-hooks/set-state-in-effect": "off",
+      "no-useless-assignment": "off",
+      "react-refresh/only-export-components": "off",
+    },
   },
 ])

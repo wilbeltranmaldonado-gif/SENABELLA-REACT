@@ -46,13 +46,8 @@ function Inicio() {
 
  
 
-  const [actualizarFavs, setActualizarFavs] = useState(0);
-
   useEffect(() => {
     iniciarFavoritosGlobal(); // Inicializar favoritos globales al montar
-    
-    const actualizar = () => setActualizarFavs(prev => prev + 1);
-    window.addEventListener("senabella-favoritos-actualizado", actualizar);
 
     const manejarScroll = () => {
       setMostrarArriba(window.scrollY > 400);
@@ -62,7 +57,6 @@ function Inicio() {
 
     return () => {
       window.removeEventListener("scroll", manejarScroll);
-      window.removeEventListener("senabella-favoritos-actualizado", actualizar);
       document.body.style.overflow = "";
     };
   }, []);

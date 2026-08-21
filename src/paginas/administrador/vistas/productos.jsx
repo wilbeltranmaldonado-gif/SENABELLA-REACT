@@ -202,7 +202,7 @@ const sincronizarCategorias = (productos) => {
 function Productos() {
   // --- ESTADOS DE LA VISTA DE PRODUCTOS ---
   const [productos, setProductos] = useState(leerProductos); // Lista de productos
-  const [categorias, setCategorias] = useState(leerCategorias); // Lista de categorías
+  const [categorias] = useState(leerCategorias); // Lista de categorías
 
   const [modalAbierto, setModalAbierto] = useState(false); // Controla si la ventana modal está abierta
   const [productoEditando, setProductoEditando] = useState(null); // Producto que se está creando o modificando

@@ -1,9 +1,9 @@
 // Este componente renderiza el encabezado principal, el menú y los accesos rápidos del usuario.
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./encabezado.css";
-import { CIUDADES, ENLACES_MENU_MOVIL } from "../../datos";
+import { ENLACES_MENU_MOVIL } from "../../datos";
 import { iniciarFavoritosGlobal } from "../../paginas/favoritos/favoritos";
 import { obtenerStockDeProducto } from "../../utils/stock";
 import { esBusquedaDeRopa } from "../../utils/search";
@@ -67,7 +67,7 @@ function iniciarCarritoGlobal() {
       try {
         const datos = localStorage.getItem(this.KEY);
         return datos ? JSON.parse(datos) : [];
-      } catch (e) {
+      } catch {
         return [];
       }
     },
@@ -171,8 +171,6 @@ function iniciarCarritoGlobal() {
 export default function Header() {
   const [modoOscuro, setModoOscuro] = useState(false);
   const [ubicacion, setUbicacion] = useState("Ciudad");
-  const [menuUbicacionAbierto, setMenuUbicacionAbierto] = useState(false);
-  const [menuTarjetasAbierto, setMenuTarjetasAbierto] = useState(false);
   const [menuAyudaAbierto, setMenuAyudaAbierto] = useState(false);
   const [menuMovilAbierto, setMenuMovilAbierto] = useState(false);
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
@@ -185,7 +183,6 @@ export default function Header() {
   });
   const navigate = useNavigate();
 
-  const contenedorUbicacionRef = useRef(null);
 
   // ------------------------------------------
   // Carga inicial (equivalente al bloque de arriba en el JS original)
@@ -317,22 +314,6 @@ export default function Header() {
   }, []);
 
   // ------------------------------------------
-  // Cerrar dropdown de ubicación al hacer click fuera
-  // ------------------------------------------
-  useEffect(() => {
-    function manejarClickFuera(e) {
-      if (
-        contenedorUbicacionRef.current &&
-        !contenedorUbicacionRef.current.contains(e.target)
-      ) {
-        setMenuUbicacionAbierto(false);
-      }
-    }
-    document.addEventListener("click", manejarClickFuera);
-    return () => document.removeEventListener("click", manejarClickFuera);
-  }, []);
-
-  // ------------------------------------------
   // Cerrar menú móvil con Escape + bloquear scroll cuando está abierto
   // ------------------------------------------
   useEffect(() => {
@@ -365,51 +346,6 @@ export default function Header() {
   // ------------------------------------------
   // UBICACIÓN
   // ------------------------------------------
-  const seleccionarCiudad = (ciudad) => {
-    setUbicacion(ciudad);
-    localStorage.setItem("ubicacion", ciudad);
-    setMenuUbicacionAbierto(false);
-
-    // Actualizar también en el perfil activo del usuario si está iniciada la sesión
-    try {
-      const user = JSON.parse(localStorage.getItem("senabella_usuario"));
-      if (user && typeof user === "object") {
-        const userActualizado = { ...user, ciudad };
-        localStorage.setItem(
-          "senabella_usuario",
-          JSON.stringify(userActualizado),
-        );
-
-        // Actualizar en base de datos persistente de usuarios
-        const usuariosBD = JSON.parse(
-          localStorage.getItem("senabella_usuarios") || "[]",
-        );
-        const emailActual = (user.email || user.correo || "").toLowerCase();
-        const idx = usuariosBD.findIndex(
-          (u) => (u.correo || u.email || "").toLowerCase() === emailActual,
-        );
-        if (idx !== -1) {
-          usuariosBD[idx] = { ...usuariosBD[idx], ciudad };
-          localStorage.setItem(
-            "senabella_usuarios",
-            JSON.stringify(usuariosBD),
-          );
-        }
-      }
-    } catch (e) {
-      console.warn(
-        "Error al sincronizar ciudad desde el header con el perfil:",
-        e,
-      );
-    }
-
-    // Disparar eventos reactivos bidireccionales
-    window.dispatchEvent(new Event("storage"));
-    window.dispatchEvent(new Event("senabella_ubicacion_actualizada"));
-    window.dispatchEvent(new Event("senabella-ubicacion-actualizada"));
-    window.dispatchEvent(new Event("senabella_orders_updated"));
-  };
-
   // ------------------------------------------
   // BÚSQUEDA
   // ------------------------------------------

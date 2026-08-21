@@ -61,24 +61,9 @@ function Reportes() {
 
   // Estados de datos
   const [pedidos, setPedidos] = useState(() => obtenerPedidosAdmin());
-  const [usuarios, setUsuarios] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
-    } catch {
-      return [];
-    }
-  });
-
   // Recargar datos reactivamente
   const recargarDatos = () => {
     setPedidos(obtenerPedidosAdmin());
-    try {
-      setUsuarios(
-        JSON.parse(localStorage.getItem("senabella_usuarios") || "[]"),
-      );
-    } catch {
-      setUsuarios([]);
-    }
   };
 
   useEffect(() => {
