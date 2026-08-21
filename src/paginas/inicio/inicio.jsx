@@ -394,7 +394,7 @@ function Inicio() {
             Lo mejor en promociones
           </h2>
 
-          <div className="row row-cols-2 row-cols-md-4 g-3 promos-grid">
+          <div className="row row-cols-2 row-cols-md-5 g-3 promos-grid">
 
             {promociones.map((promo, index) => (
               <div
