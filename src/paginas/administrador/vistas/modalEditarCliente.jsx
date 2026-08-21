@@ -1,8 +1,17 @@
-// Este modal permite editar la información de un cliente desde el administrador.
+// =============================================================================
+// COMPONENTE: MODAL PARA VER Y EDITAR DATOS DEL CLIENTE
+// -----------------------------------------------------------------------------
+// Esta ventana emergente permite al administrador:
+// 1. Modificar el nombre, correo electrónico y número de celular del cliente.
+// 2. Actualizar la dirección y ciudad de entrega predeterminada.
+// 3. Cambiar el estado de la cuenta (Activo / Inactivo).
+// 4. Consultar métricas del cliente (fecha de registro, pedidos y total gastado).
+// =============================================================================
 
 import { useState } from "react";
 
 function ModalEditarCliente({ cliente, alCerrar, alGuardar }) {
+  // Estado local para manejar los datos del formulario de edición del cliente
   const [formData, setFormData] = useState({
     id: cliente.id,
     nombre: cliente.nombre || "",
@@ -17,10 +26,12 @@ function ModalEditarCliente({ cliente, alCerrar, alGuardar }) {
     totalGastado: cliente.totalGastado || "$ 0"
   });
 
+  // Manejador para actualizar cualquier campo del formulario
   const handleChange = (campo, valor) => {
     setFormData((prev) => ({ ...prev, [campo]: valor }));
   };
 
+  // Validación y envío de datos modificados
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.nombre.trim() || !formData.correo.trim()) {

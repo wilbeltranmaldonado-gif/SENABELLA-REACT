@@ -1,15 +1,30 @@
-// Esta vista ofrece un resumen general con indicadores operativos del administrador.
+// =============================================================================
+// VISTA: RESUMEN GENERAL (DASHBOARD DEL ADMINISTRADOR)
+// -----------------------------------------------------------------------------
+// Esta pantalla es el panel principal de control y muestra:
+// 1. Tarjetas de métricas clave (KPIs): Ventas totales, Pedidos, Clientes y Productos.
+// 2. Tabla de pedidos recientes que están pendientes o en proceso.
+// 3. Relación interactiva de productos más vendidos (por unidades o por dinero recaudado).
+// 4. Gráfica interactiva de ventas mensuales utilizando Chart.js.
+// =============================================================================
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { productosIniciales, obtenerPedidosAdmin, pedidosDemo } from "../../../datos";
 import ModalEditarPedido from "./modalEditarPedido";
 
+/**
+ * Función auxiliar: Recopila y calcula las métricas globales del sistema.
+ * Lee de localStorage y de los datos iniciales para obtener totales precisos.
+ */
 function cargarDatosDashboard() {
   try {
     const pedidos = obtenerPedidosAdmin();
     const productos = JSON.parse(localStorage.getItem("senabella_admin_products") || "[]");
     const usuarios = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
+    
+    // Sumamos el total de dinero de todos los pedidos registrados
     const ventas = pedidos.reduce((total, pedido) => total + (Number(String(pedido.total || "").replace(/[^\d]/g, "")) || 0), 0);
+    
     return {
       pedidos,
       ventas,
@@ -23,14 +38,20 @@ function cargarDatosDashboard() {
 }
 
 function Resumen() {
-  const [datos, setDatos] = useState(() => cargarDatosDashboard());
-  const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
-  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [criterioTopProductos, setCriterioTopProductos] = useState("unidades"); // "unidades" o "ingresos"
-  const [categoriaProducto, setCategoriaProducto] = useState("todas");
+  // --- ESTADOS DE LA VISTA RESUMEN ---
+  const [datos, setDatos] = useState(() => cargarDatosDashboard()); // Métricas globales
+  const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null); // Pedido para abrir en el modal de edición
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null); // Producto para ver detalle
+  const [criterioTopProductos, setCriterioTopProductos] = useState("unidades"); // Ordenar por: "unidades" o "ingresos"
+  const [categoriaProducto, setCategoriaProducto] = useState("todas"); // Filtro de categoría en top productos
+  
+  // Referencias para inicializar y controlar la gráfica de Chart.js
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
+  /**
+   * Guarda los cambios de un pedido editado en el modal y sincroniza con localStorage
+   */
   const guardarPedidoEditado = (pedidoActualizado) => {
     const id = pedidoActualizado.id || pedidoActualizado.numero;
     const base = datos.pedidos.length ? datos.pedidos : pedidosDemo;
@@ -39,11 +60,15 @@ function Resumen() {
       return identificador === id ? pedidoActualizado : p;
     });
     localStorage.setItem("senabella_admin_orders", JSON.stringify(actualizados));
+    // Emitimos eventos para que otras partes de la app se enteren del cambio
     window.dispatchEvent(new Event("storage"));
     window.dispatchEvent(new Event("senabella_orders_updated"));
     setPedidoSeleccionado(null);
   };
 
+  /**
+   * Elimina un pedido seleccionado previa confirmación del usuario
+   */
   const handleEliminarPedido = (id) => {
     if (!window.confirm(`¿Estás seguro de que deseas eliminar el pedido ${id}? Esta acción no se puede deshacer.`)) {
       return;

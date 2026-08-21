@@ -1,8 +1,20 @@
-// Esta vista presenta reportes y métricas clave del negocio.
+// =============================================================================
+// VISTA: REPORTES Y ESTADÍSTICAS DEL NEGOCIO
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Generar informes detallados de Ventas, Productos, Pedidos y Clientes.
+// 2. Filtrar información por periodos de tiempo (Este mes, últimos 30 días, últimos 7 días).
+// 3. Ver gráficas de rendimiento financiero y tasas de conversión.
+// 4. Exportar reportes o imprimir comprobantes consolidados.
+// =============================================================================
 
 import { useState, useEffect, useMemo } from "react";
 import { obtenerPedidosAdmin } from "../../../datos";
 
+/**
+ * Función auxiliar: Extrae el número de mes (0 = Enero, 11 = Diciembre)
+ * a partir de cadenas de texto con fechas en diversos formatos.
+ */
 function extraerMesDeFecha(fechaStr) {
   if (!fechaStr) return new Date().getMonth();
   const str = String(fechaStr).toLowerCase();
@@ -30,11 +42,12 @@ function extraerMesDeFecha(fechaStr) {
 }
 
 function Reportes() {
-  const [tipoReporte, setTipoReporte] = useState("ventas"); // "ventas", "productos", "pedidos", "clientes"
-  const [periodo, setPeriodo] = useState("todos"); // "todos", "este_mes", "ultimos_30", "ultimos_7"
-  const [filtroEstado, setFiltroEstado] = useState("todos");
-  const [busqueda, setBusqueda] = useState("");
-  const [reporteGeneradoInfo, setReporteGeneradoInfo] = useState(null);
+  // --- ESTADOS DE CONFIGURACIÓN DEL REPORTE ---
+  const [tipoReporte, setTipoReporte] = useState("ventas"); // Tipo: "ventas", "productos", "pedidos", "clientes"
+  const [periodo, setPeriodo] = useState("todos"); // Periodo temporal
+  const [filtroEstado, setFiltroEstado] = useState("todos"); // Filtro de estado
+  const [busqueda, setBusqueda] = useState(""); // Filtro de búsqueda
+  const [reporteGeneradoInfo, setReporteGeneradoInfo] = useState(null); // Alerta o mensaje de éxito al generar
 
   // Estados de datos
   const [pedidos, setPedidos] = useState(() => obtenerPedidosAdmin());

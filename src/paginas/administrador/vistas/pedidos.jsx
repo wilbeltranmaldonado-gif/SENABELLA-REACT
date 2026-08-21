@@ -1,22 +1,39 @@
-// Esta vista lista y gestiona los pedidos recibidos por la tienda.
+// =============================================================================
+// VISTA: GESTIÓN DE PEDIDOS (ÓRDENES DE COMPRA)
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Ver todos los pedidos realizados por los clientes en la tienda.
+// 2. Filtrar pedidos por su estado (Pendiente, Procesando, Enviado, Completado, Cancelado).
+// 3. Filtrar por producto específico o método de pago (Nequi, Tarjeta, Contra Entrega, etc.).
+// 4. Buscar por ID de orden, nombre del cliente, correo o ciudad.
+// 5. Cambiar el estado de los pedidos en tiempo real o abrir el modal de edición/factura.
+// =============================================================================
 
 import { useEffect, useState, useMemo } from "react";
 import { obtenerPedidosAdmin, pedidosDemo } from "../../../datos";
 import ModalEditarPedido from "./modalEditarPedido";
 
 function Pedidos() {
+  /**
+   * Normaliza los estados de las órdenes para consistencia
+   * (por ejemplo: convierte 'pendiente-verificacion' a 'pendiente').
+   */
   const normalizarOrdenes = (ordenes) => ordenes.map((orden) => ({
     ...orden,
     estado: orden.estado === "pendiente-verificacion" ? "pendiente" : orden.estado
   }));
 
-  const [pedidos, setPedidos] = useState(() => normalizarOrdenes(obtenerPedidosAdmin()));
-  const [filtroEstado, setFiltroEstado] = useState("todos");
-  const [filtroProducto, setFiltroProducto] = useState("todos");
-  const [filtroMetodoPago, setFiltroMetodoPago] = useState("todos");
-  const [busqueda, setBusqueda] = useState("");
-  const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
+  // --- ESTADOS DE LA VISTA DE PEDIDOS ---
+  const [pedidos, setPedidos] = useState(() => normalizarOrdenes(obtenerPedidosAdmin())); // Lista de pedidos
+  const [filtroEstado, setFiltroEstado] = useState("todos"); // Filtro de estado activo
+  const [filtroProducto, setFiltroProducto] = useState("todos"); // Filtro por producto específico
+  const [filtroMetodoPago, setFiltroMetodoPago] = useState("todos"); // Filtro por pasarela de pago
+  const [busqueda, setBusqueda] = useState(""); // Texto del buscador
+  const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null); // Pedido para ver/editar en modal
 
+  // =========================================================================
+  // EFECTO: Sincronizar pedidos ante cualquier cambio en el almacenamiento
+  // =========================================================================
   useEffect(() => {
     const actualizarPedidos = () => {
       setPedidos(normalizarOrdenes(obtenerPedidosAdmin()));
@@ -30,9 +47,10 @@ function Pedidos() {
     };
   }, []);
 
+  // Función para convertir texto con formato de moneda a número decimal
   const parsearPrecio = (texto) => parseFloat(String(texto || "").replace(/[^\d]/g, "")) || 0;
 
-  // Lista de productos únicos presentes en los pedidos
+  // Lista de productos únicos presentes en los pedidos (para el menú de filtros)
   const listaProductosUnicos = useMemo(() => {
     const productosMap = new Map();
     pedidos.forEach((p) => {
@@ -48,7 +66,7 @@ function Pedidos() {
     return Array.from(productosMap.entries()).sort((a, b) => b[1] - a[1]);
   }, [pedidos]);
 
-  // Conteo por estado para los chips de filtro
+  // Conteo de cuántos pedidos hay en cada estado (para las pestañas/chips superiores)
   const conteoEstados = useMemo(() => {
     const conteo = { todos: pedidos.length, pendiente: 0, procesando: 0, enviado: 0, completado: 0, cancelado: 0 };
     pedidos.forEach((p) => {
@@ -60,7 +78,9 @@ function Pedidos() {
     return conteo;
   }, [pedidos]);
 
-  // Filtrado reactivo integral
+  // =========================================================================
+  // FILTRADO REACTIVO INTEGRAL (Combina estado + producto + método + buscador)
+  // =========================================================================
   const pedidosFiltrados = useMemo(() => {
     return pedidos.filter((pedido) => {
       // Filtro por Estado

@@ -1,15 +1,25 @@
-// Esta vista maneja la gestión de usuarios y roles del sistema.
+// =============================================================================
+// VISTA: GESTIÓN DE USUARIOS Y ROLES DEL SISTEMA
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Ver todas las cuentas registradas en la plataforma (Administradores y Clientes).
+// 2. Asignar o revocar privilegios (cambiar entre rol 'administrador' y 'cliente').
+// 3. Modificar estados de cuenta ('activo' o 'inactivo').
+// 4. Crear nuevas cuentas de acceso o eliminar usuarios existentes.
+// =============================================================================
 
 import { useState, useEffect, useMemo } from "react";
 import { obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario as borrarUsuario } from "../../../utils/usuariosBd";
 
 function Usuarios() {
-  const [usuarios, setUsuarios] = useState([]);
-  const [busqueda, setBusqueda] = useState("");
-  const [filtroRol, setFiltroRol] = useState("todos");
-  const [modalAbierto, setModalAbierto] = useState(false);
-  const [usuarioEditando, setUsuarioEditando] = useState(null);
+  // --- ESTADOS DE LA VISTA DE USUARIOS ---
+  const [usuarios, setUsuarios] = useState([]); // Lista completa de usuarios
+  const [busqueda, setBusqueda] = useState(""); // Filtro de búsqueda por texto
+  const [filtroRol, setFiltroRol] = useState("todos"); // Filtro por rol ('administrador', 'cliente' o 'todos')
+  const [modalAbierto, setModalAbierto] = useState(false); // Modal de creación/edición de usuario
+  const [usuarioEditando, setUsuarioEditando] = useState(null); // Datos del usuario en edición
 
+  // Carga inicial de usuarios desde la base de datos simulada en localStorage
   const cargarUsuarios = () => {
     try {
       setUsuarios(obtenerUsuarios());
@@ -22,6 +32,7 @@ function Usuarios() {
     cargarUsuarios();
   }, []);
 
+  // Filtra usuarios reactivamente según el texto y el rol seleccionado
   const usuariosFiltrados = useMemo(() => {
     return usuarios.filter((usuario) => {
       const coincideRol = filtroRol === "todos" || usuario.rol === filtroRol;
@@ -35,6 +46,7 @@ function Usuarios() {
     });
   }, [usuarios, filtroRol, busqueda]);
 
+  // Devuelve la clase de estilo CSS para resaltar el rol
   const obtenerClaseRol = (rol) => {
     const clases = {
       administrador: "rol-admin",

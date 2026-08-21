@@ -1,10 +1,22 @@
-// Esta vista administra el stock, precios y catalogación de productos.
+// =============================================================================
+// VISTA: GESTIÓN DE PRODUCTOS (CATÁLOGO E INVENTARIO)
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Ver la lista completa de productos (tanto iniciales como creados).
+// 2. Crear nuevos productos con nombre, precio, stock, imagen y categoría.
+// 3. Editar datos de productos existentes (ajustar precios, inventario, etc.).
+// 4. Eliminar productos del catálogo.
+// 5. Filtrar por categoría y buscar productos en tiempo real.
+// =============================================================================
 
 import { useState } from "react";
 import { productosIniciales, productosRopaAccesorios } from "../../../datos";
 
+// Claves utilizadas para almacenar los datos en el navegador (localStorage)
 const PRODUCTOS_ADMIN_KEY = "senabella_admin_products";
 const CATEGORIAS_KEY = "senabella_categories";
+
+// Lista de productos por defecto en caso de que no haya nada en el almacenamiento local
 const productosPredeterminados = [
   { id: 1, nombre: "Auriculares Bluetooth", marca: "JBL", categoria: "Audio", precio: "$ 89.900", precioNumero: 89900, stock: 45, estado: "activo", imagen: "https://media.falabella.com/falabellaCO/155500313_01/w=1200,h=1200,fit=pad" },
   { id: 2, nombre: "Smartwatch Pro", marca: "XIAOMI", categoria: "Relojes", precio: "$ 199.900", precioNumero: 199900, stock: 23, estado: "activo", imagen: "https://media.falabella.com/falabellaCO/139001771_01/w=480,h=480,fit=pad" },
@@ -18,6 +30,7 @@ const datosProductosActualizados = productosPredeterminados.reduce((datos, produ
   return datos;
 }, {});
 
+// Adaptamos los productos del catálogo público para que encajen en la estructura del panel de administración
 const productosDelCatalogo = [...productosIniciales, ...productosRopaAccesorios].map((producto) => ({
   id: `catalogo-${producto.id}`,
   nombre: producto.nombre,
@@ -32,6 +45,9 @@ const productosDelCatalogo = [...productosIniciales, ...productosRopaAccesorios]
   origenCatalogo: true
 }));
 
+/**
+ * Lee los productos guardados en el navegador o carga los predeterminados.
+ */
 const leerProductos = () => {
   try {
     const guardados = JSON.parse(localStorage.getItem(PRODUCTOS_ADMIN_KEY) || "null");
@@ -55,6 +71,9 @@ const leerProductos = () => {
   }
 };
 
+/**
+ * Lee las categorías registradas en localStorage.
+ */
 const leerCategorias = () => {
   try {
     const categorias = JSON.parse(localStorage.getItem(CATEGORIAS_KEY) || "[]");
@@ -66,6 +85,9 @@ const leerCategorias = () => {
   }
 };
 
+/**
+ * Recalcula cuántos productos pertenecen a cada categoría y lo guarda.
+ */
 const sincronizarCategorias = (productos) => {
   try {
     const categorias = leerCategorias();
@@ -80,13 +102,14 @@ const sincronizarCategorias = (productos) => {
 };
 
 function Productos() {
-  const [productos, setProductos] = useState(leerProductos);
-  const [categorias, setCategorias] = useState(leerCategorias);
+  // --- ESTADOS DE LA VISTA DE PRODUCTOS ---
+  const [productos, setProductos] = useState(leerProductos); // Lista de productos
+  const [categorias, setCategorias] = useState(leerCategorias); // Lista de categorías
 
-  const [modalAbierto, setModalAbierto] = useState(false);
-  const [productoEditando, setProductoEditando] = useState(null);
-  const [busqueda, setBusqueda] = useState("");
-  const [categoriaFiltro, setCategoriaFiltro] = useState("todas");
+  const [modalAbierto, setModalAbierto] = useState(false); // Controla si la ventana modal está abierta
+  const [productoEditando, setProductoEditando] = useState(null); // Producto que se está creando o modificando
+  const [busqueda, setBusqueda] = useState(""); // Texto escrito en el buscador
+  const [categoriaFiltro, setCategoriaFiltro] = useState("todas"); // Filtro de categoría seleccionado
   const proveedoresDisponibles = Array.from(new Set([
     "Proveedor Senabella",
     "TechSupply Inc.",

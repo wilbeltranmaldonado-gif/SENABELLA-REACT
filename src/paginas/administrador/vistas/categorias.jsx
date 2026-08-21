@@ -1,8 +1,17 @@
-// Esta vista administra la creación y edición de categorías del catálogo.
+// =============================================================================
+// VISTA: GESTIÓN DE CATEGORÍAS
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Crear, editar y eliminar categorías para organizar los productos de la tienda.
+// 2. Ver en tiempo real la cantidad de productos asociados a cada categoría.
+// 3. Sincronizar automáticamente nuevas categorías cuando se crean productos.
+// =============================================================================
 
 import { useState } from "react";
 
 const CATEGORIAS_KEY = "senabella_categories";
+
+// Categorías por defecto del sistema
 const categoriasIniciales = [
   { id: 1, nombre: "Audio", descripcion: "Auriculares, parlantes y sistemas de sonido", productos: 0 },
   { id: 2, nombre: "Relojes", descripcion: "Smartwatches y relojes tradicionales", productos: 0 },
@@ -11,11 +20,17 @@ const categoriasIniciales = [
   { id: 5, nombre: "Accesorios", descripcion: "Fundas, protectores y accesorios varios", productos: 0 },
 ];
 
+/**
+ * Normaliza el formato del texto de la categoría (primera letra en mayúscula)
+ */
 const normalizarNombreCategoria = (nombre) => String(nombre || "General")
   .trim()
   .toLowerCase()
   .replace(/^\w/, (letra) => letra.toUpperCase());
 
+/**
+ * Lee las categorías guardadas y calcula cuántos productos pertenecen a cada una
+ */
 const leerCategorias = () => {
   let categoriasGuardadas = categoriasIniciales;
   let productos = [];

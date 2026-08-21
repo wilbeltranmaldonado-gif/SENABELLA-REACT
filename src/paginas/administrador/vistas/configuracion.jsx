@@ -1,8 +1,17 @@
-// Esta vista permite ajustar la configuración general de la tienda.
+// =============================================================================
+// VISTA: CONFIGURACIÓN DEL SISTEMA
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Modificar los datos generales de la tienda (Nombre comercial, correo, teléfono).
+// 2. Definir moneda e idioma principal.
+// 3. Activar o desactivar preferencias de notificaciones automáticas.
+// 4. Guardar los cambios directamente en localStorage.
+// =============================================================================
 
 import { useState, useEffect } from "react";
 
 function Configuracion() {
+  // Estado que contiene todos los parámetros de configuración de la tienda
   const [configuracion, setConfiguracion] = useState({
     nombreTienda: "Senabella",
     email: "contacto@senabella.com",
@@ -14,16 +23,18 @@ function Configuracion() {
     notificacionesStock: true
   });
 
+  // Estado para mostrar un mensaje temporal de "Guardado con éxito"
   const [guardado, setGuardado] = useState(false);
 
+  // Carga la configuración guardada previamente en el navegador
   useEffect(() => {
-    // Cargar configuración del localStorage
     const configGuardada = localStorage.getItem("senabella_config");
     if (configGuardada) {
       setConfiguracion(JSON.parse(configGuardada));
     }
   }, []);
 
+  // Controla los cambios en los campos de texto y casillas de verificación (checkbox)
   const manejarCambio = (e) => {
     const { name, value, type, checked } = e.target;
     setConfiguracion({
@@ -32,6 +43,7 @@ function Configuracion() {
     });
   };
 
+  // Guarda la configuración actualizada en localStorage
   const guardarConfiguracion = (e) => {
     e.preventDefault();
     localStorage.setItem("senabella_config", JSON.stringify(configuracion));

@@ -1,17 +1,30 @@
-// Esta vista muestra la información de clientes y su relación con los pedidos.
+// =============================================================================
+// VISTA: GESTIÓN DE CLIENTES
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Ver el directorio completo de clientes registrados (usuarios sin rol de admin).
+// 2. Consultar el total de pedidos realizados y monto gastado por cada cliente.
+// 3. Ver y editar la información de contacto (nombre, email, teléfono, ciudad, dirección).
+// 4. Buscar clientes por cualquier campo (nombre, correo, celular o ciudad).
+// =============================================================================
 
 import { useState, useEffect, useMemo } from "react";
 import { obtenerUsuarios, actualizarUsuario } from "../../../utils/usuariosBd";
 import ModalEditarCliente from "./modalEditarCliente";
 
 function Clientes() {
-  const [busqueda, setBusqueda] = useState("");
-  const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
-  const [usuariosRaw, setUsuariosRaw] = useState([]);
-  const [pedidosRaw, setPedidosRaw] = useState([]);
+  // --- ESTADOS DE LA VISTA DE CLIENTES ---
+  const [busqueda, setBusqueda] = useState(""); // Texto para buscar clientes
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(null); // Cliente para ver/editar en modal
+  const [usuariosRaw, setUsuariosRaw] = useState([]); // Lista de usuarios crudos de la BD
+  const [pedidosRaw, setPedidosRaw] = useState([]); // Lista de pedidos crudos de la BD
 
+  /**
+   * Carga los usuarios que no son administradores y los pedidos registrados.
+   */
   const cargarDatos = () => {
     try {
+      // Filtramos únicamente a los clientes (excluimos a los administradores)
       const u = obtenerUsuarios().filter((usuario) => usuario.rol !== "administrador");
       const p = JSON.parse(localStorage.getItem("senabella_admin_orders") || "[]");
       setUsuariosRaw(u);
@@ -22,6 +35,7 @@ function Clientes() {
     }
   };
 
+  // Escuchamos cambios en localStorage para actualizar los datos en tiempo real
   useEffect(() => {
     cargarDatos();
     window.addEventListener("storage", cargarDatos);

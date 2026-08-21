@@ -1,14 +1,28 @@
-// Esta vista organiza la información de proveedores y sus relaciones con la tienda.
+// =============================================================================
+// VISTA: GESTIÓN DE PROVEEDORES
+// -----------------------------------------------------------------------------
+// Esta pantalla permite al administrador:
+// 1. Mantener un directorio de empresas proveedoras y marcas asociadas.
+// 2. Registrar datos de contacto (persona de contacto, correo y teléfono).
+// 3. Consultar cuántos productos suministra cada proveedor en el inventario.
+// 4. Crear, editar y eliminar proveedores fácilmente.
+// =============================================================================
 
 import { useState } from "react";
 
 const PROVEEDORES_KEY = "senabella_suppliers";
+
+// Proveedores precargados en el sistema
 const proveedoresIniciales = [
   { id: 1, nombre: "TechSupply Inc.", contacto: "Juan Pérez", email: "juan@techsupply.com", telefono: "+57 300 111 2222", productos: 0 },
   { id: 2, nombre: "Global Electronics", contacto: "María López", email: "maria@globalelectronics.com", telefono: "+57 310 333 4444", productos: 0 },
   { id: 3, nombre: "Digital Accessories", contacto: "Carlos Ruiz", email: "carlos@digitalacc.com", telefono: "+57 320 555 6666", productos: 0 },
 ];
 
+/**
+ * Lee los proveedores de localStorage o inicializa con los predeterminados.
+ * Además, detecta automáticamente marcas de productos y las registra como proveedores si faltan.
+ */
 const leerProveedores = () => {
   let proveedoresGuardados = proveedoresIniciales;
   let productos = [];

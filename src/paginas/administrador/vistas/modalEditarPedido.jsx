@@ -1,8 +1,19 @@
-// Este modal facilita la edición del estado o detalles de un pedido.
+// =============================================================================
+// COMPONENTE: MODAL PARA VER Y EDITAR DETALLES DEL PEDIDO
+// -----------------------------------------------------------------------------
+// Esta ventana emergente permite al administrador:
+// 1. Ver la información completa del pedido (cliente, contacto, dirección, productos y totales).
+// 2. Modificar el estado (pendiente, procesando, enviado, completado, cancelado).
+// 3. Ajustar cantidades de productos o agregar nuevos productos al pedido.
+// 4. Ver el comprobante de pago adjunto por el cliente.
+// 5. Imprimir la factura/remisión comercial del pedido.
+// 6. Eliminar el pedido si es necesario.
+// =============================================================================
 
 import { useState, useRef } from "react";
 
 function ModalEditarPedido({ pedido, alCerrar, alGuardar, alEliminar }) {
+  // Inicializamos los datos del formulario copiando los valores actuales del pedido
   const [formData, setFormData] = useState(() => {
     const clienteNombre = pedido.cliente?.nombre || pedido.cliente || "";
     const email = pedido.cliente?.email || pedido.email || "";
