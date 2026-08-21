@@ -11,6 +11,7 @@ import {
 } from "../../datos";
 import { iniciarFavoritosGlobal } from "../favoritos/favoritos";
 import imagenFallback from "../../assets/teclado.webp";
+import { cumpleBusquedaInteligente } from "../../utils/search";
 
 const usarImagenFallback = (evento) => {
   if (evento.currentTarget.src !== imagenFallback) {
@@ -95,12 +96,7 @@ function Catalogo() {
     const prodNombre = prod.nombre.toLowerCase();
     const prodMarca = (prod.marca || "").toLowerCase();
 
-    // Búsqueda
-    const textoProducto = [prod.nombre, prod.marca, prod.categoria, prod.referencia]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-    const cumpleBusqueda = !busqueda || textoProducto.includes(busqueda);
+    const cumpleBusqueda = cumpleBusquedaInteligente(prod, busqueda);
 
     // Marca
     const cumpleMarca = marcasSeleccionadas.length === 0 || marcasSeleccionadas.includes(prod.marca);
