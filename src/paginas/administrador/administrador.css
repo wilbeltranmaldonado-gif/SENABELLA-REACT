@@ -3153,6 +3153,10 @@ body.cuerpo-admin.modo-oscuro .vista-resumen strong[style*="#1e293b"] {
   color: #f3f4f6 !important;
 }
 
+body.cuerpo-admin.modo-oscuro .admin-metrica-menor-venta {
+  color: #f3f4f6 !important;
+}
+
 body.cuerpo-admin.modo-oscuro .vista-categorias .admin-categoria-card h3 {
   color: #f3f4f6 !important;
 }
@@ -3171,6 +3175,125 @@ body.cuerpo-admin.modo-oscuro .vista-categorias .admin-categoria-acciones button
 body.cuerpo-admin.modo-oscuro .vista-categorias .admin-categoria-acciones button:hover {
   background-color: #2c333a !important;
   color: #f3f4f6 !important;
+}
+
+/* =========================================================================
+   IMPRESION DE REPORTES
+   ========================================================================= */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 14mm;
+  }
+
+  html,
+  body,
+  body.cuerpo-admin,
+  body.cuerpo-admin.modo-oscuro {
+    background: #ffffff !important;
+    color: #111827 !important;
+    min-height: auto !important;
+  }
+
+  body.cuerpo-admin .admin-sidebar,
+  body.cuerpo-admin .admin-topbar,
+  body.cuerpo-admin .admin-overlay,
+  body.cuerpo-admin .admin-toasts,
+  body.cuerpo-admin .admin-modal-overlay,
+  body.cuerpo-admin .vista-reportes .admin-filtros,
+  body.cuerpo-admin .vista-reportes .admin-mensaje-exito {
+    display: none !important;
+  }
+
+  body.cuerpo-admin .admin-main {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  body.cuerpo-admin .admin-contenido {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  body.cuerpo-admin .vista-reportes {
+    display: block !important;
+    width: 100% !important;
+    color: #111827 !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-cabecera-vista {
+    display: block !important;
+    margin-bottom: 14px !important;
+    border-bottom: 2px solid #84b814;
+    padding-bottom: 8px;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-seccion,
+  body.cuerpo-admin .vista-reportes .admin-tarjeta-estadistica,
+  body.cuerpo-admin .vista-reportes .admin-tabla-contenedor,
+  body.cuerpo-admin .vista-reportes .vista-reportes > div > div {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border-color: #d1d5db !important;
+    box-shadow: none !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-seccion {
+    break-inside: avoid;
+    margin-bottom: 12px !important;
+    padding: 12px !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-grid-estadisticas {
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-tarjeta-estadistica {
+    padding: 12px !important;
+    break-inside: avoid;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-tarjeta-contenido h3,
+  body.cuerpo-admin .vista-reportes .admin-tarjeta-valor,
+  body.cuerpo-admin .vista-reportes .admin-seccion-subtitulo,
+  body.cuerpo-admin .vista-reportes .admin-seccion h4,
+  body.cuerpo-admin .vista-reportes .admin-tabla,
+  body.cuerpo-admin .vista-reportes .admin-tabla td,
+  body.cuerpo-admin .vista-reportes .admin-tabla th,
+  body.cuerpo-admin .vista-reportes .admin-tabla strong {
+    color: #111827 !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-tabla {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 10px !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-tabla thead {
+    display: table-header-group;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-tabla tr {
+    break-inside: avoid;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-tabla th {
+    background: #f3f4f6 !important;
+    font-weight: 700 !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-tabla th,
+  body.cuerpo-admin .vista-reportes .admin-tabla td {
+    border: 1px solid #d1d5db !important;
+    padding: 6px 8px !important;
+  }
+
+  body.cuerpo-admin .vista-reportes .admin-badge {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 }
 
 .modal-pedido-btn-mini {

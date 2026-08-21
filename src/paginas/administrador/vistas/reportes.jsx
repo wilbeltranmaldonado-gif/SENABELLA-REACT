@@ -481,6 +481,15 @@ function Reportes() {
     }
   };
 
+  const imprimirReporte = () => {
+    const tituloOriginal = document.title;
+    document.title = `Reporte Senabella - ${tipoReporte}`;
+    window.print();
+    window.setTimeout(() => {
+      document.title = tituloOriginal;
+    }, 1000);
+  };
+
   const obtenerClaseEstado = (estado) => {
     const clases = {
       completado: "estado-exito",
@@ -561,7 +570,7 @@ function Reportes() {
           </button>
           <button
             className='admin-boton'
-            onClick={() => window.print()}
+            onClick={imprimirReporte}
             title='Imprimir o guardar PDF'
           >
             <i className='fa-solid fa-print'></i> Imprimir
@@ -922,6 +931,7 @@ function Reportes() {
                   Menor Facturación
                 </span>
                 <strong
+                  className='admin-metrica-menor-venta'
                   style={{
                     fontSize: "15px",
                     color: "#0f172a",

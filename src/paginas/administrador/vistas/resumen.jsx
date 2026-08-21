@@ -11,6 +11,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import {
   productosIniciales,
+  productosRopaAccesorios,
   obtenerPedidosAdmin,
   pedidosDemo,
 } from "../../../datos";
@@ -23,12 +24,24 @@ import ModalEditarPedido from "./modalEditarPedido";
 function cargarDatosDashboard() {
   try {
     const pedidos = obtenerPedidosAdmin();
-    const productos = JSON.parse(
-      localStorage.getItem("senabella_admin_products") || "[]",
+    const productosGuardados = JSON.parse(
+      localStorage.getItem("senabella_admin_products") || "null",
     );
     const usuarios = JSON.parse(
       localStorage.getItem("senabella_usuarios") || "[]",
     );
+
+    // Productos ya contiene la lista completa sincronizada por la vista de inventario.
+    // Solo usamos el catálogo inicial cuando todavía no existe almacenamiento.
+    const productos = Array.isArray(productosGuardados)
+      ? productosGuardados
+      : [
+          ...productosIniciales,
+          ...productosRopaAccesorios,
+        ].filter(
+          (producto, indice, lista) =>
+            lista.findIndex((item) => item.nombre === producto.nombre) === indice,
+        );
 
     // Sumamos el total de dinero de todos los pedidos registrados
     const ventas = pedidos.reduce(
@@ -39,9 +52,7 @@ function cargarDatosDashboard() {
     return {
       pedidos,
       ventas,
-      productos:
-        (Array.isArray(productos) ? productos.length : 0) +
-        productosIniciales.length,
+      productos: productos.length,
       clientes: Array.isArray(usuarios)
         ? usuarios.filter((usuario) => usuario.rol !== "administrador").length
         : 0,
