@@ -1,12 +1,10 @@
 // =============================================================================
-// COMPONENTE PRINCIPAL: PANEL DE ADMINISTRADOR (SENABELLA)
+// COMPONENTE: PANEL DE ADMINISTRADOR (SENABELLA)
 // -----------------------------------------------------------------------------
-// Este componente actúa como el "esqueleto" o contenedor maestro del panel de control.
-// Controla:
-// 1. La barra lateral de navegación (Sidebar) para cambiar entre secciones/vistas.
-// 2. La barra superior (Topbar) con modo oscuro y campana de notificaciones.
-// 3. El estado de la sesión y el modal de confirmación para cerrar sesión.
-// 4. El renderizado dinámico de la vista seleccionada (Resumen, Pedidos, Productos, etc.)
+// Contenedor principal que administra la navegación del panel:
+// - Menú lateral (Sidebar) con contadores en tiempo real.
+// - Barra superior (Topbar) con Modo Oscuro y Notificaciones de stock/pedidos.
+// - Conmutador dinámico de vistas y modal de confirmación de cierre de sesión.
 // =============================================================================
 
 import { useState, useEffect, useRef } from "react";
@@ -15,7 +13,7 @@ import { obtenerPedidosAdmin } from "../../datos";
 import "./administrador.css";
 import "./encabezado.css";
 
-// --- IMPORTACIÓN DE TODAS LAS VISTAS DISPONIBLES EN EL PANEL ---
+// Vistas del panel
 import Resumen from "./vistas/resumen";
 import Pedidos from "./vistas/pedidos";
 import Productos from "./vistas/productos";
@@ -26,222 +24,138 @@ import Usuarios from "./vistas/usuarios";
 import Reportes from "./vistas/reportes";
 import Configuracion from "./vistas/configuracion";
 
-/**
- * Función auxiliar: Revisa el stock y pedidos para generar alertas automáticas
- * (por ejemplo: si un producto tiene poco inventario o hay compras pendientes de atención).
- */
-function obtenerNotificaciones() {
+// Mapeo de vistas para renderizado directo
+const MAPA_VISTAS = {
+  resumen: { componente: Resumen, titulo: "Resumen general" },
+  pedidos: { componente: Pedidos, titulo: "Gestión de pedidos" },
+  productos: { componente: Productos, titulo: "Gestión de productos" },
+  clientes: { componente: Clientes, titulo: "Gestión de clientes" },
+  categorias: { componente: Categorias, titulo: "Gestión de categorías" },
+  proveedores: { componente: Proveedores, titulo: "Gestión de proveedores" },
+  usuarios: { componente: Usuarios, titulo: "Gestión de usuarios" },
+  reportes: { componente: Reportes, titulo: "Reportes y estadísticas" },
+  configuracion: { componente: Configuracion, titulo: "Configuración del sistema" },
+};
+
+// Helper para leer datos de localStorage de forma segura
+const leerLocalStorage = (clave, valorPorDefecto = []) => {
   try {
-    const productos = JSON.parse(
-      localStorage.getItem("senabella_admin_products") || "[]",
-    );
-    const pedidos = obtenerPedidosAdmin();
-    // Contamos productos con stock bajo (entre 1 y 10 unidades)
-    const stockBajo = productos.filter(
-      (producto) => Number(producto.stock) > 0 && Number(producto.stock) <= 10,
-    ).length;
-    // Contamos pedidos que están esperando atención
-    const pedidosPendientes = pedidos.filter((pedido) =>
-      ["pendiente", "pendiente-verificacion", "procesando"].includes(
-        pedido.estado,
-      ),
-    ).length;
-    // Retornamos la lista de alertas formateadas con sus íconos y textos
-    return [
-      ...(stockBajo
-        ? [
-            {
-              id: "stockBajo",
-              icono: "fa-triangle-exclamation",
-              clase: "texto-warning",
-              titulo: "Stock bajo",
-              texto: `${stockBajo} producto${stockBajo === 1 ? "" : "s"} necesita${stockBajo === 1 ? "" : "n"} reposición.`,
-              vista: "productos",
-            },
-          ]
-        : []),
-      ...(pedidosPendientes
-        ? [
-            {
-              id: "pedidoNuevo",
-              icono: "fa-cart-shopping",
-              clase: "texto-info",
-              titulo: "Pedidos pendientes",
-              texto: `${pedidosPendientes} pedido${pedidosPendientes === 1 ? "" : "s"} requiere${pedidosPendientes === 1 ? "" : "n"} atención.`,
-              vista: "pedidos",
-            },
-          ]
-        : []),
-    ];
+    const data = localStorage.getItem(clave);
+    return data ? JSON.parse(data) : valorPorDefecto;
   } catch {
-    return [];
+    return valorPorDefecto;
   }
+};
+
+// Genera alertas de stock bajo y pedidos pendientes
+function obtenerNotificaciones() {
+  const productos = leerLocalStorage("senabella_admin_products", []);
+  const pedidos = obtenerPedidosAdmin();
+
+  const stockBajo = productos.filter((p) => Number(p.stock) > 0 && Number(p.stock) <= 10).length;
+  const pedidosPendientes = pedidos.filter((p) => ["pendiente", "pendiente-verificacion", "procesando"].includes(p.estado)).length;
+
+  const alertas = [];
+  if (stockBajo > 0) {
+    alertas.push({
+      id: "stockBajo",
+      icono: "fa-triangle-exclamation",
+      clase: "texto-warning",
+      titulo: "Stock bajo",
+      texto: `${stockBajo} producto${stockBajo === 1 ? "" : "s"} necesita${stockBajo === 1 ? "" : "n"} reposición.`,
+      vista: "productos",
+    });
+  }
+  if (pedidosPendientes > 0) {
+    alertas.push({
+      id: "pedidoNuevo",
+      icono: "fa-cart-shopping",
+      clase: "texto-info",
+      titulo: "Pedidos pendientes",
+      texto: `${pedidosPendientes} pedido${pedidosPendientes === 1 ? "" : "s"} requiere${pedidosPendientes === 1 ? "" : "n"} atención.`,
+      vista: "pedidos",
+    });
+  }
+  return alertas;
 }
 
-/**
- * Función auxiliar: Cuenta la cantidad de registros en cada módulo
- * para mostrar las insignias (badges con números) en el menú lateral.
- */
+// Cuenta la cantidad de elementos para los badges del menú lateral
 function calcularCantidadesSidebar() {
-  let pedidos = 0;
-  let productos = 0;
-  let clientes = 0;
-  let categorias = 0;
-  let proveedores = 0;
-  let usuarios = 0;
+  const pedidos = obtenerPedidosAdmin().length;
+  const productos = (leerLocalStorage("senabella_admin_products", null) || Array(15)).length;
+  const usuarios = leerLocalStorage("senabella_usuarios", Array(4));
+  const clientes = usuarios.filter((u) => u.rol !== "administrador").length || 3;
+  const categorias = (leerLocalStorage("senabella_categories", null) || Array(5)).length;
+  const proveedores = (leerLocalStorage("senabella_suppliers", null) || Array(3)).length;
 
-  try {
-    pedidos = obtenerPedidosAdmin().length;
-  } catch {
-    pedidos = 0;
-  }
-
-  try {
-    const prodsGuardados = JSON.parse(
-      localStorage.getItem("senabella_admin_products") || "null",
-    );
-    if (Array.isArray(prodsGuardados) && prodsGuardados.length > 0) {
-      productos = prodsGuardados.length;
-    } else {
-      productos = 15;
-    }
-  } catch {
-    productos = 15;
-  }
-
-  try {
-    const usrs = JSON.parse(localStorage.getItem("senabella_usuarios") || "[]");
-    const noAdmin = usrs.filter((u) => u.rol !== "administrador");
-    clientes = noAdmin.length > 0 ? noAdmin.length : 3;
-    usuarios = usrs.length > 0 ? usrs.length : 4;
-  } catch {
-    clientes = 3;
-    usuarios = 4;
-  }
-
-  try {
-    const cats = JSON.parse(
-      localStorage.getItem("senabella_categories") || "null",
-    );
-    categorias = Array.isArray(cats) && cats.length > 0 ? cats.length : 5;
-  } catch {
-    categorias = 5;
-  }
-
-  try {
-    const sups = JSON.parse(
-      localStorage.getItem("senabella_suppliers") || "null",
-    );
-    proveedores = Array.isArray(sups) && sups.length > 0 ? sups.length : 3;
-  } catch {
-    proveedores = 3;
-  }
-
-  return { pedidos, productos, clientes, categorias, proveedores, usuarios };
+  return { pedidos, productos, clientes, categorias, proveedores, usuarios: usuarios.length || 4 };
 }
 
 function Administrador() {
-  // --- ESTADOS PRINCIPALES DE LA PÁGINA ---
-  const [vistaActual, setVistaActual] = useState("resumen"); // Cuál pestaña está abierta ('resumen', 'pedidos', etc.)
-  const [sidebarAbierto, setSidebarAbierto] = useState(false); // Para abrir/cerrar el menú en pantallas pequeñas (móviles)
-  const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] =
-    useState(false); // Desplegable de campana
-  const [notificaciones, setNotificaciones] = useState(obtenerNotificaciones); // Lista de notificaciones activas
-  const [cantidades, setCantidades] = useState(calcularCantidadesSidebar); // Contadores de productos, pedidos, etc.
-  const [modoOscuro, setModoOscuro] = useState(false); // Tema visual claro/oscuro
-  const [notificacionesLeidas, setNotificacionesLeidas] = useState({}); // Registro de notificaciones marcadas como leídas
-  const sidebarRef = useRef(null);
-  const overlayRef = useRef(null);
+  const [vistaActual, setVistaActual] = useState("resumen");
+  const [sidebarAbierto, setSidebarAbierto] = useState(false);
+  const [menuNotificacionesAbierto, setMenuNotificacionesAbierto] = useState(false);
+  const [notificaciones, setNotificaciones] = useState(obtenerNotificaciones);
+  const [cantidades, setCantidades] = useState(calcularCantidadesSidebar);
+  const [modoOscuro, setModoOscuro] = useState(() => localStorage.getItem("modoOscuro") === "activado");
+  const [notificacionesLeidas, setNotificacionesLeidas] = useState({});
+  const [modalLogoutAbierto, setModalLogoutAbierto] = useState(false);
 
-  // =========================================================================
-  // EFECTO 1: CARGAR CONFIGURACIONES INICIALES Y TEMA
-  // =========================================================================
+  const sidebarRef = useRef(null);
+
+  // Inicializar tema oscuro y clases en el body
   useEffect(() => {
     document.body.classList.add("cuerpo-admin");
-    // Verificamos si el usuario tenía guardado el modo oscuro previamente
-    if (localStorage.getItem("modoOscuro") === "activado") {
-      setModoOscuro(true);
+    if (modoOscuro) {
       document.body.classList.add("modo-oscuro");
+    } else {
+      document.body.classList.remove("modo-oscuro");
     }
+    return () => {
+      document.body.classList.remove("cuerpo-admin");
+      document.body.classList.remove("modo-oscuro");
+    };
+  }, [modoOscuro]);
 
-    // Limpieza al salir de la página
-    return () => document.body.classList.remove("cuerpo-admin");
-  }, []);
-
-  // Función para alternar entre tema Claro y tema Oscuro
-  const alternarModoOscuro = () => {
-    const nuevoEstado = !modoOscuro;
-    setModoOscuro(nuevoEstado);
-    document.body.classList.toggle("modo-oscuro", nuevoEstado);
-    localStorage.setItem(
-      "modoOscuro",
-      nuevoEstado ? "activado" : "desactivado",
-    );
-  };
-
-  // Función para refrescar las notificaciones
-  const actualizarNotificaciones = () =>
-    setNotificaciones(obtenerNotificaciones());
-  // Cálculo de cuántas notificaciones no han sido leídas
-  const notificacionesNoLeidas = notificaciones.filter(
-    (notificacion) => !notificacionesLeidas[notificacion.id],
-  ).length;
-
-  // =========================================================================
-  // EFECTO 2: ESCUCHAR CAMBIOS EN EL ALMACENAMIENTO PARA AUTO-ACTUALIZAR DATOS
-  // =========================================================================
+  // Sincronizar contadores y notificaciones con eventos del sistema
   useEffect(() => {
-    const actualizarCantidades = () => {
+    const sincronizar = () => {
       setCantidades(calcularCantidadesSidebar());
       setNotificaciones(obtenerNotificaciones());
     };
-
-    // Escuchamos eventos del sistema cuando se crea un pedido o producto nuevo
-    window.addEventListener("storage", actualizarCantidades);
-    window.addEventListener("senabella_orders_updated", actualizarCantidades);
+    window.addEventListener("storage", sincronizar);
+    window.addEventListener("senabella_orders_updated", sincronizar);
     return () => {
-      window.removeEventListener("storage", actualizarCantidades);
-      window.removeEventListener(
-        "senabella_orders_updated",
-        actualizarCantidades,
-      );
+      window.removeEventListener("storage", sincronizar);
+      window.removeEventListener("senabella_orders_updated", sincronizar);
     };
   }, []);
 
-  // =========================================================================
-  // EFECTO 3: CERRAR EL MENÚ LATERAL SI EL USUARIO HACE CLICK AFUERA (EN MÓVIL)
-  // =========================================================================
+  // Cerrar el menú lateral en móviles al hacer clic afuera
   useEffect(() => {
-    function manejarClickFuera(e) {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(e.target) &&
-        !e.target.closest("#adminBotonMenu")
-      ) {
+    const clickFuera = (e) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target) && !e.target.closest("#adminBotonMenu")) {
         setSidebarAbierto(false);
       }
-    }
-
-    document.addEventListener("click", manejarClickFuera);
-    return () => document.removeEventListener("click", manejarClickFuera);
+    };
+    document.addEventListener("click", clickFuera);
+    return () => document.removeEventListener("click", clickFuera);
   }, []);
 
-  // Función para cambiar de vista (por ejemplo, de "Resumen" a "Productos")
-  const cambiarVista = (vista) => {
-    setVistaActual(vista);
-    setSidebarAbierto(false); // Cerramos el sidebar en móvil al cambiar
+  // Alternar entre modo claro y oscuro
+  const alternarModoOscuro = () => {
+    const nuevo = !modoOscuro;
+    setModoOscuro(nuevo);
+    localStorage.setItem("modoOscuro", nuevo ? "activado" : "desactivado");
   };
 
-  // Estado para el modal emergente de cerrar sesión
-  const [modalLogoutAbierto, setModalLogoutAbierto] = useState(false);
-
-  // Abre el modal de confirmación antes de salir
-  const solicitarCerrarSesion = () => {
-    setModalLogoutAbierto(true);
+  // Cambiar vista activa y cerrar menú móvil
+  const cambiarVista = (vista) => {
+    setVistaActual(vista);
     setSidebarAbierto(false);
   };
 
-  // Limpia los datos de sesión en localStorage y redirige al inicio
+  // Cerrar sesión y limpiar credenciales
   const ejecutarCerrarSesion = () => {
     localStorage.setItem("senabella_sesion", "inactiva");
     localStorage.removeItem("senabella_rol");
@@ -250,83 +164,23 @@ function Administrador() {
     window.location.href = "/";
   };
 
-  // =========================================================================
-  // RENDERIZADO CONDICIONAL: Muestra la vista según la opción elegida
-  // =========================================================================
-  const renderizarVista = () => {
-    switch (vistaActual) {
-      case "resumen":
-        return <Resumen />;
-      case "pedidos":
-        return <Pedidos />;
-      case "productos":
-        return <Productos />;
-      case "clientes":
-        return <Clientes />;
-      case "categorias":
-        return <Categorias />;
-      case "proveedores":
-        return <Proveedores />;
-      case "usuarios":
-        return <Usuarios />;
-      case "reportes":
-        return <Reportes />;
-      case "configuracion":
-        return <Configuracion />;
-      default:
-        return <Resumen />;
-    }
-  };
-
-  // =========================================================================
-  // DEFINICIÓN DE MENÚS Y SECCIONES DEL SIDEBAR
-  // =========================================================================
+  // Definición de las secciones de navegación del Sidebar
   const itemsNavegacion = [
     {
       titulo: "General",
       items: [
         { id: "resumen", icono: "fa-gauge-high", texto: "Resumen" },
-        {
-          id: "pedidos",
-          icono: "fa-cart-shopping",
-          texto: "Pedidos",
-          badge: String(cantidades.pedidos),
-        },
-        {
-          id: "productos",
-          icono: "fa-box",
-          texto: "Productos",
-          badge: String(cantidades.productos),
-        },
-        {
-          id: "clientes",
-          icono: "fa-users",
-          texto: "Clientes",
-          badge: String(cantidades.clientes),
-        },
+        { id: "pedidos", icono: "fa-cart-shopping", texto: "Pedidos", badge: String(cantidades.pedidos) },
+        { id: "productos", icono: "fa-box", texto: "Productos", badge: String(cantidades.productos) },
+        { id: "clientes", icono: "fa-users", texto: "Clientes", badge: String(cantidades.clientes) },
       ],
     },
     {
       titulo: "Catálogo",
       items: [
-        {
-          id: "categorias",
-          icono: "fa-tags",
-          texto: "Categorías",
-          badge: String(cantidades.categorias),
-        },
-        {
-          id: "proveedores",
-          icono: "fa-truck-field",
-          texto: "Proveedores",
-          badge: String(cantidades.proveedores),
-        },
-        {
-          id: "usuarios",
-          icono: "fa-user-shield",
-          texto: "Usuarios",
-          badge: String(cantidades.usuarios),
-        },
+        { id: "categorias", icono: "fa-tags", texto: "Categorías", badge: String(cantidades.categorias) },
+        { id: "proveedores", icono: "fa-truck-field", texto: "Proveedores", badge: String(cantidades.proveedores) },
+        { id: "usuarios", icono: "fa-user-shield", texto: "Usuarios", badge: String(cantidades.usuarios) },
       ],
     },
     {
@@ -338,49 +192,31 @@ function Administrador() {
     },
   ];
 
-  // Devuelve el título que se muestra en la cabecera superior según la vista activa
-  const obtenerTituloVista = () => {
-    const titulos = {
-      resumen: "Resumen general",
-      pedidos: "Gestión de pedidos",
-      productos: "Gestión de productos",
-      clientes: "Gestión de clientes",
-      categorias: "Gestión de categorías",
-      proveedores: "Gestión de proveedores",
-      usuarios: "Gestión de usuarios",
-      reportes: "Reportes y estadísticas",
-      configuracion: "Configuración del sistema",
-    };
-    return titulos[vistaActual] || "Panel de administración";
-  };
+  // Componente y título de la vista actual
+  const vistaSeleccionada = MAPA_VISTAS[vistaActual] || MAPA_VISTAS.resumen;
+  const VistaComponente = vistaSeleccionada.componente;
+  const noLeidas = notificaciones.filter((n) => !notificacionesLeidas[n.id]).length;
 
   return (
     <div className={`cuerpo-admin${modoOscuro ? " modo-oscuro" : ""}`}>
-      {/* ==========================================
-           SIDEBAR
-      ========================================== */}
-      <aside
-        className={`admin-sidebar${sidebarAbierto ? " sidebar-abierto" : ""}`}
-        ref={sidebarRef}
-      >
-        <div className='admin-sidebar-logo'>
+      {/* SIDEBAR LATERAL */}
+      <aside className={`admin-sidebar${sidebarAbierto ? " sidebar-abierto" : ""}`} ref={sidebarRef}>
+        <div className="admin-sidebar-logo">
           <img
-            src='../src/assets/logo.png'
-            alt='Senabella'
+            src="../src/assets/logo.png"
+            alt="Senabella"
             style={{ width: "140px", height: "auto" }}
-            onError={(e) => {
-              e.target.style.display = "none";
-            }}
+            onError={(e) => { e.target.style.display = "none"; }}
           />
         </div>
 
-        <nav className='admin-nav'>
-          {itemsNavegacion.map((seccion, index) => (
-            <div key={index}>
-              <p className='admin-nav-titulo'>{seccion.titulo}</p>
+        <nav className="admin-nav">
+          {itemsNavegacion.map((seccion, idx) => (
+            <div key={idx}>
+              <p className="admin-nav-titulo">{seccion.titulo}</p>
               {seccion.items.map((item) => (
                 <a
-                  href='#'
+                  href="#"
                   key={item.id}
                   className={`admin-nav-item${vistaActual === item.id ? " activo" : ""}`}
                   onClick={(e) => {
@@ -390,116 +226,96 @@ function Administrador() {
                 >
                   <i className={`fa-solid ${item.icono}`}></i>
                   <span>{item.texto}</span>
-                  {item.badge && (
-                    <span className='admin-nav-badge'>{item.badge}</span>
-                  )}
+                  {item.badge && <span className="admin-nav-badge">{item.badge}</span>}
                 </a>
               ))}
             </div>
           ))}
         </nav>
 
-        <div className='admin-sidebar-footer'>
-          <Link to='/' onClick={() => setSidebarAbierto(false)}>
-            <i className='fa-solid fa-store'></i> Volver a la tienda
+        <div className="admin-sidebar-footer">
+          <Link to="/" onClick={() => setSidebarAbierto(false)}>
+            <i className="fa-solid fa-store"></i> Volver a la tienda
           </Link>
           <a
-            href='#'
+            href="#"
             onClick={(e) => {
               e.preventDefault();
-              solicitarCerrarSesion();
+              setModalLogoutAbierto(true);
             }}
           >
-            <i className='fa-solid fa-power-off'></i> Cerrar sesión
+            <i className="fa-solid fa-power-off"></i> Cerrar sesión
           </a>
         </div>
       </aside>
 
-      {/* Fondo oscuro al abrir el sidebar en móvil */}
+      {/* OVERLAY PARA MÓVILES */}
       <div
         className={`admin-overlay${sidebarAbierto ? " overlay-visible" : ""}`}
         onClick={() => setSidebarAbierto(false)}
       ></div>
 
-      {/* ==========================================
-           CONTENIDO PRINCIPAL
-      ========================================== */}
-      <div className='admin-main'>
-        {/* TOPBAR */}
-        <header className='admin-topbar'>
+      {/* CONTENIDO PRINCIPAL */}
+      <div className="admin-main">
+        {/* BARRA SUPERIOR (TOPBAR) */}
+        <header className="admin-topbar">
           <button
-            className='admin-boton-menu'
+            id="adminBotonMenu"
+            className="admin-boton-menu"
             onClick={() => setSidebarAbierto(!sidebarAbierto)}
-            aria-label='Abrir menú'
+            aria-label="Abrir menú"
           >
-            <i className='fa-solid fa-bars'></i>
+            <i className="fa-solid fa-bars"></i>
           </button>
 
-          <h1 className='admin-titulo-vista'>{obtenerTituloVista()}</h1>
+          <h1 className="admin-titulo-vista">{vistaSeleccionada.titulo}</h1>
 
-          <div className='admin-topbar-acciones'>
+          <div className="admin-topbar-acciones">
+            {/* BOTÓN MODO OSCURO */}
             <button
-              className='admin-icono-boton admin-boton-tema'
+              className="admin-icono-boton admin-boton-tema"
               onClick={alternarModoOscuro}
-              title={
-                modoOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
-              }
-              aria-label={
-                modoOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
-              }
+              title={modoOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+              aria-label={modoOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
             >
-              <i
-                className={`fa-solid ${modoOscuro ? "fa-sun" : "fa-moon"}`}
-              ></i>
+              <i className={`fa-solid ${modoOscuro ? "fa-sun" : "fa-moon"}`}></i>
             </button>
 
-            {/* NOTIFICACIONES */}
-            <div className='admin-menu-desplegable'>
+            {/* MENÚ DE NOTIFICACIONES */}
+            <div className="admin-menu-desplegable">
               <button
-                className='admin-icono-boton admin-boton-notificaciones'
+                className="admin-icono-boton admin-boton-notificaciones"
                 onClick={() => {
-                  actualizarNotificaciones();
+                  setNotificaciones(obtenerNotificaciones());
                   setMenuNotificacionesAbierto(!menuNotificacionesAbierto);
                 }}
-                title='Notificaciones'
+                title="Notificaciones"
               >
-                <i className='fa-solid fa-bell'></i>
-                {notificacionesNoLeidas > 0 && (
-                  <span className='admin-punto-badge'>
-                    {notificacionesNoLeidas}
-                  </span>
-                )}
+                <i className="fa-solid fa-bell"></i>
+                {noLeidas > 0 && <span className="admin-punto-badge">{noLeidas}</span>}
               </button>
-              <div
-                className={`admin-dropdown admin-dropdown-notificaciones${menuNotificacionesAbierto ? " mostrar" : ""}`}
-              >
-                <div className='admin-dropdown-titulo'>Notificaciones</div>
+
+              <div className={`admin-dropdown admin-dropdown-notificaciones${menuNotificacionesAbierto ? " mostrar" : ""}`}>
+                <div className="admin-dropdown-titulo">Notificaciones</div>
                 {notificaciones.length === 0 ? (
-                  <p className='admin-dropdown-item'>
-                    No hay notificaciones nuevas.
-                  </p>
+                  <p className="admin-dropdown-item">No hay notificaciones nuevas.</p>
                 ) : (
-                  notificaciones.map((notificacion) => (
+                  notificaciones.map((n) => (
                     <a
-                      href='#'
-                      key={notificacion.id}
-                      className={`admin-dropdown-item${!notificacionesLeidas[notificacion.id] ? " no-leido" : ""}`}
+                      href="#"
+                      key={n.id}
+                      className={`admin-dropdown-item${!notificacionesLeidas[n.id] ? " no-leido" : ""}`}
                       onClick={(e) => {
                         e.preventDefault();
-                        setNotificacionesLeidas((prev) => ({
-                          ...prev,
-                          [notificacion.id]: true,
-                        }));
-                        cambiarVista(notificacion.vista);
+                        setNotificacionesLeidas((prev) => ({ ...prev, [n.id]: true }));
+                        cambiarVista(n.vista);
                         setMenuNotificacionesAbierto(false);
                       }}
                     >
-                      <i
-                        className={`fa-solid ${notificacion.icono} ${notificacion.clase}`}
-                      ></i>
+                      <i className={`fa-solid ${n.icono} ${n.clase}`}></i>
                       <div>
-                        <strong>{notificacion.titulo}</strong>
-                        <p>{notificacion.texto}</p>
+                        <strong>{n.titulo}</strong>
+                        <p>{n.texto}</p>
                       </div>
                     </a>
                   ))
@@ -509,31 +325,26 @@ function Administrador() {
           </div>
         </header>
 
-        {/* CONTENIDO */}
-        <main className='admin-contenido'>{renderizarVista()}</main>
+        {/* VISTA RENDERIZADA DINÁMICAMENTE */}
+        <main className="admin-contenido">
+          <VistaComponente />
+        </main>
       </div>
 
-      {/* ==========================================
-           MODAL DE CONFIRMACIÓN DE CIERRE DE SESIÓN
-      ========================================== */}
+      {/* MODAL DE CONFIRMACIÓN DE CIERRE DE SESIÓN */}
       {modalLogoutAbierto && (
         <div
-          className='admin-modal-overlay'
+          className="admin-modal-overlay"
           onClick={() => setModalLogoutAbierto(false)}
-          style={{
-            backdropFilter: "blur(4px)",
-            background: "rgba(15, 23, 42, 0.6)",
-            zIndex: 9999,
-          }}
+          style={{ backdropFilter: "blur(4px)", background: "rgba(15, 23, 42, 0.6)", zIndex: 9999 }}
         >
           <div
-            className='admin-modal'
+            className="admin-modal"
             onClick={(e) => e.stopPropagation()}
             style={{
               maxWidth: "420px",
               width: "90%",
               borderRadius: "16px",
-              overflow: "hidden",
               textAlign: "center",
               padding: "28px 24px",
               boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
@@ -553,50 +364,33 @@ function Administrador() {
                 fontSize: "24px",
               }}
             >
-              <i className='fa-solid fa-power-off'></i>
+              <i className="fa-solid fa-power-off"></i>
             </div>
 
-            <h3
-              style={{
-                margin: "0 0 8px 0",
-                fontSize: "18px",
-                color: "#0f172a",
-                fontWeight: 700,
-              }}
-            >
+            <h3 style={{ margin: "0 0 8px 0", fontSize: "18px", color: "#0f172a", fontWeight: 700 }}>
               ¿Cerrar sesión de administrador?
             </h3>
 
-            <p
-              style={{
-                margin: "0 0 24px 0",
-                fontSize: "13.5px",
-                color: "#64748b",
-                lineHeight: "1.5",
-              }}
-            >
-              Tendrás que volver a ingresar tus credenciales para acceder
-              nuevamente al panel de control.
+            <p style={{ margin: "0 0 24px 0", fontSize: "13.5px", color: "#64748b", lineHeight: "1.5" }}>
+              Tendrás que volver a ingresar tus credenciales para acceder nuevamente al panel de control.
             </p>
 
-            <div
-              style={{ display: "flex", gap: "12px", justifyContent: "center" }}
-            >
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
               <button
-                type='button'
-                className='admin-boton admin-boton-secundario'
+                type="button"
+                className="admin-boton admin-boton-secundario"
                 onClick={() => setModalLogoutAbierto(false)}
                 style={{ flex: 1 }}
               >
-                <i className='fa-solid fa-xmark'></i> Cancelar
+                <i className="fa-solid fa-xmark"></i> Cancelar
               </button>
               <button
-                type='button'
-                className='admin-boton admin-boton-peligro'
+                type="button"
+                className="admin-boton admin-boton-peligro"
                 onClick={ejecutarCerrarSesion}
                 style={{ flex: 1 }}
               >
-                <i className='fa-solid fa-arrow-right-from-bracket'></i> Salir
+                <i className="fa-solid fa-arrow-right-from-bracket"></i> Salir
               </button>
             </div>
           </div>

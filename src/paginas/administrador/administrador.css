@@ -256,22 +256,26 @@
 }
 
 /* =========================================================================
-   CONTENIDO PRINCIPAL
+   CONTENIDO PRINCIPAL FULL WIDTH & RESPONSIVO
    ========================================================================= */
 .admin-main {
   margin-left: 200px;
   flex: 1;
+  width: calc(100% - 200px);
+  max-width: calc(100% - 200px);
   min-width: 0;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
   background-color: #f3f4f7;
+  transition: all 0.25s ease;
 }
 
 /* --- Topbar --- */
 .admin-topbar {
   background-color: #ffffff;
   border-bottom: 1px solid var(--border-color);
-  padding: 12px 20px;
+  padding: 12px 28px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -280,6 +284,7 @@
   z-index: 10;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   height: 56px;
+  width: 100%;
 }
 
 .admin-boton-menu {
@@ -584,13 +589,14 @@
 }
 
 /* =========================================================================
-   CONTENIDO / GRID
+   CONTENIDO / GRID FULL WIDTH
    ========================================================================= */
 .admin-contenido {
-  padding: 16px;
-  max-width: 1400px;
+  padding: 24px 28px 40px;
   width: 100%;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
+  box-sizing: border-box;
   animation: admin-aparecer 0.22s ease;
 }
 
@@ -2308,30 +2314,30 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
 }
 
 /* =========================================================================
-   RESPONSIVE
+   RESPONSIVE (ADAPTACIÓN A CUALQUIER TAMAÑO DE PANTALLA)
    ========================================================================= */
-@media (max-width: 1180px) {
-  .admin-grid-kpi {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .admin-grid-charts,
-  .admin-grid-tablas {
-    grid-template-columns: 1fr;
+@media (max-width: 1200px) {
+  .admin-grid-estadisticas {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
   .admin-sidebar {
     transform: translateX(-100%);
   }
+  .admin-sidebar.sidebar-abierto,
   .admin-sidebar.abierto {
     transform: translateX(0);
   }
+  .admin-overlay.overlay-visible,
   .admin-overlay.visible {
     display: block;
   }
   .admin-main {
     margin-left: 0;
+    width: 100%;
+    max-width: 100%;
   }
   .admin-boton-menu {
     display: inline-flex;
@@ -2342,29 +2348,44 @@ body.cuerpo-admin.modo-oscuro .admin-boton-peligro:hover {
   .admin-perfil-nombre {
     display: none;
   }
+  .admin-topbar {
+    padding: 12px 18px;
+  }
+  .admin-contenido {
+    padding: 20px 18px 36px;
+  }
 }
 
-@media (max-width: 620px) {
-  .admin-grid-kpi {
+@media (max-width: 640px) {
+  .admin-grid-estadisticas {
     grid-template-columns: 1fr;
-  }
-  .admin-form-fila {
-    grid-template-columns: 1fr;
+    gap: 12px;
   }
   .admin-bienvenida {
     flex-direction: column;
     align-items: flex-start;
   }
   .admin-topbar {
-    padding: 12px 16px;
+    padding: 10px 14px;
+    height: 52px;
+  }
+  .admin-titulo-vista {
+    font-size: 16px;
   }
   .admin-contenido {
-    padding: 18px 16px 40px;
+    padding: 14px 12px 30px;
+  }
+  .admin-tarjeta-estadistica {
+    padding: 16px;
+  }
+  .admin-seccion {
+    padding: 14px;
+    border-radius: 10px;
   }
   .admin-toasts {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
     max-width: none;
   }
 }
@@ -3429,3 +3450,225 @@ body.cuerpo-admin.modo-oscuro .pedidos-btn-limpiar:hover {
   background: #1f2636;
   color: #f8fafc;
 }
+
+/* =========================================================================
+   SISTEMA DE MODO OSCURO INTEGRAL Y ESTÉTICO PARA EL PANEL DE ADMINISTRADOR
+   ========================================================================= */
+
+/* Fondo general y contenedor principal */
+body.modo-oscuro,
+body.cuerpo-admin.modo-oscuro,
+.cuerpo-admin.modo-oscuro,
+.modo-oscuro .admin-main,
+.modo-oscuro .admin-contenido {
+  background-color: #0b0f17 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Barra superior (Topbar) */
+.modo-oscuro .admin-topbar,
+body.cuerpo-admin.modo-oscuro .admin-topbar {
+  background-color: #111622 !important;
+  border-bottom-color: #1e2638 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.modo-oscuro .admin-titulo-vista,
+body.cuerpo-admin.modo-oscuro .admin-titulo-vista {
+  color: #ffffff !important;
+}
+
+/* Sidebar y navegación lateral */
+.modo-oscuro .admin-sidebar,
+body.cuerpo-admin.modo-oscuro .admin-sidebar {
+  background: linear-gradient(180deg, #10141d 0%, #090c12 100%) !important;
+  border-right: 1px solid #1a202c !important;
+}
+
+.modo-oscuro .admin-sidebar-footer,
+body.cuerpo-admin.modo-oscuro .admin-sidebar-footer {
+  border-top-color: #1a202c !important;
+}
+
+/* Secciones y contenedores de tarjetas */
+.modo-oscuro .admin-seccion,
+body.cuerpo-admin.modo-oscuro .admin-seccion,
+.modo-oscuro .admin-tarjeta,
+body.cuerpo-admin.modo-oscuro .admin-tarjeta,
+.modo-oscuro .admin-panel,
+body.cuerpo-admin.modo-oscuro .admin-panel {
+  background-color: #141923 !important;
+  border: 1px solid #202738 !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25) !important;
+  color: #f1f5f9 !important;
+}
+
+.modo-oscuro .admin-seccion-titulo,
+body.cuerpo-admin.modo-oscuro .admin-seccion-titulo,
+.modo-oscuro .admin-seccion-subtitulo,
+body.cuerpo-admin.modo-oscuro .admin-seccion-subtitulo {
+  color: #f8fafc !important;
+}
+
+/* Tarjetas de estadísticas (KPIs del resumen) */
+.modo-oscuro .admin-tarjeta-estadistica,
+body.cuerpo-admin.modo-oscuro .admin-tarjeta-estadistica {
+  background: #141923 !important;
+  border: 1px solid #202738 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modo-oscuro .admin-tarjeta-contenido h3,
+body.cuerpo-admin.modo-oscuro .admin-tarjeta-contenido h3 {
+  color: #94a3b8 !important;
+}
+
+.modo-oscuro .admin-tarjeta-valor,
+body.cuerpo-admin.modo-oscuro .admin-tarjeta-valor {
+  color: #ffffff !important;
+}
+
+/* Tablas y filas */
+.modo-oscuro .admin-tabla-contenedor,
+body.cuerpo-admin.modo-oscuro .admin-tabla-contenedor,
+.modo-oscuro .admin-tabla,
+body.cuerpo-admin.modo-oscuro .admin-tabla {
+  background-color: #141923 !important;
+  border-color: #202738 !important;
+  color: #f1f5f9 !important;
+}
+
+.modo-oscuro .admin-tabla thead tr,
+body.cuerpo-admin.modo-oscuro .admin-tabla thead tr,
+.modo-oscuro .admin-tabla th,
+body.cuerpo-admin.modo-oscuro .admin-tabla th {
+  background-color: #0e121a !important;
+  color: #94a3b8 !important;
+  border-bottom: 1px solid #202738 !important;
+}
+
+.modo-oscuro .admin-tabla tbody tr,
+body.cuerpo-admin.modo-oscuro .admin-tabla tbody tr,
+.modo-oscuro .admin-tabla td,
+body.cuerpo-admin.modo-oscuro .admin-tabla td {
+  background-color: #141923 !important;
+  color: #e2e8f0 !important;
+  border-bottom: 1px solid #1c2230 !important;
+}
+
+.modo-oscuro .admin-tabla tbody tr:hover,
+body.cuerpo-admin.modo-oscuro .admin-tabla tbody tr:hover {
+  background-color: #1a2130 !important;
+}
+
+/* Entradas de formulario, selectores y buscadores */
+.modo-oscuro .admin-input-busqueda,
+body.cuerpo-admin.modo-oscuro .admin-input-busqueda,
+.modo-oscuro .admin-buscador,
+body.cuerpo-admin.modo-oscuro .admin-buscador,
+.modo-oscuro .admin-form-grupo input,
+body.cuerpo-admin.modo-oscuro .admin-form-grupo input,
+.modo-oscuro .admin-form-grupo select,
+body.cuerpo-admin.modo-oscuro .admin-form-grupo select,
+.modo-oscuro .admin-form-grupo textarea,
+body.cuerpo-admin.modo-oscuro .admin-form-grupo textarea {
+  background-color: #0e121a !important;
+  border-color: #273042 !important;
+  color: #ffffff !important;
+}
+
+.modo-oscuro .admin-input-busqueda:focus,
+.modo-oscuro .admin-form-grupo input:focus,
+.modo-oscuro .admin-form-grupo select:focus,
+.modo-oscuro .admin-form-grupo textarea:focus {
+  border-color: #84b814 !important;
+  box-shadow: 0 0 0 3px rgba(132, 184, 20, 0.2) !important;
+}
+
+/* Botones de acción e íconos */
+.modo-oscuro .admin-icono-boton,
+body.cuerpo-admin.modo-oscuro .admin-icono-boton {
+  background-color: #141923 !important;
+  border-color: #273042 !important;
+  color: #cbd5e1 !important;
+}
+
+.modo-oscuro .admin-icono-boton:hover,
+body.cuerpo-admin.modo-oscuro .admin-icono-boton:hover {
+  background-color: #202738 !important;
+  border-color: #3b465c !important;
+  color: #ffffff !important;
+}
+
+.modo-oscuro .admin-boton-secundario,
+body.cuerpo-admin.modo-oscuro .admin-boton-secundario {
+  background-color: #1b212f !important;
+  border-color: #2d3748 !important;
+  color: #e2e8f0 !important;
+}
+
+.modo-oscuro .admin-boton-secundario:hover {
+  background-color: #252d40 !important;
+  color: #ffffff !important;
+}
+
+/* Menú desplegable de notificaciones */
+.modo-oscuro .admin-dropdown,
+body.cuerpo-admin.modo-oscuro .admin-dropdown {
+  background-color: #141923 !important;
+  border: 1px solid #273042 !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+}
+
+.modo-oscuro .admin-dropdown-titulo {
+  background-color: #0e121a !important;
+  border-bottom: 1px solid #202738 !important;
+  color: #ffffff !important;
+}
+
+.modo-oscuro .admin-dropdown-item {
+  border-bottom: 1px solid #1a202c !important;
+  color: #cbd5e1 !important;
+}
+
+.modo-oscuro .admin-dropdown-item strong {
+  color: #ffffff !important;
+}
+
+.modo-oscuro .admin-dropdown-item p {
+  color: #94a3b8 !important;
+}
+
+.modo-oscuro .admin-dropdown-item:hover {
+  background-color: #1c2332 !important;
+}
+
+/* Modales */
+.modo-oscuro .admin-modal,
+body.cuerpo-admin.modo-oscuro .admin-modal {
+  background-color: #141923 !important;
+  border: 1px solid #273042 !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+}
+
+.modo-oscuro .admin-modal h2,
+.modo-oscuro .admin-modal h3,
+.modo-oscuro .admin-modal h4 {
+  color: #ffffff !important;
+}
+
+.modo-oscuro .admin-modal p {
+  color: #94a3b8 !important;
+}
+
+/* Tarjetas de productos, clientes, proveedores y categorías */
+.modo-oscuro .admin-producto-top-card,
+.modo-oscuro .admin-categoria-tarjeta,
+.modo-oscuro .admin-proveedor-card,
+.modo-oscuro .admin-usuario-card {
+  background-color: #141923 !important;
+  border-color: #202738 !important;
+  color: #f1f5f9 !important;
+}
+
