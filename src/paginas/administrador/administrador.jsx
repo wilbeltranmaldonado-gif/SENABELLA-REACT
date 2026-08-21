@@ -435,7 +435,9 @@ function Administrador() {
             <i className='fa-solid fa-bars'></i>
           </button>
 
-          <h1 className='admin-titulo-vista'>{obtenerTituloVista()}</h1>
+          {vistaActual === "resumen" && (
+            <h1 className='admin-titulo-vista'>{obtenerTituloVista()}</h1>
+          )}
 
           <div className='admin-topbar-acciones'>
             <button
