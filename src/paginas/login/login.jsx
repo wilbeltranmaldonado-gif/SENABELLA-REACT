@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { validarLogin } from "../../utils/usuariosBd";
+import { validarLogin } from "../../utilidades/usuariosBd";
 import "./login.css";
 
 function Login() {

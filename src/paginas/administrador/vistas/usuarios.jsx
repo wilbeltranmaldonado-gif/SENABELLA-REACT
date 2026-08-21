@@ -14,7 +14,7 @@ import {
   crearUsuario,
   actualizarUsuario,
   eliminarUsuario as borrarUsuario,
-} from "../../../utils/usuariosBd";
+} from "../../../utilidades/usuariosBd";
 
 function Usuarios() {
   // --- ESTADOS DE LA VISTA DE USUARIOS ---

@@ -9,7 +9,10 @@
 // =============================================================================
 
 import { useState, useEffect, useMemo } from "react";
-import { obtenerUsuarios, actualizarUsuario } from "../../../utils/usuariosBd";
+import {
+  obtenerUsuarios,
+  actualizarUsuario,
+} from "../../../utilidades/usuariosBd";
 import ModalEditarCliente from "./modalEditarCliente";
 
 function Clientes() {
